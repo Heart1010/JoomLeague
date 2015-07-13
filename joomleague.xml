@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.1" method="upgrade">
 	<name>joomleague</name>
-	<creationDate>2014</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
@@ -62,7 +62,12 @@
 
 	<administration>
 		<!-- Administration Menu Section -->
-		<menu view="projects" img="components/com_joomleague/assets/images/joomleague_icon.png">com_joomleague</menu>
+		<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE_PROJECTS</menu>
+		<submenu>
+			<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE_PROJECTS</menu>
+		</submenu>
+		
+		
 		<files folder="admin">
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
