@@ -2,7 +2,7 @@
 /**
  * @author Wolfgang Pinitsch <andone@mfga.at>
  * 
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -12,16 +12,15 @@
  */
 
 // no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die();
+
+jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 
 class com_joomleagueInstallerScript
 {
 	private function _install($update=false, $parent) {
-		echo JHtml::_('sliders.start','steps',array(
-						'allowAllClose' => true,
-						'startTransition' => true,
-						true));
+		echo JHtml::_('sliders.start','steps',array('allowAllClose' => true,'startTransition' => true,true));
 		$image = '<img src="../media/com_joomleague/jl_images/ext_com.png">';
 		echo JHtml::_('sliders.panel', $image.' Component', 'panel-component');
 		?>
@@ -30,7 +29,7 @@ class com_joomleagueInstallerScript
 			src="../media/com_joomleague/jl_images/joomleague_logo.png"
 			alt="JoomLeague" title="JoomLeague" />
 		<?php
-		$this->install_admin_rootfolder	= JPATH::clean($parent->getParent()->getPath('source').'/administrator');
+		$this->install_admin_rootfolder	= JPATH::clean($parent->getParent()->getPath('source').'/admin');
 		$this->install_rootfolder 		= $parent->getParent()->getPath('source');
 		$this->debug = false;
 		$maxExecutionTime = $maxInputTime = 900;
@@ -44,7 +43,7 @@ class com_joomleagueInstallerScript
 		$image = '<img src="../media/com_joomleague/jl_images/ext_esp.png">';
 		echo JHtml::_('sliders.panel', $image.' Database', 'panel-database');
 		
-		include_once($this->install_admin_rootfolder.'/components/com_joomleague/models/databasetools.php');
+		include_once($this->install_admin_rootfolder.'/models/databasetools.php');
 		if($update) {
 			self::updateDatabase();
 		}
@@ -63,12 +62,12 @@ class com_joomleagueInstallerScript
 		
 		$image = '<img src="../media/com_joomleague/jl_images/ext_lang.png">';
 		echo JHtml::_('sliders.panel', $image.' Component Languages', 'panel-clang');
-		self::installComponentLanguages();
+		// self::installComponentLanguages();
 		
 		$image = '<img src="../media/com_joomleague/jl_images/ext_esp.png">';
 		echo JHtml::_('sliders.panel', $image.' Basic Data', 'panel-basicdata');
-		include_once($this->install_rootfolder.'/components/com_joomleague/joomleague.core.php');
-		include_once($this->install_admin_rootfolder.'/components/com_joomleague/assets/updates/jl_install.php');
+		include_once($this->install_rootfolder.'/site/joomleague.core.php');
+		include_once($this->install_admin_rootfolder.'/assets/updates/jl_install.php');
 		
 		$image = '<img src="../media/com_joomleague/jl_images/ext_mod.png">';
 		echo JHtml::_('sliders.panel', $image.' Modules', 'panel-modules');
@@ -77,7 +76,7 @@ class com_joomleagueInstallerScript
 		$image = '<img src="../media/com_joomleague/jl_images/ext_plugin.png">';
 		echo JHtml::_('sliders.panel', $image.' Plugins', 'panel-plugins');
 		self::installPlugins();
-		//self::installPermissions();
+		self::installPermissions();
 		echo JHtml::_('sliders.end');
 		echo self::getFxInitJSCode('steps');
 		?>
@@ -103,7 +102,7 @@ class com_joomleagueInstallerScript
 		$arrLanguages = array(); 
 		echo 'All language translations are powered by <a href="https://opentranslators.transifex.com/projects/p/joomleague/">Transifex</a>';
 		
-		$src = $this->install_admin_rootfolder.'/components/com_joomleague/';
+		$src = $this->install_admin_rootfolder;
 		$dest = JPATH_ADMINISTRATOR.'/language';
 		if($this->debug) {
 			echo '<br>copy ' . $src.'/language' . ' -> ' . JPATH_ADMINISTRATOR.'/language';
@@ -116,13 +115,13 @@ class com_joomleagueInstallerScript
 			$arrAdminLanguages[] = str_replace('-', '_', $lang);
 		}
 		
-		$src = $this->install_rootfolder.'/components/com_joomleague/';
+		$src = $this->install_rootfolder;
 		$dest = JPATH_SITE.'/';
 		if($this->debug) {
-			echo '<br>copy ' . $src.'/language' . ' -> ' . JPATH_SITE.'/language';
+			echo '<br>copy ' . $src.'/site/language' . ' -> ' . JPATH_SITE.'/language';
 		}
-		JFolder::copy($src.'/language', JPATH_SITE.'/language', '', true);
-		$languages = JFolder::folders($src.'/language');
+		JFolder::copy($src.'/site/language', JPATH_SITE.'/language', '', true);
+		$languages = JFolder::folders($src.'/site/language');
 		foreach ($languages as $lang)
 		{
 			$arrLanguages[] = str_replace('-', '_', $lang);
@@ -160,7 +159,9 @@ class com_joomleagueInstallerScript
 		$image = '<img src="../media/com_joomleague/jl_images/ext_mod.png">';
 		$arrAdminModules = array(); 
 		$arrModules = array(); 
-		$src=$this->install_admin_rootfolder.'/components/com_joomleague/modules';
+		$src=$this->install_admin_rootfolder.'/modules';
+		
+		/*
 		if(JFolder::exists($src)) {
 			echo 'All language translations are powered by <a href="https://opentranslators.transifex.com/projects/p/joomleague/">Transifex</a>';
 			$dest=JPATH_ADMINISTRATOR.'/modules';
@@ -181,8 +182,10 @@ class com_joomleagueInstallerScript
 		} else {
 			echo "No administration Module(s) copied<br>";
 		}
+		*/
 		
-		$src = $this->install_rootfolder.'/components/com_joomleague/modules';
+		/*
+		$src = $this->install_rootfolder.'/site/modules';
 		if(JFolder::exists($src)) {
 			$dest=JPATH_SITE.'/modules';
 			$modules = JFolder::folders($src);
@@ -242,6 +245,7 @@ class com_joomleagueInstallerScript
 		} else {
 			echo "No Module(s) copied<br>";
 		}
+		*/
 		self::_addJoomLeagueBugtrackerModule();
 
 		$time_end = microtime(true);
@@ -259,7 +263,7 @@ class com_joomleagueInstallerScript
 		$time_start = microtime(true);
 		$image = '<img src="../media/com_joomleague/jl_images/ext_plugin.png">';
 		$arrPlugins = array(); 
-		$src = $this->install_rootfolder.'/components/com_joomleague/plugins';
+		$src = $this->install_rootfolder.'/site/plugins';
 		if(JFolder::exists($src)) {
 			echo 'All language translations are powered by <a href="https://opentranslators.transifex.com/projects/p/joomleague/">Transifex</a>';
 			$dest=JPATH_SITE.'/plugins';
@@ -422,7 +426,7 @@ class com_joomleagueInstallerScript
 
 	private function _versionCompare () {
 		if (version_compare(phpversion(), '5.3.0', '<')===true) {
-			echo  '<div style="font:12px/1.35em arial, helvetica, sans-serif;"><div style="margin:0 0 25px 0; border-bottom:1px solid #ccc;"><h3 style="margin:0; font-size:1.7em; font-weight:normal; text-transform:none; text-align:left; color:#2f2f2f;">Whoops, it looks like you have an invalid PHP version.</h3></div><p>JoomLeague requires PHP 5.2.4 or newer.</p><p>PHP4 is no longer supported by its developers and your webhost almost certainly offers PHP5.  Please contact your webhost for advice on how to enable PHP5 on your website.</p></div>';
+			// echo  '<div style="font:12px/1.35em arial, helvetica, sans-serif;"><div style="margin:0 0 25px 0; border-bottom:1px solid #ccc;"><h3 style="margin:0; font-size:1.7em; font-weight:normal; text-transform:none; text-align:left; color:#2f2f2f;">Whoops, it looks like you have an invalid PHP version.</h3></div><p>JoomLeague requires PHP 5.2.4 or newer.</p><p>PHP4 is no longer supported by its developers and your webhost almost certainly offers PHP5.  Please contact your webhost for advice on how to enable PHP5 on your website.</p></div>';
 			return false;
 		}
 		return true;
@@ -465,7 +469,7 @@ class com_joomleagueInstallerScript
 		if ($uninstallDB)
 		{
 			echo JText::_('Also removing database tables of JoomLeague');
-			include_once(JPATH_ADMINISTRATOR.'/components/com_joomleague/models/databasetools.php');
+			include_once(JPATH_ADMINISTRATOR.'/models/databasetools.php');
 			JoomleagueModelDatabaseTools::dropJoomLeagueTables();
 		}
 		else
@@ -485,7 +489,8 @@ class com_joomleagueInstallerScript
 	{
 		$time_start = microtime(true);
 		echo JText::_('Creating new Image Folder structure');
-		$src = JPath::clean($this->install_rootfolder.'/media/com_joomleague/database');
+			
+		$src = JPath::clean($this->install_rootfolder.'/media/database');
 		$dest = JPath::clean(JPATH_ROOT.'/images/com_joomleague/database');
 	
 		if(JFolder::exists($src)) {
