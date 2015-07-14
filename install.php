@@ -40,10 +40,13 @@ class com_joomleagueInstallerScript
 			@set_time_limit($maxInputTime);
 		}
 		$time_start = microtime(true);
+		
+		// slider - database
 		$image = '<img src="../media/com_joomleague/jl_images/ext_esp.png">';
 		echo JHtml::_('sliders.panel', $image.' Database', 'panel-database');
 		
 		include_once($this->install_admin_rootfolder.'/models/databasetools.php');
+		
 		if($update) {
 			self::updateDatabase();
 		}
@@ -56,23 +59,23 @@ class com_joomleagueInstallerScript
 			JoomleagueModelDatabaseTools::updateEventtypeSuspensions();
 		}
 		
+		// slider - imagefolder
 		$image = '<img src="../media/com_joomleague/jl_images/ext_esp.png">';
 		echo JHtml::_('sliders.panel', $image.' Create/Update Images Folders', 'panel-images');
 		self::createImagesFolder();
 		
-		$image = '<img src="../media/com_joomleague/jl_images/ext_lang.png">';
-		echo JHtml::_('sliders.panel', $image.' Component Languages', 'panel-clang');
-		// self::installComponentLanguages();
-		
+		// slider - basicData
 		$image = '<img src="../media/com_joomleague/jl_images/ext_esp.png">';
 		echo JHtml::_('sliders.panel', $image.' Basic Data', 'panel-basicdata');
 		include_once($this->install_rootfolder.'/site/joomleague.core.php');
 		include_once($this->install_admin_rootfolder.'/assets/updates/jl_install.php');
 		
+		// slider - modules
 		$image = '<img src="../media/com_joomleague/jl_images/ext_mod.png">';
 		echo JHtml::_('sliders.panel', $image.' Modules', 'panel-modules');
 		self::installModules();
 		
+		// slider - plugins
 		$image = '<img src="../media/com_joomleague/jl_images/ext_plugin.png">';
 		echo JHtml::_('sliders.panel', $image.' Plugins', 'panel-plugins');
 		self::installPlugins();
@@ -87,7 +90,9 @@ class com_joomleagueInstallerScript
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
 		echo '<hr />';
-		echo '<br>Overall Duration: '.round($time).'s<br>';
+		if($this->debug) {
+			echo '<br>Overall Duration: '.round($time).'s<br>';
+		}
 	}
 
 	/**
@@ -145,7 +150,9 @@ class com_joomleagueInstallerScript
 		
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		echo 'Duration: '.round($time).'s<br>';
+		if($this->debug) {
+			echo 'Duration: '.round($time).'s<br>';
+		}
 	}
 
 	/**
@@ -161,47 +168,21 @@ class com_joomleagueInstallerScript
 		$arrModules = array(); 
 		$src=$this->install_admin_rootfolder.'/modules';
 		
-		/*
 		if(JFolder::exists($src)) {
-			echo 'All language translations are powered by <a href="https://opentranslators.transifex.com/projects/p/joomleague/">Transifex</a>';
-			$dest=JPATH_ADMINISTRATOR.'/modules';
-			$modules = JFolder::folders($src);
-			foreach ($modules as $module)
-			{
-				$arrAdminModules[$module] = array();
-				if(JFolder::exists($src.'/'.$module.'/language')) {
-					$langs = JFolder::folders($src.'/'. $module . '/language');
-					foreach ($langs as $lang)
-					{
-						$arrAdminModules[$module][] = str_replace('-', '_', $lang);
-					}
-					JFolder::copy($src.'/'.$module.'/language', JPATH_ADMINISTRATOR.'/language', '', true);
-				}
-			}
+			$dest=JPATH_SITE.'/administrator/modules';
 			JFolder::copy($src, $dest, '', true);
+			JFolder::delete(JPATH_SITE.'/administrator/components/com_joomleague/modules');
 		} else {
 			echo "No administration Module(s) copied<br>";
 		}
-		*/
 		
-		/*
 		$src = $this->install_rootfolder.'/site/modules';
 		if(JFolder::exists($src)) {
 			$dest=JPATH_SITE.'/modules';
 			$modules = JFolder::folders($src);
-			foreach ($modules as $module)
-			{
-				$arrModules[$module] = array();
-				if(JFolder::exists($src.'/'.$module.'/language')) {
-					$langs = JFolder::folders($src.'/'. $module . '/language');
-					foreach ($langs as $lang)
-					{
-						$arrModules[$module][] = str_replace('-', '_', $lang);
-					}
-					JFolder::copy($src.'/'.$module.'/language', JPATH_SITE.'/language', '', true);
-				}
-			}
+		
 			JFolder::copy($src, $dest, '', true);
+			JFolder::delete(JPATH_SITE.'/components/com_joomleague/modules');
 			
 			echo JHtml::_('sliders.start','adminmoddetails',array(
 						'allowAllClose' => true,
@@ -245,12 +226,12 @@ class com_joomleagueInstallerScript
 		} else {
 			echo "No Module(s) copied<br>";
 		}
-		*/
-		self::_addJoomLeagueBugtrackerModule();
 
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		echo 'Duration: '.round($time).'s<br>';
+		if($this->debug) {
+			echo 'Duration: '.round($time).'s<br>';
+		}
 	}
 
 	/**
@@ -266,26 +247,11 @@ class com_joomleagueInstallerScript
 		$src = $this->install_rootfolder.'/site/plugins';
 		if(JFolder::exists($src)) {
 			echo 'All language translations are powered by <a href="https://opentranslators.transifex.com/projects/p/joomleague/">Transifex</a>';
+			
 			$dest=JPATH_SITE.'/plugins';
-			$groups = JFolder::folders($src);
-			foreach ($groups as $group)
-			{
-				$plugins = JFolder::folders($src.'/'.$group);
-				foreach ($plugins as $plugin)
-				{
-					$arrPlugins[$group.'/'.$plugin] = array();
-					if(JFolder::exists($src.'/'.$group.'/'.$plugin.'/language')) 
-					{
-						$langs = JFolder::folders($src.'/'.$group.'/'.$plugin.'/language');
-						foreach ($langs as $lang)
-						{
-							$arrPlugins[$group.'/'.$plugin][] = $lang;
-						}
-						JFolder::copy($src.'/'.$group.'/'.$plugin.'/language', JPATH_ADMINISTRATOR.'/language', '', true);
-					}
-				}
-			}
 			JFolder::copy($src, $dest, '', true);
+			JFolder::delete(JPATH_SITE.'/components/com_joomleague/plugins');
+			
 			echo JHtml::_('sliders.start','plgdetails',array(
 					'allowAllClose' => true,
 					'startTransition' => true,
@@ -311,10 +277,12 @@ class com_joomleagueInstallerScript
 		
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		echo '<br>Duration: '.round($time) . 's';
+		if($this->debug) {
+			echo '<br>Duration: '.round($time) . 's';
+		}
 	}
 	
-	public static function installPermissions()
+	public function installPermissions()
 	{
 		$time_start = microtime(true);
 		jimport('joomla.access.rules');
@@ -341,7 +309,9 @@ class com_joomleagueInstallerScript
 		}
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		echo 'Duration: '.round($time).'s<br>';
+		if($this->debug) {
+			echo 'Duration: '.round($time).'s<br>';
+		}
 	}
 	
 	private function getFxInitJSCode ($group) {
@@ -405,7 +375,9 @@ class com_joomleagueInstallerScript
 		echo '<br />';
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		echo '<br>Duration: '.round($time).'s<br>';
+		if($this->debug) {
+			echo '<br>Duration: '.round($time).'s<br>';
+		}
 	}
 	
 	/**
@@ -515,45 +487,9 @@ class com_joomleagueInstallerScript
 		echo ' - <span style="color:green">'.JText::_('Success').'</span>';
 		$time_end = microtime(true);
 		$time = $time_end - $time_start;
-		echo '<br>Duration: '.round($time).'s<br>';
-	}
-	
-	private function _addJoomLeagueBugtrackerModule() {
-		$title = 'JoomLeague Bugtracker';
-		$tblModules = JTable::getInstance('module');
-		$tblModules->load(array('title'=>$title));
-		$tblModules->title			= $title;
-		$tblModules->module			= 'mod_feed';
-		$tblModules->position 		= 'cpanel';
-		$tblModules->published 		= 1;
-		$tblModules->client_id 		= 1;
-		$tblModules->ordering 		= 1;
-		$tblModules->access 		= 3;
-		$tblModules->language 		= '*';
-		$tblModules->publish_up		= '2000-00-00 00:00:00';
-		$tblModules->params 		= '{"rssurl":"http:\/\/tracker.joomleague.at\/projects\/joomleague\/issues.atom?c%5B%5D=project&c%5B%5D=tracker&c%5B%5D=parent&c%5B%5D=status&c%5B%5D=subject&c%5B%5D=assigned_to&c%5B%5D=fixed_version&c%5B%5D=due_date&f%5B%5D=updated_on&f%5B%5D=status_id&f%5B%5D=&group_by=&key=ad01ef2fceecf0c7c51812792f3b9cd54612ef15&op%5Bstatus_id%5D=%3D&op%5Bupdated_on%5D=%3E%3Ct-&set_filter=1&utf8=%E2%9C%93&v%5Bstatus_id%5D%5B%5D=3&v%5Bstatus_id%5D%5B%5D=5&v%5Bstatus_id%5D%5B%5D=6&v%5Bupdated_on%5D%5B%5D=30","rssrtl":"0","rsstitle":"1","rssdesc":"1","rssimage":"1","rssitems":"10","rssitemdesc":"1","word_count":"100","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900"}';
-	
-		if (!$tblModules->store()) {
-			echo $tblModules->getError().'<br />';
+		
+		if($this->debug) {
+			echo '<br>Duration: '.round($time).'s<br>';
 		}
-		$db = JFactory::getDbo();
-		$query = 'INSERT IGNORE INTO #__modules_menu (moduleid,menuid) VALUES ('.$tblModules->id.',0)';
-		$db->setQuery($query);
-		if (!$db->query())
-		{
-			//echo $db->getErrorMsg().'<br />';
-		}
-			
-		// Initialise variables
-		$conf = JFactory::getConfig();
-		$dispatcher = JDispatcher::getInstance();
-			
-		$options = array(
-				'defaultgroup' => ($tblModules->module) ? $tblModules->module : (isset($this->option) ? $this->option : JRequest::getCmd('option')),
-				'cachebase' => ($tblModules->client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache'));
-			
-		$cache = JCache::getInstance('callback', $options);
-		$cache->clean();
 	}
-	
 }
