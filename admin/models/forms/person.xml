@@ -27,7 +27,7 @@
 		<field
 			name="published"
 			type="radio"
-			class="inputbox"
+			class="btn-group btn-group-yesno"
 			default="1"
 			size="1"
 			label="JSTATUS"
@@ -191,6 +191,7 @@
 			<field
 				name="show_pic"
 				type="radio"
+				class="btn-group btn-group-yesno"
 				default="1"
 				label="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_PICTURE"
 				description="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_PICTURE_DESC">
@@ -200,6 +201,7 @@
 			<field
 				name="show_persdata"
 				type="radio"
+				class="btn-group btn-group-yesno"
 				default="1"
 				label="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_P_DATA"
 				description="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_P_DATA_DESC">
@@ -209,6 +211,7 @@
 			<field
 				name="show_teamdata"
 				type="radio"
+				class="btn-group btn-group-yesno"
 				default="1"
 				label="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_T_DATA"
 				description="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_T_DATA_DESC">
@@ -218,6 +221,7 @@
 			<field
 				name="show_on_frontend"
 				type="radio"
+				class="btn-group btn-group-yesno"
 				default="1"
 				label="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_FE"
 				description="COM_JOOMLEAGUE_ADMIN_PERSON_SHOW_FE">

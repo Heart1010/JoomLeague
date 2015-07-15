@@ -26,6 +26,7 @@
 		<field
 			name="injury"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_INJURED"
 			description="COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_INJURED_DESC">
@@ -57,6 +58,7 @@
 		<field
 			name="suspension"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_SUSPENDED"
 			description="COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_SUSPENDED_DESC">
@@ -88,6 +90,7 @@
 		<field
 			name="away"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_AWAY"
 			description="COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_AWAY_DESC">

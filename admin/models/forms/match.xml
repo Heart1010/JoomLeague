@@ -16,6 +16,7 @@
 		<field
 				name="cancel"
 				type="radio"
+				class="btn-group btn-group-yesno"
 				default="0"				
 				label="COM_JOOMLEAGUE_ADMIN_MATCH_F_MD_CANCEL"
 				description="COM_JOOMLEAGUE_ADMIN_MATCH_F_MD_CANCEL_DESC">
@@ -45,6 +46,7 @@
 		<field
 				name="show_report"
 				type="radio"
+				class="btn-group btn-group-yesno"
 				default="0"				
 				label="COM_JOOMLEAGUE_ADMIN_MATCH_F_MR_SHOW"
 				description="COM_JOOMLEAGUE_ADMIN_MATCH_F_MR_SHOW_DESC">

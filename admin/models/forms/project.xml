@@ -157,7 +157,7 @@
 		<field
 			name="is_utc_converted"
 			type="radio"
-			class="inputbox"
+			class="btn-group btn-group-yesno"
 			default="0"
 			size="1"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_IS_UTC_CONVERTED"
@@ -257,6 +257,7 @@
 		<field
 			name="use_legs"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_USE_SETS"
 			description="COM_JOOMLEAGUE_ADMIN_PROJECT_USE_SETS_DESC">
@@ -267,6 +268,7 @@
 		<field
 			name="allow_add_time"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_OT_OR_PENALTY"
 			description="COM_JOOMLEAGUE_ADMIN_PROJECT_OT_OR_PENALTY_DESC">
@@ -316,6 +318,7 @@
 		<field
 			name="fav_team_highlight_type"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_TYPE"
 			description="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_TYPE_DESC">
@@ -340,6 +343,7 @@
 		<field
 			name="fav_team_text_bold"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			default="0"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_TEXT_BOLD"
 			description="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_TEXT_BOLD_DESC">

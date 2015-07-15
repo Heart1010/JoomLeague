@@ -30,7 +30,7 @@
 		<field
 			name="published"
 			type="radio"
-			class="inputbox"
+			class="btn-group btn-group-yesno"
 			default="1"
 			size="1"
 			label="JSTATUS"
@@ -45,6 +45,7 @@
 		<field
 			name="splitt"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			label="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_NOTE"
 			description="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_NOTE_DESC"
 			default="1">
@@ -55,9 +56,9 @@
 		<field
 			name="directions"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			label="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_SORTING"
-			description="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_SORTING_DESC"
-			class="inputbox"			
+			description="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_SORTING_DESC"		
 			default="0">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_DESCENDING</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_ASCENDING</option>
@@ -66,6 +67,7 @@
 		<field
 			name="double"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			label="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_PAIR_EVENT"
 			description="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_PAIR_EVENT_DESC"
 			default="0">
@@ -76,6 +78,7 @@
 		<field
 			name="suspension"
 			type="radio"
+			class="btn-group btn-group-yesno"
 			label="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_SUSPENSION"
 			description="COM_JOOMLEAGUE_ADMIN_EVENTTYPE_SUSPENSION_DESC"
 			default="0">
