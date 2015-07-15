@@ -49,7 +49,7 @@ if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 	<div id="editcell">
 		<fieldset class="adminform">
 			<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_ROUNDS_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="1%"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>

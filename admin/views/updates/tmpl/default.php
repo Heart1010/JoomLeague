@@ -3,7 +3,7 @@
 JHtml::_('behavior.tooltip');
 ?>
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
-	<table class="adminlist">
+	<table class="adminlist table table-striped">
 		<thead>
 			<tr>
 				<th width="5" style="vertical-align: top; "><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>

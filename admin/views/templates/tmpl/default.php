@@ -17,7 +17,7 @@ JHtml::_('behavior.tooltip');
 		<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_TEMPLATES_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>
 		<?php if ($this->projectws->master_template){echo $this->loadTemplate('import');} ?>
 		<form action="index.php?option=com_joomleague&view=templates" method="post" id="adminForm">
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>

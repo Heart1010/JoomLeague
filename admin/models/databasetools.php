@@ -87,7 +87,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 				$panelName = substr(str_replace('joomleague','',str_replace('_','',$DummyStr)),1);
 				echo JHtml::_('sliders.panel',$DummyStr,'panel-'.$panelName);
 					
-				echo '<table class="adminlist" style="width:100%; " border="0"><thead><tr><td colspan="2" class="key" style="text-align:center;"><h3>';
+				echo '<table class="adminlist table table-striped" style="width:100%; " border="0"><thead><tr><td colspan="2" class="key" style="text-align:center;"><h3>';
 				echo "Checking existence of table [$DummyStr] - <span style='color:";
 				if ($db->query()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
 				echo '</span>';

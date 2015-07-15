@@ -6,7 +6,7 @@
 		echo JText::_( 'COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_ASSIGN_PROJ_TEAMS' );
 		?>
 		</legend>
-		<table class="adminlist">
+		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th class="title"><?PHP echo JText::_( 'COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_CHANGE' ); ?>

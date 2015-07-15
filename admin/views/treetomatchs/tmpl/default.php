@@ -19,7 +19,7 @@ JToolBarHelper::help('screen.joomleague',true);
 			<?php
 			$colspan= 9;
 			?>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="5" style="vertical-align: top; "><?php echo count($this->match).'/'.$this->pagination->total; ?></th>

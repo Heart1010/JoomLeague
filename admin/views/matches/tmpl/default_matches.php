@@ -24,7 +24,7 @@ fieldset button {
 			<?php
 			$colspan=($this->projectws->allow_add_time) ? 16 : 15;
 			?>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="5" ><?php echo count($this->matches).'/'.$this->pagination->total; ?></th>

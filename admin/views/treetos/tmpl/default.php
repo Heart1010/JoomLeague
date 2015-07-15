@@ -3,14 +3,15 @@
 //JHtml::script('JL_matchdetailsediting.js?v='.$version,'administrator/components/com_joomleague/assets/js/');
 JHtml::_('behavior.tooltip');
 ?>
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
 <div id="editcell">
 	<fieldset class="adminform">
 		<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_TREETOS_TITLE','<i>','<i>'.$this->projectws->name.'</i>'); ?></legend>
-		<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+		
 			<?php
 			$colspan= 11;
 			?>
-			<table class='adminlist' border='0'>
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="5" style="vertical-align: top; "><?php echo count($this->items).'/'.$this->pagination->total; ?></th>

@@ -17,7 +17,7 @@ JHtml::_('behavior.tooltip');
 	<div id="editcell">
 		<fieldset class="adminform">
 			<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_P_POSITION_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>

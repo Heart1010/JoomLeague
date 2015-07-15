@@ -15,7 +15,7 @@
 				echo JHtml::_('form.token')."\n";
 				$date = new JDate($this->roundws->round_date_first, new DateTimeZone($this->projectws->timezone));
 				?>
-				<table class="adminlist">
+				<table class="adminlist table table-striped">
 					<thead>
 						<tr>
 							<th class="nowrap"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCHES_MASSADD_MULTI'); ?></th>

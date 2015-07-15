@@ -17,7 +17,7 @@
 					'startTransition' => true,
 					true));
 			$ret .= JHtml::_('sliders.panel', JText::_($key), 'slider'.($iSlider++));
-			$ret .= '<table class="adminlist"><tr><td>'.$value.'</td></tr></table>';
+			$ret .= '<table class="adminlist table table-striped"><tr><td>'.$value.'</td></tr></table>';
 			$ret .= JHtml::_('sliders.end');
 			echo $ret;
 		}

@@ -7,7 +7,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 	<legend>
 		<?php echo $this->teams->team1; ?>
 	</legend>
-	<table class="adminlist">
+	<table class="adminlist table table-striped">
 		<thead>
 			<tr>
 				<th style="text-align: left; width: 10px;"></th>

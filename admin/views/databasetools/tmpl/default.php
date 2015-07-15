@@ -4,7 +4,7 @@ JHtml::_( 'behavior.tooltip' );
 ?>
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
 	<div id="editcell">
-		<table class="adminlist">
+		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th class="title" class="nowrap">

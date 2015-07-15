@@ -42,7 +42,7 @@ JHtml::_('behavior.tooltip');
 	</div>
 	<div style="clear: both;"></div>
 	<div id="editcell">
-		<table class="adminlist">
+		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>

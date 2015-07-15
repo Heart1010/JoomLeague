@@ -11,7 +11,7 @@ echo JHtml::script('JL_eventsediting.js?v='.$version,'administrator/components/c
 	<div class="col50">
 		<fieldset class="adminform">
 			<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_P_POSITION_EDIT_LEGEND','<i>'.$this->projectws->name.'</i>');?></legend>
-			<table class="adminlist">
+			<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_P_POSITION_EDIT_AVAILABLE'); ?></th>
