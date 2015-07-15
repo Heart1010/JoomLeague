@@ -160,6 +160,7 @@ class JoomleagueController extends JLGControllerAdmin
 		}
 
 	}
+	
 }
 
 /**

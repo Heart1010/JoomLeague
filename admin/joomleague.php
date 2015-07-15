@@ -31,5 +31,6 @@ require_once JLG_PATH_ADMIN.DS.'helpers'.DS.'jltoolbarhelper.php';
 require_once JLG_PATH_SITE .'/helpers/extensioncontroller.php';
 
 $controller	= JLGController::getInstance('joomleague');
-$controller->execute(JRequest::getCmd('task'));
+//$controller->execute(JRequest::getCmd('task'));
+$controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

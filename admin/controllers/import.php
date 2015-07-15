@@ -41,7 +41,10 @@ class JoomleagueControllerImport extends JoomleagueController {
 		$this->registerTask ( 'csvplaygroundimport', 'dispatch' );
 	}
 	public function dispatch() {
-		switch ($this->getTask ()) {
+		
+		$task = $this->getTask();
+	
+		switch ($task) {
 			case 'csvseasonimport' :
 				{
 					$table = "Season";

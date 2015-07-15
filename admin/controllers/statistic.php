@@ -43,7 +43,10 @@ class JoomleagueControllerStatistic extends JoomleagueController
 		$mainframe 		= JFactory::getApplication();
 		$sports_type	= JRequest::getInt('filter_sports_type',0);
 		$mainframe->setUserState($option.'.statistics.filter_sports_type',$sports_type);
-		switch($this->getTask())
+		
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'add'	 :
 			{
@@ -96,7 +99,9 @@ class JoomleagueControllerStatistic extends JoomleagueController
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
 
-		if ($this->getTask() == 'save')
+		$task = $this->getTask();
+		
+		if ($task == 'save')
 		{
 			$link = 'index.php?option=com_joomleague&view=statistics&task=statistic.display';
 		}
@@ -120,7 +125,9 @@ class JoomleagueControllerStatistic extends JoomleagueController
 
 		$model = $this->getModel('statistic');
 
-		if ($this->getTask() == 'fulldelete')
+		$task = $this->getTask();
+		
+		if ($task == 'fulldelete')
 		{
 			if(!$model->fulldelete($cid)) {
 				$this->setRedirect('index.php?option=com_joomleague&view=statistics&task=statistic.display', $model->getError(), 'error');

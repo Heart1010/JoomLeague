@@ -46,7 +46,7 @@ JTable::addIncludePath(JLG_PATH_ADMIN.DS.'tables');
 
 require_once JLG_PATH_ADMIN.DS.'helpers'.DS.'plugins.php';
 
-$task = JRequest::getCmd('task');
+$task = JFactory::getApplication()->input->get('task');
 $option = JRequest::getCmd('option');
 if($task != '' && $option == 'com_joomleague')  {
 	if (!JFactory::getUser()->authorise($task, 'com_joomleague')) {

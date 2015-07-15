@@ -62,7 +62,9 @@ class JoomleagueControllerMatch extends JoomleagueController
 		$roundws->setId($app->getUserState($option.'round_id'));
 		$view->setModel($roundws);
 
-		switch ($this->getTask())
+		$task = $this->getTask();
+		
+		switch ($task)
 		{
 			case 'add'		:	{
 				JRequest::setVar('hidemainmenu',JRequest::getVar('hidemainmenu',1));

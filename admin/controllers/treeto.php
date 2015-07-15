@@ -47,8 +47,10 @@ class JoomleagueControllerTreeto extends JoomleagueController
 		$projectws=$this->getModel('project');
 		$projectws->setId($mainframe->getUserState($option.'project',0));
 		$view->setModel($projectws);
-				
-		switch($this->getTask())
+
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'add':
 			{
@@ -175,7 +177,10 @@ class JoomleagueControllerTreeto extends JoomleagueController
 		}
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link='index.php?option=com_joomleague&view=treetos&task=treeto.display';
 		}

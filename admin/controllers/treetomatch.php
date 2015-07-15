@@ -59,7 +59,9 @@ class JoomleagueControllerTreetomatch extends JoomleagueController
 		$nodews->setId( $mainframe->getUserState( $option.'node_id') );
 		$view->setModel( $nodews );
 		
-		switch($this->getTask())
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'edit'	:
 			{

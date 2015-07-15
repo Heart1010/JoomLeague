@@ -38,7 +38,9 @@ class JoomleagueControllerJLXMLImport extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		switch ($this->getTask())
+		$task = $this->getTask();
+		
+		switch ($task)
 		{
 			case 'edit':
 				JRequest::setVar('hidemainmenu',0);

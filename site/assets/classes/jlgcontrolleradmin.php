@@ -85,7 +85,7 @@ class JLGControllerAdmin extends JControllerAdmin
 				return $result;
 			}
 		}
-
+		
 		// Still here ? Then the extension doesn't override this, use regular view
 		return parent::createView($name, $prefix, $type, $config);
 	}

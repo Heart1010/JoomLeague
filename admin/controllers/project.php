@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL,see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License,and as distributed it includes or
@@ -25,15 +25,16 @@ class JoomleagueControllerProject extends JoomleagueController
 {
 	protected $view_list = 'projects';
 	
-	public function __construct()
+	public function __construct($config = array())
 	{
-		parent::__construct();
+		parent::__construct($config);
+	
 		// Register Extra tasks
 		$this->registerTask('add','display');
-		$this->registerTask('edit','display');
-		$this->registerTask('apply','save');
+	 	$this->registerTask('edit','display');
+		$this->registerTask('apply','save');	
 	}
-
+	
 	public function display($cachable = false, $urlparams = false)
 	{
 		$option = JRequest::getCmd('option');
@@ -42,7 +43,6 @@ class JoomleagueControllerProject extends JoomleagueController
 		$season			= JRequest::getInt('filter_season',0);
 		$mainframe->setUserState($option.'.projects.filter_sports_type', $sports_type);
 		$mainframe->setUserState($option.'.projects.filter_season', $season);
-
 		$document = JFactory::getDocument();
 		$model=$this->getModel('project');
 		$viewType=$document->getType();
@@ -50,7 +50,9 @@ class JoomleagueControllerProject extends JoomleagueController
 		$view->setModel($model,true);	// true is for the default model;
 		$view->setLayout('form');
 		
-		switch($this->getTask())
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'add'	:
 			{
@@ -87,6 +89,8 @@ class JoomleagueControllerProject extends JoomleagueController
 				JRequest::setVar('copy',true);
 			} break;
 		}
+		
+	
 		parent::display($cachable = false, $urlparams = false);
 	}
 
@@ -495,7 +499,10 @@ class JoomleagueControllerProject extends JoomleagueController
 
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link='index.php?option=com_joomleague&view=projects&task=project.display';
 		}

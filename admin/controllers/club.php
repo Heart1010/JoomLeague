@@ -37,7 +37,9 @@ class JoomleagueControllerClub extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		switch($this->getTask())
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'add'     :
 				{
@@ -97,7 +99,10 @@ class JoomleagueControllerClub extends JoomleagueController
 		}
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link='index.php?option=com_joomleague&view=clubs&club.display';
 		}

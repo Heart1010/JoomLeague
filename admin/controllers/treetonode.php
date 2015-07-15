@@ -54,7 +54,9 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 		$treetows->setId( $mainframe->getUserState( $option.'treeto_id') );
 		$view->setModel( $treetows );
 		
-		switch($this->getTask())
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'edit'	:
 			{
@@ -196,7 +198,10 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 		}
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link='index.php?option=com_joomleague&view=treetonodes&task=treetonode.display';
 		}

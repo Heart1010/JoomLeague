@@ -245,7 +245,10 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link = 'index.php?option=com_joomleague&view=projectteams&task=projectteam.display';
 		}

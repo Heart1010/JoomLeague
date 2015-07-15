@@ -49,7 +49,9 @@ class JoomleagueControllerRound extends JoomleagueController
 		$projectws->setId($mainframe->getUserState($option.'project',0));
 		$view->setModel($projectws);
 
-		switch($this->getTask())
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'add':
 			{
@@ -148,7 +150,10 @@ class JoomleagueControllerRound extends JoomleagueController
 		}
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link='index.php?option=com_joomleague&view=rounds&task=round.display';
 		}

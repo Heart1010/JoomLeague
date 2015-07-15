@@ -53,7 +53,9 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 		$teamws->setId($mainframe->getUserState($option.'project_team_id',0));
 		$view->setModel($teamws);
 
-		switch($this->getTask())
+		$task = $this->getTask();
+		
+		switch($task)
 		{
 			case 'add'	 :
 				{
@@ -163,7 +165,10 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 		}
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
-		if ($this->getTask()=='save')
+		
+		$task = $this->getTask();
+		
+		if ($task=='save')
 		{
 			$link='index.php?option=com_joomleague&view=teamstaffs&task=teamstaff.display';
 		}
