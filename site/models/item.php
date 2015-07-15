@@ -117,7 +117,7 @@ class JoomleagueModelItem extends JModelAdmin
 	{
 		if ( $table == '')
 		{
-			$row =& $this->getTable();
+			$row = $this->getTable();
 		}
 		else
 		{
@@ -169,7 +169,7 @@ class JoomleagueModelItem extends JModelAdmin
 	 */
 	function move( $direction )
 	{
-		$row =& $this->getTable();
+		$row = $this->getTable();
 		if ( !$row->load( $this->_id ) )
 		{
 			$this->setError( $this->_db->getErrorMsg() );

@@ -193,7 +193,7 @@ class JoomleagueModelProjectposition extends JoomleagueModelList
 		{
 			foreach($results as $result)
 			{
-				$p_position =& $this->getTable();
+				$p_position = $this->getTable();
 				$p_position->bind($result);
 				$p_position->set('id',NULL);
 				$p_position->set('project_id',$project_id);

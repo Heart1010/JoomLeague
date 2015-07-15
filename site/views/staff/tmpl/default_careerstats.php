@@ -29,7 +29,7 @@
 				$k=0;
 				$career=array();
 				$career['played']=0;
-				$mod =& JLGModel::getInstance('Staff','JoomleagueModel');
+				$mod = JLGModel::getInstance('Staff','JoomleagueModel');
 				if (count($this->history) > 0)
 				{
 					foreach ($this->history as $player_hist)

@@ -72,7 +72,7 @@ if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 					$k=0;
 					for ($i=0,$n=count($this->matchday); $i < $n; $i++)
 					{
-						$row =& $this->matchday[$i];
+						$row = $this->matchday[$i];
 						$link1=JRoute::_('index.php?option=com_joomleague&task=round.edit&cid[]='.$row->id);
 						$link2=JRoute::_('index.php?option=com_joomleague&view=matches&task=match.display&rid[]='.$row->id);
 						$checked=JHtml::_('grid.checkedout',$row,$i);

@@ -53,7 +53,7 @@ class JoomleagueViewProjectReferee extends JLGView
 		//build the html select list for positions
 		$refereepositions=array();
 		$refereepositions[]=JHtml::_('select.option',	'0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_REF_POS'));
-		if ($res=& $model->getRefereePositions())
+		if ($res= $model->getRefereePositions())
 		{
 			$refereepositions=array_merge($refereepositions,$res);
 		}

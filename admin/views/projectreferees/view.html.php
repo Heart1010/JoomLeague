@@ -77,7 +77,7 @@ class JoomleagueViewProjectReferees extends JLGView
 		$ress=array();
 		$res1=array();
 		$notusedplayers=array();
-		if ($ress =& $model->getProjectPlayers())
+		if ($ress = $model->getProjectPlayers())
 		{
 			foreach ($ress1 as $res1)
 			{

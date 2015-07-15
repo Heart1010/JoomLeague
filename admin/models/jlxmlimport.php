@@ -1131,7 +1131,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			}
 			else
 			{
-				$p_sportstype =& $this->getTable('sportstype');
+				$p_sportstype = $this->getTable('sportstype');
 				$p_sportstype->set('name',trim($this->_sportstype_new));
 
 				if ($p_sportstype->store()===false)
@@ -1182,7 +1182,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			}
 			else
 			{
-				$p_league =& $this->getTable('league');
+				$p_league = $this->getTable('league');
 				$p_league->set('name',trim($this->_league_new));
 				$p_league->set('alias',JFilterOutput::stringURLSafe($this->_league_new));
 				//$p_league->set('country',$this->_league_new_country);
@@ -1235,7 +1235,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			}
 			else
 			{
-				$p_season =& $this->getTable('season');
+				$p_season = $this->getTable('season');
 				$p_season->set('name',trim($this->_season_new));
 				$p_season->set('alias',JFilterOutput::stringURLSafe($this->_season_new));
 
@@ -1295,7 +1295,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			foreach ($this->_neweventsid AS $key => $id)
 			{
 				if(!isset($this->_neweventsname[$key])) continue;
- 				$p_eventtype =& $this->getTable('eventtype');
+ 				$p_eventtype = $this->getTable('eventtype');
 				$import_event=$this->_datas['event'][$key];
 				$oldID=$this->_getDataFromObject($import_event,'id');
 				$alias=$this->_getDataFromObject($import_event,'alias');
@@ -1373,7 +1373,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			foreach ($this->_newstatisticsid AS $key => $id)
 			{
 				if(!isset($this->_newstatisticsname[$key])) continue;
-				$p_statistic =&  $this->getTable('statistic');
+				$p_statistic =  $this->getTable('statistic');
 				$import_statistic=$this->_datas['statistic'][$key];
 				$oldID=$this->_getDataFromObject($import_statistic,'id');
 				$alias=$this->_getDataFromObject($import_statistic,'alias');
@@ -1453,7 +1453,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			foreach ($this->_newparentpositionsid AS $key => $id)
 			{
 				if(!isset($this->_newparentpositionsname[$key])) continue;
-				$p_position =&  $this->getTable('position');
+				$p_position =  $this->getTable('position');
 				$import_position=$this->_datas['parentposition'][$key];
 				$oldID=$this->_getDataFromObject($import_position,'id');
 				$alias=$this->_getDataFromObject($import_position,'alias');					
@@ -1532,7 +1532,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			foreach ($this->_newpositionsid AS $key => $id)
 			{
 				if(!isset($this->_newpositionsname[$key])) continue;
-				$p_position =&  $this->getTable('position');
+				$p_position = $this->getTable('position');
 				$import_position=$this->_datas['position'][$key];
 				$oldID=$this->_getDataFromObject($import_position,'id');
 				$alias=$this->_getDataFromObject($import_position,'alias');
@@ -1612,7 +1612,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			$import_positioneventtype=$this->_datas['positioneventtype'][$key];
 			$oldID=$this->_getDataFromObject($import_positioneventtype,'id');
-			$p_positioneventtype =& $this->getTable('positioneventtype');
+			$p_positioneventtype = $this->getTable('positioneventtype');
 			$oldEventID=$this->_getDataFromObject($import_positioneventtype,'eventtype_id');
 			$oldPositionID=$this->_getDataFromObject($import_positioneventtype,'position_id');
 			if (!isset($this->_convertEventID[$oldEventID]) ||
@@ -1690,7 +1690,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			foreach ($this->_newplaygroundid AS $key => $id)
 			{
 				if(!isset($this->_newplaygroundname[$key])) continue;
-				$p_playground =&  $this->getTable('playground');
+				$p_playground = $this->getTable('playground');
 				$import_playground=$this->_datas['playground'][$key];
 				$oldID=$this->_getDataFromObject($import_playground,'id');
 				$alias=$this->_getDataFromObject($import_playground,'alias');
@@ -1797,7 +1797,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 					// diddipoeler
 					// update clubdata
-					$p_club =& $this->getTable('club');
+					$p_club = $this->getTable('club');
 					$p_club->set('id',$id);
 					$p_club->set('address', (string) $this->_datas['club'][$key]->address ); 
 					$p_club->set('zipcode',(string) $this->_datas['club'][$key]->zipcode); 
@@ -1846,7 +1846,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_newclubsid AS $key => $id)
 			{
-				$p_club =& $this->getTable('club');
+				$p_club = $this->getTable('club');
 				foreach ($this->_datas['club'] AS $dClub)
 				{
 					if ($dClub->id == $id)
@@ -2012,7 +2012,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_newteams AS $key => $value)
 			{
-				$p_team =& $this->getTable('team');
+				$p_team = $this->getTable('team');
                 if(!isset($this->_datas['team'][$key]) || !isset($this->_newteamsmiddle[$key])) continue;
 				$import_team=$this->_datas['team'][$key];
 				$oldID=$this->_getDataFromObject($import_team,'id');
@@ -2138,7 +2138,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_newpersonsid AS $key => $id)
 			{
-				$p_person =&  $this->getTable('person');
+				$p_person =  $this->getTable('person');
 				$import_person=$this->_datas['person'][$key];
 				$oldID=$this->_getDataFromObject($import_person,'id');
 				if(isset($this->_newperson_lastname[$key])) {
@@ -2261,7 +2261,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	private function _importProject()
 	{
 		$my_text='';
-		$p_project =& $this->getTable('project');
+		$p_project = $this->getTable('project');
 		$p_project->set('name',trim($this->_name));
 		$p_project->set('alias',JFilterOutput::stringURLSafe(trim($this->_name)));
 		$p_project->set('league_id',$this->_league_id);
@@ -2430,7 +2430,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			$rows=$this->_db->loadObjectList();
 			foreach ($rows AS $row)
 			{
-				$p_template =& $this->getTable('template');
+				$p_template = $this->getTable('template');
 				$p_template->load($row->id);
 				$p_template->set('project_id',$this->_project_id);
 				if ($p_template->store()===false)
@@ -2456,7 +2456,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			{
 				foreach ($this->_datas['template'] as $value)
 				{
-					$p_template =& $this->getTable('template');
+					$p_template = $this->getTable('template');
 					$template=$this->_getDataFromObject($value,'template');
 					$p_template->set('template',$template);
 					//actually func is unused in 1.5.0
@@ -2514,7 +2514,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_datas['division'] as $key => $division)
 			{
-				$p_division =&  $this->getTable('division');
+				$p_division =  $this->getTable('division');
 				$oldId=(int)$division->id;
 				$p_division->set('project_id',$this->_project_id);
 				if ($division->id ==$this->_datas['division'][$key]->id)
@@ -2567,7 +2567,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 		foreach ($this->_datas['projectteam'] as $key => $projectteam)
 		{
-			$p_projectteam =& $this->getTable('projectteam');
+			$p_projectteam = $this->getTable('projectteam');
 			$import_projectteam=$this->_datas['projectteam'][$key];
 			$oldID=$this->_getDataFromObject($import_projectteam,'id');
 			$p_projectteam->set('project_id',$this->_project_id);
@@ -2655,7 +2655,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			}
 			$import_projectreferee=$this->_datas['projectreferee'][$key];
 			$oldID=$this->_getDataFromObject($import_projectreferee,'id');
-			$p_projectreferee =& $this->getTable('projectreferee');
+			$p_projectreferee = $this->getTable('projectreferee');
 
 			$p_projectreferee->set('project_id',$this->_project_id);
 			$p_projectreferee->set('person_id',$this->_convertPersonID[$this->_getDataFromObject($import_projectreferee,'person_id')]);
@@ -2701,7 +2701,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			$import_projectposition=$this->_datas['projectposition'][$key];
 			$oldID=$this->_getDataFromObject($import_projectposition,'id');
-			$p_projectposition =&  $this->getTable('projectposition');
+			$p_projectposition =  $this->getTable('projectposition');
 			$p_projectposition->set('project_id',$this->_project_id);
 			$oldPositionID=$this->_getDataFromObject($import_projectposition,'position_id');
 			if (!isset($this->_convertPositionID[$oldPositionID]))
@@ -2747,7 +2747,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 		foreach ($this->_datas['teamplayer'] as $key => $teamplayer)
 		{
-			$p_teamplayer =& $this->getTable('teamplayer');
+			$p_teamplayer = $this->getTable('teamplayer');
 			$import_teamplayer=$this->_datas['teamplayer'][$key];
 			$oldID=$this->_getDataFromObject($import_teamplayer,'id');
 			$oldTeamID=$this->_getDataFromObject($import_teamplayer,'projectteam_id');
@@ -2849,7 +2849,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 		foreach ($this->_datas['teamstaff'] as $key => $teamstaff)
 		{
-			$p_teamstaff =&  $this->getTable('teamstaff');
+			$p_teamstaff =  $this->getTable('teamstaff');
 			$import_teamstaff=$this->_datas['teamstaff'][$key];
 			$oldID=$this->_getDataFromObject($import_teamstaff,'id');
 			$oldProjectTeamID=$this->_getDataFromObject($import_teamstaff,'projectteam_id');
@@ -2945,7 +2945,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 		foreach ($this->_datas['teamtraining'] as $key => $teamtraining)
 		{
-			$p_teamtraining =& $this->getTable('teamtrainingdata');
+			$p_teamtraining = $this->getTable('teamtrainingdata');
 			$import_teamtraining=$this->_datas['teamtraining'][$key];
 			$oldID=$this->_getDataFromObject($import_teamtraining,'id');
 
@@ -2987,7 +2987,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 		foreach ($this->_datas['round'] as $key => $round)
 		{
-			$p_round =& $this->getTable('round');
+			$p_round = $this->getTable('round');
 			$oldId=(int)$round->id;
 			$name=trim($this->_getDataFromObject($round,'name'));
 			$alias=trim($this->_getDataFromObject($round,'alias'));
@@ -3047,7 +3047,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 		foreach ($this->_datas['match'] as $key => $match)
 		{
-			$p_match =& $this->getTable('match');
+			$p_match = $this->getTable('match');
 			$oldId=(int)$match->id;
 			if ($this->import_version=='NEW')
 			{
@@ -3316,7 +3316,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			$import_matchplayer=$this->_datas['matchplayer'][$key];
 			$oldID=$this->_getDataFromObject($import_matchplayer,'id');
-			$p_matchplayer =& $this->getTable('matchplayer');
+			$p_matchplayer = $this->getTable('matchplayer');
 			$oldMatchID=$this->_getDataFromObject($import_matchplayer,'match_id');
 			$oldTeamPlayerID=$this->_getDataFromObject($import_matchplayer,'teamplayer_id');
 			if (!isset($this->_convertMatchID[$oldMatchID]) ||
@@ -3389,7 +3389,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			$import_matchstaff=$this->_datas['matchstaff'][$key];
 			$oldID=$this->_getDataFromObject($import_matchstaff,'id');
-			$p_matchstaff =& $this->getTable('matchstaff');
+			$p_matchstaff = $this->getTable('matchstaff');
 			$oldMatchID=$this->_getDataFromObject($import_matchstaff,'match_id');
 			$oldTeamStaffID=$this->_getDataFromObject($import_matchstaff,'team_staff_id');
 			if (!isset($this->_convertMatchID[$oldMatchID]) ||
@@ -3450,7 +3450,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			$import_matchreferee=$this->_datas['matchreferee'][$key];
 			$oldID=$this->_getDataFromObject($import_matchreferee,'id');
-			$p_matchreferee =& $this->getTable('matchreferee');
+			$p_matchreferee = $this->getTable('matchreferee');
 			$oldMatchID=$this->_getDataFromObject($import_matchreferee,'match_id');
 			$oldProjectRefereeID=$this->_getDataFromObject($import_matchreferee,'project_referee_id');
 			if (!isset($this->_convertMatchID[$oldMatchID]) ||
@@ -3515,7 +3515,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			$import_matchevent=$this->_datas['matchevent'][$key];
 			$oldID=$this->_getDataFromObject($import_matchevent,'id');
 
-			$p_matchevent =& $this->getTable('matchevent');
+			$p_matchevent = $this->getTable('matchevent');
             if(!isset($this->_convertMatchID[$this->_getDataFromObject($import_matchevent,'match_id')]) ||
                !isset($this->_convertProjectTeamID[$this->_getDataFromObject($import_matchevent,'projectteam_id')]) ||
                !isset($this->_convertTeamPlayerID[$this->_getDataFromObject($import_matchevent,'teamplayer_id')]))
@@ -3607,7 +3607,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			$import_positionstatistic=$this->_datas['positionstatistic'][$key];
 			$oldID=$this->_getDataFromObject($import_positionstatistic,'id');
 
-			$p_positionstatistic =& $this->getTable('positionstatistic');
+			$p_positionstatistic = $this->getTable('positionstatistic');
 
 			$p_positionstatistic->set('position_id',$this->_convertPositionID[$this->_getDataFromObject($import_positionstatistic,'position_id')]);
 			$p_positionstatistic->set('statistic_id',$this->_convertStatisticID[$this->_getDataFromObject($import_positionstatistic,'statistic_id')]);
@@ -3695,7 +3695,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			$import_matchstaffstatistic=$this->_datas['matchstaffstatistic'][$key];
 			$oldID=$this->_getDataFromObject($import_matchstaffstatistic,'id');
 
-			$p_matchstaffstatistic =& $this->getTable('matchstaffstatistic');
+			$p_matchstaffstatistic = $this->getTable('matchstaffstatistic');
 
 			$p_matchstaffstatistic->set('match_id',$this->_convertMatchID[$this->_getDataFromObject($import_matchstaffstatistic,'match_id')]);
 			$p_matchstaffstatistic->set('projectteam_id',$this->_convertProjectTeamID[$this->_getDataFromObject($import_matchstaffstatistic,'projectteam_id')]);
@@ -3774,7 +3774,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			$import_matchstatistic=$this->_datas['matchstatistic'][$key];
 			$oldID=$this->_getDataFromObject($import_matchstatistic,'id');
 
-			$p_matchstatistic =& $this->getTable('matchstatistic');
+			$p_matchstatistic = $this->getTable('matchstatistic');
 
 			$p_matchstatistic->set('match_id',$this->_convertMatchID[$this->_getDataFromObject($import_matchstatistic,'match_id')]);
 			$p_matchstatistic->set('projectteam_id',$this->_convertProjectTeamID[$this->_getDataFromObject($import_matchstatistic,'projectteam_id')]);
@@ -3816,7 +3816,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_datas['treeto'] as $key => $treeto)
 			{
-				$p_treeto =&  $this->getTable('treeto');
+				$p_treeto =  $this->getTable('treeto');
 				$oldId=(int)$treeto->id;
 				$p_treeto->set('project_id',$this->_project_id);
 				if ($treeto->id ==$this->_datas['treeto'][$key]->id)
@@ -3873,7 +3873,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_datas['treetonode'] as $key => $treetonode)
 			{
-				$p_treetonode =&  $this->getTable('treetonode');
+				$p_treetonode =  $this->getTable('treetonode');
 				$oldId=(int)$treetonode->id;
 				if ($treetonode->id ==$this->_datas['treetonode'][$key]->id)
 				{
@@ -3921,7 +3921,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		{
 			foreach ($this->_datas['treetomatch'] as $key => $treetomatch)
 			{
-				$p_treetomatch =&  $this->getTable('treetomatch');
+				$p_treetomatch =  $this->getTable('treetomatch');
 				$oldId=(int)$treetomatch->id;
 				if ($treetomatch->id ==$this->_datas['treetomatch'][$key]->id)
 				{

@@ -193,7 +193,7 @@ class JoomleagueModelTeamStaff extends JoomleagueModelItem
 		{
 			foreach($results as $result)
 			{
-				$p_teamstaff =& $this->getTable();
+				$p_teamstaff = $this->getTable();
 				$p_teamstaff->bind($result);
 				$p_teamstaff->set('id',NULL);
 				$p_teamstaff->set('projectteam_id',$to_projectteam_id);

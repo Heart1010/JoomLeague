@@ -20,7 +20,7 @@ JHtml::_('behavior.tooltip');
 		$k=0;
 		for ($i=0, $n=count($this->updateFiles); $i < $n; $i++)
 		{
-			$row =& $this->updateFiles[$i];
+			$row = $this->updateFiles[$i];
 			$link=JRoute::_('index.php?option=com_joomleague&view=updates&task=update.save&file_name='.$row['file_name']);
 			?>
 			<tr class="<?php echo "row$k"; ?>">

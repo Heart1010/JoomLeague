@@ -340,7 +340,7 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	{
 		$result = '';
 		$configvalues = array();
-		$project =& $this->getData();
+		$project = $this->getData();
 
 		// load template param associated to project, or to master template if none find.
 		$query =	"	SELECT params

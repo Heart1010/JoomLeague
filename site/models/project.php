@@ -817,7 +817,7 @@ class JoomleagueModelProject extends JModel
 		if (empty($this->_stats))
 		{
 			require_once (JLG_PATH_ADMIN .DS.'statistics'.DS.'base.php');
-			$project =& $this->getProject();
+			$project = $this->getProject();
 			$project_id=$project->id;
 			$query='	SELECT	stat.id,
 								stat.name,
@@ -855,7 +855,7 @@ class JoomleagueModelProject extends JModel
 			{
 				if (!$statid || $statid == $row->id || (is_array($statid) && in_array($row->id, $statid)))
 				{
-					$stat=&JLGStatistic::getInstance($row->class);
+					$stat=JLGStatistic::getInstance($row->class);
 					$stat->bind($row);
 					$stat->set('position_id',$row->position_id);
 					$stats[$row->position_id][$row->id]=$stat;
@@ -931,7 +931,7 @@ class JoomleagueModelProject extends JModel
 	{
 		if ($table=='')
 		{
-			$row =& $this->getTable();
+			$row = $this->getTable();
 		}
 		else
 		{

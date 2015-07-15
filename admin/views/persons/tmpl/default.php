@@ -114,7 +114,7 @@ jimport('joomla.filesystem.file');
 				$k=0;
 				for ($i=0,$n=count($this->items); $i < $n; $i++)
 				{
-					$row=&$this->items[$i];
+					$row=$this->items[$i];
 					if (($row->firstname != '!Unknown') && ($row->lastname != '!Player')) // Ghostplayer for match-events
 					{
 						$link       = JRoute::_('index.php?option=com_joomleague&task=person.edit&cid[]='.$row->id);

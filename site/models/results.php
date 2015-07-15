@@ -57,7 +57,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		$division=null;
 		if ($this->divisionid > 0)
 		{
-			$division =& $this->getTable('Division','Table');
+			$division = $this->getTable('Division','Table');
 			$division->load($this->divisionid);
 		}
 

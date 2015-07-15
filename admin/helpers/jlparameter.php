@@ -46,7 +46,7 @@ class JLParameter extends JRegistry
 
 			if ( $xml->loadFile( $path ) )
 			{
-				if ( $params =& $xml->document->params )
+				if ( $params = $xml->document->params )
 				{
 					foreach ( $params as $param )
 					{
@@ -55,12 +55,12 @@ class JLParameter extends JRegistry
 					}
 				}
 
-				if ( $name =& $xml->document->name )
+				if ( $name = $xml->document->name )
 				{
 					$this->name = JText::_( $name[0]->_data );
 				}
 
-				if ( $description =& $xml->document->description )
+				if ( $description = $xml->document->description )
 				{
 					$this->description = JText::_( $description[0]->_data );
 				}

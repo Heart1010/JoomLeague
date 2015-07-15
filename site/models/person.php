@@ -187,10 +187,10 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 		$rounds = array();
 		if ( count( $rows ) > 0 )
 		{
-			$startround =& $this->getTable( 'Round', 'Table' );
+			$startround = $this->getTable( 'Round', 'Table' );
 			$startround->load( $rows[0] );
 			$rounds[0] = $startround;
-			$endround =& $this->getTable( 'Round', 'Table' );
+			$endround = $this->getTable( 'Round', 'Table' );
 			$endround->load( end( $rows ) );
 			$rounds[1] = $endround;
 		}

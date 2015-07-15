@@ -310,7 +310,7 @@ class JoomleagueModelTeamStaffs extends JoomleagueModelList
 		$count=0;
 		foreach ($cids as $cid)
 		{
-			$object=&$this->getTable('teamstaff');
+			$object=$this->getTable('teamstaff');
 			if ($object->canDelete($cid) && $object->delete($cid))
 			{
 				$count++;

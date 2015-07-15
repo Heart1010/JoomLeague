@@ -66,7 +66,7 @@ class JoomleagueControllerPerson extends JoomleagueController
 			$post['deathday'] = JoomleagueHelper::convertDate( $post['deathday'], 0 );
 			
 			$model = $this->getModel('person');
-			$params =& JComponentHelper::getParams('com_joomleague');
+			$params = JComponentHelper::getParams('com_joomleague');
 			
 			// Save methode des models benutzen
 			if( $model->store($post, 'Person') )

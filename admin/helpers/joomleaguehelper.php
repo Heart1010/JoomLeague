@@ -213,14 +213,14 @@ class JoomleagueHelper
 		$option = JRequest::getCmd('option');
 		if (!$project_id)
 		{
-			$app=&JFactory::getApplication();
+			$app=JFactory::getApplication();
 			$project_id=$app->getUserState($option.'project',0);
 		}
 		if (!$project_id){
 			return false;
 		}
 
-		$db=&JFactory::getDbo();
+		$db=JFactory::getDbo();
 		$query='SELECT extension FROM #__joomleague_project WHERE id='. $db->Quote((int)$project_id);
 		$db->setQuery($query);
 		$res=$db->loadResult();
@@ -681,7 +681,7 @@ class JoomleagueHelper
 			else
 			{
 				// Otherwise use user timezone for display, and if not set use the project timezone
-				$user =& JFactory::getUser();
+				$user = JFactory::getUser();
 	 			$timezone = $user->getParam('timezone', $match->timezone);
 			}
 

@@ -117,7 +117,7 @@ if(!class_exists('JoomleagueModelItem')) {
 		{
 			if ($table=='')
 			{
-				$row =& $this->getTable();
+				$row = $this->getTable();
 			}
 			else
 			{
@@ -167,7 +167,7 @@ if(!class_exists('JoomleagueModelItem')) {
 		 */
 		function move($direction)
 		{
-			$row =& $this->getTable($this->getName());
+			$row = $this->getTable($this->getName());
 			if (!$row->load($this->_id))
 			{
 				$this->setError($this->_db->getErrorMsg());
@@ -189,7 +189,7 @@ if(!class_exists('JoomleagueModelItem')) {
 		function getProject($id=0)
 		{
 			$option = JRequest::getCmd('option');
-			$mainframe=&JFactory::getApplication();
+			$mainframe=JFactory::getApplication();
 			if (!$id) {
 				$id=$mainframe->getUserState($option.'project',0);
 			}

@@ -113,7 +113,9 @@ class JoomleagueHelperHtml {
 	{
 		$output='';
 		if ($config['switch_home_guest']) {
-			$tmpteam =& $hometeam; $hometeam =& $guestteam; $guestteam =& $tmpteam;
+			$tmpteam = $hometeam; 
+			$hometeam = $guestteam; 
+			$guestteam = $tmpteam;
 		}
 		if	((isset($hometeam) && $hometeam->division_id > 0) && (isset($guestteam) && $guestteam->division_id > 0))
 		{

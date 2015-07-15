@@ -60,7 +60,7 @@ class JoomleagueViewCurve extends JLGView
 		foreach ($rounds as $r) {
 			$round_labels[] = $r->name;
 		}
-		$division	=& $this->get('division');
+		$division	= $this->get('division');
 		$data = $model->getDataByDivision($division->id);
 		//create a line
 		$length = (count($rounds)-0.5);

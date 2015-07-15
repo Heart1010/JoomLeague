@@ -96,7 +96,7 @@ class JoomleagueViewPersons extends JLGView
 		$project_name 	= $mdlProject->getProjectName($project_id);
 		$project_team_id = $mainframe->getUserState($option.'project_team_id');
 		$team_name = $model->getProjectTeamName($project_team_id);
-		$mdlQuickAdd =& JLGModel::getInstance('Quickadd','JoomleagueModel');
+		$mdlQuickAdd = JLGModel::getInstance('Quickadd','JoomleagueModel');
 
 		$filter_state		= $mainframe->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
 		$filter_order		= $mainframe->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering',	'cmd');

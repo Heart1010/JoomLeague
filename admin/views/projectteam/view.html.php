@@ -83,7 +83,7 @@ class JoomleagueViewProjectteam extends JLGView
 			//build the html options for divisions
 			$division[]=JHtml::_('select.option', '0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_DIVISION'));
 			$mdlDivisions = JModelLegacy::getInstance("divisions", "JoomLeagueModel");
-			if ($res =& $mdlDivisions->getDivisions($project_id)){
+			if ($res = $mdlDivisions->getDivisions($project_id)){
 				$division=array_merge($division,$res);
 			}
 			$lists['divisions']=$division;

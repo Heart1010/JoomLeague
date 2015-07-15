@@ -45,7 +45,7 @@ JHtml::_('behavior.tooltip');
 					$k=0;
 					for ($i=0, $n=count($this->templates); $i < $n; $i++)
 					{
-						$row =& $this->templates[$i];
+						$row = $this->templates[$i];
 						$link1=JRoute::_('index.php?option=com_joomleague&task=template.edit&cid[]='.$row->id);
 						$checked=JHtml::_('grid.checkedout',$row,$i);
 						?>

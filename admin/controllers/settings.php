@@ -154,7 +154,7 @@ class JoomleagueControllerSettings extends JoomleagueController
 		}
 		
 		$xmlfile = JPATH_ADMINISTRATOR.DS.'components'.DS.$data['option'].DS.'config.xml';
-		$form =& JForm::getInstance($data['option'], $xmlfile, array('control'=> 'params'), false, "/config");
+		$form = JForm::getInstance($data['option'], $xmlfile, array('control'=> 'params'), false, "/config");
 		$data['params'] = $model->validate($form, $params);
 		// Save the rules.
 		if (isset($data['params']['rules'])) {
@@ -218,5 +218,3 @@ class JoomleagueControllerSettings extends JoomleagueController
 		$this->setRedirect( 'index.php?option=com_joomleague&task=settings.display' );
 	}
 }
-
-?>

@@ -695,7 +695,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 		{
 			$result = $this->_db->loadAssocList();
 			$result[0]['object'] = 'ProjectTeam';
-			$this->_projectteam =& $result;
+			$this->_projectteam = $result;
 			return $result;
 		}
 		return false;
@@ -720,7 +720,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 		{
 			$result = $this->_db->loadAssocList();
 			$result[0]['object'] = 'ProjectPosition';
-			$this->_projectposition =& $result;
+			$this->_projectposition = $result;
 			return $result;
 		}
 		return false;
@@ -745,7 +745,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 		{
 			$result = $this->_db->loadAssocList();
 			$result[0]['object'] = 'ProjectReferee';
-			$this->_projectreferee =& $result;
+			$this->_projectreferee = $result;
 			return $result;
 		}
 		return false;
@@ -776,7 +776,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 			{
 				$result = $this->_db->loadAssocList();
 				$result[0]['object'] = 'JL_Team';
-				$this->_team =& $result;
+				$this->_team = $result;
 				return $result;
 			}
 			return false;

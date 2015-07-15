@@ -192,7 +192,7 @@ class JoomleagueModelProjects extends JoomleagueModelList
 				$this->_db->setQuery( $query );
 				$newprojectteam_id = $this->_db->loadResult();
 
-				$p_staff =& $this->getTable();
+				$p_staff = $this->getTable();
 				$p_staff->bind( $result );
 				$p_staff->set( 'teamstaff_id', NULL );
 				$p_staff->set( 'projectteam_id', $newprojectteam_id );

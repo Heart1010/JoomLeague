@@ -36,7 +36,7 @@ if (isset($this->teams) && count($this->teams) > 1) {
 				if(count($this->matches) >0) {
 					for ($i=0,$n=count($this->matches); $i < $n; $i++)
 					{
-						$row =& $this->matches[$i];
+						$row = $this->matches[$i];
 						if($row->projectteam1_id == $trow->value 
 							&& $row->projectteam2_id == $tcol->value
 						){

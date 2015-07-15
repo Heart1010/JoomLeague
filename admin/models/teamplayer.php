@@ -196,7 +196,7 @@ class JoomleagueModelTeamPlayer extends JoomleagueModelItem
 		{
 			foreach($results as $result)
 			{
-				$p_player =& $this->getTable();
+				$p_player = $this->getTable();
 				$p_player->bind($result);
 				$p_player->set('id',NULL);
 				$p_player->set('projectteam_id',$to_projectteam_id);

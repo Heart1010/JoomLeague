@@ -20,7 +20,7 @@
 			$k = 0;
 			for ( $i = 0, $n = count( $this->stafflist ); $i < $n; $i++ )
 			{
-				$row =& $this->stafflist[$i];
+				$row = $this->stafflist[$i];
 				?>
 				<tr class="<?php echo ($k == 0)? '' : 'sectiontableentry2'; ?>"></td><div class="mini-team-toggler">
 			<div class="short-team">

@@ -59,7 +59,7 @@ class JoomleagueControllerClubInfo extends JoomleagueController
 			$club = & JTable::getInstance( "Club", "Table" );
 			$club->load( $cid );
 			$club->bind( $post );
-			$params =& JComponentHelper::getParams('com_joomleague');
+			$params = JComponentHelper::getParams('com_joomleague');
 
 			if ( ( $club->store() ) &&
 			( $params->get('cfg_edit_club_info_update_notify') == "1" ) )

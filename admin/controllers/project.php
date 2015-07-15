@@ -487,7 +487,7 @@ class JoomleagueControllerProject extends JoomleagueController
 			
 			//	save the templates params
 			if ($post['id']==0){$post['id']=$id;}
-			$templatesModel =& JLGModel::getInstance('Templates','JoomleagueModel');
+			$templatesModel = JLGModel::getInstance('Templates','JoomleagueModel');
 			$templatesModel->setProjectId($post['id']);
 			$templatesModel->checklist();
 			$msg .= JText::_('COM_JOOMLEAGUE_PROJECT_SAVED');

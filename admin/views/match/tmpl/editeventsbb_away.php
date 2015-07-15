@@ -42,7 +42,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 			$model = $this->getModel();
 			for( $i=0 , $n = count( $this->awayRoster ); $i < $n; $i++ )
 			{
-					$row =& $this->awayRoster[$i];
+					$row = $this->awayRoster[$i];
 					if($row->value == 0) continue;
 					?>
 					<tr class="row<?php echo $k;?>">

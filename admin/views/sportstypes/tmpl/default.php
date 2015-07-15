@@ -58,7 +58,7 @@ JHtml::_('behavior.tooltip');
 				$k=0;
 				for ($i=0,$n=count($this->items); $i < $n; $i++)
 				{
-					$row =& $this->items[$i];
+					$row = $this->items[$i];
 					$link=JRoute::_('index.php?option=com_joomleague&task=sportstype.edit&cid[]='.$row->id);
 					$checked=JHtml::_('grid.checkedout',$row,$i);
 					?>

@@ -38,7 +38,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 			$tehp = 0;
 			for( $i=0 , $n = count( $this->homeRoster ); $i < $n; $i++ )
 			{
-					$row =& $this->homeRoster[$i];
+					$row = $this->homeRoster[$i];
 					if($row->value == 0) continue;
 					?>
 					<tr class="row<?php echo $k;?>">

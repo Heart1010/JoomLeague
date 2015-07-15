@@ -331,10 +331,10 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 		$rounds=array();
 		if (count($rows) > 0)
 		{
-			$startround =& $this->getTable('Round','Table');
+			$startround = $this->getTable('Round','Table');
 			$startround->load($rows[0]);
 			$rounds[0]=$startround;
-			$endround =& $this->getTable('Round','Table');
+			$endround = $this->getTable('Round','Table');
 			$endround->load(end($rows));
 			$rounds[1]=$endround;
 		}
@@ -348,7 +348,7 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 	 */
 	function getAllEvents($sportstype=0)
 	{
-		$history=&$this->getPlayerHistory($sportstype);
+		$history=$this->getPlayerHistory($sportstype);
 		$positionhistory=array();
 		foreach($history as $h)
 		{
@@ -494,7 +494,7 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 	function getStats($current_round=0, $personid=0)
 	{
 		$stats = array();
-		$players =& $this->getTeamPlayerByRound($current_round, $personid);
+		$players = $this->getTeamPlayerByRound($current_round, $personid);
 		if (is_array($players))
 		{
 			foreach ($players as $player)
@@ -556,7 +556,7 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 		{
 			foreach ($this->_careerStats as $k => $row)
 			{
-				$stat=&JLGStatistic::getInstance($row->class);
+				$stat=JLGStatistic::getInstance($row->class);
 				$stat->bind($row);
 				$stat->set('position_id',$row->position_id);
 				$stats[$row->id]=$stat;
@@ -575,7 +575,7 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 		$displaystats=array();
 		if (count($teamplayers))
 		{
-			$project =& $this->getProject();
+			$project = $this->getProject();
 			$project_id=$project->id;
 			// Determine teamplayer id(s) of the player (plural if (s)he played in multiple teams of the project
 			// and the position_id(s) where the player played
@@ -624,15 +624,15 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 	 */
 	function getPlayerStatsByProject($sportstype=0, $current_round=0, $playerid)
 	{
-		$teamplayer =& $this->getTeamPlayerByRound($current_round, $playerid);
+		$teamplayer = $this->getTeamPlayerByRound($current_round, $playerid);
 		$result=array();
 		if (is_array($teamplayer) && !empty($teamplayer))
 		{
 			// getTeamPlayer can return multiple teamplayers, because a player can be transferred from
 			// one team to another inside a season, but they are all the same person so have same person_id.
 			// So we get the player_id from the first array entry.
-			$stats  =& $this->getCareerStats($teamplayer[0]->person_id, $sportstype);
-			$history=& $this->getPlayerHistory($sportstype);
+			$stats  = $this->getCareerStats($teamplayer[0]->person_id, $sportstype);
+			$history= $this->getPlayerHistory($sportstype);
 			if(count($history)>0)
 			{
 				foreach ($stats as $stat)

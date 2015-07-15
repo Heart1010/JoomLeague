@@ -195,7 +195,7 @@ class JoomleagueModelDivision extends JoomleagueModelItem
 		{
 			foreach($results as $result)
 			{
-				$p_division =& $this->getTable();
+				$p_division = $this->getTable();
 				$p_division->bind($result);
 				$p_division->set('id', NULL);
 				$p_division->set('project_id', $project_id);
@@ -215,7 +215,7 @@ class JoomleagueModelDivision extends JoomleagueModelItem
 				{
 					foreach ($subs as $sub)
 					{
-						$p_subdiv =& $this->getTable();
+						$p_subdiv = $this->getTable();
 						$p_subdiv->bind($sub);
 						$p_subdiv->set('id', NULL);
 						$p_subdiv->set('project_id', $project_id);

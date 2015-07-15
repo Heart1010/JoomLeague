@@ -49,7 +49,7 @@ JHtml::_('behavior.tooltip');
 					$k=0;
 					for ($i=0,$n=count($this->items); $i < $n; $i++)
 					{
-						$row		=& $this->items[$i];
+						$row		= $this->items[$i];
 						$checked	= JHtml::_('grid.checkedout',$row,$i,'id');
 						$published	= JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','treeto.');
 					?>

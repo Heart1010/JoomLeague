@@ -57,10 +57,10 @@ window.addEvent('domready', function() {
 			</form>
 			<?php
 				$n		= 0;
-				$tabs	=& $this->tabs;
-				$link	=& $this->link;
-				$label	=& $this->label;
-				$limage	=& $this->limage;
+				$tabs	= $this->tabs;
+				$link	= $this->link;
+				$label	= $this->label;
+				$limage	= $this->limage;
 				$href	= '';
 				$title	= '';
 				$image	= '';
@@ -80,10 +80,10 @@ window.addEvent('domready', function() {
 						<table><?php
 							for ($i=0; $i<count($link[$n]); $i++)
 							{
-								$href	=& $link[$n][$i];
-								$title	=& $label[$n][$i];
-								$image	=& $limage[$n][$i];
-								$text	=& $label[$n][$i];
+								$href	= $link[$n][$i];
+								$title	= $label[$n][$i];
+								$image	= $limage[$n][$i];
+								$text	= $label[$n][$i];
 								$allowed= true;
 								$data 	= JUri::getInstance($href)->getQuery(true);
 								$jinput = new JInput($data);

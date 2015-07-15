@@ -71,7 +71,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (empty($this->_project))
 		{
-			$match=&$this->getMatch();
+			$match=$this->getMatch();
 			$this->setProjectID($match->project_id);
 			parent::getProject();
 		}
@@ -80,7 +80,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 
 	function getClubinfo($clubid)
 	{
-		$this->club =& $this->getTable('Club','Table');
+		$this->club = $this->getTable('Club','Table');
 		$this->club->load($clubid);
 
 		return $this->club;
@@ -90,7 +90,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		$match=$this->getMatch();
 
-		$round =& $this->getTable('Round','Table');
+		$round = $this->getTable('Round','Table');
 		$round->load($match->round_id);
 
 		//if no match title set then set the default one
@@ -290,7 +290,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 
 	function getPlayground($pgid)
 	{
-		$this->playground =& $this->getTable('Playground','Table');
+		$this->playground = $this->getTable('Playground','Table');
 		$this->playground->load($pgid);
 
 		return $this->playground;
@@ -302,7 +302,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	 */
 	function getMatchStats()
 	{
-		$match=&$this->getMatch();
+		$match=$this->getMatch();
 		$query=' SELECT * FROM #__joomleague_match_statistic '
 		      .' WHERE match_id='. $this->_db->Quote($match->id);
 		$this->_db->setQuery($query);
@@ -327,7 +327,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (!($this->_playersbasicstats))
 		{
-			$match=&$this->getMatch();
+			$match=$this->getMatch();
 
 			$query=' SELECT * FROM #__joomleague_match_statistic '
 			      .' WHERE match_id='. $this->_db->Quote($match->id);
@@ -356,7 +356,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (!($this->_playersevents))
 		{
-			$match=&$this->getMatch();
+			$match=$this->getMatch();
 
 			$query=' SELECT * FROM #__joomleague_match_event '
 			      .' WHERE match_id='. $this->_db->Quote($match->id);
@@ -385,7 +385,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (!($this->_staffsbasicstats))
 		{
-			$match=&$this->getMatch();
+			$match=$this->getMatch();
 
 			$query=' SELECT * FROM #__joomleague_match_staff_statistic '
 			      .' WHERE match_id='. $this->_db->Quote($match->id);
@@ -423,4 +423,3 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	}
 
 }
-?>

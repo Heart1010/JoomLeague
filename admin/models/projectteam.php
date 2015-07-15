@@ -167,7 +167,7 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 		{
 			foreach($results as $result)
 			{
-				$p_team =& $this->getTable();
+				$p_team = $this->getTable();
 				$p_team->bind($result);
 				$p_team->set('id', NULL);
 				$p_team->set('project_id', $project_id);
@@ -229,7 +229,7 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 				{
 					foreach($results as $result)
 					{
-						$tData =& $this->getTable('teamtrainingdata');
+						$tData = $this->getTable('teamtrainingdata');
 						$tData->bind($result);
 						$tData->set('id',NULL);
 						$tData->set('project_team_id',$to_projectteam_id);

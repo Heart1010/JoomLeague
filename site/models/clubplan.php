@@ -41,7 +41,7 @@ class JoomleagueModelClubPlan extends JoomleagueModelProject
 		{
 			if ($this->clubid > 0)
 			{
-				$this->club =& $this->getTable('Club','Table');
+				$this->club = $this->getTable('Club','Table');
 				$this->club->load($this->clubid);
 			}
 		}

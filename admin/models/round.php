@@ -151,7 +151,7 @@ class JoomleagueModelRound extends JoomleagueModelItem
 		{
 			foreach($results as $result)
 			{
-				$p_round =& $this->getTable();
+				$p_round = $this->getTable();
 				$p_round->bind($result);
 				$p_round->set('id',NULL);
 				$p_round->set('project_id',$project_id);

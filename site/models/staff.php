@@ -180,7 +180,7 @@ class JoomleagueModelStaff extends JoomleagueModelPerson
 	 */
 	function getStats($current_round=0, $personid=0)
 	{
-		$staff =& $this->getTeamStaffByRound($current_round, $personid);
+		$staff = $this->getTeamStaffByRound($current_round, $personid);
 		if(!isset($staff->position_id)){$staff->position_id=0;}
 		$result=$this->getProjectStats(0,$staff->position_id);
 		return $result;
@@ -192,10 +192,10 @@ class JoomleagueModelStaff extends JoomleagueModelPerson
 	 */
 	function getStaffStats($current_round=0, $personid=0)
 	{
-		$staff =& $this->getTeamStaffByRound($current_round, $personid);
+		$staff = $this->getTeamStaffByRound($current_round, $personid);
 		if (!isset($staff->position_id)){$staff->position_id=0;}
-		$stats =& $this->getProjectStats(0,$staff->position_id);
-		$history =& $this->getStaffHistory();
+		$stats = $this->getProjectStats(0,$staff->position_id);
+		$history = $this->getStaffHistory();
 		$result=array();
 		if(count($history) > 0 && count($stats) > 0)
 		{
@@ -215,8 +215,8 @@ class JoomleagueModelStaff extends JoomleagueModelPerson
 
 	function getHistoryStaffStats($current_round=0, $personid=0)
 	{
-		$staff =& $this->getTeamStaffByRound($current_round, $personid);
-		$stats =& $this->getProjectStats(0,$staff->position_id);
+		$staff = $this->getTeamStaffByRound($current_round, $personid);
+		$stats = $this->getProjectStats(0,$staff->position_id);
 		$result=array();
 		if (count($stats) > 0)
 		{
@@ -230,6 +230,4 @@ class JoomleagueModelStaff extends JoomleagueModelPerson
 		}
 		return $result;
 	}
-
 }
-?>

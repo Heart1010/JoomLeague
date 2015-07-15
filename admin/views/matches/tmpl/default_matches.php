@@ -84,7 +84,7 @@ fieldset button {
 					$k=0;
 					for ($i=0,$n=count($this->matches); $i < $n; $i++)
 					{
-						$row		=& $this->matches[$i];
+						$row		= $this->matches[$i];
 						$checked	= JHtml::_('grid.checkedout',$row,$i,'id');
 						$published	= JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','match.');
 

@@ -65,7 +65,7 @@ JHtml::_('behavior.tooltip');
 					$k=0;
 					for ($i=0, $n=count($this->positiontool); $i < $n; $i++)
 					{
-						$row =& $this->positiontool[$i];
+						$row = $this->positiontool[$i];
 						$imageFileOk='administrator/components/com_joomleague/assets/images/ok.png';
 						?>
 						<tr class="<?php echo "row$k"; ?>">

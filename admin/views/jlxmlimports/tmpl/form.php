@@ -8,55 +8,55 @@ if (isset($this->xml) && is_array($this->xml))
 		//echo 'this<pre>'.print_r($this,true).'</pre>';
 		if (array_key_exists('exportversion',$this->xml))
 		{
-			$exportversion =& $this->xml['exportversion'];
+			$exportversion = $this->xml['exportversion'];
 		}
 		if (array_key_exists('project',$this->xml))
 		{
-			$proj =& $this->xml['project'];
+			$proj = $this->xml['project'];
 		}
 		if (array_key_exists('team',$this->xml))
 		{
-			$teams =& $this->xml['team'];
+			$teams = $this->xml['team'];
 		}
 		if (array_key_exists('club',$this->xml))
 		{
-			$clubs =& $this->xml['club'];
+			$clubs = $this->xml['club'];
 		}
 		if (array_key_exists('playground',$this->xml))
 		{
-			$playgrounds =& $this->xml['playground'];
+			$playgrounds = $this->xml['playground'];
 		}
 		if (array_key_exists('league',$this->xml))
 		{
-			$league =& $this->xml['league'];
+			$league = $this->xml['league'];
 		}
 		if (array_key_exists('season',$this->xml))
 		{
-			$season =& $this->xml['season'];
+			$season = $this->xml['season'];
 		}
 		if (array_key_exists('sportstype',$this->xml))
 		{
-			$sportstype =& $this->xml['sportstype'];
+			$sportstype = $this->xml['sportstype'];
 		}
 		if (array_key_exists('person',$this->xml))
 		{
-			$persons =& $this->xml['person'];
+			$persons = $this->xml['person'];
 		}
 		if (array_key_exists('event',$this->xml))
 		{
-			$events =& $this->xml['event'];
+			$events = $this->xml['event'];
 		}
 		if (array_key_exists('position',$this->xml))
 		{
-			$positions =& $this->xml['position'];
+			$positions = $this->xml['position'];
 		}
 		if (array_key_exists('parentposition',$this->xml))
 		{
-			$parentpositions =& $this->xml['parentposition'];
+			$parentpositions = $this->xml['parentposition'];
 		}
 		if (array_key_exists('statistic',$this->xml))
 		{
-			$statistics =& $this->xml['statistic'];
+			$statistics = $this->xml['statistic'];
 		}
 	}
 

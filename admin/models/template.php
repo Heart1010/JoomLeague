@@ -102,7 +102,7 @@ class JoomleagueModelTemplate extends JoomleagueModelItem
 	 */
 	function import($templateid,$projectid)
 	{
-		$row =& $this->getTable();
+		$row = $this->getTable();
 
 		// load record to copy
 		if (!$row->load($templateid))

@@ -295,7 +295,7 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 
 	function getInOutStats($player_id)
 	{
-		$teaminout=&$this->_getTeamInOutStats();
+		$teaminout=$this->_getTeamInOutStats();
 		if (isset($teaminout[$player_id])) {
 			return $teaminout[$player_id];
 		}
@@ -306,7 +306,7 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 
 	function _getTeamInOutStats()
 	{
-		$projectteam=&$this->getprojectteam();
+		$projectteam=$this->getprojectteam();
 		if (empty($this->_teaminout))
 		{
 			$projectteam_id = $this->_db->Quote($this->projectteamid);
@@ -523,8 +523,8 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 
 	function getRosterStats()
 	{
-		$stats =& $this->getProjectStats();
-		$projectteam =& $this->getprojectteam();
+		$stats = $this->getProjectStats();
+		$projectteam = $this->getprojectteam();
 		$result=array();
 		foreach ($stats as $pos => $pos_stats)
 		{

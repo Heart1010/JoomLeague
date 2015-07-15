@@ -152,8 +152,8 @@ $uri = JUri::root();
 					$k = 0;
 					for ( $i = 0, $n = count( $this->items ); $i < $n; $i++ )
 					{
-						$row =& $this->items[$i];
-#echo '<pre>'; print_r($row); echo '</pre>';
+						$row = $this->items[$i];
+						#echo '<pre>'; print_r($row); echo '</pre>';
 						$link = JRoute::_(	'index.php?option=com_joomleague&task=teamstaff.edit&team=' .
 											$this->teamws->id . '&cid[]=' . $row->id );
 						$checked = JHtml::_( 'grid.checkedout', $row, $i );
