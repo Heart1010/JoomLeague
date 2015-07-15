@@ -23,23 +23,23 @@ class JoomleagueViewClubInfo extends JLGView
 		$address_string = $model->getAddressString();
 		$map_config		= $model->getMapConfig();
 		
-		$this->assignRef( 'project',		$project );
-		$this->assignRef( 'overallconfig',	$overallconfig );
-		$this->assignRef( 'config',			$config );
+		$this->project = $project;
+		$this->overallconfig = $overallconfig;
+		$this->config = $config;
 
-		$this->assignRef( 'showclubconfig',	$showclubconfig );
-		$this->assignRef( 'club',			$club);
+		$this->showclubconfig = $showclubconfig;
+		$this->club = $club;
 
 		$extended = $this->getExtended($club->extended, 'club');
-		$this->assignRef( 'extended', $extended );
+		$this->extended = $extended;
 
-		$this->assignRef( 'teams',			$teams );
-		$this->assignRef( 'stadiums',		$stadiums );
-		$this->assignRef( 'playgrounds',	$playgrounds );
-		$this->assignRef( 'showediticon',	$isEditor );
+		$this->teams = $teams;
+		$this->stadiums = $stadiums;
+		$this->playgrounds = $playgrounds;
+		$this->showediticon = $isEditor;
 
-		$this->assignRef( 'address_string', $address_string);
-		$this->assignRef( 'mapconfig',		$map_config ); // Loads the project-template -settings for the GoogleMap
+		$this->address_string = $address_string;
+		$this->mapconfig = $map_config; // Loads the project-template -settings for the GoogleMap
 
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_CLUBINFO_PAGE_TITLE'));
 		if (!empty( $this->club ) )
@@ -56,10 +56,9 @@ class JoomleagueViewClubInfo extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
 }
-?>

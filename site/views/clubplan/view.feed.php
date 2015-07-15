@@ -10,11 +10,11 @@ class JoomleagueViewClubplan extends JLGView
 		$document->link = JRoute::_('index.php?option=com_joomleague');
 		$model = $this->getModel();
 		$config=$model->getTemplateConfig($this->getName());
-		$this->assignRef( 'config', $config);
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'homematches',    $model->getHomeMatches($config['HomeMatchesOrderBy']) );
-		$this->assignRef( 'awaymatches',    $model->getAwayMatches($config['AwayMatchesOrderBy']) );
-		$this->assignRef( 'project',		$model->getProject() );
+		$this->config = $config;
+		$this->overallconfig = $model->getOverallConfig();
+		$this->homematches = $model->getHomeMatches($config['HomeMatchesOrderBy']);
+		$this->awaymatches = $model->getAwayMatches($config['AwayMatchesOrderBy']);
+		$this->project = $model->getProject();
 
 		$this->matches = (array_merge($this->homematches,$this->awaymatches));
 		foreach ($this->matches as $game)
@@ -44,4 +44,3 @@ class JoomleagueViewClubplan extends JLGView
 		}
 	}
 }
-?>

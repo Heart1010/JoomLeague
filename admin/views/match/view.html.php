@@ -109,11 +109,11 @@ class JoomleagueViewMatch extends JLGView {
 				$lists ['team_referees' . $key] = JHtml::_ ( 'select.genericlist', $temp [$key], 'position' . $key . '[]', 'id="testing" style="font-size:12px;height:auto;min-width:15em;" ' . 'class="inputbox position-starters" multiple="true" ', 'value', 'text' );
 			}
 		}
-		$this->assignRef ( 'project_id', $project_id );
-		$this->assignRef ( 'match', $match );
-		$this->assignRef ( 'positions', $projectpositions );
-		$this->assignRef ( 'lists', $lists );
-		parent::display ( $tpl );
+		$this->project_id = $project_id;
+		$this->match = $match;
+		$this->positions = $projectpositions;
+		$this->lists = $lists;
+		parent::display ($tpl);
 	}
 	function _displayEditevents($tpl) {
 		$option = JRequest::getCmd ( 'option' );
@@ -152,7 +152,7 @@ class JoomleagueViewMatch extends JLGView {
 				'home' => $homeRoster,
 				'away' => $awayRoster
 		);
-		$matchevents = & $model->getMatchEvents ();
+		$matchevents = $model->getMatchEvents ();
 		$project_model = $this->getModel ( 'project' );
 
 		$lists = array ();
@@ -174,13 +174,13 @@ class JoomleagueViewMatch extends JLGView {
 
 		$lists ['events'] = JHtml::_ ( 'select.genericlist', $eventlist, 'event_type_id', 'class="inputbox select-event"' );
 
-		$this->assignRef ( 'overall_config', $project_model->getTemplateConfig ( 'overall' ) );
-		$this->assignRef ( 'lists', $lists );
-		$this->assignRef ( 'rosters', $rosters );
-		$this->assignRef ( 'teams', $teams );
-		$this->assignRef ( 'matchevents', $matchevents );
-		$this->assignRef ( 'default_name_format', $default_name_format );
-		$this->assignRef ( 'default_name_dropdown_list_order', $default_name_dropdown_list_order );
+		$this->overall_config = $project_model->getTemplateConfig('overall');
+		$this->lists = $lists;
+		$this->rosters = $rosters;
+		$this->teams = $teams;
+		$this->matchevents = $matchevents;
+		$this->default_name_format = $default_name_format;
+		$this->default_name_dropdown_list_order = $default_name_dropdown_list_order;
 
 		parent::display ( $tpl );
 	}
@@ -219,12 +219,12 @@ class JoomleagueViewMatch extends JLGView {
 			$awayRoster = $model->getGhostPlayerbb ( $teams->projectteam2_id );
 		}
 
-		$this->assignRef ( 'homeRoster', $homeRoster );
-		$this->assignRef ( 'awayRoster', $awayRoster );
-		$this->assignRef ( 'teams', $teams );
-		$this->assignRef ( 'events', $events );
-		$this->assignRef ( 'default_name_format', $default_name_format );
-		$this->assignRef ( 'default_name_dropdown_list_order', $default_name_dropdown_list_order );
+		$this->homeRoster = $homeRoster;
+		$this->awayRoster = $awayRoster;
+		$this->teams = $teams;
+		$this->events = $events;
+		$this->default_name_format = $default_name_format;
+		$this->default_name_dropdown_list_order = $default_name_dropdown_list_order;
 
 		$this->addToolbar_Editeventsbb ();
 		parent::display ( $tpl );
@@ -290,18 +290,18 @@ class JoomleagueViewMatch extends JLGView {
 		$playerstats = $model->getMatchStatsInput ();
 		$staffstats = $model->getMatchStaffStatsInput ();
 
-		$this->assignRef ( 'homeRoster', $homeRoster );
-		$this->assignRef ( 'awayRoster', $awayRoster );
-		$this->assignRef ( 'homeStaff', $homeStaff );
-		$this->assignRef ( 'awayStaff', $awayStaff );
-		$this->assignRef ( 'teams', $teams );
-		$this->assignRef ( 'stats', $stats );
-		$this->assignRef ( 'playerstats', $playerstats );
-		$this->assignRef ( 'staffstats', $staffstats );
-		$this->assignRef ( 'match', $match );
-		$this->assignRef ( 'positions', $positions );
-		$this->assignRef ( 'staffpositions', $staffpositions );
-		$this->assignRef ( 'default_name_format', $default_name_format );
+		$this->homeRoster = $homeRoster;
+		$this->awayRoster = $awayRoster;
+		$this->homeStaff = $homeStaff;
+		$this->awayStaff = $awayStaff;
+		$this->teams = $teams;
+		$this->stats = $stats;
+		$this->playerstats = $playerstats;
+		$this->staffstats = $staffstats;
+		$this->match = $match;
+		$this->positions = $positions;
+		$this->staffpositions = $staffpositions;
+		$this->default_name_format = $default_name_format;
 
 		parent::display ( $tpl );
 	}
@@ -340,7 +340,7 @@ class JoomleagueViewMatch extends JLGView {
 			return false;
 		}
 
-		$projectpositions = & $model->getProjectPositions ();
+		$projectpositions = $model->getProjectPositions ();
 		if (! $projectpositions) {
 			JError::raiseWarning ( 440, '<br />' . JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_NO_POS' ) . '<br /><br />' );
 			return false;
@@ -501,7 +501,7 @@ class JoomleagueViewMatch extends JLGView {
 		/**
 		 * staff positions
 		 */
-		$staffpositions = & $model->getProjectStaffPositions (); // get staff not already assigned to starter
+		$staffpositions = $model->getProjectStaffPositions (); // get staff not already assigned to starter
 		                                                       // echo '<pre>'.print_r($staffpositions,true).'</pre>';
 
 		// assigned staff
@@ -540,17 +540,17 @@ class JoomleagueViewMatch extends JLGView {
 			$lists ['team_staffs' . $position_id] = JHtml::_ ( 'select.genericlist', $options, 'staffposition' . $position_id . '[]', 'style="font-size:12px;height:auto;min-width:15em;" size="4" class="inputbox position-staff" multiple="true" ', 'value', 'text' );
 		}
 
-		$this->assignRef ( 'match', $teams );
-		$this->assignRef ( 'tid', $tid );
-		$this->assignRef ( 'teamname', $teamname );
-		$this->assignRef ( 'positions', $projectpositions );
-		$this->assignRef ( 'staffpositions', $staffpositions );
-		$this->assignRef ( 'substitutions', $substitutions [$tid] );
-		$this->assignRef ( 'playersoptions_subs_out',  $playersoptions_subs_out );
-		$this->assignRef ( 'playersoptions_subs_in', $playersoptions_subs_in );
-		$this->assignRef ( 'lists', $lists );
-		$this->assignRef ( 'default_name_format', $default_name_format );
-		$this->assignRef ( 'default_name_dropdown_list_order', $default_name_dropdown_list_order );
+		$this->match = $teams;
+		$this->tid = $tid;
+		$this->teamname = $teamname;
+		$this->positions = $projectpositions;
+		$this->staffpositions = $staffpositions;
+		$this->substitutions = $substitutions [$tid];
+		$this->playersoptions_subs_out = $playersoptions_subs_out;
+		$this->playersoptions_subs_in = $playersoptions_subs_in;
+		$this->lists = $lists;
+		$this->default_name_format = $default_name_format;
+		$this->default_name_dropdown_list_order = $default_name_dropdown_list_order;
 
 		parent::display ( $tpl );
 	}
@@ -615,7 +615,7 @@ class JoomleagueViewMatch extends JLGView {
 		$oldmatches [] = JHtml::_ ( 'select.option', '0', JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_OLD_MATCH' ) );
 		$res = array ();
 		$new_match_id = ($match->new_match_id) ? $match->new_match_id : 0;
-		if ($res = & $mdlMatch->getMatchRelationsOptions ( $mainframe->getUserState ( $option . 'project', 0 ), $match->id . "," . $new_match_id )) {
+		if ($res = $mdlMatch->getMatchRelationsOptions ( $mainframe->getUserState ( $option . 'project', 0 ), $match->id . "," . $new_match_id )) {
 			foreach ( $res as $m ) {
 				$m->text = '(' . JoomleagueHelper::getMatchStartTimestamp ( $m ) . ') - ' . $m->t1_name . ' - ' . $m->t2_name;
 			}
@@ -626,7 +626,7 @@ class JoomleagueViewMatch extends JLGView {
 		$newmatches [] = JHtml::_ ( 'select.option', '0', JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_NEW_MATCH' ) );
 		$res = array ();
 		$old_match_id = ($match->old_match_id) ? $match->old_match_id : 0;
-		if ($res = & $mdlMatch->getMatchRelationsOptions ( $mainframe->getUserState ( $option . 'project', 0 ), $match->id . "," . $old_match_id )) {
+		if ($res = $mdlMatch->getMatchRelationsOptions ( $mainframe->getUserState ( $option . 'project', 0 ), $match->id . "," . $old_match_id )) {
 			foreach ( $res as $m ) {
 				$m->text = '(' . JoomleagueHelper::getMatchStartTimestamp ( $m ) . ') - ' . $m->t1_name . ' - ' . $m->t2_name;
 			}
@@ -634,15 +634,16 @@ class JoomleagueViewMatch extends JLGView {
 		}
 		$lists ['new_match'] = JHtml::_ ( 'select.genericlist', $newmatches, 'new_match_id', 'class="inputbox" size="1"', 'value', 'text', $match->new_match_id );
 
-		$this->assignRef ( 'overall_config', $overall_config );
-		$this->assignRef ( 'table_config', $table_config );
-		$this->assignRef ( 'projectws', $projectws );
-		$this->assignRef ( 'lists', $lists );
-		$this->assignRef ( 'match', $match );
-		$this->assignRef ( 'extended', $extended );
-		$form = $this->get ( 'form' );
-		$form->setValue ( 'playground_id', null, $playground_id );
-		$this->assignRef ( 'form', $form );
+		$this->overall_config = $overall_config;
+		$this->table_config = $table_config;
+		$this->projectws = $projectws;
+		$this->lists = $lists;
+		$this->match = $match;
+		$this->extended = $extended;
+		
+		$form = $this->get('form');
+		$form->setValue ('playground_id', null, $playground_id );
+		$this->form = $form;
 
 		parent::display ( $tpl );
 	}
@@ -680,7 +681,6 @@ class JoomleagueViewMatch extends JLGView {
 				}
 			}
 		}
-		$this->assignRef ( 'preFillSuccess', $preFillSuccess );
+		$this->preFillSuccess = $preFillSuccess;
 	}
 }
-?>

@@ -49,50 +49,50 @@ class JoomleagueViewResultsranking extends JoomleagueViewResults {
 		// merge the 2 config files
 		$config = array_merge($rankingconfig, $resultsconfig);
 
-		$this->assignRef('model' , 			$rankingmodel);
-		$this->assignRef('project', 		$resultsmodel->getProject());
-		$this->assignRef('overallconfig',	$resultsmodel->getOverallConfig());
-		$this->assignRef('config',			array_merge($this->overallconfig, $config));
-		$this->assignRef('tableconfig',		$rankingconfig);
-		$this->assignRef('params', 			$params);
-		$this->assignRef('showediticon',	$resultsmodel->getShowEditIcon());
-		$this->assignRef('division',		$resultsmodel->getDivision());
-		$this->assignRef('divisions', 		$rankingmodel->getDivisions());
-		$this->assignRef('divLevel',  		$rankingmodel->divLevel);
-		$this->assignRef('matches',			$resultsmodel->getMatches());
-		$this->assignRef('round',			$resultsmodel->roundid);
-		$this->assignRef('roundid',			$resultsmodel->roundid);
-		$this->assignRef('roundcode',		$roundcode);
+		$this->model = $rankingmodel;
+		$this->project = $resultsmodel->getProject();
+		$this->overallconfig = $resultsmodel->getOverallConfig();
+		$this->config = array_merge($this->overallconfig, $config);
+		$this->tableconfig = $rankingconfig;
+		$this->params = $params;
+		$this->showediticon = $resultsmodel->getShowEditIcon();
+		$this->division = $resultsmodel->getDivision();
+		$this->divisions = $rankingmodel->getDivisions();
+		$this->divLevel = $rankingmodel->divLevel;
+		$this->matches = $resultsmodel->getMatches();
+		$this->round = $resultsmodel->roundid;
+		$this->roundid = $resultsmodel->roundid;
+		$this->roundcode = $roundcode;
 
 		$rounds = $resultsmodel->getRoundOptions();
 		$options = $this->getRoundSelectNavigation($rounds);
 
-		$this->assignRef('matchdaysoptions',$options);
-		$this->assignRef('currenturl', 		JoomleagueHelperRoute::getResultsRankingRoute($resultsmodel->getProject()->slug, $this->round));
-		$this->assignRef('rounds',			$resultsmodel->getRounds());
-		$this->assignRef('favteams',		$resultsmodel->getFavTeams($this->project));
-		$this->assignRef('projectevents',	$resultsmodel->getProjectEvents());
-		$this->assignRef('model',			$resultsmodel);
-		$this->assignRef('isAllowed',		$resultsmodel->isAllowed());
+		$this->matchdaysoptions = $options;
+		$this->currenturl = JoomleagueHelperRoute::getResultsRankingRoute($resultsmodel->getProject()->slug, $this->round);
+		$this->rounds = $resultsmodel->getRounds();
+		$this->favteams = $resultsmodel->getFavTeams($this->project);
+		$this->projectevents = $resultsmodel->getProjectEvents();
+		$this->model = $resultsmodel;
+		$this->isAllowed = $resultsmodel->isAllowed();
 
-		$this->assignRef('type',      $rankingmodel->type);
-		$this->assignRef('from',      $rankingmodel->from);
-		$this->assignRef('to',        $rankingmodel->to);
+		$this->type = $rankingmodel->type;
+		$this->from = $rankingmodel->from;
+		$this->to = $rankingmodel->to;
 
-		$this->assignRef('currentRanking',  $rankingmodel->currentRanking);
-		$this->assignRef('previousRanking', $rankingmodel->previousRanking);
-		$this->assignRef('homeRanking',    	$rankingmodel->homeRank);
-		$this->assignRef('awayRanking',    	$rankingmodel->awayRank);
-		$this->assignRef('current_round', 	$rankingmodel->current_round);
-		$this->assignRef('teams',			$rankingmodel->getTeamsIndexedByPtid($resultsmodel->getDivisionID()));
-		$this->assignRef('previousgames',   $rankingmodel->getPreviousGames());
+		$this->currentRanking = $rankingmodel->currentRanking;
+		$this->previousRanking = $rankingmodel->previousRanking;
+		$this->homeRanking = $rankingmodel->homeRank;
+		$this->awayRanking = $rankingmodel->awayRank;
+		$this->current_round = $rankingmodel->current_round;
+		$this->teams = $rankingmodel->getTeamsIndexedByPtid($resultsmodel->getDivisionID());
+		$this->previousgames = $rankingmodel->getPreviousGames();
 
-		$this->assign('action', $uri->toString());
+		$this->action = $uri->toString();
 		//rankingcolors
 		if (!isset ($this->config['colors'])) {
 			$this->config['colors'] = "";
 		}
-		$this->assignRef('colors', $rankingmodel->getColors($this->config['colors']));
+		$this->colors = $rankingmodel->getColors($this->config['colors']);
 
 		// Set page title
 		if ($this->params->get('what_to_show_first', 0) == 0) {
@@ -115,7 +115,7 @@ class JoomleagueViewResultsranking extends JoomleagueViewResults {
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $pageTitleFormat));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $pageTitleFormat);
 		$document->setTitle($this->pagetitle);
 		
 		/*
@@ -141,4 +141,3 @@ class JoomleagueViewResultsranking extends JoomleagueViewResults {
 	}
 
 }
-?>

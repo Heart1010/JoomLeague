@@ -13,9 +13,9 @@ class JoomleagueViewStatsRanking extends JLGView
 		$model = $this->getModel();
 		$config = $model->getTemplateConfig($this->getName());
 		
-		$this->assignRef( 'project', $model->getProject() );
-		$this->assignRef( 'division', $model->getDivision() );
-		$this->assignRef( 'teamid', $model->getTeamId() );
+		$this->project = $model->getProject();
+		$this->division = $model->getDivision();
+		$this->teamid = $model->getTeamId();
 		$teams = $model->getTeamsIndexedById();
 		if ( $this->teamid != 0 )
 		{
@@ -28,15 +28,15 @@ class JoomleagueViewStatsRanking extends JLGView
 			}
 		}
 
-		$this->assignRef( 'teams', $teams );
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'config', $config );
-		$this->assignRef( 'favteams', $model->getFavTeams() );
-		$this->assignRef( 'stats', $model->getProjectUniqueStats() );
-		$this->assignRef( 'playersstats', $model->getPlayersStats() );
-		$this->assignRef( 'limit', $model->getLimit() );
-		$this->assignRef( 'limitstart', $model->getLimitStart() );
-		$this->assign( 'multiple_stats', count($this->stats) > 1 );
+		$this->teams = $teams;
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
+		$this->favteams = $model->getFavTeams();
+		$this->stats = $model->getProjectUniqueStats();
+		$this->playersstats = $model->getPlayersStats();
+		$this->limit = $model->getLimit();
+		$this->limitstart = $model->getLimitStart();
+		$this->multiple_stats = count($this->stats) > 1;
 
 		$prefix = JText::_('COM_JOOMLEAGUE_STATSRANKING_PAGE_TITLE');
 		if ( $this->multiple_stats )
@@ -63,10 +63,9 @@ class JoomleagueViewStatsRanking extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
 }
-?>

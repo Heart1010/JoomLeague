@@ -12,30 +12,30 @@ class JoomleagueViewTeamPlan extends JLGView
 		// Get a refrence of the page instance in joomla
 		$document = JFactory::getDocument();
 		$model = $this->getModel();
-		$project =& $model->getProject();
+		$project = $model->getProject();
 		$config=$model->getTemplateConfig($this->getName());
 
 		$mdlRoster = JModelLegacy::getInstance("Roster", "JoomleagueModel");
 
 		if (isset($project))
 		{
-			$this->assignRef('project',$project);
+			$this->project = $project;
 			$rounds=$model->getRounds($config['plan_order']);
 
-			$this->assignRef('overallconfig',$model->getOverallConfig());
-			$this->assignRef('config',array_merge($this->overallconfig,$config));
-			$this->assignRef('rounds',$rounds);
-			$this->assignRef('teams',$model->getTeamsIndexedByPtid());
-			$this->assignRef('match',$match);
-			$this->assignRef('favteams',$model->getFavTeams());
-			$this->assignRef('division',$model->getDivision());
-			$this->assignRef('ptid',$model->getProjectTeamId());
-			$this->assignRef('projectteam',$mdlRoster->getProjectTeam());
-			$this->assignRef('projectevents',$model->getProjectEvents());
-			$this->assignRef('matches',$model->getMatches($config));
-			$this->assignRef('matches_refering',$model->getMatchesRefering($config));
-			$this->assignRef('matchesperround',$model->getMatchesPerRound($config,$rounds));
-			$this->assignRef('model',$model);
+			$this->overallconfig = $model->getOverallConfig();
+			$this->config = array_merge($this->overallconfig,$config);
+			$this->rounds = $rounds;
+			$this->teams = $model->getTeamsIndexedByPtid();
+			$this->match = $match;
+			$this->favteams = $model->getFavTeams();
+			$this->division = $model->getDivision();
+			$this->ptid = $model->getProjectTeamId();
+			$this->projectteam = $mdlRoster->getProjectTeam();
+			$this->projectevents = $model->getProjectEvents();
+			$this->matches = $model->getMatches($config);
+			$this->matches_refering = $model->getMatchesRefering($config);
+			$this->matchesperround = $model->getMatchesPerRound($config,$rounds);
+			$this->model = $model;
 
 		}
 
@@ -52,7 +52,7 @@ class JoomleagueViewTeamPlan extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display($tpl);
@@ -313,4 +313,3 @@ class JoomleagueViewTeamPlan extends JLGView
 		return $output;
 	}
 }
-?>

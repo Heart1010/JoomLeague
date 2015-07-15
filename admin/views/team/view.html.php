@@ -57,6 +57,4 @@ class JoomleagueViewTeam extends JLGView
 		JToolBarHelper::back();
 		JToolBarHelper::help( 'screen.joomleague.edit' );
 	}
-
 }
-?>

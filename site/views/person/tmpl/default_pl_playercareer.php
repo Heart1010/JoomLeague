@@ -93,13 +93,13 @@
 				$career['played'] = 0;
 				$career['in'] = 0;
 				$career['out'] = 0;
-				$player =& JLGModel::getInstance( "Person", "JoomleagueModel" );
+				$player = JLGModel::getInstance( "Person", "JoomleagueModel" );
 				if ( count( $this->historyPlayer ) > 0 )
 				{
 					foreach ( $this->historyPlayer as $player_hist )
 					{
 						$model = $this->getModel();
-						$this->assignRef( 'inoutstat', $model->getInOutStats( $player_hist->project_id, $player_hist->pid ) );
+						$this->inoutstat = $model->getInOutStats($player_hist->project_id, $player_hist->pid);
 						?>
 						<tr class="<?php echo ($k == 0)? 'sectiontableentry1' : 'sectiontableentry2'; ?>">
 							<td class="td_l" class="nowrap">

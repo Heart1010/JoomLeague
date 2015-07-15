@@ -53,7 +53,7 @@ class JoomleagueViewTeamStaff extends JLGView
 		$selectedvalue = $project_teamstaff->project_position_id;
 		$projectpositions = array();
 		$projectpositions[] = JHtml::_('select.option', '0', JText::_( 'COM_JOOMLEAGUE_GLOBAL_SELECT_FUNCTION' ) );
-		if ( $res = & $model->getProjectPositions() )
+		if ( $res = $model->getProjectPositions() )
 		{
 			$projectpositions = array_merge( $projectpositions, $res );
 		}
@@ -152,13 +152,13 @@ class JoomleagueViewTeamStaff extends JLGView
 										$project_teamstaff->away_end );
 
 		$extended = $this->getExtended($project_teamstaff->extended, 'teamstaff');
-		$this->assignRef( 'extended', $extended );
-		$this->assignRef('form'      	, $this->get('form'));			
-		#$this->assignRef( 'default_person',		$default_person );
-		$this->assignRef( 'projectws',			$projectws );
-		$this->assignRef( 'teamws',				$teamws );
-		$this->assignRef( 'lists',				$lists );
-		$this->assignRef( 'project_teamstaff',	$project_teamstaff );
+		$this->extended = $extended;
+		$this->form = $this->get('form');			
+		#$this->default_person = $default_person;
+		$this->projectws = $projectws;
+		$this->teamws = $teamws;
+		$this->lists = $lists;
+		$this->project_teamstaff = $project_teamstaff;
 
 		$this->addToolbar();
 		parent::display( $tpl );
@@ -181,7 +181,7 @@ class JoomleagueViewTeamStaff extends JLGView
 		JToolBarHelper::title( $text);
 		JLToolBarHelper::save('teamstaff.save');
 			
-		if ( !$edit )
+		if (!$edit)
 		{
 			JLToolBarHelper::cancel('teamstaff.cancel');
 		}
@@ -195,4 +195,3 @@ class JoomleagueViewTeamStaff extends JLGView
 		JToolBarHelper::help( 'screen.joomleague', true );
 	}
 }
-?>

@@ -11,15 +11,15 @@ class JoomleagueViewTreetonode extends JLGView
 
 		$model = $this->getModel();
 		$project = $model->getProject();
-	//no treeko !!!
+		//no treeko !!!
 		$config = $model->getTemplateConfig('tree');
 		
-		$this->assignRef( 'project', $model->getProject() );
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'config', $config );
-		$this->assignRef( 'node', $model->getTreetonode() );
-		$this->assignRef( 'roundname', $model->getRoundName() );
-		$this->assignRef( 'model', $model );
+		$this->project = $model->getProject();
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
+		$this->node = $model->getTreetonode();
+		$this->roundname = $model->getRoundName();
+		$this->model = $model;
 		
 		// Set page title
 		///TODO: treeto name, no project name
@@ -35,10 +35,9 @@ class JoomleagueViewTreetonode extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
 }
-?>

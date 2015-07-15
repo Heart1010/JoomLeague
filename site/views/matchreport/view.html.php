@@ -21,44 +21,44 @@ class JoomleagueViewMatchReport extends JLGView
 		$project=$model->getProject();
 		$match=$model->getMatch();
 
-		$this->assignRef('project',$project);
-		$this->assignRef('overallconfig',$model->getOverallConfig());
-		$this->assignRef('config',$config);
-		$this->assignRef('match',$match);
+		$this->project = $project;
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
+		$this->match = $match;
 		$ret=$model->getMatchText($match->new_match_id);
-		$this->assignRef('newmatchtext',$ret->text);
+		$this->newmatchtext = $ret->text;
 		$ret=$model->getMatchText($match->old_match_id);
-		$this->assignRef('oldmatchtext',$ret->text);
+		$this->oldmatchtext = $ret->text;
 
-		$this->assignRef('round',$model->getRound());
-		$this->assignRef('team1',$model->getTeaminfo($this->match->projectteam1_id));
-		$this->assignRef('team2',$model->getTeaminfo($this->match->projectteam2_id));
-		$this->assignRef('team1_club',$model->getClubinfo($this->team1->club_id));
-		$this->assignRef('team2_club',$model->getClubinfo($this->team2->club_id));
-		$this->assignRef('matchplayerpositions',$model->getMatchPlayerPositions());
-		$this->assignRef('matchplayers',$model->getMatchPlayers());
-		$this->assignRef('matchstaffpositions',$model->getMatchStaffPositions());
-		$this->assignRef('matchstaffs',$model->getMatchStaff());
-		$this->assignRef('matchrefereepositions',$model->getMatchRefereePositions());
-		$this->assignRef('matchreferees',$model->getMatchReferees());
-		$this->assignRef('substitutes',$model->getSubstitutes());
-		$this->assignRef('eventtypes',$model->getEventTypes());
+		$this->round = $model->getRound();
+		$this->team1 = $model->getTeaminfo($this->match->projectteam1_id);
+		$this->team2 = $model->getTeaminfo($this->match->projectteam2_id);
+		$this->team1_club = $model->getClubinfo($this->team1->club_id);
+		$this->team2_club = $model->getClubinfo($this->team2->club_id);
+		$this->matchplayerpositions = $model->getMatchPlayerPositions();
+		$this->matchplayers = $model->getMatchPlayers();
+		$this->matchstaffpositions = $model->getMatchStaffPositions();
+		$this->matchstaffs = $model->getMatchStaff();
+		$this->matchrefereepositions = $model->getMatchRefereePositions();
+		$this->matchreferees = $model->getMatchReferees();
+		$this->substitutes = $model->getSubstitutes();
+		$this->eventtypes = $model->getEventTypes();
 		$sortEventsDesc = isset($this->config['sort_events_desc']) ? $this->config['sort_events_desc'] : '1';
-		$this->assignRef('matchevents',$model->getMatchEvents($this->match->id,1,$sortEventsDesc));
-		$this->assignRef('playground',$model->getPlayground($this->match->playground_id));
+		$this->matchevents = $model->getMatchEvents($this->match->id,1,$sortEventsDesc);
+		$this->playground = $model->getPlayground($this->match->playground_id);
 
-		$this->assignRef('stats',$model->getProjectStats());
-		$this->assignRef('playerstats',$model->getMatchStats());
-		$this->assignRef('staffstats',$model->getMatchStaffStats());
-		$this->assignRef('model',$model);
+		$this->stats = $model->getProjectStats();
+		$this->playerstats = $model->getMatchStats();
+		$this->staffstats = $model->getMatchStaffStats();
+		$this->model = $model;
 
 		$xmlfile=JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'extended'.DS.'match.xml';
 		$jRegistry = new JRegistry;
 		$jRegistry->loadString($match->extended, 'ini');
-		$extended =& JForm::getInstance('extended', $xmlfile, array('control'=> 'extended'), false, '/config');
+		$extended = JForm::getInstance('extended', $xmlfile, array('control'=> 'extended'), false, '/config');
 		$extended->bind($jRegistry);
 		
-		$this->assignRef( 'extended', $extended);
+		$this->extended = $extended;
 
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_MATCHREPORT_PAGE_TITLE'));
@@ -85,7 +85,7 @@ class JoomleagueViewMatchReport extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 
 		parent::display($tpl);
@@ -535,4 +535,3 @@ class JoomleagueViewMatchReport extends JLGView
 	}
 
 }
-?>

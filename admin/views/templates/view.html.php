@@ -46,7 +46,7 @@ class JoomleagueViewTemplates extends JLGView
 			$importlist=array_merge($importlist,$masterTemplates);
 			$lists['mastertemplates']=JHtml::_('select.genericlist',$importlist,'templateid');
 			$master=$this->get('MasterName');
-			$this->assign('master',$master);
+			$this->master = $master;
 			$templates=array_merge($templates,$allMasterTemplates);
 		}
 
@@ -68,13 +68,13 @@ class JoomleagueViewTemplates extends JLGView
 		$lists['search']=$search;
 		$lists['search_mode']=$search_mode;
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('templates',$templates);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
-		$this->assignRef('projectws',$projectws);
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->templates = $templates;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
+		$this->projectws = $projectws;
 		
 		$this->addToolbar();			
 		parent::display($tpl);
@@ -102,4 +102,3 @@ class JoomleagueViewTemplates extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}	
 }
-?>

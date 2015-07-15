@@ -8,10 +8,9 @@ class JoomleagueViewBackButton extends JLGView
 	{
 		//$model = $this->getModel();
 
-		//$this->assignRef( 'project',		$model->getProject() );
-		//$this->assignRef( 'overallconfig',	$model->getOverallConfig() );
+		//$this->project = $model->getProject();
+		//$this->overallconfig = $model->getOverallConfig();
 
 		parent::display( $tpl );
 	}
 }
-?>

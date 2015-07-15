@@ -71,7 +71,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 						foreach ( $this->events as $ev)
 						{
 							$tehp++;	
-							$this->assignRef( 'evbb', $model->getPlayerEventsbb( $row->value, $ev->value ) );	
+							$this->evbb = $model->getPlayerEventsbb($row->value, $ev->value);	
 							?>
 							<td class="leftdashed">
 							<input type="hidden" name="event_type_id_h_<?php echo $i.'_'.$tehp;?>" value="<?php echo $ev->value;?>" />

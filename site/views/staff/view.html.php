@@ -18,22 +18,22 @@ class JoomleagueViewStaff extends JLGView
 		$current_round = $project->current_round;
 		$personid = $model->personid;
 		
-		$this->assignRef('project',$model->getProject());
-		$this->assignRef('overallconfig',$model->getOverallConfig());
-		$this->assignRef('config',$config);
-		$this->assignRef('person',$person);
+		$this->project = $model->getProject();
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
+		$this->person = $person;
 		
-		$staff=&$model->getTeamStaffByRound($current_round, $personid);
+		$staff = $model->getTeamStaffByRound($current_round, $personid);
 		
-		$this->assignRef('teamStaff',$staff);
-		$this->assignRef('history',$model->getStaffHistory('ASC'));
+		$this->teamStaff = $staff;
+		$this->history = $model->getStaffHistory('ASC');
 		
-		$this->assignRef('stats',$model->getStats($current_round, $personid));
-		$this->assignRef('staffstats',$model->getStaffStats($current_round, $personid));
-		$this->assignRef('historystats',$model->getHistoryStaffStats($current_round, $personid));
-		$this->assignRef('showediticon',$model->getAllowed($config['edit_own_player']));
+		$this->stats = $model->getStats($current_round, $personid);
+		$this->staffstats = $model->getStaffStats($current_round, $personid);
+		$this->historystats = $model->getHistoryStaffStats($current_round, $personid);
+		$this->showediticon = $model->getAllowed($config['edit_own_player']);
 		$extended = $this->getExtended($person->extended, 'staff');
-		$this->assignRef( 'extended', $extended);
+		$this->extended = $extended;
 		
 		if (isset($person))
 		{
@@ -54,11 +54,9 @@ class JoomleagueViewStaff extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display($tpl);
 	}
-
 }
-?>

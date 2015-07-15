@@ -11,14 +11,12 @@ class JoomleagueViewAbout extends JLGView
 
 		$model = $this->getModel();
 		$about = $model->getAbout();
-		$this->assignRef('about',	$about);
+		$this->about = $about;
 
         // Set page title
-		$this->assignRef('pagetitle', JText::_('COM_JOOMLEAGUE_ABOUT_PAGE_TITLE'));
+		$this->pagetitle = JText::_('COM_JOOMLEAGUE_ABOUT_PAGE_TITLE');
 		$document->setTitle($this->pagetitle);
 		
 		parent::display($tpl);
 	}
-
 }
-?>

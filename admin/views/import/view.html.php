@@ -38,11 +38,11 @@ class JoomleagueViewImport extends JLGView
 
 		// Get data from the model
 		$model = $this->getModel("import");
-		$tablefields = & $model->getTablefields('#__joomleague_' . $table);
+		$tablefields = $model->getTablefields('#__joomleague_' . $table);
 
 		//assign vars to the template
-		$this->assignRef('tablefields',	$tablefields);
-		$this->assignRef('table',		$table);
+		$this->tablefields = $tablefields;
+		$this->table = $table;
 		parent::display($tpl);
 	}
 

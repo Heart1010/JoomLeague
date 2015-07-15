@@ -172,7 +172,7 @@ if (count($this->stafflist) > 0)
 				<?php
 
 				$mdlStaff = JModelLegacy::getInstance("Staff", "JoomleagueModel");
-				$this->assignRef('stafftool',$mdlStaff->getTeamStaffByRound($this->project->current_round,$row->pid));
+				$this->stafftool = $mdlStaff->getTeamStaffByRound($this->project->current_round,$row->pid);
 
 				$today = JHtml::date('now' .' UTC',
 								JText::_('COM_JOOMLEAGUE_GLOBAL_MATCHDAYDATE'),

@@ -121,7 +121,7 @@ class JoomleagueViewPosition extends JLGView
 		$this->lists = $lists;
 		$this->position = $position;
 		//$extended = $this->getExtended($position->extended, 'position');
-		//$this->assignRef( 'extended', $extended );
+		//$this->extended = $extended;
 		$this->addToolbar();			
 		parent::display($tpl);
 	}

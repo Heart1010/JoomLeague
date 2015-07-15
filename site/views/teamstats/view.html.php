@@ -16,36 +16,36 @@ class JoomleagueViewTeamStats extends JLGView
 		$eventsconfig = $model->getTemplateConfig( "eventsranking" );
 		$flashconfig = $model->getTemplateConfig( "flash" );
 
-		$this->assignRef( 'project', $model->getProject() );
+		$this->project = $model->getProject();
 		if ( isset( $this->project ) )
 		{
-			$this->assignRef( 'overallconfig', $model->getOverallConfig() );
+			$this->overallconfig = $model->getOverallConfig();
 			if ( !isset( $this->overallconfig['seperator'] ) )
 			{
 				$this->overallconfig['seperator'] = ":";
 			}
-			$this->assignRef( 'config', $config );
+			$this->config = $config;
 
-			$this->assignRef( 'tableconfig', $tableconfig );
-			$this->assignRef( 'eventsconfig', $eventsconfig );
-			$this->assignRef( 'actualround', $model->getCurrentRound() );
-			$this->assignRef( 'team', $model->getTeam() );
-			$this->assignRef( 'highest_home', $model->getHighestHome( ) );
-			$this->assignRef( 'highest_away', $model->getHighestAway( ) );
-			$this->assignRef( 'highestdef_home', $model->getHighestDefHome( ) );
-			$this->assignRef( 'highestdef_away', $model->getHighestDefAway( ) );
-			$this->assignRef( 'totalshome', $model->getSeasonTotalsHome( ) );
-			$this->assignRef( 'totalsaway', $model->getSeasonTotalsAway( ) );
-			$this->assignRef( 'matchdaytotals', $model->getMatchDayTotals( ) );
-			$this->assignRef( 'totalrounds', $model->getTotalRounds( ) );
-			$this->assignRef( 'totalattendance', $model->getTotalAttendance() );
-			$this->assignRef( 'bestattendance', $model->getBestAttendance() );
-			$this->assignRef( 'worstattendance', $model->getWorstAttendance() );
-			$this->assignRef( 'averageattendance', $model->getAverageAttendance() );
-			$this->assignRef( 'chart_url', $model->getChartURL( ) );
-			$this->assignRef( 'nogoals_against', $model->getNoGoalsAgainst( ) );
-			$this->assignRef( 'logo', $model->getLogo( ) );
-			$this->assignRef( 'results',  $model->getResults());
+			$this->tableconfig = $tableconfig;
+			$this->eventsconfig = $eventsconfig;
+			$this->actualround = $model->getCurrentRound();
+			$this->team = $model->getTeam();
+			$this->highest_home = $model->getHighestHome();
+			$this->highest_away = $model->getHighestAway();
+			$this->highestdef_home = $model->getHighestDefHome();
+			$this->highestdef_away = $model->getHighestDefAway();
+			$this->totalshome = $model->getSeasonTotalsHome();
+			$this->totalsaway = $model->getSeasonTotalsAway();
+			$this->matchdaytotals = $model->getMatchDayTotals();
+			$this->totalrounds = $model->getTotalRounds();
+			$this->totalattendance = $model->getTotalAttendance();
+			$this->bestattendance = $model->getBestAttendance();
+			$this->worstattendance = $model->getWorstAttendance();
+			$this->averageattendance = $model->getAverageAttendance();
+			$this->chart_url = $model->getChartURL();
+			$this->nogoals_against = $model->getNoGoalsAgainst();
+			$this->logo = $model->getLogo();
+			$this->results = $model->getResults();
 
 			$this->_setChartdata(array_merge($flashconfig, $config));
 		}
@@ -67,7 +67,7 @@ class JoomleagueViewTeamStats extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
@@ -164,7 +164,6 @@ class JoomleagueViewTeamStats extends JLGView
 		$y_legend->set_style( '{font-size: 15px; color: #778877}' );
 		$chart->set_y_legend( $y_legend );
 
-		$this->assignRef( 'chartdata',  $chart);
+		$this->chartdata = $chart;
 	}
 }
-?>

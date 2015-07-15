@@ -59,7 +59,7 @@ class JoomleagueViewTreetomatchs extends JLGView
 		$res1 = array();
 		$notusedmatches = array();
 
-		if ($ress =& $model->getNodeMatches($node_id))
+		if ($ress = $model->getNodeMatches($node_id))
 		{
 			$matcheslist=array();
 			foreach($ress as $res)
@@ -84,9 +84,9 @@ class JoomleagueViewTreetomatchs extends JLGView
 			$lists['node_matches']= '<select name="node_matcheslist[]" id="node_matcheslist" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
-		if ($ress1 =& $model->getMatches())
+		if ($ress1 = $model->getMatches())
 		{
-			if ($ress =& $model->getNodeMatches($node_id))
+			if ($ress = $model->getNodeMatches($node_id))
 			{
 				foreach ($ress1 as $res1)
 				{
@@ -143,13 +143,13 @@ class JoomleagueViewTreetomatchs extends JLGView
 		unset($res1);
 		unset($notusedmatches);
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('treetomatchs',$treetomatchs);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('nodews',$nodews);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->treetomatchs = $treetomatchs;
+		$this->projectws = $projectws;
+		$this->nodews = $nodews;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		parent::display($tpl);
 	}
@@ -168,15 +168,13 @@ class JoomleagueViewTreetomatchs extends JLGView
 		$projectws = $this->get('Data','project');
 		$nodews = $this->get('Data','node');
 
-		$this->assignRef('match',$match);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('nodews',$nodews);
-		$this->assignRef('total',$total);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->match = $match;
+		$this->projectws = $projectws;
+		$this->nodews = $nodews;
+		$this->total = $total;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		parent::display($tpl);
 	}
-
 }
-?>

@@ -67,13 +67,13 @@ class JoomleagueViewRound extends JLGView
 		}
 
 		$projectws = $this->get('Data','project');
-		$this->assignRef('projectws',$projectws);
-		 #$this->assignRef('lists',$lists);
-		$this->assignRef('matchday',$round);
+		$this->projectws = $projectws;
+		 #$this->lists = $lists;
+		$this->matchday = $round;
 
-		$this->assignRef('form'      	, $this->get('form'));	
+		$this->form = $this->get('form');	
 		//$extended = $this->getExtended($round->extended, 'round');
-		//$this->assignRef( 'extended', $extended );		
+		//$this->extended = $extended;		
 		$this->addToolbar();		
 		parent::display($tpl);
 	}
@@ -103,4 +103,3 @@ class JoomleagueViewRound extends JLGView
 		JToolBarHelper::help('screen.joomleague', true);	
 	}
 }
-?>

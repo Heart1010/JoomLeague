@@ -14,25 +14,25 @@ class JoomleagueViewReferee extends JLGView
 		$config=$model->getTemplateConfig($this->getName());
 		$person=$model->getPerson();
 
-		$this->assignRef('project',$model->getProject());
-		$this->assignRef('overallconfig',$model->getOverallConfig());
-		$this->assignRef('config',$config);
-		$this->assignRef('person',$person);
-		$this->assignRef('showediticon', $isEditor);
+		$this->project = $model->getProject();
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
+		$this->person = $person;
+		$this->showediticon = $isEditor;
 		
-		$ref=&$model->getReferee();
-		$this->assignRef('referee',$ref);
-		$this->assignRef('history',$model->getHistory('ASC'));
+		$ref=$model->getReferee();
+		$this->referee = $ref;
+		$this->history = $model->getHistory('ASC');
 		if ($config['show_gameshistory'])
 		{
-			$this->assignRef('games',$model->getGames());
-			$this->assignRef('teams',$model->getTeamsIndexedByPtid());
+			$this->games = $model->getGames();
+			$this->teams = $model->getTeamsIndexedByPtid();
 		}
 		
 		if ($person)
 		{
 			$extended = $this->getExtended($person->extended, 'referee');
-			$this->assignRef( 'extended', $extended );
+			$this->extended = $extended;
 		}
 		
 		$name = !empty($person) ? JoomleagueHelper::formatName(null, $person->firstname, $person->nickname,  $person->lastname,  $this->config["name_format"]) : "";
@@ -51,11 +51,9 @@ class JoomleagueViewReferee extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display($tpl);
 	}
-
 }
-?>

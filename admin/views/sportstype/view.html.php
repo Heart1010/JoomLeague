@@ -28,7 +28,7 @@ class JoomleagueViewSportsType extends JLGView
 	{
 		$this->form =  $this->get('form');
 		//$extended = $this->getExtended($sportstype->extended, 'sporttype');
-		//$this->assignRef( 'extended', $extended );
+		//$this->extended = $extended;
 		$this->addToolbar();		
 		parent::display($tpl);
 	}
@@ -64,4 +64,3 @@ class JoomleagueViewSportsType extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);	
 	}	
 }
-?>

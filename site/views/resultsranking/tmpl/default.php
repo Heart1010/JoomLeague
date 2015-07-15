@@ -47,11 +47,11 @@ JoomleagueHelper::addTemplatePaths($templatesToLoad, $this);
 			echo $this->loadTemplate('ranking');
 
 			echo JHtml::_('tabs.panel', JText::_('COM_JOOMLEAGUE_RANKING_HOME_RANKING'), 'panel'.($i++));
-			$this->assignRef('currentRanking',    	$this->homeRanking);
+			$this->currentRanking = $this->homeRanking;
 			echo $this->loadTemplate('ranking');
 
 			echo JHtml::_('tabs.panel', JText::_('COM_JOOMLEAGUE_RANKING_AWAY_RANKING'), 'panel'.($i++));
-			$this->assignRef('currentRanking',    	$this->awayRanking);
+			$this->currentRanking = $this->awayRanking;
 			echo $this->loadTemplate('ranking');
 			echo JHtml::_('tabs.end');
 		}

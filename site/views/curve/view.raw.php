@@ -25,22 +25,22 @@ class JoomleagueViewCurve extends JLGView
 		$flashconfig   = $model->getTemplateConfig( "flash" );
 		$config        = $model->getTemplateConfig($this->getName());
 
-		$this->assignRef( 'project', $model->getProject() );
+		$this->project = $model->getProject();
 
 		if ( isset( $this->project ) )
 		{
-			$this->assignRef( 'overallconfig', $model->getOverallConfig() );
+			$this->overallconfig = $model->getOverallConfig();
 			if ( !isset( $this->overallconfig['seperator'] ) )
 			{
 				$this->overallconfig['seperator'] = ":";
 			}
-			$this->assignRef( 'config', $config );
-			$this->assignRef( 'model', $model);
+			$this->config = $config;
+			$this->model = $model;
 			
-			$this->assignRef( 'colors',          $model->getColors($rankingconfig['colors']) );
-			$this->assignRef( 'division',        $model->getDivision($division));
-			$this->assignRef( 'team1',           $model->getTeam1($division) );
-			$this->assignRef( 'team2',           $model->getTeam2($division) );
+			$this->colors = $model->getColors($rankingconfig['colors']);
+			$this->division = $model->getDivision($division);
+			$this->team1 = $model->getTeam1($division);
+			$this->team2 = $model->getTeam2($division);
 			
 			$this->_setChartdata(array_merge($flashconfig, $rankingconfig));
 		}
@@ -163,5 +163,3 @@ function hline($color, $length, $ypoint, $linewidth)
 	$hline->append_value( new shape_point( $length, $ypoint ) );
 	return $hline;
 }
-
-?>

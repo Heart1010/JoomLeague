@@ -13,20 +13,21 @@ class JoomleagueViewEventsRanking extends JLGView
 		$model = $this->getModel();
 		$config=$model->getTemplateConfig($this->getName());
 
-		$this->assignRef('project', $model->getProject());
-		$this->assignRef('division', $model->getDivision());
-		$this->assignRef('matchid', $model->matchid);
-		$this->assignRef('overallconfig', $model->getOverallConfig());
-		$this->assignRef('config', $config);
-		$this->assignRef('teamid', $model->getTeamId());
-		$this->assignRef('teams', $model->getTeamsIndexedById());
-		$this->assignRef('favteams', $model->getFavTeams());
-		$this->assignRef('eventtypes', $model->getEventTypes());
-		$this->assignRef('limit', $model->getLimit());
-		$this->assignRef('limitstart', $model->getLimitStart());
-		$this->assignRef('pagination', $this->get('Pagination'));
-		$this->assignRef('eventranking', $model->getEventRankings($this->limit));
-		$this->assign( 'multiple_events', count($this->eventtypes) > 1 );
+		$this->project = $model->getProject();
+		$this->division = $model->getDivision();
+		$this->matchid = $model->matchid;
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
+		$this->teamid = $model->getTeamId();
+		$this->teams = $model->getTeamsIndexedById();
+		$this->favteams = $model->getFavTeams();
+		$this->eventtypes = $model->getEventTypes();
+		$this->limit = $model->getLimit();
+		$this->limitstart = $model->getLimitStart();
+		$this->pagination = $this->get('Pagination');
+		$this->eventranking = $model->getEventRankings($this->limit);
+		// @todo: check!
+		$this->multiple_events = count($this->eventtypes) > 1;
 
 		$prefix = JText::_('COM_JOOMLEAGUE_EVENTSRANKING_PAGE_TITLE');
 		if ( $this->multiple_events )
@@ -58,11 +59,9 @@ class JoomleagueViewEventsRanking extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 
 		parent::display($tpl);
 	}
-
 }
-?>

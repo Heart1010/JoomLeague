@@ -34,7 +34,7 @@ class JoomleagueViewSettings extends JLGView
 		$jRegistry->loadString($params->toString('ini'), 'ini');
 		$form = JForm::getInstance($option, $xmlfile, array('control'=> 'params'), false, "/config");
 		$form->bind($jRegistry);
-		$this->assignRef('form', $form);
+		$this->form = $form;
 
 		$this->addToolbar();		
 		parent::display($tpl);
@@ -56,4 +56,3 @@ class JoomleagueViewSettings extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);		
 	}
 }
-?>

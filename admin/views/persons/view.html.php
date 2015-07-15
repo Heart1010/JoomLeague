@@ -147,16 +147,16 @@ class JoomleagueViewPersons extends JLGView
 		$lists['search']=$search;
 		$lists['search_mode']=$search_mode;
 
-		$this->assignRef('prjid',$project_id);
-		$this->assignRef('prj_name',$project_name);
-		$this->assignRef('team_id',$team_id);
-		$this->assignRef('team_name',$team_name);
-		$this->assignRef('project_team_id',$project_team_id);
-		$this->assignRef('lists',$lists);
-		$this->assignRef('items',$items);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',JFactory::getURI()->toString());
-		$this->assignRef('type',$type);
+		$this->prjid = $project_id;
+		$this->prj_name = $project_name;
+		$this->team_id = $team_id;
+		$this->team_name = $team_name;
+		$this->project_team_id = $project_team_id;
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->pagination = $pagination;
+		$this->request_url = JFactory::getURI()->toString();
+		$this->type = $type;
 		$this->component_params = $params;
 				 
 		parent::display($tpl);

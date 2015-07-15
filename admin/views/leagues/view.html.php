@@ -45,11 +45,11 @@ class JoomleagueViewLeagues extends JLGView
 		// search filter
 		$lists['search']=$search;
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('items',$items);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 		$this->addToolbar();
 		parent::display($tpl);
 	}
@@ -72,4 +72,3 @@ class JoomleagueViewLeagues extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

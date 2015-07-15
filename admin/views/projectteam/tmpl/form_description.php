@@ -27,7 +27,7 @@
 						<td>
 							<?php
 							$editor = JFactory::getEditor();
-							$this->assignRef('editor', $editor);
+							$this->editor = $editor;
 							// parameters : areaname, content, hidden field, width, height, rows, cols
 							echo $this->editor->display('notes',$this->project_team->notes,'600','400','70','15');
 							?>

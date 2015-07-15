@@ -70,12 +70,12 @@ class JoomleagueViewProjectposition extends JLGView
 
 		$projectws = $this->get('Data','project');
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('positiontool',$positiontool);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->positiontool = $positiontool;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 		
 		$this->addToolbar();	
 		parent::display($tpl);
@@ -93,7 +93,7 @@ class JoomleagueViewProjectposition extends JLGView
 		$res1=array();
 		$notusedpositions=array();
 
-		if ($ress =& $model->getProjectPositions())
+		if ($ress = $model->getProjectPositions())
 		{ // select all already assigned positions to the project
 			foreach($ress as $res){$project_positionslist[]=JHtml::_('select.option',$res->value,JText::_($res->text));}
 			$lists['project_positions']=JHtml::_(	'select.genericlist',
@@ -108,7 +108,7 @@ class JoomleagueViewProjectposition extends JLGView
 			$lists['project_positions']='<select name="project_positionslist[]" id="project_positionslist" style="width:250px; height:250px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
-		if ($ress1 =& $model->getSubPositions($projectws->sports_type_id))
+		if ($ress1 = $model->getSubPositions($projectws->sports_type_id))
 		{
 			if ($ress)
 			{
@@ -153,12 +153,12 @@ class JoomleagueViewProjectposition extends JLGView
 		unset($ress1);
 		unset($notusedpositions);
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('positiontool',$positiontool);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->positiontool = $positiontool;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		$this->addToolbar_Editlist();		
 		parent::display($tpl);
@@ -191,4 +191,3 @@ class JoomleagueViewProjectposition extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}	
 }
-?>

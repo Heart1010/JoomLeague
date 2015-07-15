@@ -43,20 +43,20 @@ class JoomleagueViewTreetos extends JLGView
 		//build the html options for divisions
 		$divisions[]=JHtmlSelect::option('0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_DIVISION'));
 		$mdlDivisions = JModelLegacy::getInstance("divisions", "JoomLeagueModel");
-		if ($res =& $mdlDivisions->getDivisions($project_id)){
+		if ($res = $mdlDivisions->getDivisions($project_id)){
 			$divisions=array_merge($divisions,$res);
 		}
 		$lists['divisions']=$divisions;
 		unset($divisions);
 	
-		$this->assignRef('user', 		$user);
-		$this->assignRef('lists',		$lists);
-		$this->assignRef('items',		$items);
-		$this->assignRef('projectws',	$projectws);
-		$this->assignRef('division',	$division);
-		$this->assignRef('total',		$total);
-		$this->assignRef('pagination',	$pagination);
-		$this->assignRef('request_url',	$uri);
+		$this->user = $user;
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->projectws = $projectws;
+		$this->division = $division;
+		$this->total = $total;
+		$this->pagination = $pagination;
+		$this->request_url = $uri;
 
 		$this->addToolbar();
 		parent::display($tpl);

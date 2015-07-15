@@ -11,25 +11,25 @@ class JoomleagueViewTeamInfo extends JLGView
 		$model		= $this->getModel();
 		$config		= $model->getTemplateConfig( $this->getName() );
 		$project	= $model->getProject();
-		$this->assignRef( 'project', $project );
+		$this->project = $project;
 		$isEditor = $model->hasEditPermission('projectteam.edit');
 
 		if ( isset($this->project->id) )
 		{
 			$overallconfig = $model->getOverallConfig();
-			$this->assignRef( 'overallconfig',  $overallconfig);
-			$this->assignRef( 'config', $config );
+			$this->overallconfig = $overallconfig;
+			$this->config = $config;
 			$team = $model->getTeamByProject();
-			$this->assignRef( 'team',  $team );
+			$this->team = $team;
 
 			$club = $model->getClub() ;
-			$this->assignRef( 'club', $club);
+			$this->club = $club;
 			$seasons = $model->getSeasons( $config );
-			$this->assignRef( 'seasons', $seasons );
-			$this->assignRef('showediticon', $isEditor);
+			$this->seasons = $seasons;
+			$this->showediticon = $isEditor;
 
 			$trainingData = $model->getTrainigData($this->project->id);
-			$this->assignRef( 'trainingData', $trainingData );
+			$this->trainingData = $trainingData;
 
 			$daysOfWeek=array(
 				1 => JText::_('COM_JOOMLEAGUE_GLOBAL_MONDAY'),
@@ -40,11 +40,11 @@ class JoomleagueViewTeamInfo extends JLGView
 				6 => JText::_('COM_JOOMLEAGUE_GLOBAL_SATURDAY'),
 				7 => JText::_('COM_JOOMLEAGUE_GLOBAL_SUNDAY')
 			);
-			$this->assignRef( 'daysOfWeek', $daysOfWeek );
+			$this->daysOfWeek = $daysOfWeek;
 		}
 
 		$extended = $this->getExtended($team->teamextended, 'team');
-		$this->assignRef( 'extended', $extended );
+		$this->extended = $extended;
 
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_TEAMINFO_PAGE_TITLE'));
@@ -63,10 +63,9 @@ class JoomleagueViewTeamInfo extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
 }
-?>

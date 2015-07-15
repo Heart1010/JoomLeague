@@ -50,36 +50,36 @@ class JoomleagueViewResultsmatrix extends JoomleagueViewResults  {
 		// merge the 2 config files
 		$config = array_merge($matrixconfig, $resultsconfig);
 
-		$this->assignRef('project', 		$resultsmodel->getProject());
-		$this->assignRef('overallconfig',	$resultsmodel->getOverallConfig());
-		$this->assignRef('config',			array_merge($this->overallconfig, $config));
-		$this->assignRef('tableconfig',		$matrixconfig);
-		$this->assignRef('params', 			$params);
-		$this->assignRef('showediticon',	$resultsmodel->getShowEditIcon());
-		$this->assignRef('division',		$resultsmodel->getDivision());
+		$this->project = $resultsmodel->getProject();
+		$this->overallconfig = $resultsmodel->getOverallConfig();
+		$this->config = array_merge($this->overallconfig, $config);
+		$this->tableconfig = $matrixconfig;
+		$this->params = $params;
+		$this->showediticon = $resultsmodel->getShowEditIcon();
+		$this->division = $resultsmodel->getDivision();
 
-		$this->assignRef( 'divisionid', $matrixmodel->getDivisionID() );
-		$this->assignRef( 'division', $matrixmodel->getDivision() );
-		$this->assignRef( 'teams', $matrixmodel->getTeamsIndexedByPtid( $matrixmodel->getDivisionID() ) );
-		$this->assignRef( 'results', $matrixmodel->getMatrixResults( $matrixmodel->getProject()->id ) );
-		$this->assignRef( 'favteams', $matrixmodel->getFavTeams() );
+		$this->divisionid = $matrixmodel->getDivisionID();
+		$this->division = $matrixmodel->getDivision();
+		$this->teams = $matrixmodel->getTeamsIndexedByPtid($matrixmodel->getDivisionID());
+		$this->results = $matrixmodel->getMatrixResults($matrixmodel->getProject()->id);
+		$this->favteams = $matrixmodel->getFavTeams();
 
-		$this->assignRef('matches',			$resultsmodel->getMatches());
-		$this->assignRef('round',			$resultsmodel->roundid);
-		$this->assignRef('roundid',			$resultsmodel->roundid);
-		$this->assignRef('roundcode',		$roundcode);
+		$this->matches = $resultsmodel->getMatches();
+		$this->round = $resultsmodel->roundid;
+		$this->roundid = $resultsmodel->roundid;
+		$this->roundcode = $roundcode;
 		
 		$options = $this->getRoundSelectNavigation($rounds);
 
-		$this->assignRef('matchdaysoptions',$options);
-		$this->assignRef('currenturl', 		JoomleagueHelperRoute::getResultsMatrixRoute($resultsmodel->getProject()->slug, $this->roundid));
-		$this->assignRef('rounds',			$resultsmodel->getRounds());
-		$this->assignRef('favteams',		$resultsmodel->getFavTeams($this->project));
-		$this->assignRef('projectevents',	$resultsmodel->getProjectEvents());
-		$this->assignRef('model',			$resultsmodel);
-		$this->assignRef('isAllowed',		$resultsmodel->isAllowed());
+		$this->matchdaysoptions = $options;
+		$this->currenturl = JoomleagueHelperRoute::getResultsMatrixRoute($resultsmodel->getProject()->slug, $this->roundid);
+		$this->rounds = $resultsmodel->getRounds();
+		$this->favteams = $resultsmodel->getFavTeams($this->project);
+		$this->projectevents = $resultsmodel->getProjectEvents();
+		$this->model = $resultsmodel;
+		$this->isAllowed = $resultsmodel->isAllowed();
 
-		$this->assign('action', $uri->toString());
+		$this->action = $uri->toString();
 
 		// Set page title
 		if ($this->params->get('what_to_show_first', 0) == 0) {
@@ -102,7 +102,7 @@ class JoomleagueViewResultsmatrix extends JoomleagueViewResults  {
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $pageTitleFormat));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $pageTitleFormat);
 		$document->setTitle($this->pagetitle);
 
 		/*
@@ -127,4 +127,3 @@ class JoomleagueViewResultsmatrix extends JoomleagueViewResults  {
 		return $options;
 	}
 }
-?>

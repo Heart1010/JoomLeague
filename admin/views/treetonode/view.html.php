@@ -47,7 +47,7 @@ class JoomleagueViewTreetonode extends JLGView
 		$lists = array();
 		
 		$node = $this->get('data');
-		$match =& $model->getNodeMatch();
+		$match = $model->getNodeMatch();
 		$total = $this->get('Total');
 		$pagination = $this->get('Pagination');
 		$projectws = $this->get( 'Data', 'project' );
@@ -55,23 +55,21 @@ class JoomleagueViewTreetonode extends JLGView
 		$model = $this->getModel('project');
 		$mdlTreetonodes = JModelLegacy::getInstance("Treetonodes", "JoomleagueModel");
 		$team_id[]=JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TEAM'));
-		if($projectteams =& $mdlTreetonodes->getProjectTeamsOptions($model->_id))
+		if($projectteams = $mdlTreetonodes->getProjectTeamsOptions($model->_id))
 		{
 			$team_id=array_merge($team_id,$projectteams);
 		}
 		$lists['team']=$team_id;
 		unset($team_id);
 
-		$this->assignRef( 'user',		JFactory::getUser() );
-		$this->assignRef( 'projectws',		$projectws );
-		$this->assignRef( 'lists',		$lists );
-		$this->assignRef( 'division',		$division );
-		$this->assignRef( 'division_id',	$division_id );
-		$this->assignRef( 'node',		$node );
-		$this->assignRef( 'match',		$match );
-		$this->assignRef( 'pagination',		$pagination );
-		parent::display( $tpl );
+		$this->user = JFactory::getUser();
+		$this->projectws = $projectws;
+		$this->lists = $lists;
+		$this->division = $division;
+		$this->division_id = $division_id;
+		$this->node = $node;
+		$this->match = $match;
+		$this->pagination = $pagination;
+		parent::display($tpl);
 	}
-
 }
-?>

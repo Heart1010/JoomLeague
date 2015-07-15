@@ -74,7 +74,7 @@ class JoomleagueViewMatches extends JLGView
 				$row->divhomeid =0;
 				$row->divawayid =0;
 			}
-			if ($projectteams =& $model->getProjectTeamsOptions($divhomeid)){
+			if ($projectteams = $model->getProjectTeamsOptions($divhomeid)){
 				$teams=array_merge($teams,$projectteams);
 			}
 			$lists['teams_'+$divhomeid] = $teams;
@@ -156,24 +156,24 @@ class JoomleagueViewMatches extends JLGView
 		//build the html options for divisions
 		$divisions[]=JHtmlSelect::option('0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_DIVISION'));
 		$mdlDivisions = JModelLegacy::getInstance("divisions", "JoomLeagueModel");
-		if ($res =& $mdlDivisions->getDivisions($project_id)){
+		if ($res = $mdlDivisions->getDivisions($project_id)){
 			$divisions=array_merge($divisions,$res);
 		}
 		$lists['divisions']=$divisions;
 		unset($divisions);
-		$this->assignRef('division',$division);
+		$this->division = $division;
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('matches',$matches);
-		$this->assignRef('ress',$ress);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('roundws',$roundws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('teams', $projectteams);
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->matches = $matches;
+		$this->ress = $ress;
+		$this->projectws = $projectws;
+		$this->roundws = $roundws;
+		$this->pagination = $pagination;
+		$this->teams = $projectteams;
 		
-		$this->assignRef('request_url',$uri->toString());
-		$this->assignRef('prefill', $params->get('use_prefilled_match_roster',0));
+		$this->request_url = $uri->toString();
+		$this->prefill = $params->get('use_prefilled_match_roster',0);
 		$this->addToolbar();
 
 		parent::display($tpl);
@@ -223,4 +223,3 @@ class JoomleagueViewMatches extends JLGView
 				$last->format(JText::_('COM_JOOMLEAGUE_ADMIN_MATCHES_DATE_FORMAT')).')';
 	}
 }
-?>

@@ -82,14 +82,14 @@ class JoomleagueViewJoomleague extends JLGView
 		$mdlRounds = JModelLegacy::getInstance("Rounds", "JoomleagueModel");
 		$iMatchDaysCount = $mdlRounds->getRoundsCount($project->id);
 		
-		$this->assignRef('project',$project);
-		$this->assignRef('count_projectdivisions',$iProjectDivisionsCount);
-		$this->assignRef('count_projectpositions',$iProjectPositionsCount);
-		$this->assignRef('count_projectreferees', $iProjectRefereesCount);
-		$this->assignRef('count_projectteams', $iProjectTeamsCount );
-		$this->assignRef('count_matchdays', $iMatchDaysCount);
-		$this->assignRef('params',$params);
-		$this->assignRef('comp_params',$comp_params);
+		$this->project = $project;
+		$this->count_projectdivisions = $iProjectDivisionsCount;
+		$this->count_projectpositions = $iProjectPositionsCount;
+		$this->count_projectreferees = $iProjectRefereesCount;
+		$this->count_projectteams = $iProjectTeamsCount;
+		$this->count_matchdays = $iMatchDaysCount;
+		$this->params = $params;
+		$this->comp_params = $comp_params;
 
 		parent::display($tpl);
 	}
@@ -475,19 +475,18 @@ class JoomleagueViewJoomleague extends JLGView
 		$versions  = $mdlJoomleague->getVersion();
 		if ($versions) {$version=$versions[0]->version;} else {$version='';}
 
-		$this->assignRef('version',$version);
-		$this->assignRef('link',$link);
-		$this->assignRef('tabs',$tabs);
-		$this->assignRef('label',$label);
-		$this->assignRef('lists',$lists);
-		$this->assignRef('active',$active);
-		$this->assignRef('limage',$limage);
-		$this->assignRef('project',$project);
-		$this->assignRef('sports_type_id',$sports_type_id);
-		$this->assignRef('management',$management);
+		$this->version = $version;
+		$this->link = $link;
+		$this->tabs = $tabs;
+		$this->label = $label;
+		$this->lists = $lists;
+		$this->active = $active;
+		$this->limage = $limage;
+		$this->project = $project;
+		$this->sports_type_id = $sports_type_id;
+		$this->management = $management;
 
 		parent::display('admin');
 	}
 
 }
-?>

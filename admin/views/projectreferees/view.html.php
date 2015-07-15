@@ -122,12 +122,12 @@ class JoomleagueViewProjectReferees extends JLGView
 		unset($res1);
 		unset($notusedplayers);
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('projectplayer',$projectplayer);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->projectplayer = $projectplayer;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		parent::display($tpl);
 	}
@@ -172,7 +172,7 @@ class JoomleagueViewProjectReferees extends JLGView
 
 		//build the html options for position
 		$position_id[]=JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_REF_FUNCTION'));
-		if ($res =& $model->getRefereePositions()){
+		if ($res = $model->getRefereePositions()){
 			$position_id=array_merge($position_id,$res);
 		}
 		$lists['project_position_id']=$position_id;
@@ -180,12 +180,12 @@ class JoomleagueViewProjectReferees extends JLGView
 
 		$projectws	= $this->get('Data','project');
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('items',$items);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 		
 		$this->addToolbar();
 		parent::display($tpl);
@@ -208,4 +208,3 @@ class JoomleagueViewProjectReferees extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

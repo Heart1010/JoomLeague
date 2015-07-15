@@ -55,7 +55,7 @@ class JoomleagueViewTeamPlayer extends JLGView
 		$selectedvalue = $project_player->project_position_id;
 		$projectpositions = array();
 		$projectpositions[] = JHtml::_('select.option',	'0', JText::_( 'COM_JOOMLEAGUE_GLOBAL_SELECT_POSITION' ) );
-		if ( $res =& $model->getProjectPositions() )
+		if ( $res = $model->getProjectPositions() )
 		{
 			$projectpositions = array_merge( $projectpositions, $res );
 		}
@@ -153,15 +153,15 @@ class JoomleagueViewTeamPlayer extends JLGView
 				'text',
 				$project_player->away_end );
 
-		$this->assignRef('form'      	, $this->get('form'));
+		$this->form = $this->get('form');
 		$extended = $this->getExtended($project_player->extended, 'teamplayer');
-		$this->assignRef( 'extended', $extended );
+		$this->extended = $extended;
 
-		#$this->assignRef( 'default_person',	$default_person );
-		$this->assignRef( 'projectws',		$projectws );
-		$this->assignRef( 'teamws',			$teamws );
-		$this->assignRef( 'lists',			$lists );
-		$this->assignRef( 'project_player',	$project_player );
+		#$this->default_person = $default_person;
+		$this->projectws = $projectws;
+		$this->teamws = $teamws;
+		$this->lists = $lists;
+		$this->project_player = $project_player;
 		$this->addToolbar();
 		parent::display( $tpl );
 	}
@@ -197,4 +197,3 @@ class JoomleagueViewTeamPlayer extends JLGView
 		JToolBarHelper::help( 'screen.joomleague', true );
 	}
 }
-?>

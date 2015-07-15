@@ -64,8 +64,8 @@ class JoomleagueViewTreeto extends JLGView
 			$mainframe->redirect('index.php?option='.$option,$msg);
 		}
 
-		$this->assignRef('form' 	,$this->get('form'));
-		$this->assignRef('treeto',$treeto);
+		$this->form = $this->get('form');
+		$this->treeto = $treeto;
 
 		$this->addToolBar();
 		parent::display($tpl);
@@ -84,10 +84,10 @@ class JoomleagueViewTreeto extends JLGView
 
 		$treeto = $this->get('data');
 		$projectws = $this->get('Data','project');
-		$this->assignRef('form' 	,$this->get('form'));
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('lists',$lists);
-		$this->assignRef('treeto',$treeto);
+		$this->form = $this->get('form');
+		$this->projectws = $projectws;
+		$this->lists = $lists;
+		$this->treeto = $treeto;
 
 		$this->addToolBar_Gennode();
 		parent::display($tpl);
@@ -116,4 +116,3 @@ class JoomleagueViewTreeto extends JLGView
 		$document->addScript(JUri::root() . $this->script);
 	}
 }
-?>

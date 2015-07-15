@@ -92,14 +92,14 @@ class JoomleagueViewProjectteam extends JLGView
 			unset($divisions);
 		}
 
-		$this->assignRef('form'      	, $this->get('form'));	
+		$this->form = $this->get('form');	
 		$extended = $this->getExtended($project_team->extended, 'projectteam');
-		$this->assignRef( 'extended', $extended );
-		//$this->assignRef('imageselect',		$imageselect);
-		$this->assignRef('projectws',		$projectws);
-		$this->assignRef('lists',			$lists);
-		$this->assignRef('project_team',	$project_team);
-		$this->assignRef('trainingData',	$trainingData);
+		$this->extended = $extended;
+		//$this->imageselect = $imageselect;
+		$this->projectws = $projectws;
+		$this->lists = $lists;
+		$this->project_team = $project_team;
+		$this->trainingData = $trainingData;
 		$this->addToolbar();
 		parent::display($tpl);
 	}
@@ -120,4 +120,3 @@ class JoomleagueViewProjectteam extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

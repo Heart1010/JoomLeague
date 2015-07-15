@@ -76,8 +76,8 @@ class JoomleagueViewProjectteams extends JLGView
 		JLToolBarHelper::custom('projectteam.storechangeteams','move.png','move_f2.png','COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_BUTTON_STORE_CHANGE_TEAMS',false);
 		JToolBarHelper::back();	
 		
-		$this->assignRef('projectteams', $projectteams);
-		$this->assignRef('lists',$lists);
+		$this->projectteams = $projectteams;
+		$this->lists = $lists;
 		
 		parent::display($tpl);
 	}
@@ -121,7 +121,7 @@ class JoomleagueViewProjectteams extends JLGView
 		$res1 = array();
 		$notusedteams = array();
 
-		if ($ress =& $model->getProjectTeams($project_id))
+		if ($ress = $model->getProjectTeams($project_id))
 		{
 			$teamslist=array();
 			foreach($ress as $res)
@@ -146,9 +146,9 @@ class JoomleagueViewProjectteams extends JLGView
 			$lists['project_teams']= '<select name="project_teamslist[]" id="project_teamslist" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
-		if ($ress1 =& $model->getTeams())
+		if ($ress1 = $model->getTeams())
 		{
-			if ($ress =& $model->getProjectTeams($project_id))
+			if ($ress = $model->getProjectTeams($project_id))
 			{
 				foreach ($ress1 as $res1)
 				{
@@ -205,12 +205,12 @@ class JoomleagueViewProjectteams extends JLGView
 		unset($res1);
 		unset($notusedteams);
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('projectteam',$projectteam);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->projectteam = $projectteam;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		$this->addToolbar_Editlist();		
 		parent::display($tpl);
@@ -261,7 +261,7 @@ class JoomleagueViewProjectteams extends JLGView
 		//build the html options for divisions
 		$divisions[]=JHtmlSelect::option('0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_DIVISION'));
 		$mdlDivisions = JModelLegacy::getInstance("divisions", "JoomLeagueModel");
-		if ($res =& $mdlDivisions->getDivisions($project_id)){
+		if ($res = $mdlDivisions->getDivisions($project_id)){
 			$divisions=array_merge($divisions,$res);
 		}
 		$lists['divisions']=$divisions;
@@ -269,13 +269,13 @@ class JoomleagueViewProjectteams extends JLGView
 
 		$projectws	= $this->get('Data','project');
 
-		$this->assignRef('user',JFactory::getUser());
-		$this->assignRef('lists',$lists);
-		$this->assignRef('projectteam',$projectteam);
-		$this->assignRef('division',$division);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->projectteam = $projectteam;
+		$this->division = $division;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		$this->addToolbar();			
 		parent::display($tpl);
@@ -311,9 +311,9 @@ class JoomleagueViewProjectteams extends JLGView
 		JLToolBarHelper::apply('projectteam.copy');		
 		JToolBarHelper::back();
 		
-		$this->assignRef('ptids', $ptids);
-		$this->assignRef('lists', $lists);
-		$this->assignRef('request_url',$uri->toString());
+		$this->ptids = $ptids;
+		$this->lists = $lists;
+		$this->request_url = $uri->toString();
 	
 		parent::display($tpl);
 	}
@@ -353,4 +353,3 @@ class JoomleagueViewProjectteams extends JLGView
 		JToolBarHelper::help( 'screen.joomleague', true );	
 	}
 }
-?>

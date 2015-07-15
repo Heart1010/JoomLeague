@@ -24,8 +24,8 @@ class JoomleagueViewCurve extends JLGView
 		$flashconfig   = $model->getTemplateConfig( "flash" );
 		$config        = $model->getTemplateConfig($this->getName());
 
-		$this->assignRef( 'project', $model->getProject() );
-		$this->assignRef( 'division', $model->getDivision($division) );
+		$this->project = $model->getProject();
+		$this->division = $model->getDivision($division);
 
 		if ( isset( $this->project ) )
 		{
@@ -82,22 +82,22 @@ class JoomleagueViewCurve extends JLGView
 				$team2select[$div->id] = JHtml::_('select.genericlist', $options, 'tid2_'.$div->id, 'onchange="reload_curve_chart_'.$div->id.'()" class="inputbox" style="font-size:9px;"','value', 'text', $teamid2);		
 			}
 
-			$this->assignRef( 'overallconfig', $model->getOverallConfig() );
+			$this->overallconfig = $model->getOverallConfig();
 			if ( !isset( $this->overallconfig['seperator'] ) )
 			{
 				$this->overallconfig['seperator'] =			 ":";
 			}
-			$this->assignRef( 'config', $config );
-			$this->assignRef( 'model', $model);
-			$this->assignRef( 'colors',          $model->getColors($rankingconfig['colors']) );
-			$this->assignRef( 'divisions',       $divisions );
-			$this->assignRef( 'division',        $model->getDivision($division) );
-			$this->assignRef( 'favteams',        $model->getFavTeams() );
-			$this->assignRef( 'team1',           $model->getTeam1() );
-			$this->assignRef( 'team2',           $model->getTeam2() );
-			$this->assignRef( 'allteams',        $model->getTeams($division) );
-			$this->assignRef( 'team1select',     $team1select );
-			$this->assignRef( 'team2select',     $team2select );
+			$this->config = $config;
+			$this->model = $model;
+			$this->colors = $model->getColors($rankingconfig['colors']);
+			$this->divisions = $divisions;
+			$this->division = $model->getDivision($division);
+			$this->favteams = $model->getFavTeams();
+			$this->team1 = $model->getTeam1();
+			$this->team2 = $model->getTeam2();
+			$this->allteams = $model->getTeams($division);
+			$this->team1select = $team1select;
+			$this->team2select = $team2select;
 			$this->_setChartdata(array_merge($flashconfig, $rankingconfig));
 		}
 
@@ -121,7 +121,7 @@ class JoomleagueViewCurve extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
@@ -275,5 +275,3 @@ function hline($color, $length, $ypoint, $linewidth)
 	$hline->append_value( new shape_point( $length, $ypoint ) );
 	return $hline;
 }
-
-?>

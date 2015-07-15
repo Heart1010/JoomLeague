@@ -18,12 +18,12 @@ class JoomleagueViewIcal extends JLGView
 
 		if ( isset( $project ) )
 		{
-			$this->assignRef( 'project', $project );
+			$this->project = $project;
 		}
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'config', $this->overallconfig );
-		$this->assignRef( 'matches', $model->getMatches() );
-		$this->assignRef( 'teams', $model->getTeamsFromMatches($this->matches) );
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $this->overallconfig;
+		$this->matches = $model->getMatches();
+		$this->teams = $model->getTeamsFromMatches($this->matches);
 
 		// load a class that handles ical formats.
 		require_once( JLG_PATH_SITE . DS . 'helpers' . DS . 'iCalcreator.class.php' );
@@ -98,4 +98,3 @@ class JoomleagueViewIcal extends JLGView
 		//		parent::display( $tpl );
 	}
 }
-?>

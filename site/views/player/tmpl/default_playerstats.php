@@ -98,10 +98,10 @@
 				foreach ($this->historyPlayer as $player_hist)
 				{
 					$model = $this->getModel();
-					$this->assignRef('inoutstat',$model->getInOutStats($player_hist->project_id, $player_hist->ptid, $player_hist->tpid));
+					$this->inoutstat = $model->getInOutStats($player_hist->project_id, $player_hist->ptid, $player_hist->tpid);
 					// time played
 					$timePlayed = 0;
-					$this->assignRef('timePlayed',$model->getTimePlayed($player_hist->tpid,$this->project->game_regular_time));
+					$this->timePlayed = $model->getTimePlayed($player_hist->tpid,$this->project->game_regular_time);
 					$timePlayed  = $this->timePlayed;
 					$link1=JoomleagueHelperRoute::getPlayerRoute($player_hist->project_slug,$player_hist->team_slug,$this->person->slug);
 					$link2=JoomleagueHelperRoute::getTeamInfoRoute($player_hist->project_slug,$player_hist->team_slug);

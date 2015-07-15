@@ -45,8 +45,8 @@ class JoomleagueViewStatistic extends JLGView
 			/*
 			 * statistic class parameters
 			 */
-			$class = &JLGStatistic::getInstance($class);
-			$this->assign( 'calculated',   $class->getCalculated());
+			$class = JLGStatistic::getInstance($class);
+			$this->calculated = $class->getCalculated();
 		}
 
 		$this->addToolbar();

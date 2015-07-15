@@ -25,31 +25,31 @@ class JoomleagueViewRanking extends JLGView {
 			
 		$model->setProjectId($project->id);
 		
-		$this->assignRef('project', $project);
-		$this->assignRef('overallconfig', $model->getOverallConfig());
-		$this->assignRef('tableconfig', $config);
-		$this->assignRef('config', $config);
+		$this->project = $project;
+		$this->overallconfig = $model->getOverallConfig();
+		$this->tableconfig = $config;
+		$this->config = $config;
 
 		$model->computeRanking();
 
-		$this->assignRef('model',     $model);
-		$this->assignRef('round',     $model->round);
-		$this->assignRef('part',      $model->part);
-		$this->assignRef('rounds',    $rounds);
-		$this->assignRef('divisions', $model->getDivisions());
-		$this->assignRef('type',      $model->type);
-		$this->assignRef('from',      $model->from);
-		$this->assignRef('to',        $model->to);
-		$this->assignRef('divLevel',  $model->divLevel);
-		$this->assignRef('currentRanking',  $model->currentRanking);
-		$this->assignRef('previousRanking', $model->previousRanking);
-		$this->assignRef('homeRanking',    	$model->homeRank);
-		$this->assignRef('awayRanking',    	$model->awayRank);
-		$this->assignRef('current_round', 	$model->current_round);
-		$this->assignRef('previousgames', 	$model->getPreviousGames());
-		//$this->assignRef('teams', 			$model->getTeamsIndexedByPtid());
+		$this->model = $model;
+		$this->round = $model->round;
+		$this->part = $model->part;
+		$this->rounds = $rounds;
+		$this->divisions = $model->getDivisions();
+		$this->type = $model->type;
+		$this->from = $model->from;
+		$this->to = $model->to;
+		$this->divLevel = $model->divLevel;
+		$this->currentRanking = $model->currentRanking;
+		$this->previousRanking = $model->previousRanking;
+		$this->homeRanking = $model->homeRank;
+		$this->awayRanking = $model->awayRank;
+		$this->current_round = $model->current_round;
+		$this->previousgames = $model->getPreviousGames();
+		//$this->teams = $model->getTeamsIndexedByPtid());
 		
-		$this->assign('action', $uri->toString());
+		$this->action = $uri->toString();
 
 		$frommatchday[] = JHtml :: _('select.option', '0', JText :: _('COM_JOOMLEAGUE_RANKING_FROM_MATCHDAY'));
 		$frommatchday = array_merge($frommatchday, $rounds);
@@ -64,16 +64,16 @@ class JoomleagueViewRanking extends JLGView {
 		$opp_arr[] = JHtml :: _('select.option', "2", JText :: _('COM_JOOMLEAGUE_RANKING_AWAY_RANKING'));
 
 		$lists['type'] = $opp_arr;
-		$this->assignRef('lists', $lists);
+		$this->lists = $lists;
 
 		if (!isset ($config['colors'])) {
 			$config['colors'] = "";
 		}
 
-		$this->assignRef('colors', $model->getColors($config['colors']));
-		//$this->assignRef('result', $model->getTeamInfo());
-		//		$this->assignRef( 'pageNav', $model->pagenav( "ranking", count( $rounds ), $sr->to ) );
-		//		$this->assignRef( 'pageNav2', $model->pagenav2( "ranking", count( $rounds ), $sr->to ) );
+		$this->colors = $model->getColors($config['colors']);
+		//$this->result = $model->getTeamInfo();
+		//		$this->pageNav = $model->pagenav( "ranking", count( $rounds ), $sr->to );
+		//		$this->pageNav2 = $model->pagenav2( "ranking", count( $rounds ), $sr->to );
 
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_RANKING_PAGE_TITLE'));
@@ -88,11 +88,9 @@ class JoomleagueViewRanking extends JLGView {
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent :: display($tpl);
-	}
-		
+	}		
 }
-?>

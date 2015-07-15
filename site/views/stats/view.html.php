@@ -17,49 +17,49 @@ class JoomleagueViewStats extends JLGView
 		$flashconfig = $model->getTemplateConfig( "flash" );
 
 
-		$this->assignRef( 'project', $model->getProject() );
+		$this->project = $model->getProject();
 		if ( isset( $this->project ) )
 		{
 			$highest_home = $model->getHighestHome();
 			$highest_away = $model->getHighestAway();
 			
-			$this->assignRef( 'division', $model->getDivision());
-			$this->assignRef( 'overallconfig', $model->getOverallConfig() );
+			$this->division = $model->getDivision();
+			$this->overallconfig = $model->getOverallConfig();
 			if ( !isset( $this->overallconfig['seperator'] ) )
 			{
 				$this->overallconfig['seperator'] = ":";
 			}
-			$this->assignRef( 'config', $config );
+			$this->config = $config;
 
-			$this->assignRef( 'tableconfig', $tableconfig );
-			$this->assignRef( 'eventsconfig', $eventsconfig );
-			$this->assignRef( 'actualround', $model->getCurrentRoundNumber() );
+			$this->tableconfig = $tableconfig;
+			$this->eventsconfig = $eventsconfig;
+			$this->actualround = $model->getCurrentRoundNumber();
 
-			$this->assignRef( 'highest_home', 		$highest_home);
-			$this->assignRef( 'highest_away', 		$highest_away);
-			$this->assignRef( 'totals', 			$model->getSeasonTotals());
-			$this->assignRef( 'totalrounds', 		$model->getTotalRounds());
-			$this->assignRef( 'attendanceranking', 	$model->getAttendanceRanking());
-			$this->assignRef( 'bestavg', 			$model->getBestAvg());
-			$this->assignRef( 'bestavgteam', 		$model->getBestAvgTeam());
-			$this->assignRef( 'worstavg', 			$model->getWorstAvg());
-			$this->assignRef( 'worstavgteam', 		$model->getWorstAvgTeam());
+			$this->highest_home = $highest_home;
+			$this->highest_away = $highest_away;
+			$this->totals = $model->getSeasonTotals();
+			$this->totalrounds = $model->getTotalRounds();
+			$this->attendanceranking = $model->getAttendanceRanking();
+			$this->bestavg = $model->getBestAvg();
+			$this->bestavgteam = $model->getBestAvgTeam();
+			$this->worstavg = $model->getWorstAvg();
+			$this->worstavgteam = $model->getWorstAvgTeam();
 				
 			//hightest home
 			$hhHomeTeaminfo = $model->getTeaminfo($highest_home->project_hometeam_id);
-			$this->assignRef('hhHomeTeaminfo', $hhHomeTeaminfo);
+			$this->hhHomeTeaminfo = $hhHomeTeaminfo;
 			$hhAwayTeaminfo = $model->getTeaminfo($highest_home->project_awayteam_id);
-			$this->assignRef('hhAwayTeaminfo', $hhAwayTeaminfo);
+			$this->hhAwayTeaminfo = $hhAwayTeaminfo;
 				
 			//highest_away
 			$haHomeTeaminfo = $model->getTeaminfo($highest_away->project_hometeam_id);
-			$this->assignRef('haHomeTeaminfo', $haHomeTeaminfo);
+			$this->haHomeTeaminfo = $haHomeTeaminfo;
 			$haAwayTeaminfo = $model->getTeaminfo($highest_away->project_awayteam_id);
-			$this->assignRef('haAwayTeaminfo', $haAwayTeaminfo);
+			$this->haAwayTeaminfo = $haAwayTeaminfo;
 				
 			$limit = 3;
 
-			$this->assignRef( 'limit', $limit );
+			$this->limit = $limit;
 			$this->_setChartdata(array_merge($flashconfig, $config));
 		}
 		// Set page title
@@ -74,7 +74,7 @@ class JoomleagueViewStats extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
@@ -169,7 +169,6 @@ class JoomleagueViewStats extends JLGView
 		$y_legend->set_style( '{font-size: 15px; color: #778877}' );
 		$chart->set_y_legend( $y_legend );
 
-		$this->assignRef( 'chartdata',  $chart);
+		$this->chartdata = $chart;
 	}
 }
-?>

@@ -28,7 +28,7 @@ class JoomleagueViewEventtype extends JLGView
 
 		$this->form = $this->get('form');		
 		//$extended = $this->getExtended($projectreferee->extended, 'eventtype');
-		//$this->assignRef( 'extended', $extended );
+		//$this->extended = $extended;
 		
 		$this->addToolbar();			
 		parent::display($tpl);

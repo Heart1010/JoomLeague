@@ -26,9 +26,9 @@ class JoomleagueViewLeague extends JLGView
 	function display($tpl=null)
 	{
 
-		$this->assignRef('form',  $this->get('form'));
+		$this->form = $this->get('form');
 		$extended = $this->getExtended($this->form->getValue('extended'), 'league');
-		$this->assignRef( 'extended', $extended );
+		$this->extended = $extended;
 
 		$this->addToolbar();			
 		parent::display($tpl);

@@ -11,29 +11,29 @@ class JoomleagueViewMatrix extends JLGView
 
 		$model = $this->getModel();
 		$config = $model->getTemplateConfig($this->getName());
-		$project =& $model->getProject();
+		$project = $model->getProject();
 		
-		$this->assignRef( 'model', $model);
-		$this->assignRef( 'project', $project);
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
+		$this->model = $model;
+		$this->project = $project;
+		$this->overallconfig = $model->getOverallConfig();
 
-		$this->assignRef( 'config', $config );
+		$this->config = $config;
 
-		$this->assignRef( 'divisionid', $model->getDivisionID() );
-		$this->assignRef( 'roundid', $model->getRoundID() );
-		$this->assignRef( 'division', $model->getDivision() );
-		$this->assignRef( 'round', $model->getRound() );
-		$this->assignRef( 'teams', $model->getTeamsIndexedByPtid( $model->getDivisionID() ) );
-		$this->assignRef( 'results', $model->getMatrixResults( $model->projectid ) );
+		$this->divisionid = $model->getDivisionID();
+		$this->roundid = $model->getRoundID();
+		$this->division = $model->getDivision();
+		$this->round = $model->getRound();
+		$this->teams = $model->getTeamsIndexedByPtid($model->getDivisionID());
+		$this->results = $model->getMatrixResults($model->projectid);
 		
 		if ($project->project_type == 'DIVISIONS_LEAGUE' && !$this->divisionid )
 		{
 			$divisions = $model->getDivisions();
-			$this->assignRef('divisions', $divisions);
+			$this->divisions = $divisions;
 		}
 		
 		if(!is_null($project)) {
-			$this->assignRef( 'favteams', $model->getFavTeams() );
+			$this->favteams = $model->getFavTeams();
 		}
 		
 		// Set page title
@@ -52,10 +52,9 @@ class JoomleagueViewMatrix extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
 }
-?>

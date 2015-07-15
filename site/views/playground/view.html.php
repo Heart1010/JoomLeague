@@ -23,19 +23,19 @@ class JoomleagueViewPlayground extends JLGView
 		$project		= $model->getProject();
 		$overallconfig	= $model->getOverallConfig();
 		
-		$this->assignRef( 'project', 		$project);
-		$this->assignRef( 'overallconfig',  $overallconfig);
-		$this->assignRef( 'config', 		$config );
-		$this->assignRef( 'playground',  	$playground);
-		$this->assignRef( 'teams', 			$teams );
-		$this->assignRef( 'games', 			$games );
-		$this->assignRef( 'gamesteams', 	$gamesteams );
+		$this->project = $project;
+		$this->overallconfig = $overallconfig;
+		$this->config = $config;
+		$this->playground = $playground;
+		$this->teams = $teams;
+		$this->games = $games;
+		$this->gamesteams = $gamesteams;
 
-		$this->assignRef( 'address_string', $address_string);
-		$this->assignRef( 'mapconfig',		$map_config ); // Loads the project-template -settings for the GoogleMap
+		$this->address_string = $address_string;
+		$this->mapconfig = $map_config; // Loads the project-template -settings for the GoogleMap
 
 		$extended = $this->getExtended($this->playground->extended, 'playground');
-		$this->assignRef( 'extended', $extended );
+		$this->extended = $extended;
 		
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_PLAYGROUND_PAGE_TITLE'));
@@ -54,7 +54,7 @@ class JoomleagueViewPlayground extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		$document->addCustomTag( '<meta property="og:title" content="' . $this->playground->name .'"/>' );
@@ -62,4 +62,3 @@ class JoomleagueViewPlayground extends JLGView
 		parent::display( $tpl );
 	}
 }
-?>

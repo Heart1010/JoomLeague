@@ -25,7 +25,7 @@ if ( $this->overallconfig['show_project_heading'] == 1 && $this->project)
 		if(empty($this->division) && $division_id >0) {
 			$model = JModelLegacy::getInstance('project', 'JoomLeagueModel');
 			$division = $model->getDivision($division_id);
-			$this->assignRef( 'division', $division );
+			$this->division = $division;
 		}
 	}
 	if($this->overallconfig['show_project_text'] ||

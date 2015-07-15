@@ -15,15 +15,15 @@ class JoomleagueViewNextMatch extends JLGView
 		$config = $model->getTemplateConfig($this->getName());
 		$tableconfig = $model->getTemplateConfig( "ranking" );
 
-		$this->assignRef( 'project',			$model->getProject() );
-		$this->assignRef( 'config',			$config );
-		$this->assignRef( 'tableconfig',		$tableconfig );
-		$this->assignRef( 'overallconfig',		$model->getOverallConfig() );
+		$this->project = $model->getProject();
+		$this->config = $config;
+		$this->tableconfig = $tableconfig;
+		$this->overallconfig = $model->getOverallConfig();
 		if ( !isset( $this->overallconfig['seperator'] ) )
 		{
 			$this->overallconfig['seperator'] = ":";
 		}
-		$this->assignRef( 'match',			$match);
+		$this->match = $match;
 
 		if ($match)
 		{
@@ -35,7 +35,7 @@ class JoomleagueViewNextMatch extends JLGView
 				$matchTime = JoomleagueHelperHtml::showMatchTime($ret, $this->config, $this->overallconfig, $this->project);
 				$newmatchtext = $matchDate . " " . $matchTime . ", " . $ret->t1name . " - " . $ret->t2name;
 			}
-			$this->assignRef( 'newmatchtext',	$newmatchtext);
+			$this->newmatchtext = $newmatchtext;
 			$prevmatchtext = "";
 			if($match->old_match_id > 0)
 			{
@@ -44,37 +44,35 @@ class JoomleagueViewNextMatch extends JLGView
 				$matchTime = JoomleagueHelperHtml::showMatchTime($ret, $this->config, $this->overallconfig, $this->project);
 				$prevmatchtext = $matchDate . " " . $matchTime . ", " . $ret->t1name . " - " . $ret->t2name;
 			}
-			$this->assignRef( 'oldmatchtext',	$prevmatchtext);
+			$this->oldmatchtext = $prevmatchtext;
+			$this->teams = $model->getMatchTeams();
 
-			$this->assignRef( 'teams', 		$model->getMatchTeams() );
+			$this->referees = $model->getReferees();
+			$this->playground = $model->getPlayground($this->match->playground_id);
+			$this->homeranked = $model->getHomeRanked();		
+			$this->awayranked = $model->getAwayRanked();
+			$this->chances = $model->getChances();		
 
-			$this->assignRef( 'referees', 	$model->getReferees() );
-			$this->assignRef( 'playground',	$model->getPlayground( $this->match->playground_id ) );
-
-			$this->assignRef( 'homeranked',	$model->getHomeRanked() );		
-			$this->assignRef( 'awayranked',	$model->getAwayRanked() );
-			$this->assignRef( 'chances', 	$model->getChances() );		
-
-			$this->assignRef( 'home_highest_home_win',	$model->getHomeHighestHomeWin() );
-			$this->assignRef( 'away_highest_home_win',	$model->getAwayHighestHomeWin() );
-			$this->assignRef( 'home_highest_home_def',	$model->getHomeHighestHomeDef() );
-			$this->assignRef( 'away_highest_home_def',	$model->getAwayHighestHomeDef() );
-			$this->assignRef( 'home_highest_away_win',	$model->getHomeHighestAwayWin() );
-			$this->assignRef( 'away_highest_away_win',	$model->getAwayHighestAwayWin() );
-			$this->assignRef( 'home_highest_away_def',	$model->getHomeHighestAwayDef() );
-			$this->assignRef( 'away_highest_away_def',	$model->getAwayHighestAwayDef() );
+			$this->home_highest_home_win = $model->getHomeHighestHomeWin();
+			$this->away_highest_home_win = $model->getAwayHighestHomeWin();
+			$this->home_highest_home_def = $model->getHomeHighestHomeDef();
+			$this->away_highest_home_def = $model->getAwayHighestHomeDef();
+			$this->home_highest_away_win = $model->getHomeHighestAwayWin();
+			$this->away_highest_away_win = $model->getAwayHighestAwayWin();
+			$this->home_highest_away_def = $model->getHomeHighestAwayDef();
+			$this->away_highest_away_def = $model->getAwayHighestAwayDef();
 
 			$games = $model->getGames();
 			$gamesteams = $model->getTeamsFromMatches( $games );
-			$this->assignRef( 'games', $games );
-			$this->assignRef( 'gamesteams', $gamesteams );
+			$this->games = $games;
+			$this->gamesteams = $gamesteams;
 			
 			
-			$previousx = &$this->get('previousx');
-			$teams = &$this->get('TeamsIndexedByPtid');
+			$previousx = $this->get('previousx');
+			$teams = $this->get('TeamsIndexedByPtid');
 			
-			$this->assignRef('previousx', $previousx);
-			$this->assignRef('allteams',  $teams);
+			$this->previousx = $previousx;
+			$this->allteams = $teams;
 		}
 		
 		// Set page title
@@ -101,10 +99,9 @@ class JoomleagueViewNextMatch extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
 }
-?>

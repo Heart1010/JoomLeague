@@ -53,7 +53,7 @@ class JoomleagueViewteamPlayers extends JLGView
 		$filter_state		= $mainframe->getUserStateFromRequest( $option . 'tp_filter_state',		'filter_state',		'',				'word' );
 		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'tp_filter_order',		'filter_order',		'ppl.ordering',	'cmd' );
 		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'tp_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-		$search			= $mainframe->getUserStateFromRequest( $option . 'tp_search',			'search',			'',				'string' );
+		$search				= $mainframe->getUserStateFromRequest( $option . 'tp_search',			'search',			'',				'string' );
 		$search_mode		= $mainframe->getUserStateFromRequest( $option . 'tp_search_mode',		'search_mode',		'',				'string' );
 
 		$model			= $this->getModel();
@@ -80,7 +80,7 @@ class JoomleagueViewteamPlayers extends JLGView
 		$res1 = array();
 		$notusedplayers = array();
 
-		if ( $ress =& $model->getTeamPlayers($teamws->team_id) )
+		if ( $ress = $model->getTeamPlayers($teamws->team_id) )
 		{
 			$playerslist = array();
 			foreach( $ress as $res )
@@ -98,9 +98,9 @@ class JoomleagueViewteamPlayers extends JLGView
 			$lists['team_players']= '<select name="team_playerslist[]" id="team_playerslist" style="width:150px" class="inputbox" multiple="true" size="20"></select>';
 		}
 
-		$ress1 =& $model->getPersons($project_id, $team_id);
+		$ress1 = $model->getPersons($project_id, $team_id);
 
-		if ( $ress =& $model->getProjectPlayers() )
+		if ( $ress = $model->getProjectPlayers() )
 		{
 			foreach ( $ress1 as $res1 )
 			{
@@ -145,13 +145,13 @@ class JoomleagueViewteamPlayers extends JLGView
 		unset( $res1 );
 		unset( $notusedplayers );
 
-		$this->assignRef( 'user',			JFactory::getUser() );
-		$this->assignRef( 'lists',			$lists );
-		$this->assignRef( 'projectplayer',	$projectplayer );
-		$this->assignRef( 'projectws',		$projectws );
-		$this->assignRef( 'teamws',			$teamws );
-		$this->assignRef( 'pagination',		$pagination );
-		$this->assignRef( 'request_url',	$uri->toString() );
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->projectplayer = $projectplayer;
+		$this->projectws = $projectws;
+		$this->teamws = $teamws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		parent::display( $tpl );
 	}
@@ -161,7 +161,7 @@ class JoomleagueViewteamPlayers extends JLGView
 		$mainframe	= JFactory::getApplication();
 		$option = JRequest::getCmd('option');
 
-		$document = &JFactory::getDocument();
+		$document = JFactory::getDocument();
 	
 		$baseurl    = JUri::root();
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.js');
@@ -182,9 +182,9 @@ class JoomleagueViewteamPlayers extends JLGView
 		$search_mode		= $mainframe->getUserStateFromRequest( $option . 'tp_search_mode',			'search_mode',		'',				'string' );
 		$teamws	= $this->get( 'Data', 'project_team' );
 
-		$items		= & $this->get( 'Data' );
-		$total		= & $this->get( 'Total' );
-		$pagination = & $this->get( 'Pagination' );
+		$items		= $this->get( 'Data' );
+		$total		= $this->get( 'Total' );
+		$pagination = $this->get( 'Pagination' );
 
 		// state filter
 		$lists['state'] = JHtml::_( 'grid.state', $filter_state );
@@ -206,15 +206,15 @@ class JoomleagueViewteamPlayers extends JLGView
 		$lists['project_position_id'] = $position_id;
 		unset( $position_id );
 
-		$projectws	= $this->get( 'Data', 'project' );
+		$projectws	= $this->get('Data', 'project');
 
-		$this->assignRef( 'user',				JFactory::getUser() );
-		$this->assignRef( 'lists',				$lists );
-		$this->assignRef( 'items',				$items );
-		$this->assignRef( 'projectws',			$projectws );
-		$this->assignRef( 'teamws',				$teamws );
-		$this->assignRef( 'pagination',			$pagination );
-		$this->assignRef( 'request_url',		$uri->toString() );
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->projectws = $projectws;
+		$this->teamws = $teamws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		$this->addToolbar();		
 		parent::display( $tpl );
@@ -245,4 +245,3 @@ class JoomleagueViewteamPlayers extends JLGView
 		JToolBarHelper::help( 'screen.joomleague', true );
 	}
 }
-?>

@@ -99,28 +99,28 @@ class JoomleagueViewJLXMLImports extends JLGView
 		$lists['published']=JHtml::_('select.booleanlist','published',' ',$publishedValue);
 		
 		$countries=new Countries();
-		$this->assignRef('uploadArray',$uploadArray);
-		$this->assignRef('starttime',$starttime);
-		$this->assignRef('countries',$countries->getCountries());
-		$this->assignRef('request_url',$uri->toString());
-		$this->assignRef('xml', $data);
-		$this->assignRef('leagues',$model->getLeagueList());
-		$this->assignRef('seasons',$model->getSeasonList());
-		$this->assignRef('sportstypes',$model->getSportsTypeList());
-		$this->assignRef('admins',$model->getUserList(true));
-		$this->assignRef('editors',$model->getUserList(false));
-		$this->assignRef('templates',$model->getTemplateList());
-		$this->assignRef('teams',$model->getTeamList());
-		$this->assignRef('clubs',$model->getClubList());
-		$this->assignRef('events',$model->getEventList());
-		$this->assignRef('positions',$model->getPositionList());
-		$this->assignRef('parentpositions',$model->getParentPositionList());
-		$this->assignRef('playgrounds',$model->getPlaygroundList());
-		$this->assignRef('persons',$model->getPersonList());
-		$this->assignRef('statistics',$model->getStatisticList());
-		$this->assignRef('OldCountries',$model->getCountryByOldid());
-		$this->assignRef('import_version',$model->import_version);
-		$this->assignRef('lists',$lists);
+		$this->uploadArray = $uploadArray;
+		$this->starttime = $starttime;
+		$this->countries = $countries->getCountries();
+		$this->request_url = $uri->toString();
+		$this->xml = $data;
+		$this->leagues = $model->getLeagueList();
+		$this->seasons = $model->getSeasonList();
+		$this->sportstypes = $model->getSportsTypeList();
+		$this->admins = $model->getUserList(true);
+		$this->editors = $model->getUserList(false);
+		$this->templates = $model->getTemplateList();
+		$this->teams = $model->getTeamList();
+		$this->clubs = $model->getClubList();
+		$this->events = $model->getEventList();
+		$this->positions = $model->getPositionList();
+		$this->parentpositions = $model->getParentPositionList();
+		$this->playgrounds = $model->getPlaygroundList();
+		$this->persons = $model->getPersonList();
+		$this->statistics = $model->getStatisticList();
+		$this->OldCountries = $model->getCountryByOldid();
+		$this->import_version = $model->import_version;
+		$this->lists = $lists;
 		
 		// Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_TITLE_2_3'),'generic.png');
@@ -146,9 +146,9 @@ class JoomleagueViewJLXMLImports extends JLGView
 		//JToolBarHelper::back();
 		JToolBarHelper::help('screen.joomleague',true);
 
-		$this->assignRef('starttime',$starttime);
-		$this->assignRef('importData',$model->importData($post));
-		$this->assignRef('postData',$post);
+		$this->starttime = $starttime;
+		$this->importData = $model->importData($post);
+		$this->postData = $post;
 
 		parent::display($tpl);
 	}
@@ -163,14 +163,14 @@ class JoomleagueViewJLXMLImports extends JLGView
 		$model 		= JModelLegacy::getInstance('JLXMLImport', 'JoomleagueModel');
 		$lists 		= array();
 
-		$this->assignRef('request_url',$uri->toString());
-		$this->assignRef('selectType',$mainframe->getUserState($option.'selectType'));
-		$this->assignRef('recordID',$mainframe->getUserState($option.'recordID'));
+		$this->request_url = $uri->toString();
+		$this->selectType = $mainframe->getUserState($option.'selectType');
+		$this->recordID = $mainframe->getUserState($option.'recordID');
 
 		switch ($this->selectType)
 		{
 			case '10':   { // Select new Club
-						$this->assignRef('clubs',$model->getNewClubListSelect());
+						$this->clubs = $model->getNewClubListSelect();
 						$clublist=array();
 						$clublist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_CLUB'));
 						$clublist=array_merge($clublist,$this->clubs);
@@ -179,7 +179,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						}
 						break;
 			case '9':   { // Select Club & Team
-						$this->assignRef('clubsteams',$model->getClubAndTeamListSelect());
+						$this->clubsteams = $model->getClubAndTeamListSelect();
 						$clubteamlist=array();
 						$clubteamlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_CLUB_AND_TEAM'));
 						$clubteamlist=array_merge($clubteamlist,$this->clubsteams);
@@ -188,7 +188,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						}
 						break;
 			case '8':	{ // Select Statistics
-						$this->assignRef('statistics',$model->getStatisticListSelect());
+						$this->statistics = $model->getStatisticListSelect();
 						$statisticlist=array();
 						$statisticlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_STATISTIC'));
 						$statisticlist=array_merge($statisticlist,$this->statistics);
@@ -198,7 +198,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 
 			case '7':	{ // Select ParentPosition
-						$this->assignRef('parentpositions',$model->getParentPositionListSelect());
+						$this->parentpositions = $model->getParentPositionListSelect();
 						$parentpositionlist=array();
 						$parentpositionlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_PARENT_POSITION'));
 						$parentpositionlist=array_merge($parentpositionlist,$this->parentpositions);
@@ -208,7 +208,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 
 			case '6':	{ // Select Position
-						$this->assignRef('positions',$model->getPositionListSelect());
+						$this->positions = $model->getPositionListSelect();
 						$positionlist=array();
 						$positionlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_POSITION'));
 						$positionlist=array_merge($positionlist,$this->positions);
@@ -218,7 +218,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 
 			case '5':	{ // Select Event
-						$this->assignRef('events',$model->getEventListSelect());
+						$this->events = $model->getEventListSelect();
 						$eventlist=array();
 						$eventlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_EVENT'));
 						$eventlist=array_merge($eventlist,$this->events);
@@ -228,7 +228,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 
 			case '4':	{ // Select Playground
-						$this->assignRef('playgrounds',$model->getPlaygroundListSelect());
+						$this->playgrounds = $model->getPlaygroundListSelect();
 						$playgroundlist=array();
 						$playgroundlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_PLAYGROUND'));
 						$playgroundlist=array_merge($playgroundlist,$this->playgrounds);
@@ -238,7 +238,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 
 			case '3':	{ // Select Person
-						$this->assignRef('persons',$model->getPersonListSelect());
+						$this->persons = $model->getPersonListSelect();
 						$personlist=array();
 						$personlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_PERSON'));
 						$personlist=array_merge($personlist,$this->persons);
@@ -248,7 +248,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 
 			case '2':	{ // Select Club
-						$this->assignRef('clubs',$model->getClubListSelect());
+						$this->clubs = $model->getClubListSelect();
 						$clublist=array();
 						$clublist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_CLUB'));
 						$clublist=array_merge($clublist,$this->clubs);
@@ -259,8 +259,8 @@ class JoomleagueViewJLXMLImports extends JLGView
 
 			case '1':
 			default:	{ // Select Team
-						$this->assignRef('teams',$model->getTeamListSelect());
-						$this->assignRef('clubs',$model->getClubListSelect());
+						$this->teams = $model->getTeamListSelect();
+						$this->clubs = $model->getClubListSelect();
 						$teamlist=array();
 						$teamlist[]=JHtml::_('select.option',0,JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_SELECT_TEAM'));
 						$teamlist=array_merge($teamlist,$this->teams);
@@ -270,7 +270,7 @@ class JoomleagueViewJLXMLImports extends JLGView
 						break;
 		}
 
-		$this->assignRef('lists',$lists);
+		$this->lists = $lists;
 		// Set page title
 		$pageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_XML_IMPORT_ASSIGN_TITLE');
 		$document->setTitle($pageTitle);
@@ -279,4 +279,3 @@ class JoomleagueViewJLXMLImports extends JLGView
 	}
 
 }
-?>

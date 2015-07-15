@@ -14,10 +14,10 @@ class JoomleagueViewRoster extends JLGView
 		$model = $this->getModel();
 		$config=$model->getTemplateConfig($this->getName());
 		
-		$this->assignRef('project',$model->getProject());
-		$this->assignRef('overallconfig',$model->getOverallConfig());
-		//$this->assignRef('staffconfig',$model->getTemplateConfig('teamstaff'));
-		$this->assignRef('config',$config);
+		$this->project = $model->getProject();
+		$this->overallconfig = $model->getOverallConfig();
+		//$this->staffconfig = $model->getTemplateConfig('teamstaff');
+		$this->config = $config;
 
 		$playerlayout =  JRequest::getVar( 'playerlayout', '' );
 		$stafflayout =  JRequest::getVar( 'stafflayout', '' );
@@ -29,28 +29,28 @@ class JoomleagueViewRoster extends JLGView
 			$this->config['show_staff_layout'] = $stafflayout;
 		}
 		
-		$this->assignRef('projectteam',$model->getProjectTeam());
+		$this->projectteam = $model->getProjectTeam();
 		
 		if ($this->projectteam)
 		{
-			$this->assignRef('showediticon',$model->hasEditPermission('teamplayer.select'));
+			$this->showediticon = $model->hasEditPermission('teamplayer.select');
 			$team = $model->getTeam();
-			$this->assignRef('team', $team);
+			$this->team = $team;
 			$players = $model->getTeamPlayers();
-			$this->assignRef('rows', $players);
+			$this->rows = $players;
 			// events
 			if ($this->config['show_events_stats'])
 			{
-				$this->assignRef('positioneventtypes',$model->getPositionEventTypes());
-				$this->assignRef('playereventstats',$model->getPlayerEventStats());
+				$this->positioneventtypes = $model->getPositionEventTypes();
+				$this->playereventstats = $model->getPlayerEventStats();
 			}
 			//stats
 			if ($this->config['show_stats'])
 			{
-				$this->assignRef('stats',$model->getProjectStats());
-				$this->assignRef('playerstats',$model->getRosterStats());
+				$this->stats = $model->getProjectStats();
+				$this->playerstats = $model->getRosterStats();
 			}
-			$this->assignRef('stafflist',$model->getStaffList());
+			$this->stafflist = $model->getStaffList();
 		}
 		
 		// Set page title
@@ -81,11 +81,9 @@ class JoomleagueViewRoster extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display($tpl);
 	}
-
 }
-?>

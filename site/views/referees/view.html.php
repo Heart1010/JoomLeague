@@ -20,12 +20,12 @@ class JoomleagueViewReferees extends JLGView
 			$config	= $model->getTemplateConfig( 'players' );
 		}
 
-		$this->assignRef( 'project', $model->getProject() );
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'config', $config );
+		$this->project = $model->getProject();
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
 
-		$this->assignRef( 'rows', $model->getReferees() );
-//		$this->assignRef( 'positioneventtypes', $model->getPositionEventTypes( ) );
+		$this->rows = $model->getReferees();
+//		$this->positioneventtypes = $model->getPositionEventTypes( ) );
 
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_REFEREES_PAGE_TITLE'));
@@ -40,11 +40,9 @@ class JoomleagueViewReferees extends JLGView
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );
 	}
-
 }
-?>

@@ -90,11 +90,12 @@ class JoomleagueViewPerson extends JLGView
 			unset($projectteams);
 		}
 
-		$this->assignRef('lists',$lists);
-		$this->assignRef('project_id',$proj_id);
+		$this->lists = $lists;
+		$this->project_id = $proj_id;
 
 		parent::display($tpl);
 	}
+	
 	/**
 	* Add the page title and toolbar.
 	*
@@ -135,4 +136,3 @@ class JoomleagueViewPerson extends JLGView
 	}		
 
 }
-?>

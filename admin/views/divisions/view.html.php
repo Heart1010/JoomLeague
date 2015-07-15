@@ -38,11 +38,11 @@ class JoomleagueViewDivisions extends JLGView
 		$search				= $mainframe->getUserStateFromRequest( $option . 'dv_search',			'search',			'',				'string' );
 		$search				= JString::strtolower( $search );
 
-		$items		= $this->get( 'Data' );
-		$total		= $this->get( 'Total' );
-		$pagination = $this->get( 'Pagination' );
+		$items		= $this->get('Data');
+		$total		= $this->get('Total');
+		$pagination = $this->get('Pagination');
 
-		$projectws	= $this->get( 'Data', 'project' );
+		$projectws	= $this->get('Data', 'project');
 
 		// state filter
 		$lists['state']		= JHtml::_( 'grid.state',  $filter_state );
@@ -54,12 +54,12 @@ class JoomleagueViewDivisions extends JLGView
 		// search filter
 		$lists['search']	= $search;
 
-		$this->assignRef( 'user',			JFactory::getUser() );
-		$this->assignRef( 'lists',			$lists );
-		$this->assignRef( 'items',			$items );
-		$this->assignRef( 'projectws',		$projectws );
-		$this->assignRef( 'pagination',		$pagination );
-		$this->assignRef( 'request_url',	$uri->toString() );
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 		$this->addToolbar();
 		parent::display( $tpl );
 	}
@@ -72,14 +72,14 @@ class JoomleagueViewDivisions extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title( JText::_( 'COM_JOOMLEAGUE_ADMIN_DIVS_TITLE' ) );
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_DIVS_TITLE'));
 		
 		JLToolBarHelper::addNewX('division.add');
 		JLToolBarHelper::editListX('division.edit');
 		JLToolBarHelper::deleteList(JText::_('COM_JOOMLEAGUE_ADMIN_DIVISIONS_DELETE_WARNING'), 'division.remove');
 		JToolBarHelper::divider();
 		
-		JToolBarHelper::help( 'screen.joomleague', true );
+		JToolBarHelper::help('screen.joomleague', true);
 	}
 }
 ?>

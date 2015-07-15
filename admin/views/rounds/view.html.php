@@ -67,14 +67,16 @@ class JoomleagueViewRounds extends JLGView
 		}
 		$lists['divisions']=$divisions;
 
-		$this->assignRef('massadd',				$massadd);
-		$this->assignRef('countProjectTeams', 	count($teams));
-		$this->assignRef('lists',				$lists);
-		$this->assignRef('matchday',			$matchday);
-		$this->assignRef('projectws',			$projectws);
-		$this->assignRef('pagination',			$pagination);
-		$this->assignRef('request_url',			$url);
-		$this->assignRef('populate',            $populate=0);
+		$this->massadd = $massadd;
+		$this->countProjectTeams = count($teams);
+		$this->lists = $lists;
+		$this->matchday = $matchday;
+		$this->projectws = $projectws;
+		$this->pagination = $pagination;
+		$this->request_url = $url;
+		
+		$populate = 0;
+		$this->populate = $populate;
 		
 		$this->addToolbar();
 		parent::display($tpl);
@@ -110,9 +112,9 @@ class JoomleagueViewRounds extends JLGView
 		}
 		$lists['teamsorder'] = JHtml::_('select.genericlist', $options, 'teamsorder[]', 'multiple="multiple" size="20"');
 
-		$this->assignRef('projectws',        $projectws);
-		$this->assignRef('request_url',      $url);
-		$this->assignRef('lists',            $lists);
+		$this->projectws = $projectws;
+		$this->request_url = $url;
+		$this->lists = $lists;
 		
 		$this->addToolbar_Populate();
 		parent::display($tpl);
@@ -162,4 +164,3 @@ class JoomleagueViewRounds extends JLGView
 		JToolBarHelper::back();
 	}
 }
-?>

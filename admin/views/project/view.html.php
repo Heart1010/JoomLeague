@@ -40,11 +40,11 @@ class JoomleagueViewProject extends JLGView {
 		$version = urlencode ( JoomleagueHelper::getVersion () );
 		$document->addScript ( JUri::root () . 'administrator/components/com_joomleague/models/forms/project.js?v=' . $version );
 		
-		$this->assignRef ( 'edit', $edit );
-		$this->assignRef ( 'copy', $copy );
+		$this->edit = $edit;
+		$this->copy = $copy;
 		
-		$extended = $this->getExtended ( $this->form->getValue ( 'extended'), 'project' );
-		$this->assignRef ( 'extended', $extended );
+		$extended = $this->getExtended($this->form->getValue('extended'), 'project');
+		$this->extended = $extended;
 		$this->addToolbar ();
 		parent::display ( $tpl );
 	}

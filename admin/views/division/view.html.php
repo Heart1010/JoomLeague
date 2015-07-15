@@ -39,7 +39,7 @@ class JoomleagueViewDivision extends JLGView
 		$option = JRequest::getCmd('option');
 
 		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState( 'com_joomleagueproject' );
+		$project_id = $mainframe->getUserState('com_joomleagueproject');
 		$db		= JFactory::getDbo();
 		$uri 	= JFactory::getURI();
 		$user 	= JFactory::getUser();
@@ -47,20 +47,20 @@ class JoomleagueViewDivision extends JLGView
 
 		$lists = array();
 		//get the division
-		$division	= $this->get( 'data' );
-		$isNew		= ( $division->id < 1 );
+		$division	= $this->get('data');
+		$isNew		= ($division->id < 1);
 
 		// fail if checked out not by 'me'
-		if ( $model->isCheckedOut( $user->get( 'id' ) ) )
+		if ($model->isCheckedOut($user->get('id')))
 		{
-			$msg = JText::sprintf( 'DESCBEINGEDITTED', JText::_( 'COM_JOOMLEAGUE_ADMIN_DIVISION_THE_DIVISION' ), $division->name );
-			$mainframe->redirect( 'index.php?option=' . $option, $msg );
+			$msg = JText::sprintf('DESCBEINGEDITTED', JText::_('COM_JOOMLEAGUE_ADMIN_DIVISION_THE_DIVISION'), $division->name );
+			$mainframe->redirect('index.php?option=' . $option, $msg);
 		}
 
 		// Edit or Create?
-		if ( !$isNew )
+		if (!$isNew)
 		{
-			$model->checkout( $user->get( 'id' ) );
+			$model->checkout($user->get('id'));
 		}
 		else
 		{
@@ -68,24 +68,23 @@ class JoomleagueViewDivision extends JLGView
 			$division->order	= 0;
 		}
 
-		$projectws = $this->get( 'Data', 'project' );
+		$projectws = $this->get('Data','project');
 
 		//build the html select list for parent divisions
-		$parents[] = JHtml::_( 'select.option', '0', JText::_( 'COM_JOOMLEAGUE_GLOBAL_SELECT_PROJECT' ) );
-		if ( $res =& $model->getParentsDivisions() )
+		$parents[] = JHtml::_('select.option', '0', JText::_( 'COM_JOOMLEAGUE_GLOBAL_SELECT_PROJECT' ) );
+		if ($res = $model->getParentsDivisions())
 		{
-			$parents = array_merge( $parents, $res );
+			$parents = array_merge($parents, $res);
 		}
-		$lists['parents'] = JHtml::_(	'select.genericlist', $parents, 'parent_id', 'class="inputbox" size="1"', 'value', 'text',
-										$division->parent_id );
+		$lists['parents'] = JHtml::_('select.genericlist', $parents, 'parent_id', 'class="inputbox" size="1"', 'value', 'text',$division->parent_id );
 		unset( $parents );
 
-		$this->assignRef( 'projectws',	$projectws );
-		$this->assignRef( 'lists',		$lists );
-		$this->assignRef( 'division',	$division );
-		$this->assignRef('form',  $this->get('form'));		
+		$this->projectws = $projectws;
+		$this->lists = $lists;
+		$this->division = $division;
+		$this->form = $this->get('form');		
 		//$extended = $this->getExtended($projectreferee->extended, 'division');
-		//$this->assignRef( 'extended', $extended );
+		//$this->extended = $extended;
 
 		$this->addToolbar();		
 		parent::display( $tpl );

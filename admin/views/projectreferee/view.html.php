@@ -67,12 +67,12 @@ class JoomleagueViewProjectReferee extends JLGView
                 
 		$projectws	= $this->get('Data','project');
 
-		$this->assignRef('form',			$this->get('form'));			
-		$this->assignRef('projectws',		$projectws);
-		$this->assignRef('lists',			$lists);
-		$this->assignRef('projectreferee',	$projectreferee);
+		$this->form = $this->get('form');			
+		$this->projectws = $projectws;
+		$this->lists = $lists;
+		$this->projectreferee = $projectreferee;
 		$extended = $this->getExtended($projectreferee->extended, 'projectreferee');		
-		$this->assignRef( 'extended', $extended );
+		$this->extended = $extended;
 		
 		$this->addToolbar();		
 		parent::display($tpl);

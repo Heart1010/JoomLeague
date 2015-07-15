@@ -99,4 +99,3 @@ class JoomleagueViewStatistics extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

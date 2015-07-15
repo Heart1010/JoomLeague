@@ -12,11 +12,11 @@ class JoomleagueViewResults extends JLGView
 		$document	= JFactory::getDocument();
 		$document->link = JRoute::_('index.php?option=com_joomleague');
 		$model = $this->getModel();
-		$this->assignRef( 'config', $model->getTemplateConfig( 'results' ));
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'matches',		$model->getMatches() );
-		$this->assignRef( 'project',		$model->getProject() );
-		$this->assignRef( 'teams',			$model->getTeamsIndexedByPtid() );
+		$this->config = $model->getTemplateConfig('results');
+		$this->overallconfig = $model->getOverallConfig();
+		$this->matches = $model->getMatches();
+		$this->project = $model->getProject();
+		$this->teams = $model->getTeamsIndexedByPtid();
 		$dates = $this->sortByDate();
 		foreach( $dates as $date => $games )
 		{
@@ -54,5 +54,3 @@ class JoomleagueViewResults extends JLGView
 		return $dates;
 	}
 }
-
-?>

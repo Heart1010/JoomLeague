@@ -12,15 +12,15 @@ class JoomleagueViewRivals extends JLGView
 		$model	= $this->getModel();
 		$config = $model->getTemplateConfig($this->getName());
 		
-		$this->assignRef( 'project', $model->getProject() );
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		if ( !isset( $this->overallconfig['seperator'] ) )
+		$this->project = $model->getProject();
+		$this->overallconfig = $model->getOverallConfig();
+		if ( !isset($this->overallconfig['seperator']))
 		{
 			$this->overallconfig['seperator'] = "-";
 		}
-		$this->assignRef( 'config', $config );
-		$this->assignRef( 'opos', $model->getOpponents() );
-		$this->assignRef( 'team', $model->getTeam() );
+		$this->config = $config;
+		$this->opos = $model->getOpponents();
+		$this->team = $model->getTeam();
 		
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_RIVALS_PAGE_TITLE'));
@@ -38,10 +38,9 @@ class JoomleagueViewRivals extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 
 		parent::display( $tpl );
 	}
 }
-?>

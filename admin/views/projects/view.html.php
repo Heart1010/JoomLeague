@@ -100,12 +100,14 @@ class JoomleagueViewProjects extends JLGView
 
 		unset($seasons);
 		$user = JFactory::getUser();
-		$this->assignRef('user',  $user);
-		$this->assignRef('lists', $lists);
-		$this->assignRef('items', $items);
-		$this->assignRef('pagination', $pagination);
+		$this->user = $user;
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->pagination = $pagination;
+		
 		$url=$uri->toString();
-		$this->assignRef('request_url',$url);
+		$this->request_url = $url;
+		
 		$this->addToolbar();
 		parent::display($tpl);
 	}
@@ -138,4 +140,3 @@ class JoomleagueViewProjects extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

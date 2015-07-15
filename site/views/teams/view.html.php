@@ -12,12 +12,12 @@ class JoomleagueViewTeams extends JLGView
 		$model = $this->getModel();
 		$config = $model->getTemplateConfig($this->getName());
 
-		$this->assignRef( 'project', $model->getProject() );
-		$this->assignRef( 'division', $model->getDivision() );
-		$this->assignRef( 'overallconfig', $model->getOverallConfig() );
-		$this->assignRef( 'config', $config );
+		$this->project = $model->getProject();
+		$this->division = $model->getDivision();
+		$this->overallconfig = $model->getOverallConfig();
+		$this->config = $config;
 
-		$this->assignRef( 'teams', $model->getTeams() );
+		$this->teams = $model->getTeams();
 
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_TEAMS_TITLE'));
@@ -31,10 +31,9 @@ class JoomleagueViewTeams extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 
 		parent::display( $tpl );
 	}
 }
-?>

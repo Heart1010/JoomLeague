@@ -38,7 +38,7 @@ class JoomleagueViewTeamStaffs extends JLGView
 
 	function _displayDefault( $tpl )
 	{
-		$document = &JFactory::getDocument();
+		$document = JFactory::getDocument();
 		$option = JRequest::getCmd('option');
 		$mainframe	= JFactory::getApplication();
 
@@ -54,7 +54,7 @@ class JoomleagueViewTeamStaffs extends JLGView
 		$filter_state		= $mainframe->getUserStateFromRequest( $option . 'ts_filter_state',		'filter_state',		'',				'word' );
 		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'ts_filter_order',		'filter_order',		'ppl.ordering',	'cmd' );
 		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'ts_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-		$search			= $mainframe->getUserStateFromRequest( $option . 'ts_search',			'search',			'',				'string' );
+		$search				= $mainframe->getUserStateFromRequest( $option . 'ts_search',			'search',			'',				'string' );
 		$search_mode		= $mainframe->getUserStateFromRequest( $option . 'ts_search_mode',		'search_mode',		'',				'string' );
 
 		$teamws	= $this->get( 'Data', 'project_team' );
@@ -79,24 +79,24 @@ class JoomleagueViewTeamStaffs extends JLGView
 
 		//build the html options for position
 		$position_id[] = JHtml::_( 'select.option', '0', JText::_( 'COM_JOOMLEAGUE_GLOBAL_SELECT_FUNCTION' ) );
-		if ( $res = & $model->getPositions() )
+		if ($res = $model->getPositions())
 		{
-			$position_id = array_merge( $position_id, $res );
+			$position_id = array_merge($position_id, $res);
 		}
 		$lists['project_position_id'] = $position_id;
 		unset( $position_id );
 
-		$projectws		= $this->get( 'Data', 'project' );
-		$teamstaffws	= $this->get( 'Data', 'team_staff' );
+		$projectws		= $this->get('Data', 'project');
+		$teamstaffws	= $this->get('Data', 'team_staff');
 
-		$this->assignRef( 'user',				JFactory::getUser() );
-		$this->assignRef( 'lists',				$lists );
-		$this->assignRef( 'items',				$items );
-		$this->assignRef( 'projectws',			$projectws );
-		$this->assignRef( 'teamstaffws',		$teamstaffws );
-		$this->assignRef( 'teamws',				$teamws );
-		$this->assignRef( 'pagination',			$pagination );
-		$this->assignRef( 'request_url',		$uri->toString() );
+		$this->user = JFactory::getUser();
+		$this->lists = $lists;
+		$this->items = $items;
+		$this->projectws = $projectws;
+		$this->teamstaffws = $teamstaffws;
+		$this->teamws = $teamws;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		$this->addToolbar();		
 		parent::display( $tpl );
@@ -126,4 +126,3 @@ class JoomleagueViewTeamStaffs extends JLGView
 		JToolBarHelper::help( 'screen.joomleague', true );
 	}
 }
-?>

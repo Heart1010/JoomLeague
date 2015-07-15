@@ -60,7 +60,7 @@ class JoomleagueViewTemplate extends JLGView
 			}
 		}
 		
-		$form =& JForm::getInstance($template->template, $xmlfile,
+		$form = JForm::getInstance($template->template, $xmlfile,
 									array('control'=> 'params'));
 		$form->bind($template->params);
 		
@@ -79,12 +79,12 @@ class JoomleagueViewTemplate extends JLGView
 		unset($res);
 		unset($templates);
 
-		$this->assignRef('request_url',$uri->toString());
-		$this->assignRef('template',$template);
-		$this->assignRef('form',$form);
-		$this->assignRef('project',$projectws);
-		$this->assignRef('lists',$lists);
-		$this->assignRef('user',$user);
+		$this->request_url = $uri->toString();
+		$this->template = $template;
+		$this->form = $form;
+		$this->project = $projectws;
+		$this->lists = $lists;
+		$this->user = $user;
 
 		$this->addToolbar();
 		parent::display($tpl);
@@ -118,6 +118,4 @@ class JoomleagueViewTemplate extends JLGView
 		}
 		JToolBarHelper::help('screen.joomleague',true);
 	}
-
 }
-?>

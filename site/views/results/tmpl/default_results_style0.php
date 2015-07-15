@@ -95,7 +95,7 @@ if ($this->config['show_comments_count'] > 0){
 
 	foreach( $games as $game )
 	{
-		$this->assignRef('game', $game);
+		$this->game = $game;
 		if ($game->published)
 		{
 			if($game->projectteam1_id == 0 || $game->projectteam2_id==0) continue;

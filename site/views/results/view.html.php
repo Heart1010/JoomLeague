@@ -30,27 +30,27 @@ class JoomleagueViewResults extends JLGView
 		$rounds = JoomleagueHelper::getRoundsOptions($project->id, 'ASC', true);
 
 
-		$this->assignRef('project', $project);
+		$this->project = $project;
 		$lists=array();
 
 		if (isset($this->project))
 		{
-			$this->assignRef('overallconfig',	$model->getOverallConfig());
-			$this->assignRef('config',			array_merge($this->overallconfig, $config));
-			$this->assignRef('teams',			$model->getTeamsIndexedByPtid($division_id));
-			$this->assignRef('showediticon',	$model->getShowEditIcon());
-			$this->assignRef('division',		$model->getDivision());
-			$this->assignRef('matches',			$matches);
-			$this->assignRef('roundid',			$model->roundid);
-			$this->assignRef('roundcode',		$roundcode);
-			$this->assignRef('rounds',			$model->getRounds());
-			$this->assignRef('favteams',		$model->getFavTeams($project));
-			$this->assignRef('projectevents',	$model->getProjectEvents());
-			$this->assignRef('model',			$model);
-			$this->assignRef('isAllowed',		$model->isAllowed());
+			$this->overallconfig = $model->getOverallConfig();
+			$this->config = array_merge($this->overallconfig, $config);
+			$this->teams = $model->getTeamsIndexedByPtid($division_id);
+			$this->showediticon = $model->getShowEditIcon();
+			$this->division = $model->getDivision();
+			$this->matches = $matches;
+			$this->roundid = $model->roundid;
+			$this->roundcode = $roundcode;
+			$this->rounds = $model->getRounds();
+			$this->favteams = $model->getFavTeams($project);
+			$this->projectevents = $model->getProjectEvents();
+			$this->model = $model;
+			$this->isAllowed = $model->isAllowed();
 
 			$lists['rounds'] = JHtml::_('select.genericlist',$rounds,'current_round','class="inputbox" size="1" onchange="joomleague_changedoc(this);','value','text',$project->current_round);
-			$this->assignRef('lists',$lists);
+			$this->lists = $lists;
 
 			if (!isset($this->config['switch_home_guest'])){$this->config['switch_home_guest']=0;}
 			if (!isset($this->config['show_dnp_teams_icons'])){$this->config['show_dnp_teams_icons']=0;}
@@ -69,7 +69,7 @@ class JoomleagueViewResults extends JLGView
 		{
 			$titleInfo->divisionName = $this->division->name;
 		}
-		$this->assignRef('pagetitle', JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]));
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 
 		//build feed links
@@ -685,4 +685,3 @@ class JoomleagueViewResults extends JLGView
 		return $output;
 	}
 }
-?>

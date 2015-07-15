@@ -29,7 +29,7 @@ class JoomleagueViewSeason extends JLGView
 		$this->form = $this->get('form');
 		
 		//$extended = $this->getExtended($season->extended, 'season');
-		//$this->assignRef( 'extended', $extended );
+		//$this->extended = $extended;
 		$this->addToolbar();			
 		parent::display($tpl);
 	}

@@ -97,7 +97,7 @@ if (count($this->games))
 				// time played
 				$timePlayed = 0;
 				$model = $this->getModel();
-				$this->assignRef('timePlayed',$model->getTimePlayed($this->teamPlayer->id,$this->project->game_regular_time,$game->id));
+				$this->timePlayed = $model->getTimePlayed($this->teamPlayer->id,$this->project->game_regular_time,$game->id);
 				$timePlayed = $this->timePlayed;
 				?>
 				<tr class="<?php echo ($k==0)? $this->config['style_class1'] : $this->config['style_class2']; ?>">

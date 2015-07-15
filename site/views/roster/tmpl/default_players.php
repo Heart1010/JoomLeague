@@ -279,7 +279,7 @@ if (!empty($this->rows))
 		?></td>
 		<td width="5%" style="text-align: left;" class="nowrap"><?php
 		$model = $this->getModel();
-		$this->assignRef('playertool',$model->getTeamPlayer($this->project->current_round,$row->playerid));
+		$this->playertool = $model->getTeamPlayer($this->project->current_round,$row->playerid);
 
 		$today = JHtml::date('now' .' UTC',
 					JText::_('COM_JOOMLEAGUE_GLOBAL_MATCHDAYDATE'),
@@ -488,7 +488,7 @@ if (!empty($this->rows))
 		{
 			// Events of COM_JOOMLEAGUE_substitutions are shown
 			$model = $this->getModel();
-			$this->assignRef('InOutStat',$model->getInOutStats($row->pid));
+			$this->InOutStat = $model->getInOutStats($row->pid);
 			if (isset($this->InOutStat) && ($this->InOutStat->played > 0))
 			{
 				$played  = $this->InOutStat->played;
@@ -514,7 +514,7 @@ if (!empty($this->rows))
 			{
 				// time played
 				$timePlayed = 0;
-				$this->assignRef('timePlayed',$model->getTimePlayed($row->playerid,$this->project->game_regular_time));
+				$this->timePlayed = $model->getTimePlayed($row->playerid,$this->project->game_regular_time);
 				$timePlayed  = $this->timePlayed;
 				?>
 		<td class="td_c"><?php echo $started;?></td>

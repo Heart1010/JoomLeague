@@ -51,7 +51,7 @@ class JoomleagueViewTreetonodes extends JLGView
 
 		//build the html options for teams
 		$team_id[]=JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TEAM'));
-		if ($projectteams =& $model->getProjectTeamsOptions())
+		if ($projectteams = $model->getProjectTeamsOptions())
 		{
 			$team_id=array_merge($team_id,$projectteams);
 		}
@@ -84,19 +84,18 @@ class JoomleagueViewTreetonodes extends JLGView
 		// build the html radio for create new treeto
 		$lists['createNewTreeto']=JHtmlSelect::radiolist($ynOptions,'createNewTreeto','class="inputbox"','value','text',1);
 
-		$this->assignRef('lists',$lists);
-		$this->assignRef('node',$node);
-	//	$this->assignRef('roundcode',$roundcode);
-		$this->assignRef('style',$style);
-		$this->assignRef('path',$path);
-		$this->assignRef('projectws',$projectws);
-		$this->assignRef('treetows',$treetows);
-		$this->assignRef('total',$total);
-		$this->assignRef('pagination',$pagination);
-		$this->assignRef('request_url',$uri->toString());
+		$this->lists = $lists;
+		$this->node = $node;
+	//	$this->roundcode',$roundcode);
+		$this->style = $style;
+		$this->path = $path;
+		$this->projectws = $projectws;
+		$this->treetows = $treetows;
+		$this->total = $total;
+		$this->pagination = $pagination;
+		$this->request_url = $uri->toString();
 
 		parent::display($tpl);
 	}
 
 }
-?>

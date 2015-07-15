@@ -86,4 +86,3 @@ class JoomleagueViewTeams extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

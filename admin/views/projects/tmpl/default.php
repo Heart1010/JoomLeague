@@ -1,7 +1,7 @@
 <?php defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.tooltip');
 ?>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 	<table>
 		<tr>
 			<td align="left" width="100%">
@@ -185,8 +185,7 @@ JHtml::_('behavior.tooltip');
 		//Load the batch processing form.
 		echo $this->loadTemplate('batch'); 
 	?>
-	<input type="hidden" name="view"				value="projects" />
-	<input type="hidden" name="task"				value="project.display" />
+	<input type="hidden" name="task"				value="" />
 	<input type="hidden" name="boxchecked"			value="0" />
 	<input type="hidden" name="filter_order"		value="<?php echo $this->lists['order']; ?>" />
 	<input type="hidden" name="filter_order_Dir"	value="" />
