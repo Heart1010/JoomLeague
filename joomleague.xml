@@ -62,11 +62,10 @@
 
 	<administration>
 		<!-- Administration Menu Section -->
-		<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE_PROJECTS</menu>
+		<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE</menu>
 		<submenu>
-			<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE_PROJECTS</menu>
+			<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE_MENU_PROJECTS</menu>
 		</submenu>
-		
 		
 		<files folder="admin">
 			<filename>access.xml</filename>
