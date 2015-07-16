@@ -30,7 +30,7 @@ JHtml::_('behavior.tooltip');
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
 					<th width="1%" class="center">
-							<?php echo JHtml::_('grid.checkall'); ?>
+						<?php echo JHtml::_('grid.checkall'); ?>
 					</th>
 					<th width="20">&nbsp;</th>
 					<th>

@@ -34,8 +34,8 @@ JHtml::_('behavior.tooltip');
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
-					<th width="20">
-						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+					<th width="1%" class="center">
+						<?php echo JHtml::_('grid.checkall'); ?>
 					</th>
 					<th width="20">&nbsp;</th>
 					<th>
@@ -82,7 +82,7 @@ JHtml::_('behavior.tooltip');
 			<tfoot><tr><td colspan="13"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 			<tbody>
 			<?php
-			$n = count($this->items);
+				$n = count($this->items);
 				foreach ($this->items as $i => $row) :
 				
 				$link=JRoute::_('index.php?option=com_joomleague&task=position.edit&cid[]='.$row->id);

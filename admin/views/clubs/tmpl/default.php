@@ -43,7 +43,9 @@ JHtml::_('behavior.tooltip');
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
-					<th width="20"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" /></th>
+					<th width="1%" class="center">
+							<?php echo JHtml::_('grid.checkall'); ?>
+					</th>
 					<th width="50">&nbsp;</th>
 					<th class="title">
 						<?php echo JHtml::_('grid.sort','COM_JOOMLEAGUE_ADMIN_CLUBS_NAME_OF_CLUB','a.name',$this->lists['order_Dir'],$this->lists['order']); ?>

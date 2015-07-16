@@ -33,8 +33,8 @@ function searchTemplate(val,key)
 				<thead>
 					<tr>
 						<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
-						<th width="20">
-							<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+						<th width="1%" class="center">
+							<?php echo JHtml::_('grid.checkall'); ?>
 						</th>
 						<th width="20">&nbsp;</th>
 						<th>

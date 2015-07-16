@@ -1,4 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
 JHtml::_('behavior.tooltip');
 if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 ?>
@@ -45,7 +55,7 @@ if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 		</form>
 	</fieldset>
 </div>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 	<div id="editcell">
 		<fieldset class="adminform">
 			<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_ROUNDS_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>
@@ -53,7 +63,9 @@ if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 				<thead>
 					<tr>
 						<th width="1%"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
-						<th width="1%"><input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" /></th>
+						<th width="1%" class="center">
+							<?php echo JHtml::_('grid.checkall'); ?>
+						</th>
 						<th width="20">&nbsp;</th>
  						<th width="20"><?php echo JHtml::_( 'grid.sort', 'COM_JOOMLEAGUE_ADMIN_ROUNDS_ROUND_NR', 'r.roundcode', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
 						<th><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_ROUNDS_ROUND_TITLE'); ?></th>
@@ -69,15 +81,13 @@ if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 				<tfoot><tr><td colspan="12"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 				<tbody>
 					<?php
-					$k=0;
-					for ($i=0,$n=count($this->matchday); $i < $n; $i++)
-					{
-						$row = $this->matchday[$i];
+					$n = count($this->matchday);
+					foreach ($this->matchday as $i => $row) :
 						$link1=JRoute::_('index.php?option=com_joomleague&task=round.edit&cid[]='.$row->id);
 						$link2=JRoute::_('index.php?option=com_joomleague&view=matches&task=match.display&rid[]='.$row->id);
 						$checked=JHtml::_('grid.checkedout',$row,$i);
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 							<td class="center"><?php echo $checked; ?></td>
 							<td class="center"><?php
@@ -184,10 +194,7 @@ if ($this->projectws->project_type == 'DIVISIONS_LEAGUE') {
 								?></td>
 							<td class="center"><?php echo $row->id; ?></td>
 						</tr>
-						<?php
-						$k=1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 		</fieldset>
