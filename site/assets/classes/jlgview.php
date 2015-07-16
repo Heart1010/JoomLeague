@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,8 +8,6 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is within the rest of the framework
 defined('JPATH_BASE') or die();
 
 jimport( 'joomla.application.component.view');
@@ -46,21 +44,21 @@ class JLGView extends JViewLegacy
 		{
 			foreach ($extensions as $e => $extension)
 			{
-				$JLGPATH_EXTENSION =  JPATH_COMPONENT_SITE . DS . 'extensions' . DS . $extension;
+				$JLGPATH_EXTENSION =  JPATH_COMPONENT_SITE.'/extensions/'.$extension;
 
 				// set the alternative template search dir
 				if (isset($app))
 				{
 					if ($app->isAdmin()) {
-						$this->_addPath('template', $JLGPATH_EXTENSION . DS . 'admin' . DS . 'views' . DS .$this->getName().DS.'tmpl');
+						$this->_addPath('template',$JLGPATH_EXTENSION.'/admin/views/'.$this->getName().'/tmpl');
 					}
 					else {
-						$this->_addPath('template', $JLGPATH_EXTENSION . DS . 'views' . DS .$this->getName().DS.'tmpl');
+						$this->_addPath('template',$JLGPATH_EXTENSION.'/views/'.$this->getName().'/tmpl');
 					}
 
 					// always add the fallback directories as last resort
 					$option = preg_replace('/[^A-Z0-9_\.-]/i', '', $option);
-					$fallback = JPATH_THEMES . DS . $app->getTemplate() . '/html/' . $option . DS . $extension . DS . $this->getName();
+					$fallback = JPATH_THEMES.'/'.$app->getTemplate().'/html/'.$option.'/'.$extension.'/'.$this->getName();
 					$this->_addPath('template', $fallback);
 				}
 			}
@@ -93,25 +91,28 @@ class JLGView extends JViewLegacy
 				}
 			}
 		}
-		//General Joomleague CSS include
-		$file = JPATH_COMPONENT.DS.'assets'.DS.'css'.DS.'joomleague.css';
+		// General Joomleague CSS include
+		$file = JPATH_COMPONENT.'/assets/css/joomleague.css';
 		if(file_exists(JPath::clean($file))) {
 			$document->addStyleSheet( $this->baseurl . '/components/'.$option.'/assets/css/joomleague.css?v=' . $version );
 		}
-		//Genereal CSS include per view
-		$file = JPATH_COMPONENT.DS.'assets'.DS.'css'.DS.$this->getName().'.css';
+		// Genereal CSS include per view
+		$file = JPATH_COMPONENT.'/assets/css/'.$this->getName().'.css';
 		if(file_exists(JPath::clean($file))) {
 			//add css file
 			$document->addStyleSheet(  $this->baseurl . '/components/'.$option.'/assets/css/'.$this->getName().'.css?v=' . $version );
 		}
-		//General Joomleague JS include
-		$file = JPATH_COMPONENT.DS.'assets'.DS.'js'.DS.'joomleague.js';
+		// General Joomleague JS include
+		$file = JPATH_COMPONENT.'/assets/js/joomleague.js';
 		if(file_exists(JPath::clean($file))) {
 			$js = $this->baseurl . '/components/'.$option.'/assets/js/joomleague.js?v=' . $version;
 			$document->addScript($js);
 		}
-		//General JS include per view
-		$file = JPATH_COMPONENT.DS.'assets'.DS.'js'.DS.$this->getName().'.js';
+		
+		// General JS include per view
+		self::includeLanguageStrings();
+		
+		$file = JPATH_COMPONENT.'/assets/js/'.$this->getName().'.js';
 		if(file_exists(JPath::clean($file))) {
 			$js = $this->baseurl . '/components/'.$option.'/assets/js/'.$this->getName().'.js?v=' . $version;
 			$document->addScript($js);
@@ -120,56 +121,56 @@ class JLGView extends JViewLegacy
 		//extension management
 		$extensions = JoomleagueHelper::getExtensions(JRequest::getInt('p'));
 		foreach ($extensions as $e => $extension) {
-			$JLGPATH_EXTENSION =  JPATH_COMPONENT_SITE . DS . 'extensions' . DS . $extension;
+			$JLGPATH_EXTENSION =  JPATH_COMPONENT_SITE.'/extensions/'.$extension;
 
 			//General extension CSS include
-			$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'css'.DS.$extension.'.css';
+			$file = $JLGPATH_EXTENSION.'/assets/css/'.$extension.'.css';
 			if(file_exists(JPath::clean($file))) {
-				$document->addStyleSheet(  $this->baseurl . '/components/'.$option.'/extensions/' . $extension . '/assets/css/' . $extension . '.css?v=' . $version );
+				$document->addStyleSheet($this->baseurl.'/components/'.$option.'/extensions/'. $extension.'/assets/css/'.$extension.'.css?v='.$version);
 			}
 			//CSS override
-			$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'css'.DS.$this->getName().'.css';
+			$file = $JLGPATH_EXTENSION.'/assets/css/'.$this->getName().'.css';
 			if(file_exists(JPath::clean($file))) {
 				//add css file
-				$document->addStyleSheet(  $this->baseurl . '/components/'.$option.'/extensions/' . $extension . '/assets/css/'.$this->getName().'.css?v=' . $version );
+				$document->addStyleSheet($this->baseurl.'/components/'.$option.'/extensions/'.$extension.'/assets/css/'.$this->getName().'.css?v='.$version);
 			}
 			//General extension JS include
-			$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'js'.DS.$extension.'.js';
+			$file = $JLGPATH_EXTENSION.'/assets/js/'.$extension.'.js';
 			if(file_exists(JPath::clean($file))) {
 				//add js file
-				$document->addScript(  $this->baseurl . '/components/'.$option.'/extensions/' . $extension . '/assets/js/' . $extension . '.js?v=' . $version );
+				$document->addScript($this->baseurl.'/components/'.$option.'/extensions/'.$extension.'/assets/js/'.$extension.'.js?v='.$version);
 			}
 			//JS override
-			$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'js'.DS.$this->getName().'.js';
+			$file = $JLGPATH_EXTENSION.'/assets/js/'.$this->getName().'.js';
 			if(file_exists(JPath::clean($file))) {
 				//add js file
 				$document->addScript(  $this->baseurl . '/components/'.$option.'/extensions/' . $extension . '/assets/js/'.$this->getName().'.js?v=' . $version );
 			}
 			if($app->isAdmin()) {
-				$JLGPATH_EXTENSION =  JPATH_COMPONENT_SITE . DS . 'extensions' . DS . $extension . DS . 'admin';
+				$JLGPATH_EXTENSION =  JPATH_COMPONENT_SITE.'/extensions/'.$extension.'/admin';
 
 				//General extension CSS include
-				$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'css'.DS.$extension.'.css';
+				$file = $JLGPATH_EXTENSION.'/assets/css/'.$extension.'.css';
 				if(file_exists(JPath::clean($file))) {
-					$document->addStyleSheet(  $this->baseurl . '/../components/'.$option.'/extensions/' . $extension . '/admin/assets/css/' . $extension . '.css?v=' . $version );
+					$document->addStyleSheet($this->baseurl.'/../components/'.$option.'/extensions/'.$extension.'/admin/assets/css/'.$extension.'.css?v=' . $version );
 				}
 				//CSS override
-				$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'css'.DS.$this->getName().'.css';
+				$file = $JLGPATH_EXTENSION.'/assets/css/'.$this->getName().'.css';
 				if(file_exists(JPath::clean($file))) {
 					//add css file
-					$document->addStyleSheet(  $this->baseurl . '/../components/'.$option.'/extensions/' . $extension . '/admin/assets/css/'.$this->getName().'.css?v=' . $version );
+					$document->addStyleSheet($this->baseurl.'/../components/'.$option.'/extensions/'.$extension.'/admin/assets/css/'.$this->getName().'.css?v=' . $version );
 				}
 				//General extension JS include
-				$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'js'.DS.$extension.'.js';
+				$file = $JLGPATH_EXTENSION.'/assets/js/'.$extension.'.js';
 				if(file_exists(JPath::clean($file))) {
 					//add js file
-					$document->addScript(  $this->baseurl . '/../components/'.$option.'/extensions/' . $extension . '/admin/assets/js/' . $extension . '.js?v=' . $version );
+					$document->addScript(  $this->baseurl.'/../components/'.$option.'/extensions/'.$extension.'/admin/assets/js/'.$extension.'.js?v=' . $version );
 				}
 				//JS override
-				$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'js'.DS.$this->getName().'.js';
+				$file = $JLGPATH_EXTENSION.'/assets/js/'.$this->getName().'.js';
 				if(file_exists(JPath::clean($file))) {
 					//add js file
-					$document->addScript(  $this->baseurl . '/../components/'.$option.'/extensions/' . $extension . '/admin/assets/js/'.$this->getName().'.js?v=' . $version);
+					$document->addScript($this->baseurl.'/../components/'.$option.'/extensions/'.$extension.'/admin/assets/js/'.$this->getName().'.js?v=' . $version);
 				}
 			}
 		}
@@ -184,13 +185,13 @@ class JLGView extends JViewLegacy
 	 */
 	function getExtended($data='', $file, $format='ini')
 	{
-		$xmlfile=JLG_PATH_ADMIN.DS.'assets'.DS.'extended'.DS.$file.'.xml';
+		$xmlfile=JLG_PATH_ADMIN.'/assets/extended/'.$file.'.xml';
 		//extension management
 		$extensions = JoomleagueHelper::getExtensions(JRequest::getInt('p'));
 		foreach ($extensions as $e => $extension) {
-			$JLGPATH_EXTENSION = JPATH_COMPONENT_SITE.DS.'extensions'.DS.$extension.DS.'admin';
+			$JLGPATH_EXTENSION = JPATH_COMPONENT_SITE.'/extensions/'.$extension.'/admin';
 			//General extension extended xml
-			$file = $JLGPATH_EXTENSION.DS.'assets'.DS.'extended'.DS.$file.'.xml';
+			$file = $JLGPATH_EXTENSION.'/assets/extended/'.$file.'.xml';
 			if(file_exists(JPath::clean($file))) {
 				$xmlfile = $file;
 				break; //first extension file will win
@@ -206,5 +207,70 @@ class JLGView extends JViewLegacy
 				false, '/config');
 		$extended->bind($jRegistry);
 		return $extended;
+	}
+	
+	
+	
+	private function includeLanguageStrings() 
+	{
+		if ($this->getName() == 'club') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_CLUB_CSJS_NO_NAME');
+		}
+		if ($this->getName() == 'division') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_DIVISION_CSJS_NO_NAME');
+		}
+		if ($this->getName() == 'eventtype') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_EVENTTYPE_CSJS_NAME_REQUIRED');
+		}
+		if ($this->getName() == 'league') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_LEAGUE_CSJS_NO_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_LEAGUE_CSJS_NO_SHORT_NAME');
+		}
+		if ($this->getName() == 'person') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_PERSON_CSJS_NO_NAME');
+		}
+		if ($this->getName() == 'playground') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_PLAYGROUND_CSJS_NO_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PLAYGROUND_CSJS_NO_S_NAME');
+		}
+		if ($this->getName() == 'position') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_POSITION_CSJS_NEEDS_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_POSITION_CSJS_NEEDS_SPORTSTYPE');
+		}
+		if ($this->getName() == 'project') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_LEAGUE_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_SEASON_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_SPORT_TYPE');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_ADMIN');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_MATCHDAY');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_MATCHTIME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_MATCHDATE');
+			JText::script('COM_JOOMLEAGUE_ADMIN_PROJECT_CSJS_ERROR_MATCHDAY');
+		}
+		if ($this->getName() == 'round') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_ROUND_CSJS_NO_ROUNDCODE');
+			JText::script('COM_JOOMLEAGUE_ADMIN_ROUND_CSJS_NO_NAME');
+		}
+		if ($this->getName() == 'rounds') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_ROUNDS_CSJS_MSG_NOTANUMBER');
+		}
+		if ($this->getName() == 'season') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_SEASON_CSJS_NO_NAME');
+		}
+		if ($this->getName() == 'sportstype') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_SPORTSTYPE_CSJS_UNTRANSLATED_NAME');
+		}
+		if ($this->getName() == 'statistic') {
+			JText::script('COM_JOOMLEAGUE_FORM_JS_CHECK_ERROR');
+		}
+		if ($this->getName() == 'team') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_TEAM_CSJS_NO_NAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_TEAM_CSJS_NO_SHORTNAME');
+			JText::script('COM_JOOMLEAGUE_ADMIN_TEAM_CSJS_NO_CLUB');
+		}
+		if ($this->getName() == 'template') {
+			JText::script('COM_JOOMLEAGUE_ADMIN_TEMPLATE_CSJS_WRONG_VALUES');
+		}
 	}
 }
