@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 	<div class="col50">
 <?php
 	$p=1;
-	echo JHtml::_('bootstrap.startTabSet', 'tabs', array());
+	echo JHtml::_('bootstrap.startTabSet', 'tabs', array('active' => 'panel1'));
 	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_('COM_JOOMLEAGUE_TABS_DETAILS', true));
 	echo $this->loadTemplate('details');
 	echo JHtml::_('bootstrap.endTab');
