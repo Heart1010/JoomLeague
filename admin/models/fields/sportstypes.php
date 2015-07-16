@@ -25,7 +25,8 @@ class JFormFieldSportsTypes extends JFormField
 		$lang->load($extension, JPATH_ADMINISTRATOR, null, false, false)
 		||	$lang->load($extension, $source, null, false, false)
 		||	$lang->load($extension, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load($extension, $source, $lang->getDefault(), false, false);
+		||	$lang->load($extension, $source, $lang->getDefault(), false, false)
+		||	$lang->load('com_joomleague_sport_types', JPATH_ADMINISTRATOR.'/components/com_joomleague', 'en-GB', true);
 		
 		$query='SELECT id, name FROM #__joomleague_sports_type ORDER BY name ASC ';
 		$db->setQuery($query);
