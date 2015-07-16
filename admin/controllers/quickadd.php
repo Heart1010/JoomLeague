@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
@@ -20,11 +18,11 @@ jimport('joomla.application.component.controller');
  * @package	 joomleague
  * @since 1.5
  */
-class JoomleagueControllerQuickAdd extends JoomleagueController
+class JoomleagueControllerQuickadd extends JoomleagueController
 {
 
 	public function __construct()
-	{
+	{		
 		parent::__construct();
 
 		// Register Extra tasks
@@ -40,7 +38,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 
 	public function searchPlayer()
 	{
-		$model 			= &JLGModel::getInstance('Quickadd', 'JoomleagueModel');
+		$model 			= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 			= JRequest::getVar("query", "", "", "string");
 		$projectteam_id = JRequest::getInt("projectteam_id");
 		$results 		= $model->getNotAssignedPlayers($query, $projectteam_id);
@@ -62,7 +60,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 
 	public function searchStaff()
 	{
-		$model 			= &JLGModel::getInstance('Quickadd', 'JoomleagueModel');
+		$model 			= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 			= JRequest::getVar("query", "", "", "string");
 		$projectteam_id = JRequest::getInt("projectteam_id");
 		$results 		= $model->getNotAssignedStaff($query, $projectteam_id);
@@ -87,7 +85,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 	{
 		$option = JRequest::getCmd('option');
 		$mainframe	= JFactory::getApplication();
-		$model 		= &JLGModel::getInstance('Quickadd', 'JoomleagueModel');
+		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 		= JRequest::getVar("query", "", "", "string");
 		$projectid 	= $mainframe->getUserState($option."project");
 		$results 	= $model->getNotAssignedReferees($query, $projectid);
@@ -112,7 +110,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 	{
 		$option = JRequest::getCmd('option');
 		$mainframe	= JFactory::getApplication();
-		$model 		= &JLGModel::getInstance('Quickadd', 'JoomleagueModel');
+		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 		= JRequest::getVar("query", "", "", "string");
 		$projectid 	= $mainframe->getUserState($option."project");
 		$results 	= $model->getNotAssignedTeams($query, $projectid);
@@ -158,7 +156,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 
 	public function addStaff()
 	{
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		$personid = JRequest::getInt("cpersonid", 0);
 		$name = JRequest::getVar("quickadd", '', 'request', 'string');
 		$projectteam_id = JRequest::getInt("projectteam_id", 0);
@@ -166,7 +164,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 		// add the new individual as their name was sent through.
 		if (!$personid)
 		{
-			$model = &JLGModel::getInstance('Person', 'JoomleagueModel');
+			$model = JLGModel::getInstance('Person', 'JoomleagueModel');
 			$name = explode(" ", $name);
 			$firstname = ucfirst(array_shift($name));
 			$lastname = ucfirst(implode(" ", $name));
@@ -251,7 +249,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 		// add the new individual as their name was sent through.
 		if (!$personid)
 		{
-			$model = &JLGModel::getInstance('Person', 'JoomleagueModel');
+			$model = JLGModel::getInstance('Person', 'JoomleagueModel');
 			$name = explode(" ", $name);
 			$firstname = ucfirst(array_shift($name));
 			$lastname = ucfirst(implode(" ", $name));
@@ -326,7 +324,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 		$option = JRequest::getCmd('option');
 		$mainframe = JFactory::getApplication();
 
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		$teamid = JRequest::getInt("cteamid", 0);
 		$name = JRequest::getVar("quickadd", '', 'request', 'string');
 		$project_id = $mainframe->getUserState($option."project");
@@ -334,7 +332,7 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 		// add the new team as their name was sent through.
 		if (!$teamid)
 		{
-			$model = &JLGModel::getInstance('Team', 'JoomleagueModel');
+			$model = JLGModel::getInstance('Team', 'JoomleagueModel');
 			$data = array(
 				"name" => $name
 			);
@@ -388,4 +386,3 @@ class JoomleagueControllerQuickAdd extends JoomleagueController
 		$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id, $msg);
 	}
 }
-?>
