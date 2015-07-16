@@ -22,7 +22,7 @@ $this->addTemplatePath(JPATH_COMPONENT.'/views/joomleague');
 						<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_PROJECTS_CONTROL_PANEL_LEGEND','<i>'.$this->project->name.'</i>'); ?></legend>
 						<div class="cpanel" style="height:100px;padding:15px">
 							<?php
-	 						$link=JRoute::_('index.php?option=com_joomleague&&task=project.edit&cid[]='.$this->project->id);
+	 						$link=JRoute::_('index.php?option=com_joomleague&task=project.edit&cid[]='.$this->project->id);
 							$text=JText::_('COM_JOOMLEAGUE_P_PANEL_PSETTINGS');
 							$imageFile='icon-48-ProjectSettings.png';
 							$linkParams="<span>$text</span>&nbsp;";
