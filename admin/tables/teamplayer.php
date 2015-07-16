@@ -49,11 +49,11 @@ class TableTeamPlayer extends JLTable
 			$this->$k = intval( $oid );
 		}
 
-		$query = 'DELETE FROM '.$this->getDbo()->nameQuote( $this->_tbl ).
+		$query = 'DELETE FROM '.$this->getDbo()->quoteName( $this->_tbl ).
 				' WHERE '.$this->_tbl_key.' = '. $this->getDbo()->Quote($this->$k);
 		$this->getDbo()->setQuery( $query );
 
-		if ($this->getDbo()->query())
+		if ($this->getDbo()->execute())
 		{
 			return true;
 		}
