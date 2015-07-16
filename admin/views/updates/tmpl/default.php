@@ -1,8 +1,10 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+
+defined('_JEXEC') or die;
 
 JHtml::_('behavior.tooltip');
 ?>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 	<table class="adminlist table table-striped">
 		<thead>
 			<tr>
@@ -17,13 +19,11 @@ JHtml::_('behavior.tooltip');
 		</thead>
 		<tfoot><tr><td colspan='7'><?php echo '&nbsp;'; ?></td></tr></tfoot>
 		<tbody><?php
-		$k=0;
-		for ($i=0, $n=count($this->updateFiles); $i < $n; $i++)
-		{
-			$row = $this->updateFiles[$i];
+		$n = count($this->updateFiles);
+		foreach ($this->updateFiles as $i => $row) :
 			$link=JRoute::_('index.php?option=com_joomleague&view=updates&task=update.save&file_name='.$row['file_name']);
 			?>
-			<tr class="<?php echo "row$k"; ?>">
+			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center"><?php echo $i+1; ?></td>
 				<td><?php
 					$linkTitle=$row['file_name'];
@@ -45,10 +45,8 @@ JHtml::_('behavior.tooltip');
 				<td class="center"><?php echo $row['date']; ?></td>
 				<td class="center"><?php echo $row['count']; ?></td>
 			</tr>
-			<?php
-			$k=1 - $k;
-		}
-		?></tbody>
+			<?php endforeach; ?>
+		</tbody>
 	</table>
 	<input type="hidden" name="view" value="updates" />
 	<input type="hidden" name="task" value="update.display" />
