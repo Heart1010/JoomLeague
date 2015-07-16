@@ -1,4 +1,15 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL, see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
+
 JHtml::_('behavior.tooltip');
 
 $istree=$this->treetows->tree_i;
@@ -26,7 +37,7 @@ JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TREETONODES_TITLE'));
 JToolBarHelper::help('screen.joomleague',true);
 ?>
 
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 	<div id="editcell">
 		<fieldset class="adminform">
 			<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_TREETONODES_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>

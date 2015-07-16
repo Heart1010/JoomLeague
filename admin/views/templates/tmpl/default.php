@@ -1,22 +1,34 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
+
 JHtml::_('behavior.tooltip');
 ?>
 <script>
-	function searchTemplate(val,key)
+function searchTemplate(val,key)
+{
+	var f = $('adminForm');
+	if(f)
 	{
-		var f = $('adminForm');
-		if(f){
-			f.elements['search'].value=val;
-			f.elements['search_mode'].value= 'matchfirst';
-			f.submit();
-		}
+		f.elements['search'].value=val;
+		f.elements['search_mode'].value= 'matchfirst';
+		f.submit();
 	}
+}
 </script>
 <div id="editcell">
 	<fieldset class="adminform">
 		<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_TEMPLATES_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>
 		<?php if ($this->projectws->master_template){echo $this->loadTemplate('import');} ?>
-		<form action="index.php?option=com_joomleague&view=templates" method="post" id="adminForm">
+		<form action="index.php?option=com_joomleague&view=templates" method="post" id="adminForm" name="adminForm">
 			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
@@ -42,14 +54,13 @@ JHtml::_('behavior.tooltip');
 				<tfoot><tr><td colspan="9"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 				<tbody>
 					<?php
-					$k=0;
-					for ($i=0, $n=count($this->templates); $i < $n; $i++)
-					{
-						$row = $this->templates[$i];
+					
+					$n = count($this->templates);
+					foreach ($this->templates as $i => $row) :
 						$link1=JRoute::_('index.php?option=com_joomleague&task=template.edit&cid[]='.$row->id);
 						$checked=JHtml::_('grid.checkedout',$row,$i);
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 							<td class="center"><?php echo $checked; ?></td>
 							<td><?php
@@ -71,10 +82,7 @@ JHtml::_('behavior.tooltip');
 								echo $row->id;
 								?><input type='hidden' name='isMaster[<?php echo $row->id; ?>]' value='<?php echo $row->isMaster; ?>' /><?php ?></td>
 						</tr>
-						<?php
-						$k=1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 			<input type="hidden" name="task" value="template.display" />

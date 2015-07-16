@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-201 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -19,7 +17,6 @@ jimport('joomla.application.component.view');
  *
  * @static
  * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueViewProjectposition extends JLGView
 {
@@ -155,9 +152,9 @@ class JoomleagueViewProjectposition extends JLGView
 
 		$this->user = JFactory::getUser();
 		$this->lists = $lists;
-		$this->positiontool = $positiontool;
+		/* $this->positiontool = $positiontool; */
 		$this->projectws = $projectws;
-		$this->pagination = $pagination;
+		/* $this->pagination = $pagination; */
 		$this->request_url = $uri->toString();
 
 		$this->addToolbar_Editlist();		

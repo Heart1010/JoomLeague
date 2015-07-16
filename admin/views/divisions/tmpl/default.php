@@ -1,50 +1,35 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
 
-JHtml::_( 'behavior.tooltip' );
+defined('_JEXEC') or die;
+JHtml::_('behavior.tooltip');
 ?>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
-	<fieldset class="adminform">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
+	<fieldset class="form-horizontal">
 		<legend>
 			<?php
 			echo JText::sprintf(	'COM_JOOMLEAGUE_ADMIN_DIVS_TITLE2',
 									'<i>' . $this->projectws->name . '</i>' );
 			?>
 		</legend>
-		<table>
-			<tr>
-				<td align="left" width="100%">
-					<?php
-					echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_FILTER' );
-					?>:&nbsp;<input	type="text" name="search" id="search"
-									value="<?php echo $this->lists['search']; ?>"
-									class="text_area" onchange="$('adminForm').submit(); " />
-					<button onclick="this.form.submit(); ">
-						<?php
-						echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_GO' );
-						?>
-					</button>
-					<button onclick="document.getElementById('search').value='';this.form.submit(); ">
-						<?php
-						echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_RESET' );
-						?>
-					</button>
-				</td>
-				<td class="nowrap">
-					<?php
-						echo $this->lists['state'];
-					?>
-					&nbsp;
-				</td>
-			</tr>
-		</table>
-
+		
+<div class="clearfix">
+	<div class="btn-wrapper input-append pull-left">
+		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER' ); ?>:
+		<input type="text" name="search" id="search" value="<?php echo $this->lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
+		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
+		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
+	</div>
+	<div class="btn-wrapper pull-right">
+		<?php echo $this->lists['state']; ?>
+	</div>
+</div>		
 		<div id="editcell">
 			<table class="adminlist table table-striped">
 				<thead>
 					<tr>
 						<th width="5" >
 							<?php
-							echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_RESET' );
+							echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_NUM' );
 							?>
 						</th>
 						<th width="20" >
@@ -95,14 +80,12 @@ JHtml::_( 'behavior.tooltip' );
 
 				<tbody>
 				<?php
-					$k = 0;
-					for ( $i = 0, $n = count( $this->items ); $i < $n; $i++ )
-					{
-						$row		= $this->items[$i];
+					$n = count($this->items);
+					foreach ($this->items as $i => $row) :
 						$link 		= JRoute::_( 'index.php?option=com_joomleague&task=division.edit&cid[]=' . $row->id );
 						$checked 	= JHtml::_( 'grid.checkedout',   $row, $i );
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td style="text-align:center; ">
 								<?php echo $this->pagination->getRowOffset( $i ); ?>
 							</td>
@@ -172,10 +155,7 @@ JHtml::_( 'behavior.tooltip' );
 								?>
 							</td>
 						</tr>
-						<?php
-						$k = 1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>

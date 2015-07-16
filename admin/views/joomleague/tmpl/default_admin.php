@@ -1,5 +1,14 @@
 <?php 
-defined('_JEXEC') or die('Restricted access'); 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die; 
 $option = 'com_joomleague';
 ?>
 <!--[if gt IE 5.5]>
@@ -97,7 +106,7 @@ window.addEvent('domready', function() {
 									}
 								}
 								if($allowed) {
-									echo '<tr><td><b><a href="'.$href.'" title="'.JText::_('JGLOBAL_AUTH_ACCESS_GRANTED').'">'.$image.' '.$text.'</a></b></td></tr>';
+									echo '<tr><td><b><a href="'.$href.'" title="">'.$image.' '.$text.'</a></b></td></tr>';
 								} else {
 									echo '<tr><td><span title="'.JText::_('JGLOBAL_AUTH_ACCESS_DENIED').'">'.$image.' '.$text.'</span></td></tr>';
 								}

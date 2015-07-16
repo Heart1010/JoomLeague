@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 jimport( 'joomla.application.component.view' );
 
@@ -19,7 +17,6 @@ jimport( 'joomla.application.component.view' );
  *
  * @static
  * @package	Joomleague
- * @since	0.1
  */
 class JoomleagueViewDivisions extends JLGView
 {
@@ -32,11 +29,11 @@ class JoomleagueViewDivisions extends JLGView
 		$db		= JFactory::getDbo();
 		$uri	= JFactory::getURI();
 
-		$filter_state		= $mainframe->getUserStateFromRequest( $option . 'dv_filter_state',		'filter_state',		'',				'word' );
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'dv_filter_order',		'filter_order',		'dv.ordering',	'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'dv_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-		$search				= $mainframe->getUserStateFromRequest( $option . 'dv_search',			'search',			'',				'string' );
-		$search				= JString::strtolower( $search );
+		$filter_state		= $mainframe->getUserStateFromRequest($option . 'dv_filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $mainframe->getUserStateFromRequest($option . 'dv_filter_order',		'filter_order',		'dv.ordering',	'cmd');
+		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option . 'dv_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $mainframe->getUserStateFromRequest($option . 'dv_search',			'search',			'',				'string');
+		$search				= JString::strtolower($search);
 
 		$items		= $this->get('Data');
 		$total		= $this->get('Total');
@@ -45,7 +42,7 @@ class JoomleagueViewDivisions extends JLGView
 		$projectws	= $this->get('Data', 'project');
 
 		// state filter
-		$lists['state']		= JHtml::_( 'grid.state',  $filter_state );
+		$lists['state']		= JHtml::_('grid.state',  $filter_state);
 
 		// table ordering
 		$lists['order_Dir']	= $filter_order_Dir;
@@ -66,8 +63,6 @@ class JoomleagueViewDivisions extends JLGView
 	
 	/**
 	 * Add the page title and toolbar.
-	 *
-	 * @since	1.7
 	 */
 	protected function addToolbar()
 	{
@@ -82,4 +77,3 @@ class JoomleagueViewDivisions extends JLGView
 		JToolBarHelper::help('screen.joomleague', true);
 	}
 }
-?>

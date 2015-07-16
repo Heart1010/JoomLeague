@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,8 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -18,7 +17,6 @@ jimport('joomla.application.component.view');
  *
  * @package		Joomla
  * @subpackage	JoomLeague
- * @since		1.5
  */
 class JoomleagueViewImport extends JLGView
 {
@@ -38,13 +36,11 @@ class JoomleagueViewImport extends JLGView
 
 		// Get data from the model
 		$model = $this->getModel("import");
-		$tablefields = $model->getTablefields('#__joomleague_' . $table);
+		$tablefields = $model->getTableColumns('#__joomleague_' . $table);
 
 		//assign vars to the template
 		$this->tablefields = $tablefields;
 		$this->table = $table;
 		parent::display($tpl);
 	}
-
 }
-?>

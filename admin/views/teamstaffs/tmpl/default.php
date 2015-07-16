@@ -1,12 +1,13 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+
+defined('_JEXEC') or die;
 
 //Ordering allowed ?
-$ordering = ( $this->lists['order'] == 'ppl.ordering' );
+$ordering = ($this->lists['order'] == 'ppl.ordering');
 
-$this->addTemplatePath( JPATH_COMPONENT . DS . 'views' . DS . 'joomleague' );
+$this->addTemplatePath(JPATH_COMPONENT.'/views/joomleague');
 ?>
 <script>
-
 	var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&task=quickadd.searchstaff&projectteam_id=<?php echo $this->teamws->id; ?>';
 
 	function searchTeamStaff(val)
@@ -23,7 +24,7 @@ $this->addTemplatePath( JPATH_COMPONENT . DS . 'views' . DS . 'joomleague' );
 <?php
 $uri = JUri::root();
 ?>
-<fieldset class="adminform">
+<fieldset class="form-horizontal">
 	<legend>
 	<?php
 	echo JText::_("COM_JOOMLEAGUE_ADMIN_TEAMSTAFFS_QUICKADD_STAFF");
@@ -42,44 +43,32 @@ $uri = JUri::root();
 	<?php echo JHtml::_( 'form.token' ); ?>
 	</form>
 </fieldset>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
-	<fieldset class="adminform">
+
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
+	<fieldset class="form-horizontal">
 		<legend>
 			<?php
 			echo JText::sprintf(	'COM_JOOMLEAGUE_ADMIN_TSTAFFS_TITLE2',
 									'<i>' . $this->teamws->name . '</i>', '<i>' . $this->projectws->name . '</i>' );
 			?>
 		</legend>
-		<table>
-			<tr>
-				<td align="left" width="100%">
-					<?php
-					echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_FILTER' );
-					?>
-					<input	type="text" name="search" id="search"
-							value="<?php echo $this->lists['search']; ?>" class="text_area"
-							onchange="document.getElementById('search_mode').value=''; $('adminForm').submit(); " />
-					<button onclick="document.getElementById('search_mode').value=''; this.form.submit(); ">
-						<?php
-						echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_GO' );
-						?>
-					</button>
-					<button onclick="document.getElementById('search').value=''; document.getElementById('search_mode').value=''; this.form.submit(); ">
-						<?php
-						echo JText::_( 'COM_JOOMLEAGUE_GLOBAL_RESET' );
-						?>
-					</button>
-				</td>
-				<td class="center" colspan="4">
-					<?php
-					for ( $i = 65; $i < 91; $i++ )
-					{
-						printf( "<a href=\"javascript:searchTeamStaff('%s')\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;", chr($i), chr($i) );
-					}
-					?>
-				 </td>
-			</tr>
-		</table>
+
+<div class="clearfix">
+	<div class="btn-wrapper input-append pull-left">
+		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER' ); ?>:
+		<input type="text" name="search" id="search" value="<?php echo $this->lists['search'];?>" class="text_area" onchange="document.getElementById('search_mode').value='';document.adminForm.submit();" />
+		<button class="btn hasTooltip" onclick="document.getElementById('search_mode').value='';this.form.submit();"><span class="icon-search"></span></button>
+		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';document.getElementById('search_mode').value='';this.form.submit();"><span class="icon-remove"></span></button>
+	</div>
+	<div class="btn-wrapper pull-right">
+	<?php
+		for ($i = 65; $i < 91; $i++){
+			printf( "<a href=\"javascript:searchTeamStaff('%s')\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;", chr($i), chr($i));
+		}
+	?>
+	</div>
+</div>		
+		
 		<div id="editcell">
 			<table class="adminlist table table-striped">
 				<thead>
@@ -149,10 +138,8 @@ $uri = JUri::root();
 				</tfoot>
 				<tbody>
 					<?php
-					$k = 0;
-					for ( $i = 0, $n = count( $this->items ); $i < $n; $i++ )
-					{
-						$row = $this->items[$i];
+					$n = count($this->items);
+					foreach ($this->items as $i => $row) :
 						#echo '<pre>'; print_r($row); echo '</pre>';
 						$link = JRoute::_(	'index.php?option=com_joomleague&task=teamstaff.edit&team=' .
 											$this->teamws->id . '&cid[]=' . $row->id );
@@ -160,7 +147,7 @@ $uri = JUri::root();
 						$inputappend = '';
 
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center">
 								<?php
 								echo $this->pagination->getRowOffset( $i );
@@ -317,10 +304,7 @@ $uri = JUri::root();
 								?>
 							</td>
 						</tr>
-						<?php
-						$k = 1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>

@@ -1,25 +1,40 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
 $uri = JFactory::getURI();
 ?>
 <!-- import the functions to move the events between selection lists  -->
 <?php 
 $version = urlencode(JoomleagueHelper::getVersion());
 echo JHtml::script('eventsediting.js?v='.$version,'administrator/components/com_joomleague/assets/js/'); ?>
-<form action="index.php" method="post" id="adminForm">
+<form action="index.php" method="post" id="adminForm" name="adminForm">
 	<div class="col50">
-<?php
-echo JHtml::_('tabs.start','tabs', array('useCookie'=>1));
-echo JHtml::_('tabs.panel',JText::_('COM_JOOMLEAGUE_TABS_DETAILS'), 'panel1');
-echo $this->loadTemplate('details');
 
-echo JHtml::_('tabs.panel',JText::_('COM_JOOMLEAGUE_TABS_EVENTS'), 'panel2');
-echo $this->loadTemplate('events');
+	<?php
+	$p=1;
+	echo JHtml::_('bootstrap.startTabSet', 'tabs', array('active' => 'panel1'));
+	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_('COM_JOOMLEAGUE_TABS_DETAILS', true));
+	echo $this->loadTemplate('details');
+	echo JHtml::_('bootstrap.endTab');
 
-echo JHtml::_('tabs.panel',JText::_('COM_JOOMLEAGUE_TABS_STATISTICS'), 'panel3');
-echo $this->loadTemplate('statistics');
+	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_('COM_JOOMLEAGUE_TABS_EVENTS', true));
+	echo $this->loadTemplate('events');
+	echo JHtml::_('bootstrap.endTab');
+	
+	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_('COM_JOOMLEAGUE_TABS_STATISTICS', true));
+	echo $this->loadTemplate('statistics');
+	echo JHtml::_('bootstrap.endTab');
 
-echo JHtml::_('tabs.end');
-?>
+	echo JHtml::_('bootstrap.endTabSet');
+	?>
 		<div class="clr"></div>
 		<input type="hidden" name="eventschanges_check" id="eventschanges_check" value="0" />
 		<input type="hidden" name="statschanges_check" id="statschanges_check" value="0" />

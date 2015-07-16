@@ -1,9 +1,19 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
 
 $path='/administrator/components/com_joomleague/assets/images/';
 $user = JFactory::getUser();
 JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTS_CONTROL_PANEL_TITLE'));
-$this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
+$this->addTemplatePath(JPATH_COMPONENT.'/views/joomleague');
 ?>
 			<div id="element-box">
 				<div class="t"><div class="t"><div class="t">&nbsp;</div></div></div>
@@ -19,7 +29,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text=JText::_('COM_JOOMLEAGUE_P_MENU_PSETTINGS');
 										$imageFile='icon-48-ProjectSettings.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>		
 										<?php
@@ -27,7 +37,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text=JText::_('COM_JOOMLEAGUE_P_MENU_FES');
 										$imageFile='icon-48-FrontendSettings.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -38,7 +48,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 											$text=JText::_('COM_JOOMLEAGUE_P_MENU_DIVISIONS');
 											$imageFile='icon-48-Divisions.png';
 											$linkParams="<span>$text</span>&nbsp;";
-											$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+											$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 											<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -51,7 +61,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 											$text=JText::_('COM_JOOMLEAGUE_P_MENU_TREE');
 											$imageFile='icon-48-Tree.png';
 											$linkParams="<span>$text</span>&nbsp;";
-											$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+											$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 											?>
 											<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -60,7 +70,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text=JText::_('COM_JOOMLEAGUE_P_MENU_POSITIONS');
 										$imageFile='icon-48-Positions.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -68,7 +78,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text=JText::_('COM_JOOMLEAGUE_P_MENU_REFEREES');
 										$imageFile='icon-48-Referees.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -76,7 +86,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text=JText::_('COM_JOOMLEAGUE_P_MENU_TEAMS');
 										$imageFile='icon-48-Teams.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -84,7 +94,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text="10 " . JText::_('COM_JOOMLEAGUE_P_MENU_MATCHDAYS');
 										$imageFile='icon-48-Matchdays.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 										<?php
@@ -92,7 +102,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 										$text=JText::_('COM_JOOMLEAGUE_P_MENU_XML_EXPORT');
 										$imageFile='icon-48-XMLExportData.png';
 										$linkParams="<span>$text</span>&nbsp;";
-										$image=JHtml::_('image.administrator',$imageFile,$path,NULL,NULL,$text).$linkParams;
+										$image=JHtml::_('image',$imageFile,$path,NULL,NULL,$text).$linkParams;
 										?>
 										<div class="icon-wrapper"><div class="icon"><?php echo JHtml::link($link,$image); ?></div></div>
 									</div>

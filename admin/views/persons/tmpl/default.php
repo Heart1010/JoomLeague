@@ -8,53 +8,49 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
+
 jimport('joomla.filesystem.file');
 ?>
 <script>
-	function searchPerson(val)
+function searchPerson(val)
+{
+	var f = $('adminForm');
+	if(f)
 	{
-		var f = $('adminForm');
-		if(f)
-		{
-			f.elements['search'].value=val;
-			f.elements['search_mode'].value= 'matchfirst';
-			f.submit();
-		}
+		f.elements['search'].value=val;
+		f.elements['search_mode'].value= 'matchfirst';
+		f.submit();
 	}
+}
 
-	function onupdatebirthday(cal)
-	{
-		$($(cal.params.inputField).getProperty('cb')).setProperty('checked','checked');
-	}
+function onupdatebirthday(cal)
+{
+	$($(cal.params.inputField).getProperty('cb')).setProperty('checked','checked');
+}
 </script>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
-	<div style="width: 100%;">
-		<div style="float: left;">
-				<?php
-				echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER');
-				?>&nbsp;<input	type="text" name="search" id="search"
-								value="<?php echo $this->lists['search']; ?>"
-								class="text_area" onchange="$('adminForm').submit(); " />
-				<button onclick="this.form.submit(); "><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_GO'); ?></button>
-				<button onclick="document.getElementById('search').value='';this.form.submit(); ">
-					<?php
-					echo JText::_('COM_JOOMLEAGUE_GLOBAL_RESET');
-					?>
-				</button>
-		</div>
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
+
+<div class="clearfix">
+	<div class="btn-wrapper input-append pull-left">
+		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER' ); ?>:
+		<input type="text" name="search" id="search" value="<?php echo $this->lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
+		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
+		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
+	</div>
+	<div class="btn-wrapper pull-right">
 		<div style="max-width: 700px; overflow: auto; float: right">
-				<?php
-				$startRange = hexdec($this->component_params->get('character_filter_start_hex', '0041'));
-				$endRange = hexdec($this->component_params->get('character_filter_end_hex', '005A'));
-				for ($i=$startRange; $i <= $endRange; $i++)
-				{
-					printf("<a href=\"javascript:searchPerson('%s')\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;",chr($i),chr($i));
-				}
-				?>
+			<?php
+			$startRange = hexdec($this->component_params->get('character_filter_start_hex', '0041'));
+			$endRange = hexdec($this->component_params->get('character_filter_end_hex', '005A'));
+			for ($i=$startRange; $i <= $endRange; $i++)
+			{
+				printf("<a href=\"javascript:searchPerson('%s')\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;",chr($i),chr($i));
+			}
+			?>
 		</div>
 	</div>
-	<div style="clear: both;"></div>
+</div>
 	<div id="editcell">
 		<table class="adminlist table table-striped">
 			<thead>
@@ -111,10 +107,8 @@ jimport('joomla.filesystem.file');
 			<tfoot><tr><td colspan='12'><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 			<tbody>
 				<?php
-				$k=0;
-				for ($i=0,$n=count($this->items); $i < $n; $i++)
-				{
-					$row=$this->items[$i];
+				$n = count($this->items);
+				foreach ($this->items as $i => $row) :
 					if (($row->firstname != '!Unknown') && ($row->lastname != '!Player')) // Ghostplayer for match-events
 					{
 						$link       = JRoute::_('index.php?option=com_joomleague&task=person.edit&cid[]='.$row->id);
@@ -122,7 +116,7 @@ jimport('joomla.filesystem.file');
 						$is_checked = JLTable::_isCheckedOut($this->user->get('id'),$row->checked_out);
                         $published  = JHtml::_('grid.published',$row,$i, 'tick.png','publish_x.png','person.');
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 							<td class="center"><?php echo $checked; ?></td>
 							<?php
@@ -240,9 +234,8 @@ jimport('joomla.filesystem.file');
 							<td class="center"><?php echo $row->id; ?></td>
 						</tr>
 						<?php
-						$k=1 - $k;
 					}
-				}
+					endforeach;
 				?>
 			</tbody>
 		</table>

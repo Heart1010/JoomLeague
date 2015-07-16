@@ -1,4 +1,15 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
+
 jimport('joomla.filesystem.file');
 JHtml::_('behavior.tooltip');
 $mainframe = JFactory::getApplication();
@@ -7,25 +18,23 @@ $mainframe = JFactory::getApplication();
 $ordering=($this->lists['order'] == 't.name');
 
 //load navigation menu
-$this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
+$this->addTemplatePath(JPATH_COMPONENT.'/views/joomleague');
 
 ?>
 <script>
-
-	function searchTeam(val,key)
-	{
-		var f= $('adminForm');
-		if(f) {
-			f.elements['search'].value=val;
-			f.elements['search_mode'].value= 'matchfirst';
-			f.submit();
-		}
+function searchTeam(val,key)
+{
+	var f= $('adminForm');
+	if(f) {
+		f.elements['search'].value=val;
+		f.elements['search_mode'].value= 'matchfirst';
+		f.submit();
 	}
+}
 
-	var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&task=quickadd.searchteam&project_id=<?php echo $this->projectws->id; ?>';
-
+var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&task=quickadd.searchteam&project_id=<?php echo $this->projectws->id; ?>';
 </script>
-<fieldset class="adminform">
+<fieldset class="form-horizontal">
 	<legend>
 	<?php
 	echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_QUICKADD_TEAM');
@@ -44,9 +53,10 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 	<?php echo JHtml::_('form.token')."\n"; ?>
 	</form>
 </fieldset>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 	<div id="editcell">
-		<fieldset class="adminform">
+		<fieldset class="form-horizontal">
 			<legend><?php echo JText::sprintf('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_LEGEND','<i>'.$this->projectws->name.'</i>'); ?></legend>
 			<?php $cell_count=22; ?>
 			<table class="adminlist table table-striped">
@@ -106,16 +116,14 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 				<tfoot><tr><td colspan="<?php echo $cell_count; ?>"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 				<tbody>
 					<?php
-					$k=0;
-					for ($i=0, $n=count($this->projectteam); $i < $n; $i++)
-					{
-						$row = &$this->projectteam[$i];
+					$n = count($this->projectteam);
+					foreach ($this->projectteam as $i => $row) :
 						$link1=JRoute::_('index.php?option=com_joomleague&task=projectteam.edit&cid[]='.$row->id);
 						$link2=JRoute::_('index.php?option=com_joomleague&task=teamplayer.select&project_team_id='.$row->id."&team_id=".$row->team_id.'&pid[]='.$this->projectws->id);
 						$link3=JRoute::_('index.php?option=com_joomleague&task=teamstaff.select&project_team_id='.$row->id."&team_id=".$row->team_id.'&pid[]='.$this->projectws->id);
 						$checked=JHtml::_('grid.checkedout',$row,$i);
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 							<td class="center"><?php echo $checked;?></td>
 							<?php
@@ -300,10 +308,7 @@ $this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
 							</td>
 							<td class="center" width="5%"><?php echo $row->id; ?></td>
 						</tr>
-						<?php
-						$k=(1-$k);
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 
 			</table>

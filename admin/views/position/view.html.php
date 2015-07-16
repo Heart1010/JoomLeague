@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
@@ -19,7 +17,6 @@ jimport('joomla.application.component.view');
  *
  * @static
  * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueViewPosition extends JLGView
 {
@@ -34,7 +31,10 @@ class JoomleagueViewPosition extends JLGView
 
 		// build the html select list for ordering
 		$query=$model->getOrderingAndPositionsQuery();
-		$lists['ordering']=JHtml::_('list.specificordering',$position,$position->id,$query,1);
+		
+		// @todo Fix!
+		/* $lists['ordering']=JHtml::_('list.specificordering',$position,$position->id,$query,1); */
+		$lists['ordering']= '';
 
 		//build the html select list for events
 		$res=array();
@@ -128,8 +128,6 @@ class JoomleagueViewPosition extends JLGView
 	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{		
@@ -157,4 +155,3 @@ class JoomleagueViewPosition extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);	
 	}
 }
-?>

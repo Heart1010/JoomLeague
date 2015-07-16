@@ -1,83 +1,46 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
 ?>
 
-		<fieldset class="adminform">
-			<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_DETAILS' );?>
-			</legend>
-			<table class="admintable">
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('name'); ?></td>
-					<td><?php echo $this->form->getInput('name'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('alias'); ?></td>
-					<td><?php echo $this->form->getInput('alias'); ?></td>
-				</tr>
-				<?php if (!$this->edit): ?>
-					<tr>
-						<td class="key"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_CREATE_TEAM')?></td>
-						<td><input type="checkbox" name="createTeam" /></td>
-					</tr>
-				<?php endif; ?>				
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('admin'); ?></td>
-					<td><?php echo $this->form->getInput('admin'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('address'); ?></td>
-					<td><?php echo $this->form->getInput('address'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('zipcode'); ?></td>
-					<td><?php echo $this->form->getInput('zipcode'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('location'); ?></td>
-					<td><?php echo $this->form->getInput('location'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('state'); ?></td>
-					<td><?php echo $this->form->getInput('state'); ?></td>
-				</tr>		
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('country'); ?></td>
-					<td><?php echo $this->form->getInput('country'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('phone'); ?></td>
-					<td><?php echo $this->form->getInput('phone'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('fax'); ?></td>
-					<td><?php echo $this->form->getInput('fax'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('email'); ?></td>
-					<td><?php echo $this->form->getInput('email'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('website'); ?></td>
-					<td><?php echo $this->form->getInput('website'); ?></td>
-				</tr>	
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('manager'); ?></td>
-					<td><?php echo $this->form->getInput('manager'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('president'); ?></td>
-					<td><?php echo $this->form->getInput('president'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('founded'); ?></td>
-					<td><?php echo $this->form->getInput('founded'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('dissolved'); ?></td>
-					<td><?php echo $this->form->getInput('dissolved'); ?></td>
-				</tr>
-				<tr>
-					<td class="key"><?php echo $this->form->getLabel('standard_playground'); ?></td>
-					<td><?php echo $this->form->getInput('standard_playground'); ?></td>
-				</tr>					
-			</table>
-		</fieldset>
+<fieldset class="form-horizontal">
+			
+	<?php 
+		echo $this->form->renderField('id');
+		echo $this->form->renderField('name');
+		echo $this->form->renderField('alias');
+		
+		if (!$this->edit): 
+	?>
+		<div class="control-group">
+			<div class="control-label"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_CREATE_TEAM')?></div>
+			<div class="controls"><input type="checkbox" name="createTeam" /></div>
+		</div>
+	<?php 
+		endif;
+
+		echo $this->form->renderField('admin');
+		echo $this->form->renderField('address');
+		echo $this->form->renderField('zipcode');
+		echo $this->form->renderField('location');
+		echo $this->form->renderField('state');
+		echo $this->form->renderField('country');
+		echo $this->form->renderField('phone');
+		echo $this->form->renderField('fax');
+		echo $this->form->renderField('email');
+		echo $this->form->renderField('website');
+		echo $this->form->renderField('manager');
+		echo $this->form->renderField('president');
+		echo $this->form->renderField('founded');
+		echo $this->form->renderField('dissolved');
+		echo $this->form->renderField('standard_playground');
+	?>		
+</fieldset>

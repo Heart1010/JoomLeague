@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright   Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license	 GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 jimport('joomla.html.pane');
@@ -21,10 +19,9 @@ jimport('joomla.filesystem.file');
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
  * @package	JoomLeague
- * @since	1.5.0a
  */
-require_once(JPATH_COMPONENT.DS.'models'.DS.'sportstypes.php');
-require_once(JPATH_COMPONENT.DS.'models'.DS.'leagues.php');
+require_once JPATH_COMPONENT.'/models/sportstypes.php';
+require_once JPATH_COMPONENT.'/models/leagues.php';
 class JoomleagueViewJoomleague extends JLGView
 {
 
@@ -57,8 +54,7 @@ class JoomleagueViewJoomleague extends JLGView
 
 	// display control panel
 	function _displayPanel($tpl)
-	{
-			
+	{	
 		//get the project
 		$project = $this->get('data');
 		
@@ -88,8 +84,9 @@ class JoomleagueViewJoomleague extends JLGView
 		$this->count_projectreferees = $iProjectRefereesCount;
 		$this->count_projectteams = $iProjectTeamsCount;
 		$this->count_matchdays = $iMatchDaysCount;
-		$this->params = $params;
-		$this->comp_params = $comp_params;
+		
+		/* $this->params = $params; */
+		/* $this->comp_params = $comp_params; */
 
 		parent::display($tpl);
 	}
@@ -484,7 +481,7 @@ class JoomleagueViewJoomleague extends JLGView
 		$this->limage = $limage;
 		$this->project = $project;
 		$this->sports_type_id = $sports_type_id;
-		$this->management = $management;
+		/* $this->management = $management; */
 
 		parent::display('admin');
 	}

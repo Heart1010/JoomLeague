@@ -1,4 +1,6 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+
+defined('_JEXEC') or die('Restricted access');
 
 //Ordering allowed ?
 $ordering=($this->lists['order'] == 't.ordering');
@@ -20,32 +22,29 @@ JHtml::_('behavior.tooltip');
 
 </script>
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
-	<div style="width: 100%;">
-		<div style="float: left;">
-				<?php
-				echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER');
-				?>&nbsp;<input	type="text" name="search" id="search"
-								value="<?php echo $this->lists['search']; ?>"
-								class="text_area" onchange="$('adminForm').submit(); " />
-				<button onclick="this.form.submit(); "><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_GO'); ?></button>
-				<button onclick="document.getElementById('search').value='';this.form.submit(); ">
-					<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_RESET'); ?>
-				</button>
-		</div>
+
+<div class="clearfix">
+	<div class="btn-wrapper input-append pull-left">
+		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER' ); ?>:
+		<input type="text" name="search" id="search" value="<?php echo $this->lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
+		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
+		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
+	</div>
+	<div class="btn-wrapper pull-right">
 		<div style="max-width: 700px; overflow: auto; float: right">
-				<?php
-				$startRange = hexdec($this->component_params->get('character_filter_start_hex', '0041'));
-				$endRange = hexdec($this->component_params->get('character_filter_end_hex', '005A'));
-				for ($i=$startRange; $i <= $endRange; $i++)
-				{
-					printf("<a href=\"javascript:searchTeam('%s')\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;",chr($i),chr($i));
-				}
-				?>
+			<?php
+			$startRange = hexdec($this->component_params->get('character_filter_start_hex', '0041'));
+			$endRange = hexdec($this->component_params->get('character_filter_end_hex', '005A'));
+			for ($i=$startRange; $i <= $endRange; $i++)
+			{
+				printf("<a href=\"javascript:searchTeam('%s')\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;",chr($i),chr($i));
+			}
+			?>
 		</div>
 	</div>
-	<div style="clear: both;"></div>
+</div>
 	<div id="editcell">
-		<table class="adminlist">
+		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
@@ -104,14 +103,12 @@ JHtml::_('behavior.tooltip');
 			<tfoot><tr><td colspan="12"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 			<tbody>
 				<?php
-				$k=0;
-				for ($i=0,$n=count($this->items); $i < $n; $i++)
-				{
-					$row = $this->items[$i];
+				$n = count($this->items);
+				foreach ($this->items as $i => $row) :
 					$link=JRoute::_('index.php?option=com_joomleague&task=team.edit&cid[]='.$row->id);
 					$checked=JHtml::_('grid.checkedout',$row,$i);
 					?>
-					<tr class="<?php echo "row$k"; ?>">
+					<tr class="row<?php echo $i % 2; ?>">
 						<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 						<td class="center"><?php echo $checked; ?></td>
 						<?php
@@ -193,10 +190,7 @@ JHtml::_('behavior.tooltip');
 						</td>
 						<td class="center"><?php echo $row->id; ?></td>
 					</tr>
-					<?php
-					$k=1 - $k;
-				}
-				?>
+					<?php endforeach; ?>
 			</tbody>
 		</table>
 	</div>
