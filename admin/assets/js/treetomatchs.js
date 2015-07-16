@@ -1,5 +1,5 @@
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license	GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
@@ -8,7 +8,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Joomla.submitbutton = function(pressbutton) {
+Joomla.submitbutton = function(task) {
 	var form = $('adminForm');
 	if($('node_matcheslist')) {
 		var mylist = $('node_matcheslist');
@@ -16,7 +16,7 @@ Joomla.submitbutton = function(pressbutton) {
 			mylist[i].selected = true;
 		}
 	}
-	Joomla.submitform(pressbutton);
+	Joomla.submitform(task);
 }
 
 function handleLeftToRight() {
