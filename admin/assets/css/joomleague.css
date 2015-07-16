@@ -102,3 +102,16 @@ fieldset img {
 div.pagetitle {
     float: left;
 }
+
+div.icon-wrapper {
+	border:1px solid black;
+	background-color: #CECECE;
+	width: 40px !important;
+	height: 40px !important;
+	padding: 10px;
+}
+
+div.icon-wrapper img{
+	height: 40px;
+	width: 40px;
+}
