@@ -1,29 +1,20 @@
 <?php
 /**
-* @version		$Id: countries.php 5205 2010-09-24 08:00:00Z
-* @package		Joomleague
-* @copyright	Copyright (C) 2008 Julien Vonthron. All rights reserved.
+* @copyright	Copyright (C) 2007-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
-* Joomla Tracks is free software. This version may have been modified pursuant
+* Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 class Countries
 {
-	function Countries() {
-		$lang = JFactory::getLanguage();
-		$extension = "com_joomleague_countries";
-		$source = JPATH_ADMINISTRATOR . '/components/' . $extension;
-		$lang->load("$extension", JPATH_ADMINISTRATOR, null, false, false)
-		||	$lang->load($extension, $source, null, false, false)
-		||	$lang->load($extension, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load($extension, $source, $lang->getDefault(), false, false);
+	public function __construct($options = array())
+	{
+		self::includeLanguageFile();
 	}	
 	
 	// Hints:
@@ -297,14 +288,7 @@ class Countries
 
 	public static function getCountryOptions($value_tag='value', $text_tag='text')
 	{
-		$lang = JFactory::getLanguage();
-		$file = "com_joomleague_countries";
-		$source = JPATH_ADMINISTRATOR . '/components/' . $file;
-		$lang->load($file, JPATH_ADMINISTRATOR, null, false, false)
-		||	$lang->load($file, $source, null, false, false)
-		||	$lang->load($file, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load($file, $source, $lang->getDefault(), false, false)
-		||	$lang->load('com_joomleague_countries', JPATH_ADMINISTRATOR.'/components/com_joomleague', 'en-GB', true);
+		self::includeLanguageFile();
 		
 		$countries=Countries::getCountries();
 		$options=array();
