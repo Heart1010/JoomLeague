@@ -1,24 +1,23 @@
 <?xml version="1.0"?>
 <form>
 	<fieldset name="COM_JOOMLEAGUE_FES_PARAMS_GROUP_PAGE_ELEMENTS"
-		description="COM_JOOMLEAGUE_FES_PARAMS_DESCR_PAGE_ELEMENTS">
-
-		<field name="show_sectionheader" type="radio" default="1"
+		label="COM_JOOMLEAGUE_FES_PARAMS_GROUP_PAGE_ELEMENTS" description="COM_JOOMLEAGUE_FES_PARAMS_DESCR_PAGE_ELEMENTS">
+		<field name="show_sectionheader" type="radio" class="btn-group btn-group-yesno" default="1"
 			label="COM_JOOMLEAGUE_FES_PARAM_LABEL_SHOW_SECTIONHEADER"
 			description="COM_JOOMLEAGUE_FES_PARAM_DESCR_SHOW_SECTIONHEADER">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_YES</option>
 		</field>
 
-		<field name="show_clubs" type="radio" default="1"
+		<field name="show_clubs" type="radio" class="btn-group btn-group-yesno" default="1"
 			label="COM_JOOMLEAGUE_FES_CLUBS_PARAM_LABEL_SHOW_CLUBS" description="COM_JOOMLEAGUE_FES_CLUBS_PARAM_DESCR_SHOW_CLUBS">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_YES</option>
 		</field>
-
 	</fieldset>
 
 	<fieldset name="COM_JOOMLEAGUE_FES_PARAMS_GROUP_OPTIONS"
+		label="COM_JOOMLEAGUE_FES_PARAMS_GROUP_OPTIONS"
 		description="COM_JOOMLEAGUE_FES_PARAMS_DESCR_OPTIONS"
 		addfieldpath="/administrator/components/com_joomleague/models/fields">
 
@@ -27,35 +26,35 @@
 				description="COM_JOOMLEAGUE_FES_PARAM_DESCR_PAGE_TITLE_FORMAT">
 		</field>
 	    
-		<field name="show_small_logo" type="radio" default="1"
+		<field name="show_small_logo" type="radio" class="btn-group btn-group-yesno" default="1"
 			label="COM_JOOMLEAGUE_FES_CLUBS_PARAM_LABEL_SHOW_SMALL_LOGO"
 			description="COM_JOOMLEAGUE_FES_CLUBS_PARAM_DESCR_SHOW_SMALL_LOGO">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_YES</option>
 		</field>
 
-		<field name="show_medium_logo" type="radio" default="0"
+		<field name="show_medium_logo" type="radio" class="btn-group btn-group-yesno" default="0"
 			label="COM_JOOMLEAGUE_FES_CLUBS_PARAM_LABEL_SHOW_MEDIUM_LOGO"
 			description="COM_JOOMLEAGUE_FES_CLUBS_PARAM_DESCR_SHOW_MEDIUM_LOGO">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_YES</option>
 		</field>
 
-		<field name="show_big_logo" type="radio" default="0"
+		<field name="show_big_logo" type="radio" class="btn-group btn-group-yesno" default="0"
 			label="COM_JOOMLEAGUE_FES_CLUBS_PARAM_LABEL_SHOW_BIG_LOGO"
 			description="COM_JOOMLEAGUE_FES_CLUBS_PARAM_DESCR_SHOW_BIG_LOGO">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_YES</option>
 		</field>
 
-		<field name="show_address" type="radio" default="1"
+		<field name="show_address" type="radio" class="btn-group btn-group-yesno" default="1"
 			label="COM_JOOMLEAGUE_FES_CLUBS_PARAM_LABEL_SHOW_ADDRESS"
 			description="COM_JOOMLEAGUE_FES_CLUBS_PARAM_DESCR_SHOW_ADDRESS">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
 			<option value="1">COM_JOOMLEAGUE_GLOBAL_YES</option>
 		</field>
 
-		<field name="show_club_teams" type="radio" default="1"
+		<field name="show_club_teams" type="radio" class="btn-group btn-group-yesno" default="1"
 			label="COM_JOOMLEAGUE_FES_CLUBS_PARAM_LABEL_SHOW_CLUB_TEAMS"
 			description="COM_JOOMLEAGUE_FES_CLUBS_PARAM_DESCR_SHOW_CLUB_TEAMS">
 			<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>
@@ -78,7 +77,8 @@
 		</field>
 	</fieldset>
 
-	<fieldset name="COM_JOOMLEAGUE_FES_PARAMS_GROUP_ADVANCED_OPTIONS" 
+	<fieldset name="COM_JOOMLEAGUE_FES_PARAMS_GROUP_ADVANCED_OPTIONS"
+			label="COM_JOOMLEAGUE_FES_PARAMS_GROUP_ADVANCED_OPTIONS" 
 			description="COM_JOOMLEAGUE_FES_PARAMS_DESCR_ADVANCED_OPTIONS">	
 		
 		<field 	name="style_class1" type="text" default="sectiontableentry1" 
@@ -89,8 +89,6 @@
 		<field 	name="style_class2" type="text" default="sectiontableentry2" 
 				label="COM_JOOMLEAGUE_FES_PARAM_LABEL_STYLE_EVEN" 
 				description="COM_JOOMLEAGUE_FES_PARAM_DESCR_STYLE_EVEN">
-		</field>
-					
+		</field>		
 	</fieldset>		
-	
 </form>
