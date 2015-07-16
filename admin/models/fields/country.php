@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.folder');
 JFormHelper::loadFieldClass('list');
@@ -30,8 +28,6 @@ class JFormFieldCountry extends JFormFieldList
 	 * Method to get the field options.
 	 *
 	 * @return  array  The field option objects.
-	 *
-	 * @since   11.1
 	 */
 	protected function getOptions()
 	{

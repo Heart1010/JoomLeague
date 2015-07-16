@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2007-2013 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2007-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
@@ -8,8 +8,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 */
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 class JFormFieldProject extends JFormField
 {
@@ -34,6 +33,7 @@ class JFormFieldProject extends JFormField
 					WHERE p.published=1 ORDER BY p.ordering DESC';
 		$db->setQuery( $query );
 		$projects = $db->loadObjectList();
+		$mitems = array();
 		if($required=='false') {
 			$mitems = array(JHtml::_('select.option', '', JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT')));
 		}
