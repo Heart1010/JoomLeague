@@ -103,7 +103,7 @@ class JoomleagueModelProjectposition extends JoomleagueModelList
 			$query="DELETE FROM #__joomleague_project_position WHERE project_id=".$data['id']." AND position_id NOT IN ($peids)";
 		}
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			$result=false;
@@ -112,7 +112,7 @@ class JoomleagueModelProjectposition extends JoomleagueModelList
 		{
 			$query="INSERT IGNORE INTO #__joomleague_project_position (project_id,position_id) VALUES ('".$data['id']."','".$data['project_positionslist'][$x]."')";
 			$this->_db->setQuery($query);
-			if(!$this->_db->query())
+			if(!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;
@@ -207,7 +207,7 @@ class JoomleagueModelProjectposition extends JoomleagueModelList
 							"SET project_position_id = " . $newid .
 							" WHERE project_position_id = " . $result['id'];
 				$this->_db->setQuery($query);
-				if(!$this->_db->query())
+				if(!$this->_db->execute())
 				{
 					$this->setError($this->_db->getErrorMsg());
 					return false;
@@ -231,7 +231,5 @@ class JoomleagueModelProjectposition extends JoomleagueModelList
 		WHERE p.id='.$project_id;
 		$this->_db->setQuery($query);
 		return $this->_db->loadResult();
-	}
-	
+	}	
 }
-?>

@@ -687,7 +687,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				INNER JOIN #__joomleague_team_staff AS r on r.person_id=ppl.id
 				WHERE r.id=".(int)$teamstaff_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadObject();
@@ -704,7 +704,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				INNER JOIN #__joomleague_team_player AS r on r.person_id=ppl.id
 				WHERE r.id=".(int)$teamplayer_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadObject();
@@ -721,7 +721,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				INNER JOIN #__joomleague_project_referee AS pr on pr.person_id=ppl.id
 				WHERE pr.id=".(int)$project_referee_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadObject();
@@ -734,7 +734,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	{
 		$query='SELECT lastname,firstname FROM #__joomleague_person WHERE id='.(int)$person_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadObject();
@@ -747,7 +747,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	{
 		$query='SELECT name FROM #__joomleague_club WHERE id='.(int)$club_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadResult();
@@ -762,7 +762,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				FROM #__joomleague_team AS t
 				INNER JOIN #__joomleague_project_team AS pt on pt.id='.(int)$team_id.' WHERE t.id=pt.team_id';
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($object=$this->_db->loadObject())
 		{
 			return $object->name;
@@ -774,7 +774,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	{
 		$query='SELECT name FROM #__joomleague_team WHERE id='.(int)$team_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadResult();
@@ -787,7 +787,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	{
 		$query='SELECT * FROM #__joomleague_playground WHERE id='.(int)$id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($object=$this->_db->loadObject()){return $object;}
 		return null;
 	}
@@ -796,14 +796,14 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	{
 		$query='UPDATE #__joomleague_playground SET club_id='.(int)$club_id.' WHERE id='.(int)$playground_id;
 		$this->_db->setQuery($query);
-		return $this->_db->query();
+		return $this->_db->execute();
 	}
 
 	private function _getRoundName($round_id)
 	{
 		$query='SELECT name FROM #__joomleague_round WHERE id='.(int)$round_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getAffectedRows())
 		{
 			$result=$this->_db->loadResult();
@@ -819,7 +819,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 			. ' INNER JOIN #__joomleague_position AS pos ON pos.id=ppos.position_id'
 			. ' WHERE ppos.id='.(int)$project_position_id;
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($object=$this->_db->loadResult()){return $object;}
 		return null;
 	}
@@ -1097,7 +1097,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		*/
 		$query="SELECT id FROM #__joomleague_project WHERE name='".addslashes(stripslashes($this->_name))."'";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0){return false;}
 		return true;
 	}
@@ -1315,7 +1315,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 					$p_eventtype->set('alias',JFilterOutput::stringURLSafe($this->_getDataFromObject($p_eventtype,'name')));
 				}
 				$query="SELECT id,name FROM #__joomleague_eventtype WHERE name='".addslashes(stripslashes($p_eventtype->name))."'";
-				$this->_db->setQuery($query); $this->_db->query();
+				$this->_db->setQuery($query); $this->_db->execute();
 				if ($object=$this->_db->loadObject())
 				{
 					$this->_convertEventID[$oldID]=$object->id;
@@ -1395,7 +1395,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				}
 				$query="SELECT * FROM #__joomleague_statistic WHERE name='".addslashes(stripslashes($p_statistic->name))."' AND class='".addslashes(stripslashes($p_statistic->class))."'";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				if ($object=$this->_db->loadObject())
 				{
 					$this->_convertStatisticID[$oldID]=$object->id;
@@ -1472,7 +1472,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				}
 				$query="SELECT id,name FROM #__joomleague_position WHERE name='".addslashes(stripslashes($p_position->name))."' AND parent_id=0";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				if ($this->_db->getAffectedRows())
 				{
 					$p_position->load($this->_db->loadResult());
@@ -1558,7 +1558,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				}
 				$query="SELECT id,name FROM #__joomleague_position WHERE name='".addslashes(stripslashes($p_position->name))."' AND parent_id=$p_position->parent_id";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				if ($this->_db->getAffectedRows())
 				{
 					$p_position->load($this->_db->loadResult());
@@ -1632,7 +1632,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 							WHERE	position_id='$p_positioneventtype->position_id' AND
 									eventtype_id='$p_positioneventtype->eventtype_id'";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($object=$this->_db->loadObject())
 			{
 				$my_text .= '<span style="color:'.$this->existingInDbColor.'">';
@@ -1728,7 +1728,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 					}
 				}
 				$query="SELECT id,name FROM #__joomleague_playground WHERE name='".addslashes(stripslashes($p_playground->name))."'";
-				$this->_db->setQuery($query); $this->_db->query();
+				$this->_db->setQuery($query); $this->_db->execute();
 				if ($object=$this->_db->loadObject())
 				{
 					$this->_convertPlaygroundID[$oldID]=$object->id;
@@ -1905,7 +1905,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 					WHERE	name='".addslashes(stripslashes($p_club->name))."' AND
 						country='$p_club->country'";
 				$this->_db->setQuery($query); 
-                $this->_db->query();
+                $this->_db->execute();
 				if ($object=$this->_db->loadObject())
 				{
 					$this->_convertClubID[$oldID]=$object->id;
@@ -2053,7 +2053,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 						FROM #__joomleague_team
 						WHERE	name='".addslashes(stripslashes($p_team->name))."' AND
 								info='".addslashes(stripslashes($p_team->info))."' ";
-				$this->_db->setQuery($query); $this->_db->query();
+				$this->_db->setQuery($query); $this->_db->execute();
 				if ($object=$this->_db->loadObject())
 				{
 					$this->_convertTeamID[$oldID]=$object->id;
@@ -2208,7 +2208,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 							WHERE	firstname='".addslashes(stripslashes($p_person->firstname))."' AND
 									lastname='".addslashes(stripslashes($p_person->lastname))."' AND
 									birthday='$p_person->birthday'";
-				$this->_db->setQuery($query); $this->_db->query();
+				$this->_db->setQuery($query); $this->_db->execute();
 				if ($object=$this->_db->loadObject())
 				{
 					$this->_convertPersonID[$oldID]=$object->id;
@@ -2395,7 +2395,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 													VALUES ('$template','".$form->getName()."','$defaultvalues','$project_id')";
 							$this->_db->setQuery($query);
 							//echo error,allows to check if there is a mistake in the template file
-							if (!$this->_db->query())
+							if (!$this->_db->execute())
 							{
 								$this->setError($this->_db->getErrorMsg());
 								return false;
@@ -2492,7 +2492,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		}
 		$query="UPDATE #__joomleague_project SET master_template=$this->_master_template WHERE id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		$this->_success_text['Importing template data:']=$my_text;
 		if ($this->_master_template==0)
 		{
@@ -2811,7 +2811,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 								FROM #__joomleague_project_position
 								WHERE	id='.$project_position_id;
 					$this->_db->setQuery($query);
-					$this->_db->query();
+					$this->_db->execute();
 					$object=$this->_db->loadObject();
 					$position_id = $object->position_id;
 					$dPosName=JText::_($this->_getObjectName('position',$position_id));
@@ -2910,7 +2910,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				if($project_position_id>0) {
 					$query ='SELECT * FROM #__joomleague_project_position WHERE id='.$project_position_id;
 					$this->_db->setQuery($query);
-					$this->_db->query();
+					$this->_db->execute();
 					$object=$this->_db->loadObject();
 					$position_id = $object->position_id;
 					$dPosName=JText::_($this->_getObjectName('position',$position_id));
@@ -3617,7 +3617,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 				FROM #__joomleague_position_statistic
 				WHERE	position_id='$p_positionstatistic->position_id' AND
 					statistic_id='$p_positionstatistic->statistic_id'";
-			$this->_db->setQuery($query); $this->_db->query();
+			$this->_db->setQuery($query); $this->_db->execute();
 			if ($object=$this->_db->loadObject())
 			{
 				$my_text .= '<span style="color:'.$this->existingInDbColor.'">';
@@ -3966,7 +3966,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		}
 		$query="UPDATE #__joomleague_project SET fav_team='$t_fav_team' WHERE id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 	}
 
 	public function importData($post)
@@ -4595,4 +4595,3 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		}
 	}
 }
-?>

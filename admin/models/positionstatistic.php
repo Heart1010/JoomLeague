@@ -73,7 +73,7 @@ class JoomleagueModelPositionstatistic extends JoomleagueModelItem
 		}
 
 		$this->_db->setQuery( $query );
-		if( !$this->_db->query() )
+		if( !$this->_db->execute() )
 		{
 			$this->setError( $this->_db->getErrorMsg() );
 			$result = false;
@@ -83,7 +83,7 @@ class JoomleagueModelPositionstatistic extends JoomleagueModelItem
 		{
 			$query = "UPDATE #__joomleague_position_statistic SET ordering='$x' WHERE position_id = '" . $data['id'] . "' AND statistic_id = '" . $peid[$x] . "'";
  			$this->_db->setQuery( $query );
-			if( !$this->_db->query() )
+			if( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result= false;
@@ -93,7 +93,7 @@ class JoomleagueModelPositionstatistic extends JoomleagueModelItem
 		{
 			$query = "INSERT IGNORE INTO #__joomleague_position_statistic (position_id, statistic_id, ordering) VALUES ( '" . $data['id'] . "', '" . $peid[$x] . "','" . $x . "')";
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result= false;

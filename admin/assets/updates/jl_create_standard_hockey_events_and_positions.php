@@ -57,7 +57,7 @@ function addSportsType()
 		// Add new sportstype Soccer to #__joomleague_sports_type
 		$queryAdd="INSERT INTO #__joomleague_sports_type (`name`) VALUES ('COM_JOOMLEAGUE_ST_HOCKEY')";
 		$db->setQuery($queryAdd);
-		$result=$db->query();
+		$result=$db->execute();
 	}
 
 	echo PrintStepResult($result).'<br />';
@@ -127,7 +127,7 @@ function addStandardsForHockey()
 		if (!$object=$db->loadObject())
 		{
 			$query				= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,1); $db->setQuery($query);
-			$result				= $db->query();
+			$result				= $db->execute();
 			$events_player['0']	= $db->insertid();
 		}
 		else
@@ -141,7 +141,7 @@ function addStandardsForHockey()
 		if (!$object=$db->loadObject())
 		{
 			$query				= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,2); $db->setQuery($query);
-			$result				= $db->query();
+			$result				= $db->execute();
 			$events_player['1']	= $db->insertid();
 			$events_staff['1']		= $db->insertid();
 			$events_clubstaff['1']	= $db->insertid();
@@ -161,7 +161,7 @@ function addStandardsForHockey()
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,3); $db->setQuery($query);
-			$result					= $db->query();
+			$result					= $db->execute();
 			$events_player['2']		= $db->insertid();
 			$events_staff['2']		= $db->insertid();
 			$events_clubstaff['2']	= $db->insertid();
@@ -181,7 +181,7 @@ function addStandardsForHockey()
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,4); $db->setQuery($query);
-			$result					= $db->query();
+			$result					= $db->execute();
 			$events_player['3']		= $db->insertid();
 			$events_staff['3']		= $db->insertid();
 			$events_clubstaff['3']	= $db->insertid();
@@ -201,7 +201,7 @@ function addStandardsForHockey()
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,5); $db->setQuery($query);
-			$result					= $db->query();
+			$result					= $db->execute();
 			$events_player['4']		= $db->insertid();
 			$events_referees['4']	= $db->insertid();
 		}
@@ -217,7 +217,7 @@ function addStandardsForHockey()
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,6); $db->setQuery($query);
-			$result					= $db->query();
+			$result					= $db->execute();
 			$events_player['5']		= $db->insertid();
 			$events_staff['5']		= $db->insertid();
 			$events_clubstaff['5']	= $db->insertid();
@@ -252,7 +252,7 @@ function addStandardsForHockey()
 			if (!$dbresult=$db->loadObject())
 			{
 				$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,1); $db->setQuery($query);
-				$result					= $db->query();
+				$result					= $db->execute();
 				$ParentID				= mysql_insert_id();
 				$PlayersPositions['0']	= mysql_insert_id();
 			}
@@ -272,7 +272,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,2); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$PlayersPositions['1']	= mysql_insert_id();
 				}
 				else
@@ -286,7 +286,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query	= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,3); $db->setQuery($query);
-					$result	= $db->query();
+					$result	= $db->execute();
 					$PlayersPositions['2']	= mysql_insert_id();
 				}
 				else
@@ -300,7 +300,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,4); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$PlayersPositions['3']	= mysql_insert_id();
 				}
 				else
@@ -314,7 +314,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,5); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$PlayersPositions['4']	= mysql_insert_id();
 				}
 				else
@@ -336,7 +336,7 @@ function addStandardsForHockey()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,6); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$ParentID				= mysql_insert_id();
 					$StaffPositions['0']	= mysql_insert_id();
 				}
@@ -357,7 +357,7 @@ function addStandardsForHockey()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,7); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$ParentID				= mysql_insert_id();
 					$StaffPositions['1']	= mysql_insert_id();
 				}
@@ -375,7 +375,7 @@ function addStandardsForHockey()
 					if (!$object=$db->loadObject())
 					{
 						$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,8); $db->setQuery($query);
-						$result					= $db->query();
+						$result					= $db->execute();
 						$StaffPositions['2']	= mysql_insert_id();
 					}
 					else
@@ -389,7 +389,7 @@ function addStandardsForHockey()
 					if (!$object=$db->loadObject())
 					{
 						$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,9); $db->setQuery($query);
-						$result					= $db->query();
+						$result					= $db->execute();
 						$StaffPositions['3']	= mysql_insert_id();
 					}
 					else
@@ -410,7 +410,7 @@ function addStandardsForHockey()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,10); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$ParentID				= mysql_insert_id();
 					$StaffPositions['4']	= mysql_insert_id();
 				}
@@ -432,7 +432,7 @@ function addStandardsForHockey()
 			if (!$dbresult=$db->loadObject())
 			{
 				$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,11); $db->setQuery($query);
-				$result					= $db->query();
+				$result					= $db->execute();
 				$ParentID				= mysql_insert_id();
 				$RefereePositions['0']	= mysql_insert_id();
 			}
@@ -450,7 +450,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,12); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$RefereePositions['1']	= mysql_insert_id();
 				}
 				else
@@ -464,7 +464,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,13); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$RefereePositions['2']	= mysql_insert_id();
 				}
 				else
@@ -478,7 +478,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,14); $db->setQuery($query);
-					$result					= $db->query();
+					$result					= $db->execute();
 					$RefereePositions['3']	= mysql_insert_id();
 				}
 				else
@@ -498,7 +498,7 @@ function addStandardsForHockey()
 			if (!$dbresult=$db->loadObject())
 			{
 				$query						= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,15); $db->setQuery($query);
-				$result						= $db->query();
+				$result						= $db->execute();
 				$ParentID					= mysql_insert_id();
 				$ClubStaffPositions['0']	= mysql_insert_id();
 			}
@@ -517,7 +517,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query						= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,16); $db->setQuery($query);
-					$result						= $db->query();
+					$result						= $db->execute();
 					$ClubStaffPositions['1']	= mysql_insert_id();
 				}
 				else
@@ -530,7 +530,7 @@ function addStandardsForHockey()
 				if (!$object=$db->loadObject())
 				{
 					$query						= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,17); $db->setQuery($query);
-					$result						= $db->query();
+					$result						= $db->execute();
 					$ClubStaffPositions['2']	= mysql_insert_id();
 				}
 				else
@@ -555,7 +555,7 @@ function addStandardsForHockey()
 	{
 		foreach ($events_player AS $epkey => $epid)
 		{
-			$query=build_InsertQuery_PositionEventType($ppid,$epid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($ppid,$epid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 
@@ -563,7 +563,7 @@ function addStandardsForHockey()
 	{
 		foreach ($events_staff AS $eskey => $esid)
 		{
-			$query=build_InsertQuery_PositionEventType($spid,$esid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($spid,$esid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 
@@ -571,7 +571,7 @@ function addStandardsForHockey()
 	{
 		foreach ($events_referees AS $erkey => $erid)
 		{
-			$query=build_InsertQuery_PositionEventType($rid,$erid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($rid,$erid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 
@@ -579,7 +579,7 @@ function addStandardsForHockey()
 	{
 		foreach ($events_clubstaff AS $ecskey => $escid)
 		{
-			$query=build_InsertQuery_PositionEventType($csid,$escid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($csid,$escid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 

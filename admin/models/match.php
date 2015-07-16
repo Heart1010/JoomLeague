@@ -184,49 +184,49 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 				{
 					$query='DELETE FROM #__joomleague_match_statistic WHERE match_id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
 					}
 					$query='DELETE FROM #__joomleague_match_staff_statistic WHERE match_id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
 					}
 					$query='DELETE FROM #__joomleague_match_staff WHERE match_id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
 					}
 					$query='DELETE FROM #__joomleague_match_event WHERE match_id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
 					}
 					$query='DELETE FROM #__joomleague_match_referee WHERE match_id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
 					}
 					$query='DELETE FROM #__joomleague_match_player WHERE match_id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
 					}
 					$query='DELETE FROM #__joomleague_match WHERE id='.(int) $result['match_id'];
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -252,42 +252,42 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 			$cids=implode(',',$pk);
 			$query="DELETE FROM #__joomleague_match_statistic WHERE match_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 			$query="DELETE FROM #__joomleague_match_staff_statistic WHERE match_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 			$query="DELETE FROM #__joomleague_match_staff WHERE match_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 			$query="DELETE FROM #__joomleague_match_event WHERE match_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 			$query="DELETE FROM #__joomleague_match_referee WHERE match_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 			$query="DELETE FROM #__joomleague_match_player WHERE match_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -304,7 +304,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		$option = JRequest::getCmd('option');
 		$mainframe	= JFactory::getApplication();
 		$datatable[0]='#__joomleague_match';
-		$fields=$this->_db->getTableFields($datatable);
+		$fields=$this->_db->getTableColumns($datatable);
 		foreach($fields as $field)
 		{
 			$query='';
@@ -911,7 +911,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 							mp.match_id='.$this->_db->Quote($mid).' AND
 							tp.projectteam_id='.$this->_db->Quote($team);
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			$result=false;
@@ -964,7 +964,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 					WHERE	mp.match_id='.$this->_db->Quote($mid).' AND
 							tp.projectteam_id='.$this->_db->Quote($team);
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			$result=false;
@@ -1027,7 +1027,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 						WHERE match_id=".$post['mid']." AND project_referee_id NOT IN (".$peids.")";
 		}
 		$this->_db->setQuery($query);
-		if (!$this->_db->query()) { $this->setError($this->_db->getErrorMsg()); $result=false; }
+		if (!$this->_db->execute()) { $this->setError($this->_db->getErrorMsg()); $result=false; }
 		foreach ($positions AS $key=>$pos)
 		{
 			if (isset($post['position'.$key]))
@@ -1053,7 +1053,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 										('$mid','$project_referee_id','$key','$x')";
 					}
 					$this->_db->setQuery($query);
-					if (!$this->_db->query())
+					if (!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						$result=false;
@@ -1253,7 +1253,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 					WHERE id=".$this->_db->Quote($substitution_id). "
 					 OR id=".$this->_db->Quote($substitution_id + 1);
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_ERROR_DELETING_SUBST'));
 			return false;
@@ -1359,7 +1359,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 				.' WHERE match_id='. $this->_db->Quote($match_id)
 				.'   AND teamplayer_id='. $this->_db->Quote($teamplayer_id);
 				$this->_db->setQuery($query);
-				$res=$this->_db->query();
+				$res=$this->_db->execute();
 				foreach ($data as $key => $value)
 				{
 					if (preg_match('/^stat'.$teamplayer_id.'_([0-9]+)/',$key,$reg) && $value!="")
@@ -1396,7 +1396,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 				.' WHERE match_id='. $this->_db->Quote($match_id)
 				.'   AND team_staff_id='. $this->_db->Quote($team_staff_id);
 				$this->_db->setQuery($query);
-				$res=$this->_db->query();
+				$res=$this->_db->execute();
 				foreach ($data as $key => $value)
 				{
 					if (ereg('^staffstat'.$team_staff_id.'_([0-9]+)',$key,$reg) && $value!="")
@@ -1652,7 +1652,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 					AND teamplayer_id in (SELECT id from #__joomleague_team_player where projectteam_id = '.$projectteam_id.')
 					';
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;
@@ -1711,7 +1711,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 					AND teamplayer_id in (SELECT id from #__joomleague_team_player where projectteam_id = '.$projectteam_id.')
 					';
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;
@@ -1831,4 +1831,3 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		return $data;
 	}
 }
-?>

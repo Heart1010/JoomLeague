@@ -38,7 +38,7 @@ class JoomleagueModelProjectReferee extends JoomleagueModelItem
 		{
 			$query='DELETE FROM #__joomleague_project_referee WHERE project_id='.$project_id;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;

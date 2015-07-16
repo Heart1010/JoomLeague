@@ -122,7 +122,7 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 						  #__joomleague_project_team.project_id='.(int) $project_id.'
 						)';
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -148,7 +148,7 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 						FROM #__joomleague_match_event
 						WHERE event_type_id IN ('.$cids.')';
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getAffectedRows())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_EVENT_MODEL_ERROR_MATCHES_EXISTS'));
@@ -159,7 +159,7 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 						FROM #__joomleague_position_eventtype
 						WHERE eventtype_id IN ('.$cids.')';
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getAffectedRows())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_EVENT_MODEL_ERROR_POSITION_EXISTS'));

@@ -38,7 +38,7 @@ class JoomleagueModelTeam extends JoomleagueModelItem
 		{
 			$query = 'DELETE FROM #__joomleague_team_trainingdata WHERE project_id='.$project_id;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -46,7 +46,7 @@ class JoomleagueModelTeam extends JoomleagueModelItem
 
 			$query = 'DELETE FROM #__joomleague_project_team WHERE project_id='.$project_id;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -119,14 +119,14 @@ class JoomleagueModelTeam extends JoomleagueModelItem
 		{
 			$query = "SELECT * FROM #__joomleague_team WHERE id=$cid";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($object = $this->_db->loadObject())
 			{
 				//echo '<pre>'; print_r($object); echo '</pre>';
 				$newTeamName = JText::sprintf('!Copy of %1$s',$object->name);
 				$query = "SELECT id FROM #__joomleague_team WHERE name='$newTeamName'";
 				$this->_db->setQuery($query);
-				$this->_db->query();
+				$this->_db->execute();
 				$found=$this->_db->loadResult();
 
 				if (!$found)
@@ -194,4 +194,3 @@ class JoomleagueModelTeam extends JoomleagueModelItem
 		return $data;
 	}
 }
-?>

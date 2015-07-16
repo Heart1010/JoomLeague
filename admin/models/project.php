@@ -37,7 +37,7 @@ class JoomleagueModelProject extends JoomleagueModelItem
 						FROM #__joomleague_team_player
 						WHERE projectteam_id in (SELECT id FROM #__joomleague_project_team WHERE project_id=$project_id)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -58,7 +58,7 @@ class JoomleagueModelProject extends JoomleagueModelItem
 						FROM #__joomleague_team_staff
 						WHERE projectteam_id in (SELECT id FROM #__joomleague_project_team WHERE project_id=$project_id)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -510,7 +510,7 @@ class JoomleagueModelProject extends JoomleagueModelItem
 			$query->set('m.match_date = '.$db->quote($utc_date));
 			$query->where('m.id = '.$match->id);
 			$db->setQuery($query);
-			if (!$db->query()) {
+			if (!$db->execute()) {
 				$this->setError($db->getError());
 				return false;
 			} else {

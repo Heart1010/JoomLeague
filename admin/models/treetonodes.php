@@ -251,7 +251,7 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 			$query .= 	' SET team_id = ' . $post['team_id' . $cid[$x]];
 			$query .= 	' WHERE id= ' . $cid[$x] ;
 			$this->_db->setQuery($query);
-			if(!$this->_db->query())
+			if(!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;
@@ -262,4 +262,3 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 	}
 
 }
-?>

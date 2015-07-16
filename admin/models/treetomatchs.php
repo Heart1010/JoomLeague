@@ -92,7 +92,7 @@ class JoomleagueModelTreetomatchs extends JoomleagueModelList
 		}
 
 		$this->_db->setQuery( $query );
-		if ( !$this->_db->query() )
+		if ( !$this->_db->execute() )
 		{
 			$this->setError( $this->_db->getErrorMsg() );
 			$result = false;
@@ -106,7 +106,7 @@ class JoomleagueModelTreetomatchs extends JoomleagueModelList
 						VALUES ( '" . $data['id'] . "', '".$data['node_matcheslist'][$x] . "')";
 
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result = false;

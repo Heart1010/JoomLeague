@@ -237,7 +237,7 @@ class JoomleagueModelTeamPlayer extends JoomleagueModelItem
 	{
 		$query='DELETE FROM #__joomleague_team_player WHERE projectteam_id='.(int) $projectteamid;
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return false;

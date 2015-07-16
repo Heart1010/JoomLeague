@@ -103,7 +103,7 @@ class JoomleagueModelTreeto extends JoomleagueModelItem
 			$query .= ' LEFT JOIN #__joomleague_treeto_match AS ttm ON ttm.node_id=ttn.id ';
 			$query .= ' WHERE tt.id IN (' . $cids . ')';
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;

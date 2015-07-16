@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,14 +8,12 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once (JLG_PATH_ADMIN .DS.'models'.DS.'rounds.php');
+require_once JLG_PATH_ADMIN.'/models/rounds.php';
 
-class JoomleagueModelProject extends JModel
+class JoomleagueModelProject extends JModelLegacy
 {
 	var $_project = null;
 	var $projectid = 0;
@@ -231,7 +229,7 @@ class JoomleagueModelProject extends JModel
 				$query = ' UPDATE #__joomleague_project SET current_round = '.$result->id
 				       . ' WHERE id = ' . $this->_db->Quote($project->id);
 				$this->_db->setQuery($query);
-				if (!$this->_db->query()) {
+				if (!$this->_db->execute()) {
 					JError::raiseWarning(0, JText::_('COM_JOOMLEAGUE_ERROR_CURRENT_ROUND_UPDATE_FAILED'));
 				}
 			}

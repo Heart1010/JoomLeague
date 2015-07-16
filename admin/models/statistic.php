@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
@@ -8,18 +8,15 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once (JPATH_COMPONENT.DS.'models'.DS.'item.php');
+require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
  * Joomleague Component statistic Model
  *
  * @package	JoomLeague
- * @since	1.5.0a
  */
 class JoomleagueModelStatistic extends JoomleagueModelItem
 {
@@ -81,7 +78,7 @@ class JoomleagueModelStatistic extends JoomleagueModelItem
 			       . ' WHERE ms.statistic_id IN ('. implode(',', $cid) .')'
 			       ;
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getAffectedRows()) {
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTIC_MODEL_CANT_DELETE_STATS_MATCHES'));
 				return false;
@@ -93,7 +90,7 @@ class JoomleagueModelStatistic extends JoomleagueModelItem
 			       . ' WHERE statistic_id IN ('. implode(',', $cid) .')'
 			       ;
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getAffectedRows()) {
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTIC_MODEL_CANT_DELETE_STATS_MATCHES'));
 				return false;
@@ -126,7 +123,7 @@ class JoomleagueModelStatistic extends JoomleagueModelItem
 			       . ' WHERE statistic_id IN ('. implode(',', $cid) .')'
 			       ;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query()) {
+			if (!$this->_db->execute()) {
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTIC_MODEL_ERROR_DELETE_STATS_MATCHES').': '.$this->_db->getErrorMsg());
 				return false;
 			}
@@ -137,7 +134,7 @@ class JoomleagueModelStatistic extends JoomleagueModelItem
 			       . ' WHERE statistic_id IN ('. implode(',', $cid) .')'
 			       ;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query()) {
+			if (!$this->_db->execute()) {
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTIC_MODEL_ERROR_DELETE_STATS_POS').': '.$this->_db->getErrorMsg());
 				return false;
 			}
@@ -147,7 +144,7 @@ class JoomleagueModelStatistic extends JoomleagueModelItem
 						WHERE id IN (' . $cids . ')';
 
 			$this->_db->setQuery($query);
-			if(!$this->_db->query())
+			if(!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -295,13 +292,13 @@ class JoomleagueModelStatistic extends JoomleagueModelItem
 		{
 			$form = JForm::getInstance($name, $source, $options, false, $xpath);
 			// load base configuration xml for stats
-			$form->loadFile(JLG_PATH_ADMIN.DS.'statistics' . DS . 'base.xml');
+			$form->loadFile(JLG_PATH_ADMIN.'/statistics/base.xml');
 			
 			// specific xml configuration depends on stat type
 			$item = $this->loadFormData();			
 			if ($item && $item->class) 
 			{
-				$class = &JLGStatistic::getInstance($item->class);
+				$class = JLGStatistic::getInstance($item->class);
 				$xmlpath = $class->getXmlPath();
 				$form->loadFile($xmlpath);
 			} 

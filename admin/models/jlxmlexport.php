@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright   Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license	 GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 
@@ -19,7 +17,6 @@ jimport('joomla.application.component.model');
  *
  * @author	Zoltan Koteles & Kurt Norgaz
  * @package	JoomLeague
- * @since	1.5.0a
  */
 class JoomleagueModelJLXMLExport extends JModelLegacy
 {
@@ -27,7 +24,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var int
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_project_id = 0;
 
@@ -35,7 +31,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_project = array();
 
@@ -43,7 +38,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_projectteam = array();
 
@@ -51,7 +45,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5253
 	 */
 	private $_projectreferee = array();
 
@@ -59,7 +52,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5253
 	 */
 	private $_projectposition = array();
 
@@ -67,7 +59,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_team = array();
 
@@ -75,7 +66,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_teamplayer = array();
 
@@ -83,7 +73,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_teamstaff = array();
 
@@ -91,7 +80,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_teamtrainingdata = array();
 
@@ -99,7 +87,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_match = array();
 
@@ -107,7 +94,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_club = array();
 
@@ -115,7 +101,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_playground = array();
 
@@ -123,7 +108,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_matchplayer = array();
 
@@ -131,7 +115,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_matchstaff = array();
 
@@ -139,7 +122,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_matchreferee = array();
 
@@ -147,7 +129,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_person = array();
 
@@ -155,7 +136,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_matchevent = array();
 
@@ -163,7 +143,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_eventtype = array();
 
@@ -171,7 +150,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.0a
 	 */
 	private $_position = array();
 
@@ -179,7 +157,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5262
 	 */
 	private $_parentposition = array();
 
@@ -187,7 +164,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5283
 	 */
 	private $_matchstaffstatistic = array();
 
@@ -195,7 +171,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5283
 	 */
 	private $_matchstatistic = array();
 
@@ -203,7 +178,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5283
 	 */
 	private $_positionstatistic = array();
 
@@ -211,7 +185,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.5283
 	 */
 	private $_statistic = array();
 
@@ -219,23 +192,20 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.2
 	 */
 	private $_treeto = array();
 
-/**
+	/**
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.2
 	 */
 	private $_treetonode = array();
 
-/**
+	/**
 	 * @var array
 	 *
 	 * @access private
-	 * @since  1.5.2
 	 */
 	private $_treetomatch = array();
 
@@ -245,7 +215,6 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 * Export the active project data to xml
 	 *
 	 * @access public
-	 * @since  1.5.0a
 	 *
 	 * @return null
 	 */
@@ -502,14 +471,14 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 		$query = "SELECT CONCAT(major,'.',minor,'.',build,'.',revision) AS version 
 					FROM #__joomleague_version ORDER BY date DESC LIMIT 1";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
 			$result[0]['exportRoutine']=$exportRoutine;
 			$result[0]['exportDate']=date('Y-m-d');
 			$result[0]['exportTime']=date('H:i:s');
-			$result[0]['exportSystem']=JFactory::getConfig()->getValue('config.sitename');
+			$result[0]['exportSystem']=JFactory::getConfig()->get('config.sitename');
 			$result[0]['object']='JoomLeagueVersion';
 			return $result;
 		}
@@ -530,7 +499,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_project WHERE id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -565,7 +534,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 		$query = "SELECT * FROM #__joomleague_template_config WHERE project_id=$master_template_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -590,7 +559,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_league WHERE id=".$this->_project[0]['league_id'];
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -615,7 +584,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_sports_type WHERE id=".$this->_project[0]['sports_type_id'];
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -640,7 +609,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_season WHERE id=".$this->_project[0]['season_id'];
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -665,7 +634,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_division WHERE project_id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -690,7 +659,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_project_team WHERE project_id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -715,7 +684,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_project_position WHERE project_id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -740,7 +709,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_project_referee WHERE project_id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -771,7 +740,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_team WHERE id IN ($ids) ORDER BY name";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -810,7 +779,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_club WHERE id IN ($ids) ORDER BY name";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -837,7 +806,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_round WHERE project_id=$this->_project_id ORDER BY id ASC";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -862,7 +831,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT m.* FROM #__joomleague_match as m INNER JOIN #__joomleague_round as r ON r.id=m.round_id WHERE r.project_id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -900,7 +869,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 			$ids = implode(",",array_unique($pgIDs));
 			$query = "SELECT * FROM #__joomleague_playground WHERE id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -933,7 +902,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_team_player WHERE projectteam_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -967,7 +936,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_team_trainingdata WHERE project_team_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1000,7 +969,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_team_staff WHERE projectteam_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1035,7 +1004,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 			$query = "SELECT * FROM #__joomleague_match_player WHERE match_id IN ($ids)";
 
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1069,7 +1038,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_match_staff WHERE match_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1103,7 +1072,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_match_referee WHERE match_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1137,7 +1106,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_position WHERE id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1171,7 +1140,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_position WHERE id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1213,7 +1182,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 			$ids = implode(",",array_unique($pgIDs));
 			$query = "SELECT * FROM #__joomleague_person WHERE id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1247,7 +1216,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_match_event WHERE	match_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1280,7 +1249,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_eventtype WHERE id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1315,7 +1284,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_position_eventtype WHERE eventtype_id IN ($event_ids) AND position_id IN ($position_ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1347,7 +1316,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_position_statistic WHERE position_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1380,7 +1349,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_match_statistic WHERE match_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1413,7 +1382,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_match_staff_statistic WHERE match_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1454,7 +1423,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 			$ids = implode(",",array_unique($sIDs));
 			$query = "SELECT * FROM #__joomleague_statistic WHERE id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1472,7 +1441,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	{
 		$query = "SELECT * FROM #__joomleague_treeto WHERE project_id=$this->_project_id";
 		$this->_db->setQuery($query);
-		$this->_db->query();
+		$this->_db->execute();
 		if ($this->_db->getNumRows() > 0)
 		{
 			$result = $this->_db->loadAssocList();
@@ -1494,7 +1463,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_treeto_node WHERE treeto_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1518,7 +1487,7 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 
 			$query = "SELECT * FROM #__joomleague_treeto_match WHERE node_id IN ($ids)";
 			$this->_db->setQuery($query);
-			$this->_db->query();
+			$this->_db->execute();
 			if ($this->_db->getNumRows() > 0)
 			{
 				$result = $this->_db->loadAssocList();
@@ -1533,4 +1502,3 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	}
 
 }
-?>

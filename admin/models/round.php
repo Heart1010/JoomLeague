@@ -38,7 +38,7 @@ class JoomleagueModelRound extends JoomleagueModelItem
 		{
 			$query='DELETE FROM #__joomleague_round WHERE project_id='.$project_id;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -187,7 +187,7 @@ class JoomleagueModelRound extends JoomleagueModelItem
 							WHERE id=".$cid[$x];
 
 			$this->_db->setQuery($query);
-			if(!$this->_db->query())
+			if(!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;

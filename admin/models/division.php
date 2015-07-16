@@ -65,14 +65,14 @@ class JoomleagueModelDivision extends JoomleagueModelItem
 			$cids=implode(',', $pks);
 			$query="UPDATE #__joomleague_project_team SET division_id=0 WHERE division_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
 			}
 			$query="UPDATE #__joomleague_treeto SET division_id=0 WHERE division_id IN ($cids)";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;

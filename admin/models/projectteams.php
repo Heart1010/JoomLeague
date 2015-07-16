@@ -107,7 +107,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 						FROM #__joomleague_project_team
 						WHERE project_id = '" . $data['id'] . "'";
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result = false;
@@ -121,7 +121,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 						FROM #__joomleague_project_team
 						WHERE project_id = '" . $data['id'] . "' AND team_id NOT IN  (" . $peids . ")";
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result = false;
@@ -133,7 +133,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 												where project_id = '" . $data['id'] . "' 
 												AND team_id NOT IN  (" . $peids . "))";
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result = false;
@@ -144,7 +144,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 												where project_id = '" . $data['id'] . "' 
 												AND team_id NOT IN  (" . $peids . "))";
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result = false;
@@ -161,7 +161,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 						VALUES ( '" . $data['id'] . "', '".$data['project_teamslist'][$x] . "', '".$ordering++."')";
 						
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result = false;
@@ -385,7 +385,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 		       . ' FROM #__joomleague_project_team '
 		       . ' WHERE id IN (' . implode(',', $ptids).')';
 		$this->_db->setQuery($query);
-		$res = $this->_db->query();
+		$res = $this->_db->execute();
 		
 		if (!$res) 
 		{
@@ -401,7 +401,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 		       . ' INNER JOIN #__joomleague_project_team AS dest ON pt.team_id = dest.team_id AND dest.project_id = '.$dest 
 		       . ' WHERE pt.id IN (' . implode(',', $ptids).')';
 		$this->_db->setQuery($query);
-		$res = $this->_db->query();
+		$res = $this->_db->execute();
 				
 		// and finally the staff
 		$query = ' INSERT INTO #__joomleague_team_staff (projectteam_id, person_id, picture, extended, published) '
@@ -411,7 +411,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 				       . ' INNER JOIN #__joomleague_project_team AS dest ON pt.team_id = dest.team_id AND dest.project_id = '.$dest 
 		. ' WHERE pt.id IN (' . implode(',', $ptids).')';
 		$this->_db->setQuery($query);
-		$res = $this->_db->query();
+		$res = $this->_db->execute();
 		
 		if (!$res) 
 		{
@@ -437,8 +437,5 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 				WHERE p.id='.$project_id;
 		$this->_db->setQuery($query);
 		return $this->_db->loadResult();
-	}
-	
-	
+	}	
 }
-?>

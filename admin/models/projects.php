@@ -143,7 +143,7 @@ class JoomleagueModelProjects extends JoomleagueModelList
 						AND season_id = ' . $season_id;
 
 			$this->_db->setQuery( $query );
-			$this->_db->query();
+			$this->_db->execute();
 			$num = $this->_db->getAffectedRows();
 
 			if ( $num > 0 )

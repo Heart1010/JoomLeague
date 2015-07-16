@@ -37,7 +37,7 @@ class JoomleagueModelTemplate extends JoomleagueModelItem
 		{
 			$query='DELETE FROM #__joomleague_template_config WHERE project_id='.(int) $project_id;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;

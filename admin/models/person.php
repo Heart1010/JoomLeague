@@ -150,7 +150,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 								WHERE teamplayer_id in (select id from #__joomleague_team_player where person_id = " . $result->id . ")
 									OR teamplayer_id2 in (select id from #__joomleague_team_player where person_id = " . $result->id . ")";
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -160,7 +160,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_match_referee
 								WHERE project_referee_id in (select id from #__joomleague_project_referee where person_id = " . $result->id . ")";
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -170,7 +170,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_match_player
 								WHERE teamplayer_id in (select id from #__joomleague_team_player where person_id = " . $result->id . ")";
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -180,7 +180,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_match_staff
 								WHERE team_staff_id in (select id from #__joomleague_team_staff where person_id = " . $result->id . ")";
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -189,7 +189,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_match_statistic
 								WHERE teamplayer_id in (select id from #__joomleague_team_player where person_id = " . $result->id . ")";
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -198,7 +198,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_match_staff_statistic
 								WHERE team_staff_id in (select id from #__joomleague_team_staff where person_id = " . $result->id . ")";
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -208,7 +208,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_project_referee
 								WHERE person_id=".$result->id;
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -218,7 +218,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_team_player
 								WHERE person_id=".$result->id;
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -228,7 +228,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					$query = "DELETE FROM #__joomleague_team_staff
 								WHERE person_id=".$result->id;
 					$this->_db->setQuery($query);
-					if(!$this->_db->query())
+					if(!$this->_db->execute())
 					{
 						$this->setError($this->_db->getErrorMsg());
 						return false;
@@ -335,7 +335,7 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 					WHERE
 					published = '1'";
 		$this->_db->setQuery($query);
-		if(!$this->_db->query())
+		if(!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			$result=false;

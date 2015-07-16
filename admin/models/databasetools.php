@@ -34,7 +34,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 			$query='OPTIMIZE TABLE `'.$result.'`'; $this->_db->setQuery($query);
 		}		
 		
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return false;
@@ -52,7 +52,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 			$query='REPAIR TABLE `'.$result.'`'; $this->_db->setQuery($query);
 		}		
 		
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return false;
@@ -89,7 +89,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 					
 				echo '<table class="adminlist table table-striped" style="width:100%; " border="0"><thead><tr><td colspan="2" class="key" style="text-align:center;"><h3>';
 				echo "Checking existence of table [$DummyStr] - <span style='color:";
-				if ($db->query()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
+				if ($db->execute()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
 				echo '</span>';
 				echo '</h3></td></tr></thead><tbody>';
 				$DummyStr=$import;
@@ -197,7 +197,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 						if($skip) continue;
 						$db->setQuery($queryDelete);
 						echo "$queryDelete - <span style='color:";
-						if ($db->query()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
+						if ($db->execute()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
 						echo '</span>';
 					}
 					else
@@ -237,9 +237,9 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 					}
 					if($add) {
 						$db->setQuery($query);
-						$db->query();
+						$db->execute();
 						echo "$query - <span style='color:";
-						if ($db->query()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');} //fehlgeschlagen
+						if ($db->execute()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');} //fehlgeschlagen
 						echo '</span>';
 					} else {
 						if(array_key_exists($fieldName, $columns)) {
@@ -247,7 +247,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 						}
 						$db->setQuery($query);
 						echo "$query - <span style='color:";
-						if ($db->query()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');} //fehlgeschlagen
+						if ($db->execute()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');} //fehlgeschlagen
 						echo '</span>';
 					}
 					echo '&nbsp;</td></tr>';
@@ -296,7 +296,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 						if($skip) continue;
 						$db->setQuery($queryAdd);
 						echo "$queryAdd - <span style='color:";
-						if ($db->query()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
+						if ($db->execute()){echo "green'>".JText::_('Success');}else{echo "red'>".JText::_('Failed');}
 						echo '</span>';
 					}
 					else
@@ -365,7 +365,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 			echo JText::_('Database Tables Picture Path Migration');
 			foreach ($arrQueries as $key=>$value) {
 				$db->setQuery($value);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					echo '-> '.JText::_('Failed').'! <br>';
 					echo $db->getErrorMsg();
@@ -402,7 +402,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 			echo JText::_('Database Tables update suspensions of event types for soccer (e.g. red card)');
 			foreach ($arrQueries as $key=>$value) {
 				$db->setQuery($value);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					echo '-> '.JText::_('Failed').'! <br>';
 					echo $db->getErrorMsg();
@@ -430,7 +430,7 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 		{
 			$query='DROP TABLE IF EXISTS `'.$result.'`';
 			$db->setQuery($query);
-			if (!$db->query())
+			if (!$db->execute())
 			{
 				return false;
 			}
@@ -439,4 +439,3 @@ class JoomleagueModelDatabaseTools extends JModelLegacy
 	}
 	
 }
-?>

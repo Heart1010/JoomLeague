@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,12 +8,10 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.model' );
-require_once ( JPATH_COMPONENT . DS . 'models' . DS . 'item.php' );
+jimport('joomla.application.component.model');
+require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
  * Joomleague Component position_eventtype Model
@@ -57,7 +55,7 @@ class JoomleagueModelPosition_eventtype extends JoomleagueModelItem
 	 * @return	boolean	True on success
 	 *
 	 */
-	function store($data)
+	function store($data,$table = '')
 	{
 		$result	= true;
 		$peid	= (isset($data['position_eventslist']) ? $data['position_eventslist'] : array());
@@ -71,7 +69,7 @@ class JoomleagueModelPosition_eventtype extends JoomleagueModelItem
 		}
 
 		$this->_db->setQuery( $query );
-		if( !$this->_db->query() )
+		if( !$this->_db->execute() )
 		{
 			$this->setError( $this->_db->getErrorMsg() );
 			$result = false;
@@ -81,7 +79,7 @@ class JoomleagueModelPosition_eventtype extends JoomleagueModelItem
 		{
 			$query = "UPDATE #__joomleague_position_eventtype SET ordering='$x' WHERE position_id = '" . $data['id'] . "' AND eventtype_id = '" . $peid[$x] . "'";
  			$this->_db->setQuery( $query );
-			if( !$this->_db->query() )
+			if( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result= false;
@@ -91,7 +89,7 @@ class JoomleagueModelPosition_eventtype extends JoomleagueModelItem
 		{
 			$query = "INSERT IGNORE INTO #__joomleague_position_eventtype (position_id, eventtype_id, ordering) VALUES ( '" . $data['id'] . "', '" . $peid[$x] . "','" . $x . "')";
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				$result= false;

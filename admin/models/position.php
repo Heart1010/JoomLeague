@@ -38,7 +38,7 @@ class JoomleagueModelPosition extends JoomleagueModelItem
 		{
 			$query='DELETE FROM #__joomleague_project_position WHERE project_id='.(int)$project_id;
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				return false;
@@ -117,7 +117,7 @@ class JoomleagueModelPosition extends JoomleagueModelItem
 						WHERE position_id IN ( ' . $cids . ' )';
 			
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				return false;
@@ -128,7 +128,7 @@ class JoomleagueModelPosition extends JoomleagueModelItem
 						WHERE position_id IN ( ' . $cids . ' )';
 			
 			$this->_db->setQuery( $query );
-			if ( !$this->_db->query() )
+			if ( !$this->_db->execute() )
 			{
 				$this->setError( $this->_db->getErrorMsg() );
 				return false;
@@ -381,7 +381,7 @@ class JoomleagueModelPosition extends JoomleagueModelItem
 							WHERE id=".$cid[$x];
 
 			$this->_db->setQuery($query);
-			if(!$this->_db->query())
+			if(!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;

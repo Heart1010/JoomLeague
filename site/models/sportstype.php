@@ -54,7 +54,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				INNER JOIN #__joomleague_project AS p ON p.sports_type_id = st.id
 				WHERE st.id='.(int) $this->_id;
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -72,7 +72,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				INNER JOIN #__joomleague_league AS l ON l.id = p.league_id
 				WHERE st.id='.(int) $this->_id;
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -90,7 +90,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				INNER JOIN #__joomleague_season AS s ON s.id = p.season_id
 				WHERE st.id='.(int) $this->_id;
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -108,7 +108,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				INNER JOIN #__joomleague_project_team AS ptt ON ptt.project_id = p.id
 				WHERE st.id='.(int) $this->_id;
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -128,7 +128,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				WHERE st.id='.(int) $this->_id;
 
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -147,7 +147,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				WHERE st.id='.(int) $this->_id;
 
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -166,7 +166,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				WHERE st.id='.(int) $this->_id;
 
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -186,7 +186,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				WHERE st.id='.(int) $this->_id;
 
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -207,7 +207,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				WHERE st.id='.(int) $this->_id;
 
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
@@ -256,14 +256,11 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				WHERE st.id='.(int) $this->_id;
 
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return 0;
 		}
 		return $this->_db->loadObject()->count;
 	}
-
-
 }
-?>

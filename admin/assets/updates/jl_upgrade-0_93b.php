@@ -761,7 +761,7 @@ function Update_Tables($updates,$tablename)
 
 	echo JText::sprintf('Updating table [%s]','<b>'.$tables[0].'</b>');
 
-	$fields=$db->getTableFields($tables);
+	$fields=$db->getTableColumns($tables);
 	$fieldlist=implode(",",array_keys($fields[ $tables[0] ]));
 
 	foreach ($updates[$tablename] as $update)
@@ -804,7 +804,7 @@ function Change_Table_Columns($updates,$tablename)
 
 	echo JText::sprintf('Updating table [%s]','<b>'.$tables[0].'</b>');
 
-	$fields=$db->getTableFields($tables);
+	$fields=$db->getTableColumns($tables);
 	$fieldlist=implode(",",array_keys($fields[ $tables[0] ]));
 
 	foreach ($updates[$tablename] as $update)
@@ -831,7 +831,7 @@ function Delete_Table_Columns($dUpdates,$tablename)
 
 	echo JText::sprintf('Updating table [%s]','<b>'.$tables[0].'</b>');
 
-	$fields=$db->getTableFields($tables);
+	$fields=$db->getTableColumns($tables);
 	$fieldlist=implode(",",array_keys($fields[$tables[0]]));
 	foreach ($dUpdates[$tablename] as $update)
 	{
@@ -931,7 +931,7 @@ function UpdateTemplateProject_ids()
 											)";
 
 				$db->setQuery($query);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo '<span style="color:red">';
@@ -990,7 +990,7 @@ function UpdateMasterTemplateProject_ids()
 			//.'<br />';
 			$query="UPDATE #__joomleague_project SET master_template='$project_id' WHERE id='$project->id'";
 			$db->setQuery($query);
-			if (!$db->query())
+			if (!$db->execute())
 			{
 				$result=false;
 				echo PrintStepResult($result).'<br />';
@@ -1190,7 +1190,7 @@ $convert = array (
 								$query .= " WHERE template='$template' AND project_id=".$proj->id;
 
 								$db->setQuery($query);
-								if (!$db->query())
+								if (!$db->execute())
 								{
 									echo '<span style="color:red">';
 									echo JText::sprintf(	'Problems while saving config for [%1$s] with project-ID [%2$s]!',
@@ -1222,7 +1222,7 @@ $convert = array (
 								$db->setQuery($query);
 								//echo error,allows to check if there is a mistake in the template file
 
-								if (!$db->query())
+								if (!$db->execute())
 								{
 									echo '<span style="color:red; font-weight:bold; ">'.JText::sprintf('Error with [%s]:',$template).'</span><br />';
 									echo $db->getErrorMsg().'<br/>';
@@ -1285,7 +1285,7 @@ function updateVersion($version,$updatefilename)
 	$query="INSERT INTO #__joomleague_version (major,minor,build,revision,file)
 				VALUES ('$versionData->major','$versionData->minor','$versionData->build','$versionData->revision','$versionData->file')";
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 
 	return '';
 }
@@ -1307,7 +1307,7 @@ function addGhostPlayer()
 	if (!$dbresult=$db->loadObject())
 	{
 		$db->setQuery($queryAdd);
-		$result=$db->query();
+		$result=$db->execute();
 	}
 
 	echo PrintStepResult($result).'<br />';
@@ -1377,7 +1377,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,1); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['0']=$db->insertid();
 		}
 		else
@@ -1391,7 +1391,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,2); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['1']=$db->insertid();
 		}
 		else
@@ -1405,7 +1405,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,3); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['2']=$db->insertid();
 			$events_staff['2']=$db->insertid();
 			$events_clubstaff['2']=$db->insertid();
@@ -1425,7 +1425,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,4); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['3']=$db->insertid();
 			$events_staff['3']=$db->insertid();
 			$events_clubstaff['3']=$db->insertid();
@@ -1445,7 +1445,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,5); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['4']=$db->insertid();
 			$events_staff['4']=$db->insertid();
 			$events_clubstaff['4']=$db->insertid();
@@ -1465,7 +1465,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,6); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['5']=$db->insertid();
 			$events_referees['5']=$db->insertid();
 		}
@@ -1481,7 +1481,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,7); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['6']=$db->insertid();
 			$events_referees['6']=$db->insertid();
 		}
@@ -1497,7 +1497,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,8); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['7']=$db->insertid();
 		}
 		else
@@ -1511,7 +1511,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,9); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['8']=$db->insertid();
 			$events_referees['8']=$db->insertid();
 		}
@@ -1527,7 +1527,7 @@ function addStandardsForSoccer()
 		if (!$object=$db->loadObject())
 		{
 			$query=build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$sports_type->id,10); $db->setQuery($query);
-			$result=$db->query();
+			$result=$db->execute();
 			$events_player['9']=$db->insertid();
 			$events_staff['9']=$db->insertid();
 			$events_clubstaff['9']=$db->insertid();
@@ -1561,7 +1561,7 @@ function addStandardsForSoccer()
 			if (!$dbresult=$db->loadObject())
 			{
 				$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,1); $db->setQuery($query);
-				$result=$db->query();
+				$result=$db->execute();
 				$ParentID=$db->insertid();
 				$PlayersPositions['0']=$db->insertid();
 			}
@@ -1581,7 +1581,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,2); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$PlayersPositions['1']=$db->insertid();
 				}
 				else
@@ -1595,7 +1595,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,3); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$PlayersPositions['2']=$db->insertid();
 				}
 				else
@@ -1609,7 +1609,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,4); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$PlayersPositions['3']=$db->insertid();
 				}
 				else
@@ -1623,7 +1623,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,5); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$PlayersPositions['4']=$db->insertid();
 				}
 				else
@@ -1645,7 +1645,7 @@ function addStandardsForSoccer()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,6); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$ParentID=$db->insertid();
 					$StaffPositions['0']=$db->insertid();
 				}
@@ -1666,7 +1666,7 @@ function addStandardsForSoccer()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,7); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$ParentID=$db->insertid();
 					$StaffPositions['1']=$db->insertid();
 				}
@@ -1684,7 +1684,7 @@ function addStandardsForSoccer()
 					if (!$object=$db->loadObject())
 					{
 						$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,8); $db->setQuery($query);
-						$result=$db->query();
+						$result=$db->execute();
 						$StaffPositions['2']=$db->insertid();
 					}
 					else
@@ -1698,7 +1698,7 @@ function addStandardsForSoccer()
 					if (!$object=$db->loadObject())
 					{
 						$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,9); $db->setQuery($query);
-						$result=$db->query();
+						$result=$db->execute();
 						$StaffPositions['3']=$db->insertid();
 					}
 					else
@@ -1718,7 +1718,7 @@ function addStandardsForSoccer()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,10); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$ParentID=$db->insertid();
 					$StaffPositions['4']=$db->insertid();
 				}
@@ -1736,7 +1736,7 @@ function addStandardsForSoccer()
 					if (!$object=$db->loadObject())
 					{
 						$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,11); $db->setQuery($query);
-						$result=$db->query();
+						$result=$db->execute();
 						$StaffPositions['5']=$db->insertid();
 					}
 					else
@@ -1756,7 +1756,7 @@ function addStandardsForSoccer()
 				if (!$dbresult=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,12); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$ParentID=$db->insertid();
 					$StaffPositions['6']=$db->insertid();
 				}
@@ -1778,7 +1778,7 @@ function addStandardsForSoccer()
 			if (!$dbresult=$db->loadObject())
 			{
 				$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,13); $db->setQuery($query);
-				$result=$db->query();
+				$result=$db->execute();
 				$ParentID=$db->insertid();
 				$RefereePositions['0']=$db->insertid();
 			}
@@ -1796,7 +1796,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,14); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$RefereePositions['1']=$db->insertid();
 				}
 				else
@@ -1810,7 +1810,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,15); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$RefereePositions['2']=$db->insertid();
 				}
 				else
@@ -1824,7 +1824,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,16); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$RefereePositions['3']=$db->insertid();
 				}
 				else
@@ -1838,7 +1838,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,17); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$RefereePositions['4']=$db->insertid();
 				}
 				else
@@ -1858,7 +1858,7 @@ function addStandardsForSoccer()
 			if (!$dbresult=$db->loadObject())
 			{
 				$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,18); $db->setQuery($query);
-				$result=$db->query();
+				$result=$db->execute();
 				$ParentID=$db->insertid();
 				$ClubStaffPositions['0']=$db->insertid();
 			}
@@ -1877,7 +1877,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,19); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$ClubStaffPositions['1']=$db->insertid();
 				}
 				else
@@ -1890,7 +1890,7 @@ function addStandardsForSoccer()
 				if (!$object=$db->loadObject())
 				{
 					$query=build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,20); $db->setQuery($query);
-					$result=$db->query();
+					$result=$db->execute();
 					$ClubStaffPositions['2']=$db->insertid();
 				}
 				else
@@ -1915,7 +1915,7 @@ function addStandardsForSoccer()
 	{
 		foreach ($events_player AS $epkey => $epid)
 		{
-			$query=build_InsertQuery_PositionEventType($ppid,$epid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($ppid,$epid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 
@@ -1923,7 +1923,7 @@ function addStandardsForSoccer()
 	{
 		foreach ($events_staff AS $eskey => $esid)
 		{
-			$query=build_InsertQuery_PositionEventType($spid,$esid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($spid,$esid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 
@@ -1931,7 +1931,7 @@ function addStandardsForSoccer()
 	{
 		foreach ($events_referees AS $erkey => $erid)
 		{
-			$query=build_InsertQuery_PositionEventType($rid,$erid); $db->setQuery($query); $result=$db->query();
+			$query=build_InsertQuery_PositionEventType($rid,$erid); $db->setQuery($query); $result=$db->execute();
 		}
 	}
 
@@ -1947,7 +1947,7 @@ function tableExists($tableName)
 	$db = JFactory::getDbo();
 	$query='SELECT * FROM #__'.$tableName;
 	$db->setQuery($query);
-	$result=$db->query();
+	$result=$db->execute();
 	if ((!$result) || ($db->getNumRows() ==0)) // check that table exists...
 	{
 		echo '<span style="color:red">'.JText::sprintf('Failed checking existance of table [#__%s]',$tableName).'</span><br />';
@@ -2011,39 +2011,39 @@ function TruncateTablesForDevelopment()
 
 	echo '<b>'.JText::_('Truncating some tables for a clean update').'</b><br /><br />';
 
-	$query='TRUNCATE TABLE `#__joomleague_club`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_division`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_eventtype`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_league`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_match`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_match_event`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_match_player`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_match_referee`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_match_staff`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_person`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_playground`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_position`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_position_eventtype`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_project`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_project_position`'; $db->setQuery($query); $db->query();
+	$query='TRUNCATE TABLE `#__joomleague_club`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_division`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_eventtype`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_league`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_match`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_match_event`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_match_player`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_match_referee`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_match_staff`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_person`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_playground`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_position`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_position_eventtype`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_project`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_project_position`'; $db->setQuery($query); $db->execute();
 
-	$query='ALTER TABLE `#__joomleague_project_position`  AUTO_INCREMENT =1000'; $db->setQuery($query); $db->query();
+	$query='ALTER TABLE `#__joomleague_project_position`  AUTO_INCREMENT =1000'; $db->setQuery($query); $db->execute();
 
-	$query='TRUNCATE TABLE `#__joomleague_project_referee`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_project_team`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_round`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_season`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_team`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_team_player`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_team_staff`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_template_config`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_team_trainingdata`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_prediction_game`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_prediction_admin`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_prediction_member`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_prediction_project`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_prediction_result`'; $db->setQuery($query); $db->query();
-	$query='TRUNCATE TABLE `#__joomleague_prediction_template`'; $db->setQuery($query); $db->query();
+	$query='TRUNCATE TABLE `#__joomleague_project_referee`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_project_team`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_round`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_season`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_team`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_team_player`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_team_staff`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_template_config`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_team_trainingdata`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_prediction_game`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_prediction_admin`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_prediction_member`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_prediction_project`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_prediction_result`'; $db->setQuery($query); $db->execute();
+	$query='TRUNCATE TABLE `#__joomleague_prediction_template`'; $db->setQuery($query); $db->execute();
 
 	echo addGhostPlayer();
 	return '';
@@ -2054,13 +2054,13 @@ function HandleVersion()
 	$db = JFactory::getDbo();
 	$query='SHOW TABLES LIKE "#__joomleague_versions"';
 	$db->setQuery($query);
-	if (!$db->query())
+	if (!$db->execute())
 	{
 		echo JText::_('Renaming and creating new table #__joomleague_version');
 
 		$query='RENAME TABLE `#__joomleague_version` TO `#__joomleague_versions`';
 		$db->setQuery($query);
-		$db->query();
+		$db->execute();
 	}
 
 	$query="
@@ -2080,7 +2080,7 @@ ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8;
 	";
 	$db->setQuery($query);
-	$result=$db->query();
+	$result=$db->execute();
 
 	echo PrintStepResult($result).'<br />';
 	if (!$result){echo JText::_ ('COM_JOOMLEAGUE_DB_UPDATE_DO_NOT_WORRY_GP').'<br />';}
@@ -2094,13 +2094,13 @@ function HandlePositionEventtype()
 
 	$query='select count(*) from `#__joomleague_position_eventtypes` WHERE 1';
 	$db->setQuery($query);
-	if ($db->query()){return '';}
+	if ($db->execute()){return '';}
 
 	echo JText::_('Renaming and creating new table #__joomleague_position_eventtype');
 
 	$query='RENAME TABLE `#__joomleague_position_eventtype` TO `#__joomleague_position_eventtypes`';
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 
 	$query="
 CREATE  TABLE IF NOT EXISTS `#__joomleague_position_eventtype` (
@@ -2119,7 +2119,7 @@ ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8;
 	";
 	$db->setQuery($query);
-	$result=$db->query();
+	$result=$db->execute();
 
 	echo PrintStepResult($result).'<br />';
 	if (!$result){echo JText::_ ('COM_JOOMLEAGUE_DB_UPDATE_DO_NOT_WORRY_GP').'<br />';}
@@ -2132,13 +2132,13 @@ function HandleTemplateConfig()
 
 	$query='select count(*) from `#__joomleague_template_configs` WHERE 1';
 	$db->setQuery($query);
-	if ($db->query()){return '';}
+	if ($db->execute()){return '';}
 
 	echo JText::_('Renaming and creating new table #__joomleague_template_config');
 
 	$query='RENAME TABLE `#__joomleague_template_config` TO `#__joomleague_template_configs`';
 	$db->setQuery($query);
-	$db->query();
+	$db->execute();
 
 	$query="
 CREATE  TABLE IF NOT EXISTS `#__joomleague_template_config` (
@@ -2158,7 +2158,7 @@ ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8;
 	";
 	$db->setQuery($query);
-	$result=$db->query();
+	$result=$db->execute();
 
 	echo PrintStepResult($result).'<br />';
 	if (!$result){echo JText::_ ('COM_JOOMLEAGUE_DB_UPDATE_DO_NOT_WORRY_GP').'<br />';}
@@ -2183,7 +2183,7 @@ function addSportsType()
 		// Add new sportstype Soccer to #__joomleague_sports_type
 		$queryAdd="INSERT INTO #__joomleague_sports_type (`name`) VALUES ('Soccer')";
 		$db->setQuery($queryAdd);
-		$result=$db->query();
+		$result=$db->execute();
 	}
 
 	echo PrintStepResult($result).'<br />';
@@ -2239,7 +2239,7 @@ function LeaguesToLeague()
 											)";
 				$db->setQuery($query);
 
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -2310,7 +2310,7 @@ function SeasonsToSeason()
 											)";
 				$db->setQuery($query);
 
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -2412,7 +2412,7 @@ function EventtypesToEventtype()
 										)";
 			$db->setQuery($query);
 
-			if (!$db->query())
+			if (!$db->execute())
 			{
 				$result=false;
 				echo PrintStepResult($result).'<br />';
@@ -2525,7 +2525,7 @@ function PositionsToPosition()
 										)";
 			$db->setQuery($query);
 
-			if (!$db->query())
+			if (!$db->execute())
 			{
 				$result=false;
 				echo PrintStepResult($result).'<br />';
@@ -2610,7 +2610,7 @@ function PositionEventtypesToPositionEventtype()
 													'$posevent->position_eventtype_id'
 												)";
 					$db->setQuery($query);
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -2722,7 +2722,7 @@ function PlaygroundsToPlayground()
 												'$playground->id'
 											)";
 				$db->setQuery($query);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -2779,7 +2779,7 @@ function ConvertPlaygroundClubID()
 				$query="UPDATE #__joomleague_playground SET club_id='".$object->id."' WHERE id='".$playground->id."'";
 				$db->setQuery($query);
 
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -2894,7 +2894,7 @@ function ClubsToClub()
 												'$club->id'
 											)";
 				$db->setQuery($query);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -2983,7 +2983,7 @@ function TeamsToTeam()
 											)";
 				$db->setQuery($query);
 
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -3128,7 +3128,7 @@ function PlayersToPerson()
 											)";
 				$db->setQuery($query);
 
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -3233,7 +3233,7 @@ function RefereesToPerson()
 											)";
 				$db->setQuery($query);
 
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -3409,7 +3409,7 @@ function JoomleagueToProject()
 												'$project->id'
 											)";
 				$db->setQuery($query);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -3421,7 +3421,7 @@ function JoomleagueToProject()
 					$new_project_id=$db->insertid();
 					$query="UPDATE #__joomleague_project SET ordering='".$new_project_id."' WHERE id='".$new_project_id."'";
 					$db->setQuery($query);
-					$db->query();
+					$db->execute();
 				}
 			}
 			else // project already exists
@@ -3520,7 +3520,7 @@ function DivisionsToDivision()
 												)";
 					$db->setQuery($query);
 
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -3632,7 +3632,7 @@ function PosjoomleagueToProjectposition()
 													'$projectposition->newposID'
 												)";
 					$db->setQuery($query);
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -3752,7 +3752,7 @@ function RoundsToRound()
 												)";
 					$db->setQuery($query);
 
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -3947,7 +3947,7 @@ function TeamjoomleagueToProjectteam()
 													'$teamtool->id'
 												)";
 					$db->setQuery($query);
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo '<br />'.$db->getErrorMsg().' <br />';
@@ -3990,9 +3990,9 @@ function PlayertoolToTeamplayer()
 	$result=true;
 	$copied=false;
 	$i=0;
-	//$query='TRUNCATE TABLE `#__joomleague_project_position`'; $db->setQuery($query); $db->query();
-	//$query='ALTER TABLE `#__joomleague_project_position`  AUTO_INCREMENT =1000'; $db->setQuery($query); $db->query();
-	//$query='TRUNCATE TABLE `#__joomleague_team_player`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_project_position`'; $db->setQuery($query); $db->execute();
+	//$query='ALTER TABLE `#__joomleague_project_position`  AUTO_INCREMENT =1000'; $db->setQuery($query); $db->execute();
+	//$query='TRUNCATE TABLE `#__joomleague_team_player`'; $db->setQuery($query); $db->execute();
 
 	echo JText::sprintf('Copying --> Table content of [%1$s] to [%2$s]','<b>joomleague_playertool</b>','<b>joomleague_team_player</b>');
 	$query='	SELECT	p.id AS newProjectID,
@@ -4094,7 +4094,7 @@ function PlayertoolToTeamplayer()
 							$db->setQuery($query);
 							//if ($playertool->newProjectID==26)
 							//{
-								$db->query();
+								$db->execute();
 							//}
 							$projPosID=$db->insertid();
 						}
@@ -4165,7 +4165,7 @@ function PlayertoolToTeamplayer()
 													'$playertool->project_id'
 												)";
 					$db->setQuery($query);
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -4206,7 +4206,7 @@ function TeamstaffprojectToTeamstaff()
 	$result=true;
 	$copied=false;
 	$i=0;
-	//$query='TRUNCATE TABLE `#__joomleague_team_staff`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_team_staff`'; $db->setQuery($query); $db->execute();
 
 	echo JText::sprintf('Copying --> Table content of [%1$s] to [%2$s]','<b>joomleague_teamstaff_project</b>','<b>joomleague_team_staff</b>');
 
@@ -4357,7 +4357,7 @@ where tsp.position_id = 0
 							//if ($stafftool->newProjectID==26){echo '<pre>1~'.print_r($query,true).'~</pre>';}
 							//if ($stafftool->newProjectID==26)
 							//{
-							$db->query();
+							$db->execute();
 							//}
 							$projPosID=$db->insertid();
 							//if ($stafftool->newProjectID==26){echo '<pre>YY~'.print_r($projPosID,true).'~</pre>';}
@@ -4415,7 +4415,7 @@ where tsp.position_id = 0
 					//if ($stafftool->newProjectID==26){echo '<pre>2~'.print_r($query,true).'~</pre>';}
 					//if ($stafftool->newProjectID==26)
 					//{
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -4460,7 +4460,7 @@ function MatchesToMatch()
 	$copied=false;
 	$oldProjectID=(-1);
 	$totalOldMatchesCount=(-1);
-	//$query='TRUNCATE TABLE `#__joomleague_match`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_match`'; $db->setQuery($query); $db->execute();
 
 	echo JText::sprintf('Copying --> Table content of [%1$s] to [%2$s]','<b>joomleague_matches</b>','<b>joomleague_match</b>').'<br /><br />';
 
@@ -4755,7 +4755,7 @@ function MatchesToMatch()
 												'$match->project_id'
 											)";
 				$db->setQuery($query);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -4796,7 +4796,7 @@ function MatcheventsToMatchevent()
 	$i=0;
 	$ii=0;
 	$totalOldMatcheEventsCount=0;
-	//$query='TRUNCATE TABLE `#__joomleague_match_event`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_match_event`'; $db->setQuery($query); $db->execute();
 	echo JText::sprintf('Copying --> Table content of [%1$s] to [%2$s]','<b>joomleague_match_events</b>','<b>joomleague_match_event</b>').'<br />';
 	$query='	SELECT	et.id AS newEventID,
 						et.name AS eventName,
@@ -4909,7 +4909,7 @@ function MatcheventsToMatchevent()
 													'".addslashes(stripslashes($matchevent->description))."'
 												)";
 					$db->setQuery($query);
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -4944,7 +4944,7 @@ function MatchplayersToMatchplayer()
 	$i=0;
 	$ii=0;
 	$totalOldMatchPlayersCount=0;
-	//$query='TRUNCATE TABLE `#__joomleague_match_player`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_match_player`'; $db->setQuery($query); $db->execute();
 
 	echo JText::sprintf('Copying --> Table content of [%1$s] to [%2$s]','<b>joomleague_match_players</b>','<b>joomleague_match_player</b>').'<br />';
 
@@ -5020,7 +5020,7 @@ function MatchplayersToMatchplayer()
 					$query="INSERT INTO	#__joomleague_project_position (`project_id`,`position_id`)
 									VALUES ('$project_id','".$positions[$matchplayer->position_id]['id']."')";
 					$db->setQuery($query);
-					$db->query();
+					$db->execute();
 				}
 				$query="SELECT ppos.id AS pposID,ppos.project_id,ppos.position_id,pos.id AS posID,pos.name
 						FROM #__joomleague_position AS pos
@@ -5070,7 +5070,7 @@ function MatchplayersToMatchplayer()
 											'$matchplayer->ordering'
 										)";
 			$db->setQuery($query);
-			if (!$db->query())
+			if (!$db->execute())
 			{
 				$result=false;
 				echo PrintStepResult($result).'<br />';
@@ -5095,8 +5095,8 @@ function MatchrefereesToMatchrefereeAndProjectReferee()
 	$result=true;
 	$copied=false;
 	$oldProjectID=(-1);
-	//$query='TRUNCATE TABLE `#__joomleague_match_referee`'; $db->setQuery($query); $db->query();
-	//$query='TRUNCATE TABLE `#__joomleague_project_referee`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_match_referee`'; $db->setQuery($query); $db->execute();
+	//$query='TRUNCATE TABLE `#__joomleague_project_referee`'; $db->setQuery($query); $db->execute();
 	echo JText::sprintf(	'Copying --> Field content of [%1$s] to [%2$s] and [%3$s]',
 							 '<b>joomleague_matches->project_referee_id</b>',
 							 '<b>joomleague_project_referee</b>',
@@ -5146,7 +5146,7 @@ function MatchrefereesToMatchrefereeAndProjectReferee()
 														'$refereePosID'
 													)";
 						$db->setQuery($query);
-						$db->query();
+						$db->execute();
 						$refereeProjectPosID=$db->insertid();
 					}
 				}
@@ -5193,7 +5193,7 @@ function MatchrefereesToMatchrefereeAndProjectReferee()
 														'$refereeProjectPosID'
 													)";
 						$db->setQuery($query);
-						if (!$db->query()) // write into table project_referee
+						if (!$db->execute()) // write into table project_referee
 						{
 							$result=false;
 							echo '<br />'.$db->getErrorMsg().' <br />';
@@ -5226,7 +5226,7 @@ function MatchrefereesToMatchrefereeAndProjectReferee()
 													'$refereeProjectPosID'
 												)";
 					$db->setQuery($query);
-					if (!$db->query()) // write into table match_referee
+					if (!$db->execute()) // write into table match_referee
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -5294,7 +5294,7 @@ function PredictionGameToPredictionGame()
 											'$predictiongame->id'
 										)";
 			$db->setQuery($query);
-			if (!$db->query())
+			if (!$db->execute())
 			{
 				$result=false;
 				echo PrintStepResult($result).'<br />';
@@ -5358,7 +5358,7 @@ function PredictionGameAdminsToPredictionAdmin()
 													'$predictionadmin->project_id'
 												)";
 					$db->setQuery($query);
-					if (!$db->query())
+					if (!$db->execute())
 					{
 						$result=false;
 						echo PrintStepResult($result).'<br />';
@@ -5472,7 +5472,7 @@ function PredictionGameProjectToPredictionProject()
 														'$predictionproject->project_id'
 													)";
 						$db->setQuery($query);
-						if (!$db->query())
+						if (!$db->execute())
 						{
 							$result=false;
 							echo PrintStepResult($result).'<br />';
@@ -5635,7 +5635,7 @@ function TipMembersToPredictionMember()
 												'$predictiongamemember->project_id'
 											)";
 				$db->setQuery($query);
-				if (!$db->query())
+				if (!$db->execute())
 				{
 					$result=false;
 					echo PrintStepResult($result).'<br />';
@@ -5671,7 +5671,7 @@ function TipResultsToPredictionResults()
 	$result=true;
 	$copied=false;
 	$i=0;
-	//$query='TRUNCATE TABLE `#__joomleague_prediction_result`'; $db->setQuery($query); $db->query();
+	//$query='TRUNCATE TABLE `#__joomleague_prediction_result`'; $db->setQuery($query); $db->execute();
 	echo JText::sprintf('Copying --> Table content of [%1$s] to [%2$s]','<b>joomleague_tip_results</b>','<b>joomleague_prediction_result</b>');
 	$query='SELECT * FROM #__joomleague_tip_results'; $db->setQuery($query);
 	if ($predictiongametipresults=$db->loadObjectList()) // get old predictiongame_tip_results...
@@ -5753,7 +5753,7 @@ function TipResultsToPredictionResults()
 														'$predictiongametipresult->id'
 													)";
 						$db->setQuery($query);
-						if (!$db->query())
+						if (!$db->execute())
 						{
 							$result=false;
 							echo PrintStepResult($result).'<br />';
@@ -5881,7 +5881,7 @@ function checklistPredictionTemplates()
 
 								$db->setQuery($query);
 								//echo error,allows to check if there is a mistake in the template file
-								if (!$db->query())
+								if (!$db->execute())
 								{
 									//$this->setError($db->getErrorMsg());
 									//return false;

@@ -121,7 +121,7 @@ class JoomleagueModelTeamStaffs extends JoomleagueModelList
 							checked_out_time=0
 							WHERE id=".$cid[$x];
 			$this->_db->setQuery($query);
-			if(!$this->_db->query())
+			if(!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result= false;

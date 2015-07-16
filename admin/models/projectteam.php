@@ -276,7 +276,7 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 		$result=true;
 		$query="INSERT INTO #__joomleague_team_trainingdata (project_id,team_id,project_team_id) VALUES ('$projectID','0','$projectTeamID')";
 		$this->_db->setQuery($query);
-		if (!$this->_db->query())
+		if (!$this->_db->execute())
 		{
 			$this->setError($this->_db->getErrorMsg());
 			$result=false;
@@ -305,7 +305,7 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 								notes='".JRequest::getVar('notes_'.$tdid,'none','post','STRING',JREQUEST_ALLOWHTML)."'
 						WHERE id='$tdid'";
 			$this->_db->setQuery($query);
-			if (!$this->_db->query())
+			if (!$this->_db->execute())
 			{
 				$this->setError($this->_db->getErrorMsg());
 				$result=false;
@@ -325,7 +325,7 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 			{
 				$query = "DELETE FROM #__joomleague_team_trainingdata WHERE id='$tdid'";
 				$this->_db->setQuery($query);
-				if (!$this->_db->query())
+				if (!$this->_db->execute())
 				{
 					$this->setError($this->_db->getErrorMsg());
 					$result=false;

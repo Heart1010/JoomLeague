@@ -67,7 +67,7 @@ class JLTable extends JTable {
 	 * @return int number of affected row
 	 */
 	public function _insertIgnoreObject($table, & $object, $keyName = NULL) {
-		$fmtsql = 'INSERT IGNORE INTO ' . $this->getDbo()->nameQuote($table) . ' ( %s ) VALUES ( %s ) ';
+		$fmtsql = 'INSERT IGNORE INTO ' . $this->getDbo()->quoteName($table) . ' ( %s ) VALUES ( %s ) ';
 		$fields = array ();
 		foreach (get_object_vars($object) as $k => $v) {
 			if (is_array($v) or is_object($v) or $v === NULL) {
@@ -77,11 +77,11 @@ class JLTable extends JTable {
 				// internal field
 				continue;
 			}
-			$fields[] = $this->getDbo()->nameQuote($k);
-			$values[] = $this->getDbo()->isQuoted($k) ? $this->getDbo()->Quote($v) : (int) $v;
+			$fields[] = $this->getDbo()->quoteName($k);
+			$values[] = $this->getDbo()->quote($v);
 		}
 		$this->getDbo()->setQuery(sprintf($fmtsql, implode(",", $fields), implode(",", $values)));
-		if (!$this->getDbo()->query()) {
+		if (!$this->getDbo()->execute()) {
 			return false;
 		}
 		$id = $this->getDbo()->insertid();

@@ -67,7 +67,7 @@ function _checkVersionTable()
 {
 	$db = JFactory::getDbo();
 
-	$res = $db->getTableFields('#__joomleague_version');
+	$res = $db->getTableColumns('#__joomleague_version');
 	$cols = array_keys(reset($res));
 
 	if (!in_array('major', $cols))
@@ -79,7 +79,7 @@ function _checkVersionTable()
 				ADD `revision` VARCHAR(128) NOT NULL ,
 				ADD `file` VARCHAR(255) NOT NULL';
 		$db->setQuery($query);
-		if (!$db->query()) {
+		if (!$db->execute()) {
 			echo JText::_('Failed updating version table');
 		}
 	}
@@ -152,7 +152,7 @@ function addGhostPlayer()
 	if (!$dbresult=$db->loadObject())
 	{
 		$db->setQuery($queryAdd);
-		$result=$db->query();
+		$result=$db->execute();
 		$status=1;
 	}
 	else
