@@ -4,23 +4,16 @@
  * @package		Blog Calendar
  * @author		Justo Gonzalez de Rivera
  * @license		GNU/GPL
+ * 
  * modified by johncage for use with joomleague
- * @version		1.5.0.1
  */
+defined('_JEXEC') or die;
 
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
-
-//require_once (JPATH_SITE.DS.'components'.DS.'com_content'.DS.'helpers'.DS.'route.php');
-require_once (dirname(__FILE__).DS.'calendarClass.php');
+require_once (dirname(__FILE__).'/calendarClass.php');
 
 
 class modJLCalendarHelper
 {
-
-
-
 	function showCal(&$params,$year,$month,$ajax=0,$modid) //this function returns the html of the calendar for a given month
 	{
 		global $mainframe;
@@ -79,14 +72,14 @@ class modJLCalendarHelper
 		foreach ( $cal->matches as $row )
 		{
 			$created= new JDate($row['date'], -$offset);
-			$createdYear=$created->toFormat('%Y');
-			$createdMonth=$created->toFormat('%m');
-			$createdDay=$created->toFormat('%d'); //have to use %d because %e doesn't works on windows
+			$createdYear=$created->format('%Y');
+			$createdMonth=$created->format('%m');
+			$createdDay=$created->format('%d'); //have to use %d because %e doesn't works on windows
 			$createdDate=$createdYear . $createdMonth . $createdDay; //this makes an unique variable for every day
 			$counter[$createdDate]['createdYear'] = $createdYear;
 			$counter[$createdDate]['createdMonth'] = $createdMonth;
 			$counter[$createdDate]['createdDay'] = $createdDay;
-			$counter[$createdDate]['tiptitle'] = $created->toFormat('%A, %d.%m.%Y');
+			$counter[$createdDate]['tiptitle'] = $created->format('%A, %d.%m.%Y');
 			if (!isset($counter[$createdDate]['count'])) $counter[$createdDate]['count'] = 1;
 			else $counter[$createdDate]['count'] += 1; //$counter[$date] counts the number of articles in each day, to display it as a title in the link of the day
 		}
@@ -132,9 +125,9 @@ class modJLCalendarHelper
 		$created=new JDate($row[0]->match_date, -$offset);
 
 
-		$createdYear=$created->toFormat('%Y');
-		$createdMonth=$created->toFormat('%m');
-		$createdDay=$created->toFormat('%d');
+		$createdYear=$created->format('%Y');
+		$createdMonth=$created->format('%m');
+		$createdDay=$created->format('%d');
 
 		$createdDate=Array($createdYear,$createdMonth,$createdDay);
 
@@ -147,8 +140,8 @@ class modJLCalendarHelper
 
 		foreach($results as $key => $result){
 			$created=new JDate($results[$key]->match_date);
-			$createdYear= $created->toFormat('%Y');
-			$createdMonth= $created->toFormat('%m');
+			$createdYear= $created->format('%Y');
+			$createdMonth= $created->format('%m');
 
 
 			$results[$key]->year = $createdYear;
@@ -306,14 +299,18 @@ class JLCalendar extends PHPCalendar
 		$usejevents = $this->params->get('jevents', 0);
 		if ( $usejevents == 1 ) {
 			$day = 0;
-			require_once (dirname(__FILE__).DS.'connectors'.DS.'jevents.php');
+			require_once (dirname(__FILE__).'/connectors/jevents.php');
 			JEventsConnector::getEntries($caldates, $this->params, $this->matches);
 		}
-		require_once (dirname(__FILE__).DS.'connectors'.DS.$joomleague.'.php');
+		require_once (dirname(__FILE__).'/connectors/'.$joomleague.'.php');
 		$this->params->prefix = $this->prefix;
-		JoomleagueConnector::getEntries ( $caldates, $this->params, $this->matches );
+		
+		// @todo Check!
+		$jlconnect = new JoomleagueConnector();
+		$jlconnect->getEntries($caldates, $this->params, $this->matches);
+		
 		if ($livescore != ''){
-			require_once (dirname(__FILE__).DS.'connectors'.DS.'livescore.php');
+			require_once (dirname(__FILE__).'/connectors/livescore.php');
 			$this->params->prefix = $this->params->get('prefix_livescore', '');
 			LivescoreConnector::getMatches ( $caldates, $this->params, $this->matches );
 		}
@@ -335,7 +332,7 @@ class JLCalendar extends PHPCalendar
 		$matches = $this->matches;
 		$div = '';
 		$now = new JDate();
-		$today = $now->toFormat('%Y-%m-%d');
+		$today = $now->format('%Y-%m-%d');
 		$todaytitle = '';
 		$pm='';
 		$offset = 0; // $mainframe->getCfg('offset');
@@ -356,9 +353,9 @@ class JLCalendar extends PHPCalendar
 			$row = $matches[$x];
 			$thispm = $row['project_id'].'_'.$row['matchcode'].'_'.$row['type'];
 			$da= new JDate($row['date'], -$offset);
-			if ($div !=$da->toFormat('%Y-%m-%d')) {
+			if ($div !=$da->format('%Y-%m-%d')) {
 				$counter = 0;
-				$div = $da->toFormat('%Y-%m-%d');
+				$div = $da->format('%Y-%m-%d');
 				$format[] = array('tag' => 'div', 'divid' => 'jlcal_'.$div."-".$this->modid, 'class' => 'jlcal_hiddenmatches');
 				$format[] = array('tag' => 'table', 'divid' => 'jlcal_'.$div."-".$this->modid, 'class' => 'jlcal_result_table');
 			}
@@ -372,7 +369,7 @@ class JLCalendar extends PHPCalendar
 			$counter++;
 			if (isset($matches[$x+1])) $nd= new JDate($matches[$x+1]['date'], -$offset);
 			else $nd = false;
-			if (!$nd || $nd->toFormat('%Y-%m-%d') != $da->toFormat('%Y-%m-%d')) {
+			if (!$nd || $nd->format('%Y-%m-%d') != $da->format('%Y-%m-%d')) {
 
 				$pm = '';
 				$format[] = array('tag' => 'tableend');
@@ -381,8 +378,8 @@ class JLCalendar extends PHPCalendar
 				$titletext .= ' ';
 				$titletext .= ($counter > 1)? $articles : $article;
 				$titletext .= ' ';
-				$titletext .= ($today == $da->toFormat('%Y-%m-%d')) ? $language->_('MOD_JOOMLEAGUE_CALENDAR_TODAY'): $language->_('MOD_JOOMLEAGUE_CALENDAR_AT');
-				$titletext .= ' ' .$da->toFormat('%d').'. '.$this->monthNames[$month - 1] . ' ' . $year;
+				$titletext .= ($today == $da->format('%Y-%m-%d')) ? $language->_('MOD_JOOMLEAGUE_CALENDAR_TODAY'): $language->_('MOD_JOOMLEAGUE_CALENDAR_AT');
+				$titletext .= ' ' .$da->format('%d').'. '.$this->monthNames[$month - 1] . ' ' . $year;
 				$format[] = array('tag' => 'span', 'divid' => 'jlcaltitte_'.$div."-".$this->modid, 'class' => 'jlcal_hiddenmatches', 'text' => $titletext);
 
 			}

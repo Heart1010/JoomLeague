@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
@@ -9,7 +9,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 class modMatchesHelper {
 
@@ -198,9 +198,9 @@ class modMatchesHelper {
 			$pic['alt'] = Countries::getCountryName($countrycode);
 		} else {
 			$defaultlogos = $this->getDefaultLogos();
-			$matchpart_pic = (!empty ($team-> $pt) AND file_exists(JPATH_ROOT . DS . $team-> $pt)) ? $team-> $pt : $defaultlogos[$pt];
-			if (file_exists(JPATH_ROOT . DS . $matchpart_pic)) {
-				$size = getimagesize(JPATH_ROOT . DS . $matchpart_pic);
+			$matchpart_pic = (!empty ($team-> $pt) AND file_exists(JPATH_ROOT.'/'.$team-> $pt)) ? $team-> $pt : $defaultlogos[$pt];
+			if (file_exists(JPATH_ROOT.'/'.$matchpart_pic)) {
+				$size = getimagesize(JPATH_ROOT.'/'.$matchpart_pic);
 				$pic_width = $size[0];
 				$pic_height = $size[1];
 				$whichparam = ($pic_width > $pic_height) ? ' width' : ' height';
@@ -208,7 +208,7 @@ class modMatchesHelper {
 				$appendimage .= $whichparam . '="' . $this->params->get('xsize') . '"';
 				elseif ($this->params->get('ysize') > 0) $appendimage .= $whichparam . '="' . $this->params->get('ysize') . '"';
 			}
-			$pic['src'] = (trim($matchpart_pic) != "" && file_exists(JPATH_ROOT . DS . trim($matchpart_pic))) ? JUri :: root(true) .
+			$pic['src'] = (trim($matchpart_pic) != "" && file_exists(JPATH_ROOT.'/'.trim($matchpart_pic))) ? JUri :: root(true) .
 			'/' . $matchpart_pic : JUri :: root(true) . '/' . $defaultlogos[$pt];
 			$pic['alt'] = $this->jl_utf8_convert($team->name, 'iso-8859-1', 'utf-8');
 		}

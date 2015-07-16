@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
@@ -8,12 +8,13 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 */
-defined( '_JEXEC' ) or die( 'Direct Access to this location is not allowed.' );
-require_once(JPATH_ROOT . DS .'components'. DS.'com_joomleague' . DS . 'joomleague.core.php' );
+defined('_JEXEC') or die;
+
+require_once JPATH_ROOT.'/components/com_joomleague/joomleague.core.php';
 if (!defined('_JLMATCHLISTMODPATH')) { define('_JLMATCHLISTMODPATH', dirname( __FILE__ ));}
 if (!defined('_JLMATCHLISTMODURL')) { define('_JLMATCHLISTMODURL', JUri::base().'modules/mod_joomleague_matches/');}
-require_once (_JLMATCHLISTMODPATH.DS.'helper.php');
-require_once (_JLMATCHLISTMODPATH.DS.'connectors'.DS.'joomleague.php');
+require_once (_JLMATCHLISTMODPATH.'/helper.php');
+require_once (_JLMATCHLISTMODPATH.'/connectors/joomleague.php');
 
 $ajax= JRequest::getVar('ajaxMListMod',0,'default','POST');
 $match_id = JRequest::getVar('match_id',0,'default','POST');
@@ -65,7 +66,7 @@ if (count($matches) > 0){
 			if (!empty($match['heading'])) $show_pheading = true;
 			$pheading .= $match['heading'];
 		}
-		include(JModuleHelper::getLayoutPath('mod_joomleague_matches', $template.DS.'match'));
+		include(JModuleHelper::getLayoutPath('mod_joomleague_matches', $template.'/match'));
 		$lastheading = $heading;
 		$oldprojectid = $match['project_id'];
 		$oldround_id = $match['round_id'];

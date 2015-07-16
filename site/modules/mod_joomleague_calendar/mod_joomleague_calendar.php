@@ -26,9 +26,9 @@ if(!$params->get('cal_start_date')){
 }
 else{
 	$startDate= new JDate($params->get('cal_start_date'));
-	$year = JRequest::getVar('year', $startDate->toFormat('%Y'));
-	$month  = JRequest::getVar('month', $startDate->toFormat('%m'));
-	$day  = $ajax? '' : JRequest::getVar('day', $startDate->toFormat('%d'));
+	$year = JRequest::getVar('year', $startDate->format('%Y'));
+	$month  = JRequest::getVar('month', $startDate->format('%m'));
+	$day  = $ajax? '' : JRequest::getVar('day', $startDate->format('%d'));
 }
 $helper = new modJLCalendarHelper;
 $doc = JFactory::getDocument();
