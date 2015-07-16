@@ -1,19 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access');
-/*
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
+ * to the GNU General Public License,and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
- *
- * Default HTML layout for the Joomleague component
- *
- * @author Joomleague Team <www.joomleague.at>
- * @package   Joomleague
- * @since 0.1
-*/
+ */
+defined('_JEXEC') or die;
 ?>
 <table class="about">
 	<tr>
