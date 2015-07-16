@@ -328,14 +328,14 @@
 
 		<field
 			name="fav_team_color"
-			type="jlgcolor"
+			type="colorpicker"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_COLOR"
 			description="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_COLOR"
 			class="inputbox"/>
 
 		<field
 			name="fav_team_text_color"
-			type="jlgcolor"
+			type="colorpicker"
 			label="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_TEXT_COLOR"
 			description="COM_JOOMLEAGUE_ADMIN_PROJECT_HIGHLIGHT_TEXT_COLOR_DESC"
 			class="inputbox"/>
