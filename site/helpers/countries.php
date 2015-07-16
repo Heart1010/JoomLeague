@@ -298,12 +298,13 @@ class Countries
 	public static function getCountryOptions($value_tag='value', $text_tag='text')
 	{
 		$lang = JFactory::getLanguage();
-		$extension = "com_joomleague_countries";
-		$source = JPATH_ADMINISTRATOR . '/components/' . $extension;
-		$lang->load("$extension", JPATH_ADMINISTRATOR, null, false, false)
-		||	$lang->load($extension, $source, null, false, false)
-		||	$lang->load($extension, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load($extension, $source, $lang->getDefault(), false, false);
+		$file = "com_joomleague_countries";
+		$source = JPATH_ADMINISTRATOR . '/components/' . $file;
+		$lang->load($file, JPATH_ADMINISTRATOR, null, false, false)
+		||	$lang->load($file, $source, null, false, false)
+		||	$lang->load($file, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+		||	$lang->load($file, $source, $lang->getDefault(), false, false)
+		||	$lang->load('com_joomleague_countries', JPATH_ADMINISTRATOR.'/components/com_joomleague', 'en-GB', true);
 		
 		$countries=Countries::getCountries();
 		$options=array();
@@ -863,6 +864,7 @@ class Countries
 	 */
 	public static function getCountryFlag($countrycode,$attributes='')
 	{
+		self::includeLanguageFile();
 		$src=Countries::getIso3Flag($countrycode);
 		if (!$src){return '';}
 		$html='<img src="'.$src.'" alt="'.Countries::getCountryName($countrycode).'" ';
@@ -876,13 +878,7 @@ class Countries
    */
 	public static function getCountryName($iso3)
 	{
-		$lang = JFactory::getLanguage();
-		$extension = "com_joomleague_countries";
-		$source = JPATH_ADMINISTRATOR . '/components/' . $extension;
-		$lang->load("$extension", JPATH_ADMINISTRATOR, null, false, false)
-		||	$lang->load($extension, $source, null, false, false)
-		||	$lang->load($extension, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load($extension, $source, $lang->getDefault(), false, false);
+		self::includeLanguageFile();
 		$countries=Countries::getCountries();
 		if(isset($countries[$iso3]['name']))
 		return JText::_($countries[$iso3]['name']);
@@ -894,13 +890,7 @@ class Countries
    */
 	public static function getShortCountryName($iso3)
 	{
-		$lang = JFactory::getLanguage();
-		$extension = "com_joomleague_countries";
-		$source = JPATH_ADMINISTRATOR . '/components/' . $extension;
-		$lang->load("$extension", JPATH_ADMINISTRATOR, null, false, false)
-		||	$lang->load($extension, $source, null, false, false)
-		||	$lang->load($extension, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
-		||	$lang->load($extension, $source, $lang->getDefault(), false, false);
+		self::includeLanguageFile();
 		$full=self::getCountryName($iso3);
 		if (empty($full)){return false;}
 		$parts=explode(',', $full);
@@ -1023,6 +1013,22 @@ check if address fields not filled then remove that
 	}
 	
 	return $string;
+	}
+	
+	
+	/**
+	 * Include country language file
+	 */
+	public static function includeLanguageFile()
+	{
+		$lang = JFactory::getLanguage();
+		$extension = "com_joomleague_countries";
+		$source = JPATH_ADMINISTRATOR . '/components/' . $extension;
+		$lang->load("$extension", JPATH_ADMINISTRATOR, null, false, false)
+		||	$lang->load($extension, $source, null, false, false)
+		||	$lang->load($extension, JPATH_ADMINISTRATOR, $lang->getDefault(), false, false)
+		||	$lang->load($extension, $source, $lang->getDefault(), false, false)
+		||	$lang->load('com_joomleague_countries', JPATH_ADMINISTRATOR.'/components/com_joomleague', 'en-GB', true);
 	}
 }
 ?>
