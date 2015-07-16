@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,11 +8,10 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
 if( !defined('THUMBLIB_BASE_PATH') ) {
-	require_once(JLG_PATH_SITE.DS.'assets'.DS.'classes'.DS.'PHPThumb'.DS.'ThumbLib.inc.php');
+	require_once(JLG_PATH_SITE.'/assets/classes/PHPThumb/ThumbLib.inc.php');
 }
 
 class JoomleagueHelper
@@ -141,16 +140,20 @@ class JoomleagueHelper
 	 *
 	 * @access	public
 	 * @return	array project
-	 * @since	1.5
 	 */
-	function getSportsTypeName($sportsType)
+	public static function getSportsTypeName($sportsType)
 	{
 		$db = JFactory::getDbo();
 		$query='SELECT name FROM #__joomleague_sports_type WHERE id='.(int) $sportsType;
 		$db->setQuery($query);
-		if (!$result=$db->loadResult())
+		$result = $db->loadResult();
+		
+		if (!$result)
 		{
-			$this->setError($db->getErrorMsg());
+			$error = $db->getErrorMsg();
+			if ($error) {
+				JFactory::getApplication()->enqueueMessage($db->getErrorMsg(), 'warning');
+			}
 			return false;
 		}
 		return JText::_($result);
@@ -184,21 +187,26 @@ class JoomleagueHelper
 	 *
 	 * @access	public
 	 * @return	array project
-	 * @since	1.5
 	 */
-	function getPosPersonTypeName($personType)
+	public static function getPosPersonTypeName($personType)
 	{
 		switch ($personType)
 		{
-			case 2	:	$result =	JText::_('COM_JOOMLEAGUE_F_TEAM_STAFF');
-			break;
-			case 3	:	$result =	JText::_('COM_JOOMLEAGUE_F_REFEREES');
-			break;
-			case 4	:	$result =	JText::_('COM_JOOMLEAGUE_F_CLUB_STAFF');
-			break;
+			case 1:	
+				$result =	JText::_('COM_JOOMLEAGUE_F_PLAYERS');
+				break;
+			case 2:	
+				$result =	JText::_('COM_JOOMLEAGUE_F_TEAM_STAFF');
+				break;
+			case 3:	
+				$result =	JText::_('COM_JOOMLEAGUE_F_REFEREES');
+				break;
+			case 4:	
+				$result =	JText::_('COM_JOOMLEAGUE_F_CLUB_STAFF');
+				break;
 			default	:
-			case 1	:	$result =	JText::_('COM_JOOMLEAGUE_F_PLAYERS');
-			break;
+				$result =	JText::_('COM_JOOMLEAGUE_F_PLAYERS');
+				break;
 		}
 		return $result;
 	}
@@ -1026,7 +1034,7 @@ class JoomleagueHelper
 	 * @param string $value
 	 * @return string
 	 */
-	public function stripInvalidXml($value)
+	public static function stripInvalidXml($value)
 	{
 		$ret='';
 		$current='';
@@ -1395,7 +1403,7 @@ class JoomleagueHelper
 			$status = 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=800,height=600,directories=no,location=no';
 			// checks template image directory for image, if non found default are loaded
 			if ($config['show_icons'] == 1 ) {
-				$image = JHtml::_('image.site', 'printButton.png', 'media/com_joomleague/jl_images/', NULL, NULL, JText::_( 'Print' ));
+				$image = JHtml::_('image','system/printButton.png', JText::_('JGLOBAL_PRINT'), NULL, true);
 			} else {
 				$image = JText::_( 'Print' );
 			}
