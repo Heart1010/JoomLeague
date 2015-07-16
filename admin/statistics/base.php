@@ -80,7 +80,7 @@ class JLGStatistic extends JObject {
 	 * @param string class
 	 * @return object
 	 */
-	function &getInstance($class)
+	public static function getInstance($class)
 	{
 		$classname = 'JLGStatistic'. ucfirst($class);
 		
@@ -88,7 +88,7 @@ class JLGStatistic extends JObject {
 		$extensions = JoomleagueHelper::getExtensions(0);
 		foreach ($extensions as $type)
 		{
-			$file = JLG_PATH_SITE.DS.'extensions'.DS.$type.DS.'admin'.DS.'statistics'.DS .$class.'.php';
+			$file = JLG_PATH_SITE.'/extensions/'.$type.'/admin/statistics/'.$class.'.php';
 			if (file_exists($file))
 			{
 				require_once($file);
@@ -99,7 +99,7 @@ class JLGStatistic extends JObject {
 	
 		if (!class_exists($classname))
 		{
-			$file = JLG_PATH_ADMIN .DS . 'statistics' . DS .$class.'.php';
+			$file = JLG_PATH_ADMIN.'/statistics/'.$class.'.php';
 			if (!file_exists($file)) {
 				JError::raiseError(0, $class .': '. JText::_('STATISTIC CLASS NOT DEFINED'));
 			}
@@ -154,7 +154,7 @@ class JLGStatistic extends JObject {
 	function getBaseParams()
 	{
 		$paramsdata = $this->baseparams;
-		$paramsdefs = JLG_PATH_ADMIN.DS.'statistics' . DS . 'base.xml';
+		$paramsdefs = JLG_PATH_ADMIN.'/statistics/base.xml';
 		return new JLParameter( $paramsdata, $paramsdefs );
 	}
 	
@@ -168,7 +168,7 @@ class JLGStatistic extends JObject {
 		$rc = new ReflectionClass(get_class($this));
 		$currentdir = dirname($rc->getFileName());
 		$paramsdata = $this->params;
-		$paramsdefs = $currentdir. DS . $this->_name .'.xml';
+		$paramsdefs = $currentdir.'/'. $this->_name .'.xml';
 		return new JLParameter( $paramsdata, $paramsdefs );
 	}
 	
@@ -181,7 +181,7 @@ class JLGStatistic extends JObject {
 		// cannot use __FILE__ because extensions can have their own stats
 		$rc = new ReflectionClass(get_class($this));
 		$currentdir = dirname($rc->getFileName());
-		return $currentdir. DS . $this->_name .'.xml';
+		return $currentdir.'/'. $this->_name .'.xml';
 	}
 	
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,19 +8,16 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once (JLG_PATH_ADMIN.DS.'models'.DS.'list.php');
+require_once (JLG_PATH_ADMIN.'/models/list.php');
 
 /**
  * Joomleague Component Matchday Model
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
  * @package	JoomLeague
- * @since	0.1
  */
 
 class JoomleagueModelRounds extends JoomleagueModelList
@@ -33,11 +30,11 @@ class JoomleagueModelRounds extends JoomleagueModelList
 		parent::__construct();
 		
 		$option     = 'com_joomleague';
-		$mainframe	= &JFactory::getApplication();
-		$params     = &JComponentHelper::getParams('com_joomleague');
+		$mainframe	= JFactory::getApplication();
+		$params     = JComponentHelper::getParams('com_joomleague');
 		$defaultorder_dir = $params->get('cfg_be_show_matchdays_order', '');
 		
-		$filter_order		    = $mainframe->getUserStateFromRequest( $option . 'rounds_filter_order', 'filter_order', 'r.roundcode', 'cmd' );
+		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'rounds_filter_order', 'filter_order', 'r.roundcode', 'cmd' );
 		$filter_order_Dir 	= $mainframe->getUserStateFromRequest( $option . 'rounds__filter_order_Dir', 'filter_order_Dir', $defaultorder_dir, 'word' );
 		
 		$this->setState('filter_order',     $filter_order);
@@ -99,7 +96,6 @@ class JoomleagueModelRounds extends JoomleagueModelList
 	*
 	* @access  public
 	* @return  array
-	* @since 0.1
 	*/
 	function getProjectTeams()
 	{
