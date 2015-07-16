@@ -57,7 +57,7 @@ function migrateAssets()
 	$results = $db->loadColumn();
 	foreach ($results as $tablename)
 	{
-		$fields = $db->getTableFields($tablename);
+		$fields = $db->getTableColumns($tablename);
 		foreach($fields as $field)
 		{
 			if(in_array('asset_id', array_keys ($field))) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,24 +8,20 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
-
-jimport ( 'joomla.application.component.model' );
+jimport('joomla.application.component.model');
 
 /**
  * Joomleague Component Import Model
  *
  * @package Joomla
  * @subpackage Joomleague
- * @since 1.5
  */
 class JoomleagueModelImport extends JModelLegacy {
 	/**
 	 * Constructor
 	 *
-	 * @since 0.9
 	 */
 	function __construct() {
 		parent::__construct ();
@@ -36,13 +32,12 @@ class JoomleagueModelImport extends JModelLegacy {
 	 *
 	 * @return array
 	 */
-	function getTableFields($table) {
-		$tables = array (
-				$table 
-		);
-		$tablesfields = $this->_db->getTableFields ( $tables );
-		
-		return array_keys ( $tablesfields [$table] );
+	function getTableColumns($table) {
+	
+		$tablesFields = $this->_db->getTableColumns($table);
+		$keys = array_keys($tablesFields);
+
+		return $keys;
 	}
 	
 	/**
