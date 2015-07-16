@@ -29,7 +29,7 @@ Owner of DHTMLgoodies.com
 	var MSIE = navigator.userAgent.indexOf('MSIE')>=0?true:false;
 	var navigatorVersion = navigator.appVersion.replace(/.*?MSIE (\d\.\d).*/g,'$1')/1;
 	
-	var form_widget_amount_slider_handle = 'images/slider_handle.gif';
+	var form_widget_amount_slider_handle = '../media/com_joomleague/colorpicker/images/slider_handle.gif';
 	var slider_handle_image_obj = false;
 	var sliderObjectArray = new Array();
 	var slider_counter = 0;
@@ -244,14 +244,14 @@ Owner of DHTMLgoodies.com
 					thisObj.className='colorPickerTab_active';
 					thisObj.style.zIndex = 50;
 					var img = thisObj.getElementsByTagName('IMG')[0];
-					img.src = "images/tab_right_active.gif"
+					img.src = "../media/com_joomleague/colorpicker/images/tab_right_active.gif"
 					img.src = img.src.replace(/inactive/,'active');							
 					contentDiv.style.display='block';
 					activeColorDiv = contentDiv;
 				}else{
 					subDiv.className = 'colorPickerTab_inactive';	
 					var img = subDiv.getElementsByTagName('IMG')[0];
-					img.src = "images/tab_right_inactive.gif";
+					img.src = "../media/com_joomleague/colorpicker/images/tab_right_inactive.gif";
 					if(activeColorDiv)
 						subDiv.style.zIndex = initZIndex - counter;
 					else
@@ -298,7 +298,7 @@ Owner of DHTMLgoodies.com
 			tabSpan.innerHTML = tabs[no];
 			tabDiv.appendChild(tabSpan);
 			var tabImg = document.createElement('IMG');
-			tabImg.src = "images/tab_right_" + suffix + ".gif";
+			tabImg.src = "../media/com_joomleague/colorpicker/images/tab_right_" + suffix + ".gif";
 			tabDiv.appendChild(tabImg);
 			div.appendChild(tabDiv);
 			if(navigatorVersion<6 && MSIE){	/* Lower IE version fix */
