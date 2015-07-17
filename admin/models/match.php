@@ -39,11 +39,15 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 */
 	protected function canDelete($record)
 	{
-		if (!empty($record->id)) {
+		
+		if ($record) {
 			$user = JFactory::getUser();
-			if (!$user->authorise('core.admin', 'com_joomleague') ||
-				!$user->authorise('core.admin', 'com_joomleague.project.'.(int) $this->getData()->project_id) ||
-				!$user->authorise('core.delete', 'com_joomleague.match.'.(int) $record->id))
+			$app = JFactory::getApplication();
+			$project = $app->getUserState('com_joomleague'.'project', 0);
+			
+			if (!$user->authorise('core.admin','com_joomleague') ||
+				!$user->authorise('core.admin','com_joomleague.project.'.$project) ||
+				!$user->authorise('core.delete','com_joomleague.match.'.$record))
 			{
 				return false;
 			}
@@ -51,6 +55,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 			//return $user->authorise('core.delete', $this->option.'.'.$this->name.'.'.(int) $record->id);
 		}
 	}
+	
 
 	/**
 	 * Method to load content matchday data
@@ -1437,14 +1442,18 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	function deleteevent($event_id)
 	{
 		$object = JTable::getInstance('MatchEvent','Table');
-		if (!$object->canDelete($event_id))
-		{
-			$this->setError('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_ERROR_DELETE');
+		$object->load($event_id);
+		
+		$res = $this->canDelete($event_id);
+		
+		if (!$res){
+			// $this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_ERROR_DELETE'));
+			$this->setError($res);
 			return false;
 		}
 		if (!$object->delete($event_id))
 		{
-			$this->setError('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_DELETE_FAILED');
+			$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_DELETE_FAILED'));
 			return false;
 		}
 		return true;
