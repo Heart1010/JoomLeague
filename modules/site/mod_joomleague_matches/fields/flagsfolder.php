@@ -22,15 +22,15 @@ class JFormFieldFlagsFolder extends JFormField
 	function getInput()
 	{
 		$folderlist = array();
-		$folderlist1 = JFolder::folders(JPATH_ROOT.DS.'images', '', true, true, array(0 => 'system'));
-	    $folderlist2 = JFolder::folders(JPATH_ROOT.DS.'media' , '', true, true, array(0 => 'system'));
+		$folderlist1 = JFolder::folders(JPATH_ROOT.'/images', '', true, true, array(0 => 'system'));
+	    $folderlist2 = JFolder::folders(JPATH_ROOT.'/media' , '', true, true, array(0 => 'system'));
 	    foreach ($folderlist1 AS $key => $val)
 	    {
-	    	$folderlist[] = str_replace(JPATH_ROOT.DS, '', $val);
+	    	$folderlist[] = str_replace(JPATH_ROOT.'/', '', $val);
 	    }
 	    foreach ($folderlist2 AS $key => $val)
 	    {
-	    	$folderlist[] = str_replace(JPATH_ROOT.DS, '', $val);
+	    	$folderlist[] = str_replace(JPATH_ROOT.'/', '', $val);
 	    }
 
 		$lang = JFactory::getLanguage();

@@ -16,7 +16,7 @@ $istree=$this->treetows->tree_i;
 $isleafed=$this->treetows->leafed;
 
 //load navigation menu
-$this->addTemplatePath(JPATH_COMPONENT.DS.'views'.DS.'joomleague');
+$this->addTemplatePath(JPATH_COMPONENT.'/views/joomleague');
 
 // Set toolbar items for the page
 JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TREETONODES_TITLE'));

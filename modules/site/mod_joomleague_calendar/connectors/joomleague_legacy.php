@@ -113,7 +113,7 @@ class JoomleagueConnector extends JLCalendar{
       $newrows[$key]['name'] = '';
       $newrows[$key]['team'] = '';
       global $mainframe;
-      if ($this->xparams->get('jlbirthdaypix', 0) == 1 AND $row->default_picture != '' AND file_exists($mainframe->getCfg('absolute_path').DS.str_replace('/', DS, $row->default_picture))) {
+      if ($this->xparams->get('jlbirthdaypix', 0) == 1 && $row->default_picture != '' && file_exists($mainframe->getCfg('absolute_path').'/'.str_replace('/', '/', $row->default_picture))) {
         $linkit = 1;
         $newrows[$key]['image'] = '<img src="'.(JUri::root(true).'/'.parent::jl_utf8_convert ($row->default_picture, 'iso-8859-1', 'utf-8'))
                                 .'" alt="" style="height:40px; vertical-align:middle;margin:0 5px;" />';

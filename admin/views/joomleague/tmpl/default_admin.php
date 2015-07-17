@@ -36,7 +36,7 @@ window.addEvent('domready', function() {
 )
 </script>
 <![endif]-->
-<table style="width: 100%">
+<table>
 	<tr>
 		<td width="140px" valign="top">
 		<div id="element-box">
@@ -120,8 +120,8 @@ window.addEvent('domready', function() {
 				//Extension
 				$extensions=JoomleagueHelper::getExtensions(1);
 				foreach ($extensions as $e => $extension) {
-					$JLGPATH_EXTENSION= JPATH_COMPONENT_SITE.DS.'extensions'.DS.$extension;
-					$menufile = $JLGPATH_EXTENSION . DS . 'admin' .DS .'views'.DS.'joomleague'.DS.'tmpl'.DS.'default_'.$extension.'.php';
+					$JLGPATH_EXTENSION= JPATH_COMPONENT_SITE.'/extensions/'.$extension;
+					$menufile = $JLGPATH_EXTENSION.'/admin/views/joomleague/tmpl/default_'.$extension.'.php';
 					if(JFile::exists($menufile )) {
 						echo $this->loadTemplate($extension);
 					} else {

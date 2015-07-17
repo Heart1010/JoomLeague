@@ -1,10 +1,8 @@
 <?php
-
 /**
- * @version	 $Id$
  * @package	 Joomla
  * @subpackage  Joomleague logo module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license	 GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant to the
  * GNU General Public License, and as distributed it includes or is derivative
@@ -12,14 +10,11 @@
  * source software licenses. See COPYRIGHT.php for copyright notices and
  * details.
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+require_once dirname(__FILE__).'/helper.php';
 
-// get helper
-require_once (dirname(__FILE__).DS.'helper.php');
-
-require_once(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'joomleague.core.php');
+require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 $p = $params->get('p');
 $list = modJLGLogoHelper::getData($params);
 
@@ -27,4 +22,4 @@ $document = JFactory::getDocument();
 //add css file
 $document->addStyleSheet(JUri::base().'modules/mod_joomleague_logo/css/mod_joomleague_logo.css');
 
-require(JModuleHelper::getLayoutPath('mod_joomleague_logo'));
+require JModuleHelper::getLayoutPath('mod_joomleague_logo');

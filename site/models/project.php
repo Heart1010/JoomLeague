@@ -680,8 +680,8 @@ class JoomleagueModelProject extends JModelLegacy
 		//first load the default settings from the default <template>.xml file
 		$paramsdata="";
 		$arrStandardSettings=array();
-		if(file_exists(JLG_PATH_SITE. DS.'settings'.DS."default".DS.$template.'.xml')) {
-			$strXmlFile = JLG_PATH_SITE. DS.'settings'.DS."default".DS.$template.'.xml';
+		if(file_exists(JLG_PATH_SITE.'/settings/default/'.$template.'.xml')) {
+			$strXmlFile = JLG_PATH_SITE.'/settings/default/'.$template.'.xml';
 			$form = JForm::getInstance($template, $strXmlFile);
 			$fieldsets = $form->getFieldsets();
 			foreach ($fieldsets as $fieldset) {
@@ -693,10 +693,10 @@ class JoomleagueModelProject extends JModelLegacy
 		//second load the default settings from the default extensions <template>.xml file
 		$extensions=JoomleagueHelper::getExtensions(JRequest::getInt('p'));
 		foreach ($extensions as $e => $extension) {
-			$JLGPATH_EXTENSION= JPATH_COMPONENT_SITE.DS.'extensions'.DS.$extension;
+			$JLGPATH_EXTENSION= JPATH_COMPONENT_SITE.'/extensions/'.$extension;
 			$paramsdata="";
-			$strXmlFile=$JLGPATH_EXTENSION. DS.'settings'.DS."default".DS.$template.'.xml';
-			if(file_exists($JLGPATH_EXTENSION. DS.'settings'.DS."default".DS.$template.'.xml')) {
+			$strXmlFile=$JLGPATH_EXTENSION.'/settings/default/'.$template.'.xml';
+			if(file_exists($JLGPATH_EXTENSION.'/settings/default/'.$template.'.xml')) {
 				$form = JForm::getInstance($template, $strXmlFile);
 				$fieldsets = $form->getFieldsets();
 				foreach ($fieldsets as $fieldset) {
@@ -814,7 +814,7 @@ class JoomleagueModelProject extends JModelLegacy
 	{
 		if (empty($this->_stats))
 		{
-			require_once (JLG_PATH_ADMIN .DS.'statistics'.DS.'base.php');
+			require_once JLG_PATH_ADMIN.'/statistics/base.php';
 			$project = $this->getProject();
 			$project_id=$project->id;
 			$query='	SELECT	stat.id,
@@ -923,7 +923,6 @@ class JoomleagueModelProject extends JModelLegacy
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function store($data,$table='')
 	{
@@ -1101,4 +1100,3 @@ class JoomleagueModelProject extends JModelLegacy
 		return $allowed;
 	}
 }
-?>

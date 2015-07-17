@@ -3,7 +3,7 @@
  * @author Wolfgang Pinitsch <andone@mfga.at>
  * @package	 Joomla
  * @subpackage  Joomleague teamstaffs module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license	 GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant to the
  * GNU General Public License, and as distributed it includes or is derivative
@@ -11,16 +11,13 @@
  * source software licenses. See COPYRIGHT.php for copyright notices and
  * details.
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
  * Ranking Module helper
  *
  * @package Joomla
  * @subpackage Joomleague teamplayers module
- * @since		1.0
  */
 class modJLGTeamStaffsHelper
 {
@@ -58,11 +55,11 @@ class modJLGTeamStaffsHelper
 		JRequest::setVar( 'ttid', $projectteamid);
 
 		if (!class_exists('JoomleagueModelRoster')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'roster.php');
+			require_once JLG_PATH_SITE.'/models/roster.php';
 		}
-		$model 	= &JLGModel::getInstance('Roster', 'JoomleagueModel');
+		$model 	= JLGModel::getInstance('Roster', 'JoomleagueModel');
 		$model->setProjectId($p);
-		$project = &$model->getProject();
+		$project = $model->getProject();
 		$project->team_name = $team_name;
 		$staffs = $model->getStaffList();
 		$bypos=array();

@@ -410,10 +410,7 @@ class JoomleagueViewMatch extends JLGView {
 				}
 			}
 		}
-		// echo "<pre>";
-		// echo var_dump($new_not_assigned);
-		// echo "</pre>";
-
+	
 		$playersoptions_subs_out = array ();
 		$playersoptions_subs_out [] = JHtml::_ ( 'select.option', '0', JText::_ ( 'COM_JOOMLEAGUE_GLOBAL_SELECT_PLAYER' ) );
 		$i = 0;

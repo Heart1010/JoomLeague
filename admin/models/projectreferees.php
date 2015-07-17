@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,19 +8,16 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once (JPATH_COMPONENT.DS.'models'.DS.'list.php');
+require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
  * Joomleague Component projectreferees Model
  *
  * @author	Kurt Norgaz
  * @package	JoomLeague
- * @since	1.5.02a
 */
 class JoomleagueModelProjectReferees extends JoomleagueModelList
 {
@@ -132,7 +129,6 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 	 *
 	 * @access  public
 	 * @return  array
-	 * @since 0.1
 	 */
 	function getPersons()
 	{
@@ -168,7 +164,6 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 		*
 		* @access  public
 		* @return  array
-		* @since 0.1
 		*/
 	function getPositions()
 	{
@@ -202,7 +197,6 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 	 *
 	 * @access	public
 	 * @return	array
-	 *
 	 */
 	function getRefereePositions()
 	{
@@ -322,7 +316,4 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 		$this->_db->setQuery($query);
 		return $this->_db->loadResult();
 	}
-
-
 }
-?>

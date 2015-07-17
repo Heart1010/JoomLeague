@@ -34,7 +34,7 @@ class modJLGResultsHelper
 	function getData(&$params)
 	{		
 		if (!class_exists('JoomleagueModelResults')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'results.php');
+			require_once JLG_PATH_SITE.'/models/results.php';
 		}
 		$model = &JLGModel::getInstance('Results', 'JoomleagueModel');
 		$model->setProjectId($params->get('p'));

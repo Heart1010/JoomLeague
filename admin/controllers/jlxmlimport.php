@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL,see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License,and as distributed it includes or
@@ -8,9 +8,7 @@
 * other free or open source software licenses.
 * See COPYRIGHT.php for copyright notices and details.
 */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
@@ -22,7 +20,6 @@ jimport('joomla.filesystem.archive');
  *
  * @author	Kurt Norgaz
  * @package	JoomLeague
- * @since	1.5.0a
  */
 class JoomleagueControllerJLXMLImport extends JoomleagueController
 {
@@ -92,9 +89,9 @@ class JoomleagueControllerJLXMLImport extends JoomleagueController
 			$mainframe->setUserState('com_joomleague'.'uploadArray',$upload);
 			$filename='';
 			$msg='';
-			$dest=JPATH_SITE.DS.'tmp'.DS.$upload['name'];
-			$extractdir=JPATH_SITE.DS.'tmp';
-			$importFile=JPATH_SITE.DS.'tmp'. DS.'joomleague_import.jlg';
+			$dest=JPATH_SITE.'/tmp/'.$upload['name'];
+			$extractdir=JPATH_SITE.'/tmp';
+			$importFile=JPATH_SITE.'/tmp/joomleague_import.jlg';
 			if (JFile::exists($importFile))
 			{
 				JFile::delete($importFile);

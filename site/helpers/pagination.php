@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,12 +8,10 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-require_once (JLG_PATH_ADMIN .DS.'models'.DS.'round.php');
-require_once (JLG_PATH_ADMIN .DS.'models'.DS.'rounds.php');
+require_once JLG_PATH_ADMIN.'/models/round.php';
+require_once JLG_PATH_ADMIN.'/models/rounds.php';
 
 class JoomleaguePagination
 {
@@ -24,7 +22,7 @@ class JoomleaguePagination
 	 * @param object $project
 	 * @return string
 	 */
-	function pagenav($project)
+	static function pagenav($project)
 	{
 		$pageNav = '';
 		$spacer2 = '&nbsp;&nbsp;';
@@ -135,7 +133,7 @@ class JoomleaguePagination
 		return '<span class="pageNav">&laquo;' . $spacer2 . $firstlink . $prevlink . $pageNav . $nextlink .  $lastlink . $spacer2 . '&raquo;</span>';
 	}
 
-	function pagenav2($jl_task,$rlimit,$currentRoundcode=0,$user='',$mode='')
+	static function pagenav2($jl_task,$rlimit,$currentRoundcode=0,$user='',$mode='')
 	{
 		$mytask = JRequest::getVar('task',false);
 		$divLevel = JRequest::getInt('divLevel',0);
@@ -175,6 +173,4 @@ class JoomleaguePagination
 		$pageNav2 .= '</select></form>';
 		return $pageNav2;
 	}
-
 }
-?>

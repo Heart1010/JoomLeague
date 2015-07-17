@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,19 +8,16 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once (JPATH_COMPONENT.DS.'models'.DS.'list.php');
+require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
  * Joomleague Component Templates Model
  *
  * @author	JoomLeague Team
  * @package	JoomLeague
- * @since	0.1
  */
 
 class JoomleagueModelTemplates extends JoomleagueModelList
@@ -100,12 +97,11 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 
 	/**
 	 * check that all templates in default location have a corresponding record,except if project has a master template
-	 *
 	 */
 	function checklist()
 	{
 		$project_id=$this->_project_id;
-		$defaultpath=JPATH_COMPONENT_SITE.DS.'settings';
+		$defaultpath=JPATH_COMPONENT_SITE.'/settings';
 		$predictionTemplatePrefix='prediction';
 
 		if (!$project_id){return;}
@@ -128,14 +124,14 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 		if (empty($records)) { $records=array(); }
 		
 		// add default folder
-		$xmldirs[]=$defaultpath.DS.'default';
+		$xmldirs[]=$defaultpath.'/default';
 		
 		$extensions = JoomleagueHelper::getExtensions(JRequest::getInt('p'));
 		foreach ($extensions as $e => $extension) {
-			$extensiontpath =  JPATH_COMPONENT_SITE . DS . 'extensions' . DS . $extension;
-			if (is_dir($extensiontpath.DS.'settings'.DS.'default'))
+			$extensiontpath =  JPATH_COMPONENT_SITE.'/extensions/'.$extension;
+			if (is_dir($extensiontpath.'/settings/default'))
 			{
-				$xmldirs[]=$extensiontpath.DS.'settings'.DS.'default';
+				$xmldirs[]=$extensiontpath.'/settings/default';
 			}
 		}
 
@@ -161,7 +157,7 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 						if ((empty($records)) || (!in_array($template,$records)))
 						{
 							$jRegistry = new JRegistry();
-							$form = JForm::getInstance($file, $xmldir.DS.$file);
+							$form = JForm::getInstance($file, $xmldir.'/'.$file);
 							$fieldsets = $form->getFieldsets();
 							foreach ($fieldsets as $fieldset) {
 								foreach($form->getFieldset($fieldset->name) as $field) {
@@ -246,6 +242,4 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 		$this->_db->setQuery($query);
 		return ($this->_db->loadResult());
 	}
-
 }
-?>

@@ -29,7 +29,7 @@ class plgSearchJoomleague extends JPlugin {
 
 	function onContentSearch($text, $phrase = '', $ordering = '', $areas = null) {
 		$db 	= JFactory::getDbo();
-		require_once(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'joomleague.core.php');
+		require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 
 		// load plugin params info
 		$plugin 				= JPluginHelper::getPlugin('search', 'joomleague');

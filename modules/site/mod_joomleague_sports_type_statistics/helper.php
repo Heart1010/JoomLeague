@@ -34,7 +34,7 @@ class modJLGSportsHelper
 	function getData(&$params)
 	{
 		if (!class_exists('JoomleagueModelSportsType')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'sportstype.php');
+			require_once JLG_PATH_SITE.'/models/sportstype.php';
 		}
 		$model = JLGModel::getInstance('sportstype', 'JoomleagueModel');
 		$model->setId($params->get('sportstypes'));

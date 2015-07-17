@@ -198,7 +198,7 @@ var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?optio
 							?>
 							<td class="center">
 								<?php
-								if (empty($row->picture) || !JFile::exists(JPATH_SITE.DS.$row->picture))
+								if (empty($row->picture) || !JFile::exists(JPATH_SITE.'/'.$row->picture))
 								{
 									$imageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_NO_IMAGE').$row->picture;
 									echo JHtml::image(	'administrator/components/com_joomleague/assets/images/delete.png',

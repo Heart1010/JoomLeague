@@ -115,13 +115,13 @@ class JoomleagueModelUpdates extends JModelLegacy
 	{
 		$option = JRequest::getCmd('option');
 		$mainframe = JFactory::getApplication();
-		//$updateFileList=JFolder::files(JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'updates'.DS,'.php$',false,true,array('',''));
-		$updateFileList=JFolder::files(JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'updates'.DS,'.php$');
+		//$updateFileList=JFolder::files(JPATH_COMPONENT_ADMINISTRATOR.'/assets/updates/','.php$',false,true,array('',''));
+		$updateFileList=JFolder::files(JPATH_COMPONENT_ADMINISTRATOR.'/assets/updates/','.php$');
 		// installer for extensions
-		$extensions=JFolder::folders(JPATH_COMPONENT_SITE.DS.'extensions');
+		$extensions=JFolder::folders(JPATH_COMPONENT_SITE.'/extensions');
 		foreach ($extensions as $ext)
 		{
-			$path=JPATH_COMPONENT_SITE.DS.'extensions'.DS.$ext.DS.'admin'.DS.'install';
+			$path=JPATH_COMPONENT_SITE.'/extensions/'.$ext.'/admin/install';
 			if (JFolder::exists($path))
 			{
 				foreach (JFolder::files($path,'.php$') as $file)
@@ -137,11 +137,11 @@ class JoomleagueModelUpdates extends JModelLegacy
 			$path=explode('/',$updateFile);
 			if (count($path) > 1)
 			{
-				$filepath=JPATH_COMPONENT_SITE.DS.'extensions'.DS.$path[0].DS.'admin'.DS.'install'.DS.$path[1];
+				$filepath=JPATH_COMPONENT_SITE.'/extensions/'.$path[0].'/admin/install/'.$path[1];
 			}
 			else
 			{
-				$filepath=JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'updates'.DS.$path[0];
+				$filepath=JPATH_COMPONENT_ADMINISTRATOR.'/assets/updates/'.$path[0];
 			}
 			if ($fileContent=JFile::read($filepath))
 			{
@@ -265,4 +265,3 @@ class JoomleagueModelUpdates extends JModelLegacy
 		return $updateFiles;
 	}
 }
-?>

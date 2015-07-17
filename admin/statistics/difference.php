@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,18 +8,15 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-require_once(JLG_PATH_ADMIN.DS.'statistics'.DS.'base.php');
+require_once JLG_PATH_ADMIN.'/statistics/base.php';
 
 /**
  * base class for statistics handling.
  *
  * @package Joomla
  * @subpackage Joomleague
- * @since 0.9
  */
 class JLGStatisticDifference extends JLGStatistic {
 //also the name of the associated xml file	

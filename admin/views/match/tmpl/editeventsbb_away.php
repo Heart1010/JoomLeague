@@ -20,7 +20,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 					?>
 					<th style="text-align: center;">
 					<?php
-					if ( JFile::exists(JPATH_SITE.DS.$ev->icon ) )
+					if ( JFile::exists(JPATH_SITE.'/'.$ev->icon ) )
 					{
 						$imageTitle = JText::sprintf( '%1$s', JText::_( $ev->text ) );
 						$iconFileName = $ev->icon;

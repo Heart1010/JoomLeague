@@ -161,7 +161,7 @@ function onupdatebirthday(cal)
 							</td>
 							<td class="center">
 								<?php
-								if (empty($row->picture) || !JFile::exists(JPATH_SITE.DS.$row->picture))
+								if (empty($row->picture) || !JFile::exists(JPATH_SITE.'/'.$row->picture))
 								{
 									$imageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_PERSONS_NO_IMAGE').$row->picture;
 									echo JHtml::_(	'image','administrator/components/com_joomleague/assets/images/delete.png',

@@ -80,7 +80,7 @@ if ($heading != $lastheading) {
     }
   ?>
   <?php
-  if (($params->get('show_referee') == 1 AND !empty($match['referee'])) OR ($params->get('show_spectators') == 1 AND !empty($match['spectators']))) { ?>
+  if (($params->get('show_referee') == 1 && !empty($match['referee'])) OR ($params->get('show_spectators') == 1 && !empty($match['spectators']))) { ?>
     <tr class="<?php echo $styleclass;?>">
       <td colspan="3">
       <?php 

@@ -50,7 +50,7 @@ if ($heading != $lastheading) {
       ?>
     </span>
     <?php
-      if($params->get('new_line_after_logo') == 1 AND (!empty($match['awayteam']['logo']) 
+      if($params->get('new_line_after_logo') == 1 && (!empty($match['awayteam']['logo']) 
          OR !empty($match['hometeam']['logo']))) { ?><?php }
 
     ?><span class="jlmlResults">
@@ -79,7 +79,7 @@ if ($heading != $lastheading) {
     }
   ?>
   <?php
-  if (($params->get('show_referee') == 1 AND !empty($match['referee'])) OR ($params->get('show_spectators') == 1 AND !empty($match['spectators']))) { ?>
+  if (($params->get('show_referee') == 1 && !empty($match['referee'])) OR ($params->get('show_spectators') == 1 && !empty($match['spectators']))) { ?>
     <div style="width:100%;display:block;clear:both;">
       <?php 
       echo $match['referee'] . ' '. $match['spectators'];

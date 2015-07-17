@@ -1,9 +1,19 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license		GNU/GPL,see LICENSE.php
+ * Joomla! is free software. This version may have been modified pursuant
+ * to the GNU General Public License,and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 jimport('joomla.html.pane');
-require_once (JLG_PATH_ADMIN .DS.'models'.DS.'match.php');
-require_once(JPATH_COMPONENT.DS.'models'.DS.'results.php');
+require_once JLG_PATH_ADMIN.'/models/match.php';
+require_once JPATH_COMPONENT.'/models/results.php';
 
 class JoomleagueViewMatchReport extends JLGView
 {
@@ -52,7 +62,7 @@ class JoomleagueViewMatchReport extends JLGView
 		$this->staffstats = $model->getMatchStaffStats();
 		$this->model = $model;
 
-		$xmlfile=JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'extended'.DS.'match.xml';
+		$xmlfile=JPATH_COMPONENT_ADMINISTRATOR.'/assets/extended/match.xml';
 		$jRegistry = new JRegistry;
 		$jRegistry->loadString($match->extended, 'ini');
 		$extended = JForm::getInstance('extended', $xmlfile, array('control'=> 'extended'), false, '/config');
@@ -521,7 +531,7 @@ class JoomleagueViewMatchReport extends JLGView
 
 	function getHtmlImageForTips($picture,$width=0,$height=0)
 	{
-		$picture = JUri::root(true).'/'.str_replace(JPATH_SITE.DS, "", $picture);
+		$picture = JUri::root(true).'/'.str_replace(JPATH_SITE.'/', "", $picture);
 		if($width > 0 && $height==0) {
 			return '&lt;img src=\''.$picture.'\' width=\''.$width.'\' /&gt;';
 		}

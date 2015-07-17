@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
@@ -34,12 +32,17 @@ class JoomleagueControllerAjax extends JoomleagueController
 		$ordering = Jrequest::getInt('o');
 		
 		$model = $this->getModel('ajax');
-		
 		$res = $model->getProjectsOptions($season, $league, $ordering);
 		
-		echo json_encode($res);
+		// Use the correct json mime-type
+		header('Content-Type: application/json');
 		
-		$app->close();
+		// Send the response.
+		echo json_encode($res);
+		JFactory::getApplication()->close();
+		
+		// echo json_encode($res);
+		// $app->close();
 	}
 	
 	public function getroute()
@@ -101,6 +104,14 @@ class JoomleagueControllerAjax extends JoomleagueController
 				$link = JoomleagueHelperRoute::getRankingRoute( JRequest::getVar('p'),JRequest::getVar('r'),null,null,0,JRequest::getVar('division') );
 		}
 		
+		// echo json_encode($link);
+		
+		// Use the correct json mime-type
+		header('Content-Type: application/json');
+		
+		// Send the response.
 		echo json_encode($link);
+		JFactory::getApplication()->close();
+		
 	}
 }

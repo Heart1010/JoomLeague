@@ -86,7 +86,7 @@ JHtml::_('behavior.tooltip');
 						<td><?php if ($row->name != JText::_($row->name)){echo JText::_($row->name);} ?></td>
 						<td class="center">
 							<?php
-							$picture=JPATH_SITE.DS.$row->icon;
+							$picture=JPATH_SITE.'/'.$row->icon;
 							$desc=JText::_($row->name);
 							echo JoomleagueHelper::getPictureThumb($picture, $desc, 0, 21, 4);
 							?>

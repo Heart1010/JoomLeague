@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,18 +8,15 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once (JPATH_COMPONENT.DS.'models'.DS.'list.php');
+require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Teams Model
+ * Joomleague Component Positions Model
  *
  * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueModelPositions extends JoomleagueModelList
 {
@@ -112,7 +109,6 @@ class JoomleagueModelPositions extends JoomleagueModelList
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 0.1
 	 */
 	function getParentsPositions()
 	{
@@ -135,6 +131,4 @@ class JoomleagueModelPositions extends JoomleagueModelList
 		}
 		return $result;
 	}
-
 }
-?>

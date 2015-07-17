@@ -52,7 +52,7 @@ class JEventsConnector extends JLCalendar{
           $newrow['time'] = '';
           if ($event->_alldayevent != 1) {
             $newrow['time'] = strftime('%H:%M', $event->_dtstart);
-            $newrow['time'] .= ($event->_dtstart != $event->_dtend AND $event->_noendtime == 0) ? '-'.strftime('%H:%M', $event->_dtend) : '';
+            $newrow['time'] .= ($event->_dtstart != $event->_dtend && $event->_noendtime == 0) ? '-'.strftime('%H:%M', $event->_dtend) : '';
           }
           $newrow['headingtitle'] = $this->xparams->get('jevents_text', 'JEvents');
           $newrow['name'] = '';
@@ -72,13 +72,12 @@ class JEventsConnector extends JLCalendar{
   }
   private function _checkJEvents() {
 
-    if (file_exists(JPATH_SITE.DS.'components'.DS.'com_jevents'.DS.'mod.defines.php')
-        AND 
-        file_exists(JPATH_SITE.DS.'components'.DS.'com_jevents'.DS.'libraries'.DS.'datamodel.php')
+    if (file_exists(JPATH_SITE.'/components/com_jevents/mod.defines.php') &&
+        file_exists(JPATH_SITE.'/components/com_jevents/libraries/datamodel.php')
         )
     {
-      require_once JPATH_SITE.DS.'components'.DS.'com_jevents'.DS.'mod.defines.php';
-      require_once JPATH_SITE.DS.'components'.DS.'com_jevents'.DS.'libraries'.DS.'datamodel.php';
+      require_once JPATH_SITE.'/components/com_jevents/mod.defines.php';
+      require_once JPATH_SITE.'/components/com_jevents/libraries/datamodel.php';
     }
     else { 
       JEventsConnector::_raiseError('Required files not found! This connector needs JEvents 1.5.2 to be installed');
@@ -99,7 +98,7 @@ class JEventsConnector extends JLCalendar{
     return true;
   }
   function buildLink (&$event, $year, $month) {
-    require_once JPATH_SITE.DS.'components'.DS.'com_jevents'.DS.'router.php';
+    require_once JPATH_SITE.'/components/com_jevents/router.php';
     $link = 'index.php?option=com_jevents&amp;task=icalrepeat.detail&amp;evid='
     .$event->_eventdetail_id.'&amp;year='.$year.'&amp;month='.$month.'&amp;day='
     .$event->_dup.'&amp;uid='.$event->_uid;

@@ -23,28 +23,28 @@ if (version_compare(phpversion(), '5.3.0', '<')===true) {
 if(!defined('DS')){
 	define('DS',DIRECTORY_SEPARATOR);
 }
-define('JLG_PATH_SITE',  JPATH_SITE.DS.'components'.DS .'com_joomleague');
-define('JLG_PATH_ADMIN', JPATH_SITE.DS.'administrator'.DS.'components'.DS.'com_joomleague');
-require_once JLG_PATH_ADMIN .DS . 'defines.php';
+define('JLG_PATH_SITE',  JPATH_SITE.'/components/com_joomleague');
+define('JLG_PATH_ADMIN', JPATH_SITE.'/administrator/components/com_joomleague');
+require_once JLG_PATH_ADMIN.'/defines.php';
 
-require_once JLG_PATH_SITE.DS.'assets'.DS.'classes'.DS.'jlgcontroller.php' ;
-require_once JLG_PATH_SITE.DS.'assets'.DS.'classes'.DS.'jlgcontrolleradmin.php' ;
-require_once JLG_PATH_SITE.DS.'assets'.DS.'classes'.DS.'jlgmodel.php' ;
-require_once JLG_PATH_SITE.DS.'assets'.DS.'classes'.DS.'jlgview.php' ;
-require_once JLG_PATH_SITE.DS.'assets'.DS.'classes'.DS.'jllanguage.php' ;
+require_once JLG_PATH_SITE.'/assets/classes/jlgcontroller.php' ;
+require_once JLG_PATH_SITE.'/assets/classes/jlgcontrolleradmin.php' ;
+require_once JLG_PATH_SITE.'/assets/classes/jlgmodel.php' ;
+require_once JLG_PATH_SITE.'/assets/classes/jlgview.php' ;
+require_once JLG_PATH_SITE.'/assets/classes/jllanguage.php' ;
 
-require_once JLG_PATH_SITE.DS.'helpers'.DS.'route.php';
-require_once JLG_PATH_SITE.DS.'helpers'.DS.'countries.php';
-require_once JLG_PATH_SITE.DS.'helpers'.DS.'extraparams.php';
-require_once JLG_PATH_SITE.DS.'helpers'.DS.'ranking.php';
-require_once JLG_PATH_SITE.DS.'helpers'.DS.'html.php';
+require_once JLG_PATH_SITE.'/helpers/route.php';
+require_once JLG_PATH_SITE.'/helpers/countries.php';
+require_once JLG_PATH_SITE.'/helpers/extraparams.php';
+require_once JLG_PATH_SITE.'/helpers/ranking.php';
+require_once JLG_PATH_SITE.'/helpers/html.php';
 
-require_once JLG_PATH_ADMIN.DS.'helpers'.DS.'joomleaguehelper.php';
-require_once JLG_PATH_ADMIN.DS.'tables'.DS.'jltable.php';
+require_once JLG_PATH_ADMIN.'/helpers/joomleaguehelper.php';
+require_once JLG_PATH_ADMIN.'/tables/jltable.php';
 
-JTable::addIncludePath(JLG_PATH_ADMIN.DS.'tables');
+JTable::addIncludePath(JLG_PATH_ADMIN.'/tables');
 
-require_once JLG_PATH_ADMIN.DS.'helpers'.DS.'plugins.php';
+require_once JLG_PATH_ADMIN.'/helpers/plugins.php';
 
 $task = JFactory::getApplication()->input->get('task');
 $option = JRequest::getCmd('option');

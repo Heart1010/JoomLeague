@@ -1,6 +1,5 @@
 <?php
 /**
- * @version	 $Id$
  * @package	 Joomla
  * @subpackage  Joomleague logo module
  * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
@@ -11,16 +10,13 @@
  * source software licenses. See COPYRIGHT.php for copyright notices and
  * details.
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
  * Logo Module helper
  *
  * @package Joomla
  * @subpackage Joomleague logo module
- * @since		1.0
  */
 class modJLGLogoHelper
 {
@@ -36,12 +32,12 @@ class modJLGLogoHelper
 		global $mainframe;
 
 		if (!class_exists('JoomleagueModelTeams')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'teams.php');
+			require_once JLG_PATH_SITE.'/models/teams.php';
 		}
-		$model = &JLGModel::getInstance('teams', 'JoomleagueModel');
+		$model = JLGModel::getInstance('teams', 'JoomleagueModel');
 		$model->setProjectId($params->get('p'));
 		
-		$project = &$model->getProject();
+		$project = $model->getProject();
 		$division_id = $params->get('division_id');
 		$division_id = explode(":", $division_id);
 		$division_id = $division_id[0];

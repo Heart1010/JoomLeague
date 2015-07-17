@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,11 +8,9 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-require_once (JPATH_COMPONENT.DS.'models'.DS.'item.php');
+require_once JPATH_COMPONENT.'/models/item.php';
 jimport('joomla.application.component.modeladmin');
 
 /**
@@ -20,7 +18,6 @@ jimport('joomla.application.component.modeladmin');
  *
  * @author	Marco Vaninetti <martizva@libero.it>
  * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueModelProject extends JoomleagueModelItem
 {
@@ -72,7 +69,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array seasons
-	* @since	1.5.0a
 	*/
 	function getSeasons()
 	{
@@ -93,7 +89,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array
-	* @since	1.5
 	*/
 	function getMasters()
 	{
@@ -114,7 +109,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5.0a
 	 */
 	function _loadData()
 	{
@@ -132,7 +126,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5.0a
 	 */
 	function _initData()
 	{
@@ -212,7 +205,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array project
-	* @since	1.5.0a
 	*/
 	function getProjects()
 	{
@@ -234,7 +226,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array project
-	* @since	1.5.0a
 	*/
 	function getProjectsBySportsType($sportstype_id, $season = null)
 	{
@@ -259,7 +250,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array project
-	* @since	1.5.0a
 	*/
 	function getSeasonProjects($season = null)
 	{
@@ -285,7 +275,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array
-	* @since 0.1
 	*/
 	function getProjectteams()
 	{
@@ -310,7 +299,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array
-	* @since	1.5.0a
 	*/
 	function getProjectteamsbyID()
 	{
@@ -417,7 +405,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	*
 	* @access  public
 	* @return  string
-	* @since 1.5
 	*/
 	function getOrderingAndProjectQuery()
 	{
@@ -431,7 +418,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
 	 */
 	public function getTable($type = 'project', $prefix = 'table', $config = array())
 	{
@@ -444,7 +430,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.7
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -462,7 +447,6 @@ class JoomleagueModelProject extends JoomleagueModelItem
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.7
 	 */
 	protected function loadFormData()
 	{

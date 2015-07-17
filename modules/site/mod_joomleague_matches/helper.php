@@ -1,6 +1,6 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
 * Joomla! is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
@@ -9,7 +9,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 class modMatchesHelper {
 
@@ -147,7 +147,7 @@ class modMatchesHelper {
 	}
 
 	public function usedteamscheck($team_id, $project_id) {
-		return ((isset ($this->usedteams[0]) AND is_array($this->usedteams[0]) AND in_array($team_id, $this->usedteams[0])) OR (isset ($this->usedteams[$project_id]) AND is_array($this->usedteams[$project_id]) AND in_array($team_id, $this->usedteams[$project_id]))) ? 1 : 0;
+		return ((isset ($this->usedteams[0]) && is_array($this->usedteams[0]) && in_array($team_id, $this->usedteams[0])) || (isset ($this->usedteams[$project_id]) && is_array($this->usedteams[$project_id]) && in_array($team_id, $this->usedteams[$project_id]))) ? 1 : 0;
 	}
 
 	public function addteamicon($which) {
@@ -198,9 +198,9 @@ class modMatchesHelper {
 			$pic['alt'] = Countries::getCountryName($countrycode);
 		} else {
 			$defaultlogos = $this->getDefaultLogos();
-			$matchpart_pic = (!empty ($team-> $pt) AND file_exists(JPATH_ROOT . DS . $team-> $pt)) ? $team-> $pt : $defaultlogos[$pt];
-			if (file_exists(JPATH_ROOT . DS . $matchpart_pic)) {
-				$size = getimagesize(JPATH_ROOT . DS . $matchpart_pic);
+			$matchpart_pic = (!empty ($team-> $pt) && file_exists(JPATH_ROOT.'/'.$team-> $pt)) ? $team-> $pt : $defaultlogos[$pt];
+			if (file_exists(JPATH_ROOT.'/'.$matchpart_pic)) {
+				$size = getimagesize(JPATH_ROOT.'/'.$matchpart_pic);
 				$pic_width = $size[0];
 				$pic_height = $size[1];
 				$whichparam = ($pic_width > $pic_height) ? ' width' : ' height';
@@ -208,7 +208,7 @@ class modMatchesHelper {
 				$appendimage .= $whichparam . '="' . $this->params->get('xsize') . '"';
 				elseif ($this->params->get('ysize') > 0) $appendimage .= $whichparam . '="' . $this->params->get('ysize') . '"';
 			}
-			$pic['src'] = (trim($matchpart_pic) != "" && file_exists(JPATH_ROOT . DS . trim($matchpart_pic))) ? JUri :: root(true) .
+			$pic['src'] = (trim($matchpart_pic) != "" && file_exists(JPATH_ROOT.'/'.trim($matchpart_pic))) ? JUri :: root(true) .
 			'/' . $matchpart_pic : JUri :: root(true) . '/' . $defaultlogos[$pt];
 			$pic['alt'] = $this->jl_utf8_convert($team->name, 'iso-8859-1', 'utf-8');
 		}
@@ -233,7 +233,7 @@ class modMatchesHelper {
 		)
 		);
 		$partresults = '';
-		if ($this->params->get('part_result') == 1 AND trim(str_replace(';', '', $match->team1_result_split)) != '') {
+		if ($this->params->get('part_result') == 1 && trim(str_replace(';', '', $match->team1_result_split)) != '') {
 			$homepartresults = $this->array_trim(explode(";", $match->team1_result_split));
 			$guestpartresults = $this->array_trim(explode(";", $match->team2_result_split));
 			$cntmp = ($match->game_parts + $this->params->get('part_result_count'));
@@ -243,17 +243,17 @@ class modMatchesHelper {
 				break;
 				if (isset ($homepartresults[$x]) && isset ($guestpartresults[$x])) {
 
-					if (is_null($match->team1_result) AND ($x +1) <= $cntmp AND (!isset ($homepartresults[$x +1]) OR $homepartresults[$x +1] == '-') AND $homepartresults[$x] != '-' AND $match->match_result_type == 0) {
+					if (is_null($match->team1_result) && ($x +1) <= $cntmp && (!isset ($homepartresults[$x +1]) OR $homepartresults[$x +1] == '-') AND $homepartresults[$x] != '-' AND $match->match_result_type == 0) {
 						$highlight_parts = true;
 					}
 					if ($x == 0)
 					$partresults .= '(';
 					if ($x != 0)
 					$partresults .= $this->params->get('part_results_separator');
-					if ($live != 'z' AND $highlight_parts)
+					if ($live != 'z' && $highlight_parts)
 					$partresults .= '<span class="jlml_livescore">';
 					$partresults .= $homepartresults[$x] . ':' . $guestpartresults[$x];
-					if ($live != 'z' AND $highlight_parts)
+					if ($live != 'z' && $highlight_parts)
 					$partresults .= '</span>';
 
 				} else
@@ -273,11 +273,11 @@ class modMatchesHelper {
 			if (trim($partresults) != '')
 			$partresults .= ')';
 		}
-		if ($live != 'z' AND trim(str_replace(';', '', $match->team1_result_split)) != '' AND is_null($match->team1_result)) {
-			if (isset ($homepartresults) AND count($homepartresults) > 0) {
+		if ($live != 'z' && trim(str_replace(';', '', $match->team1_result_split)) != '' && is_null($match->team1_result)) {
+			if (isset ($homepartresults) && count($homepartresults) > 0) {
 				$row['homescore'] = array_sum($homepartresults);
 			}
-			if (isset ($guestpartresults) AND count($guestpartresults) > 0) {
+			if (isset ($guestpartresults) && count($guestpartresults) > 0) {
 				$row['awayscore'] = array_sum($guestpartresults);
 			}
 			$row['homescore'] = '<span class="jlml_livescore">' . $row['homescore'] . '</span>';
@@ -291,8 +291,8 @@ class modMatchesHelper {
 	}
 
 	public function createMatchInfo(& $row, $match) {
-		$row['notice'] = ($match->match_result_detail != '' AND $this->params->get('show_match_notice') == 1) ? $match->match_result_detail : '';
-		if ($this->params->get('show_referee', 1) == 1 AND $match->refname != '') {
+		$row['notice'] = ($match->match_result_detail != '' && $this->params->get('show_match_notice') == 1) ? $match->match_result_detail : '';
+		if ($this->params->get('show_referee', 1) == 1 && $match->refname != '') {
 			$row['referee'] = '<span style="float:right;">';
 			$row['referee'] .= ($this->iconpath) ? JHtml :: _('image', $this->iconpath . 'referee.png', 'Referee', array (
 				'title' => 'Referee',
@@ -303,7 +303,7 @@ class modMatchesHelper {
 		} else {
 			$row['referee'] = '';
 		}
-		if ($this->params->get('show_spectators', 1) == 1 AND $match->crowd > 0) {
+		if ($this->params->get('show_spectators', 1) == 1 && $match->crowd > 0) {
 			$row['spectators'] = '<span style="float:left;">';
 			$row['spectators'] .= ($this->iconpath) ? JHtml :: _('image', $this->iconpath . 'spectators.png', 'Spectators', array (
 				'title' => 'Spectators',
@@ -416,7 +416,7 @@ class modMatchesHelper {
 		$livematchestime = "IF((p.allow_add_time > 0), ((p.game_regular_time+(p.game_parts * p.halftime)) + p.add_time), (p.game_regular_time+(p.game_parts * p.halftime)))";
 		$timeforfirstmatch = "DATE_SUB(" . $this->getDateString() . ", INTERVAL $livematchestime MINUTE) > UTC_TIMESTAMP()";
 		//$timeforfirstmatch = $this->getDateString() . " > NOW()";
-		if ($this->params->get('show_played', 0) == 1 AND ($this->params->get('result_add_time', 0)) > 0) {
+		if ($this->params->get('show_played', 0) == 1 && ($this->params->get('result_add_time', 0)) > 0) {
 			$timeforfirstmatch = $this->getDateString() . " > DATE_SUB(UTC_TIMESTAMP(), INTERVAL " . intval($this->params->get('result_add_time', 0)) . " " . $this->params->get('result_add_unit') . ")";
 		}
 		$timeforlastmatch = ($this->params->get('period_int', 0) > 0) ? $this->getDateString() . " < DATE_ADD(UTC_TIMESTAMP(), INTERVAL " . intval($this->params->get('period_int')) . " " . $this->params->get('period_string') . ")" : '';
@@ -450,14 +450,14 @@ class modMatchesHelper {
 			$showhome = (($this->params->get('next_last') + $this->usedteamscheck($row->team1_id, $row->project_id)) >= 2);
 			$showaway = (($this->params->get('next_last') + $this->usedteamscheck($row->team2_id, $row->project_id)) >= 2);
 			$temp = '<div class="jlmlext_ajaxmenu" style="text-align:center;width:100%;display:block;clear:both;margin-top:10px;">';
-			if ($showhome AND ($row->lasthome OR $row->nexthome)) {
+			if ($showhome && ($row->lasthome OR $row->nexthome)) {
 				$temp .= '<span style="float:left">';
 				if ($row->lasthome) {
 					$tmp = $options;
 					$tmp['title'] = 'Previous Match';
 					$tmp['onclick'] = sprintf($jsfunc, $row->team1_id, $row->lasthome, $origin);
 					$alt = $tmp['title'];
-					if ($this->iconpath AND $this->params->get('icons_for_ajax') == 1)
+					if ($this->iconpath && $this->params->get('icons_for_ajax') == 1)
 					$temp .= JHtml :: _('image', $this->iconpath . 'page_prev.png', $alt, $tmp);
 					else
 					$temp .= '<input type="button" class="' . $this->params->get('reset_class') . '" value="' . $this->params->get('last_text') . '" style="cursor:pointer;" onclick="' . $tmp['onclick'] . '" />';
@@ -467,21 +467,21 @@ class modMatchesHelper {
 					$tmp['title'] = 'next Match';
 					$tmp['onclick'] = sprintf($jsfunc, $row->team1_id, $row->nexthome, $origin);
 					$alt = $tmp['title'];
-					if ($this->iconpath AND $this->params->get('icons_for_ajax') == 1)
+					if ($this->iconpath && $this->params->get('icons_for_ajax') == 1)
 					$temp .= JHtml :: _('image', $this->iconpath . 'page_next.png', $alt, $tmp);
 					else
 					$temp .= '<input type="button" class="' . $this->params->get('reset_class') . '" value="' . $this->params->get('next_text') . '" style="cursor:pointer;" onclick="' . $tmp['onclick'] . '" />';
 				}
 				$temp .= '</span>';
 			}
-			if ($showaway AND ($row->lastaway OR $row->nextaway)) {
+			if ($showaway && ($row->lastaway OR $row->nextaway)) {
 				$temp .= '<span style="float:right">';
 				if ($row->lastaway) {
 					$tmp = $options;
 					$tmp['title'] = 'Previous Match';
 					$tmp['onclick'] = sprintf($jsfunc, $row->team2_id, $row->lastaway, $origin);
 					$alt = $tmp['title'];
-					if ($this->iconpath AND $this->params->get('icons_for_ajax') == 1)
+					if ($this->iconpath && $this->params->get('icons_for_ajax') == 1)
 					$temp .= JHtml :: _('image', $this->iconpath . 'page_prev.png', $alt, $tmp);
 					else
 					$temp .= '<input type="button" class="' . $this->params->get('reset_class') . '" value="' . $this->params->get('last_text') . '" style="cursor:pointer;" onclick="' . $tmp['onclick'] . '" />';
@@ -491,20 +491,20 @@ class modMatchesHelper {
 					$tmp['title'] = 'next Match';
 					$tmp['onclick'] = sprintf($jsfunc, $row->team2_id, $row->nextaway, $origin);
 					$alt = $tmp['title'];
-					if ($this->iconpath AND $this->params->get('icons_for_ajax') == 1)
+					if ($this->iconpath && $this->params->get('icons_for_ajax') == 1)
 					$temp .= JHtml :: _('image', $this->iconpath . 'page_next.png', $alt, $tmp);
 					else
 					$temp .= '<input type="button" class="' . $this->params->get('reset_class') . '" value="' . $this->params->get('next_text') . '" style="cursor:pointer;" onclick="' . $tmp['onclick'] . '" />';
 				}
 				$temp .= '</span>';
 			}
-			if ($this->params->get('reset_start_match') == 1 AND $origin != $row->id) {
+			if ($this->params->get('reset_start_match') == 1 && $origin != $row->id) {
 				$temp .= '<span style="float:none;">';
 				$tmp = $options;
 				$tmp['title'] = 'Reset';
 				$tmp['onclick'] = sprintf($jsfunc, '0', $origin, $origin);
 				$alt = $tmp['title'];
-				if ($this->iconpath AND $this->params->get('icons_for_ajax') == 1)
+				if ($this->iconpath && $this->params->get('icons_for_ajax') == 1)
 				$temp .= JHtml :: _('image', $this->iconpath . 'page_reset.png', $alt, $tmp);
 				else
 				$temp .= '<input type="button" class="' . $this->params->get('reset_class') . '" value="' . $this->params->get('reset_text') . '" style="cursor:pointer;" onclick="' . $tmp['onclick'] . '" />';

@@ -1066,7 +1066,7 @@ $convert = array (
 	if ($projects=$db->loadObjectList()) // check that there are projects...
 	{
 		//echo '<br />';
-		$xmldir=JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'settings'.DS.'default';
+		$xmldir=JPATH_SITE.'/components/com_joomleague/settings/default';
 
 		if ($handle=JFolder::files($xmldir))
 		{
@@ -1084,7 +1084,7 @@ $convert = array (
 				{
 					$defaultconfig=array ();
 					$template=substr($file,0,(strlen($file) - 4));
-					$out=simplexml_load_file($xmldir.DS.$file,'SimpleXMLElement',LIBXML_NOCDATA);
+					$out=simplexml_load_file($xmldir.'/'.$file,'SimpleXMLElement',LIBXML_NOCDATA);
 					$temp='';
 					$arr=obj2Array($out);
 					$outName=JText::_($out->name[0]);
@@ -1258,7 +1258,7 @@ function updateVersion($version,$updatefilename)
 {
 	$db = JFactory::getDbo();
 
-	$updateVersionFile=JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'updates'.DS.'update_version.sql';
+	$updateVersionFile=JPATH_COMPONENT_ADMINISTRATOR.'/assets/updates/update_version.sql';
 
 	if (JFile::exists($updateVersionFile))
 	{
@@ -5810,8 +5810,8 @@ function checklistPredictionTemplates()
 		foreach ($predictiongameIDs as $predictiongameID)
 		{
 			$prediction_id=$predictiongameID->id;
-			$defaultpath=JPATH_COMPONENT_SITE.DS.'settings';
-			$extensiontpath=JPATH_COMPONENT_SITE.DS.'extensions'.DS;
+			$defaultpath=JPATH_COMPONENT_SITE.'/settings';
+			$extensiontpath=JPATH_COMPONENT_SITE.'/extensions/';
 			$templatePrefix='prediction';
 
 			if (!$prediction_id){return;}
@@ -5835,14 +5835,14 @@ function checklistPredictionTemplates()
 			// first check extension template folder if template is not default
 			if ((isset($params->extension)) && ($params->extension!=''))
 			{
-				if (is_dir($extensiontpath.$params->extension.DS.'settings'))
+				if (is_dir($extensiontpath.$params->extension.'/settings'))
 				{
-					$xmldirs[]=$extensiontpath.$params->extension.DS.'settings';
+					$xmldirs[]=$extensiontpath.$params->extension.'/settings';
 				}
 			}
 
 			// add default folder
-			$xmldirs[]=$defaultpath.DS.'default';
+			$xmldirs[]=$defaultpath.'/default';
 
 			// now check for all xml files in these folders
 			foreach ($xmldirs as $xmldir)
@@ -5862,7 +5862,7 @@ function checklistPredictionTemplates()
 							if ((empty($records)) || (!in_array($template,$records)))
 							{
 								//template not present,create a row with default values
-								$params=new JLParameter(null,$xmldir.DS.$file);
+								$params=new JLParameter(null,$xmldir.'/'.$file);
 
 								//get the values
 								$defaultvalues=array();

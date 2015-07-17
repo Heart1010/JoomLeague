@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,14 +8,12 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
-require_once JPATH_COMPONENT.DS.'controllers'.DS.'ranking.php';
-require_once JPATH_COMPONENT.DS.'controllers'.DS.'matrix.php';
+require_once JPATH_COMPONENT.'/controllers/ranking.php';
+require_once JPATH_COMPONENT.'/controllers/matrix.php';
 
 class JoomleagueControllerResultsRankingMatrix extends JoomleagueController
 {
@@ -28,5 +26,3 @@ class JoomleagueControllerResultsRankingMatrix extends JoomleagueController
         $this->showfooter();
     }
 }
-
-?>

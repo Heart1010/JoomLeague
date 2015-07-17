@@ -88,7 +88,7 @@ function updateVersion($versionData)
 	echo JText::_('Updating database version');
 
 	$status=0;
-	$updateVersionFile=JPATH_ADMINISTRATOR.DS.'components'.DS.'com_joomleague'.DS.'assets'.DS.'updates'.DS.'update_version.sql';
+	$updateVersionFile=JPATH_ADMINISTRATOR.'/components/com_joomleague/assets/updates/update_version.sql';
 
 	if (JFile::exists($updateVersionFile))
 	{

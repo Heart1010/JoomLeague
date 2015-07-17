@@ -19,13 +19,12 @@ class JoomleagueConnector extends JLCalendar{
 			$rows = JoomleagueConnector::getMatches($caldates);
 			$m = JoomleagueConnector::formatMatches($rows, $matches);
 		}
+		
 		if ($this->xparams->get('jlbirthdays', 1) == 1)
 		{
 			$birthdays = JoomleagueConnector::getBirthdays (  $caldates, $this->params, $this->matches  );
 			$b = JoomleagueConnector::formatBirthdays($birthdays, $matches, $caldates);
 		}
-
-
 		return array_merge($m, $b);
 	}
 
@@ -177,7 +176,7 @@ class JoomleagueConnector extends JLCalendar{
 			$newrows[$key]['headingtitle'] = $this->xparams->get('birthday_text', 'Birthday');
 			$newrows[$key]['name'] = '';
 
-			if ($row->picture != '' AND file_exists(JPATH_BASE.DS.$row->picture))
+			if ($row->picture != '' && file_exists(JPATH_BASE.'/'.$row->picture))
 			{
 				$linkit = 1;
 				$newrows[$key]['name'] = '<img src="'.JUri::root(true).'/'.$row->picture.'" alt="Picture" style="height:40px; vertical-align:middle;margin:0 5px;" />';

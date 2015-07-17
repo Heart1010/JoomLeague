@@ -1,9 +1,8 @@
 <?php
 /**
- * @version	 $Id: mod_joomleague_ticker.php 4905 2012-02-02 22:51:33Z and_one $
  * @package	 Joomla
  * @subpackage  Joomleague ticker module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license	 GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant to the
  * GNU General Public License, and as distributed it includes or is derivative
@@ -11,11 +10,11 @@
  * source software licenses. See COPYRIGHT.php for copyright notices and
  * details.
  */
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 //get helper
-require_once(dirname(__FILE__).DS.'helper.php');
-require_once(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'joomleague.core.php');
+require_once dirname(__FILE__).'/helper.php';
+require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 
 $document = JFactory::getDocument();
 
@@ -52,17 +51,16 @@ if(empty($matches) || count($matches) == 0)
 	switch ($mode)
 	{
 		case 'T':
-			include(dirname(__FILE__).DS.'js'.DS.'ticker.js');
+			include dirname(__FILE__).'/js/ticker.js';
 			break;
 		case 'V':
-			include(dirname(__FILE__).DS.'js'.DS.'qscrollerv.js');
+			include dirname(__FILE__).'/js/qscrollerv.js';
 			$document->addScript(JUri::base().'modules/mod_joomleague_ticker/js/qscroller.js');
 			break;
 		case 'H':
-			include(dirname(__FILE__).DS.'js'.DS.'qscrollerh.js');
+			include dirname(__FILE__).'/js/qscrollerh.js';
 			$document->addScript(JUri::base().'modules/mod_joomleague_ticker/js/qscroller.js');
 			break;
 	}
 }
 require(JModuleHelper::getLayoutPath('mod_joomleague_ticker'));
-?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,19 +8,16 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once(JPATH_COMPONENT.DS.'models'.DS.'item.php');
+require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
  * Joomleague Component Match Model
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
  * @package	JoomLeague
- * @since	0.1
  */
 
 class JoomleagueModelMatch extends JoomleagueModelItem
@@ -299,12 +296,17 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 
 	// function save_array changed for date per match and period results
 	// Gucky 2007/05/25
+	
+	// @todo: fix!
 	function save_array($cid=null,$post=null,$zusatz=false,$project_id)
 	{
 		$option = JRequest::getCmd('option');
 		$mainframe	= JFactory::getApplication();
-		$datatable[0]='#__joomleague_match';
-		$fields=$this->_db->getTableColumns($datatable);
+		$datatable ='#__joomleague_match';
+		$columns=$this->_db->getTableColumns($datatable);
+		
+		$fields = array('#__joomleague_match'=>$columns);
+		
 		foreach($fields as $field)
 		{
 			$query='';
@@ -387,13 +389,22 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 			}
 		}
 		$user = JFactory::getUser();
-		$query='UPDATE #__joomleague_match SET '.$query.',`modified`=NOW(),`modified_by`='.$user->id.' WHERE id='.$cid;
-		$this->_db->setQuery($query);
-		$this->_db->query($query);
-
+	
+		$db = JFactory::getDbo();
+		$query2	= $db->getQuery(true);
+		$query2->update('#__joomleague_match');
+		$query2->set(array(
+				$query,
+				'modified = NOW()',
+				'modified_by = '.$user->id,
+		));
+		$query2->where('id = '.$cid);
+		$db->setQuery($query2)->execute();
+		
 		//FIXME: ^^^^^^^ remove the table update query part above ^^^^^^
 		//lets handle joomla the asset_id
 		$table = $this->getTable();
+		
 		if ($table->load($cid))
 		{
 			$table->store(true);
@@ -1571,7 +1582,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 
 	function getInputStats()
 	{
-		require_once (JPATH_COMPONENT_ADMINISTRATOR .DS.'statistics'.DS.'base.php');
+		require_once JPATH_COMPONENT_ADMINISTRATOR.'/statistics/base.php';
 		$match = $this->getData();
 		$project_id=$match->project_id;
 		$query=' SELECT stat.id,stat.name,stat.short,stat.class,stat.icon,stat.calculated,ppos.position_id AS posid'

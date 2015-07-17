@@ -45,17 +45,17 @@ class JoomleagueViewTemplate extends JLGView
 		}
 
 		$projectws = $this->get('Data','project');
-		$templatepath=JPATH_COMPONENT_SITE.DS.'settings';
-		$xmlfile=$templatepath.DS.'default'.DS.$template->template.'.xml';
+		$templatepath=JPATH_COMPONENT_SITE.'/settings';
+		$xmlfile=$templatepath.'/default/'.$template->template.'.xml';
 
 		$extensions = JoomleagueHelper::getExtensions(JRequest::getInt('p'));
 		foreach ($extensions as $e => $extension) {
-			$extensiontpath =  JPATH_COMPONENT_SITE . DS . 'extensions' . DS . $extension;
-			if (is_dir($extensiontpath.DS.'settings'.DS.'default'))
+			$extensiontpath =  JPATH_COMPONENT_SITE.'/extensions/'. $extension;
+			if (is_dir($extensiontpath.'/settings/default'))
 			{
-				if (file_exists($extensiontpath.DS.'settings'.DS.'default'.DS.$template->template.'.xml'))
+				if (file_exists($extensiontpath.'/settings/default/'.$template->template.'.xml'))
 				{
-					$xmlfile=$extensiontpath.DS.'settings'.DS.'default'.DS.$template->template.'.xml';
+					$xmlfile=$extensiontpath.'/settings/default/'.$template->template.'.xml';
 				}
 			}
 		}
@@ -92,7 +92,6 @@ class JoomleagueViewTemplate extends JLGView
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @since	1.7
 	 */
 	protected function addToolbar()
 	{

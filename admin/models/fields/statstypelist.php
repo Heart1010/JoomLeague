@@ -45,7 +45,7 @@ class JFormFieldStatstypelist extends JFormFieldList
 		//$hideDefault = (string) $this->element['hide_default'];
 
 		// Get the path in which to search for file options.
-		$files = JFolder::files(JPATH_COMPONENT_ADMINISTRATOR.DS.'statistics', 'php$');
+		$files = JFolder::files(JPATH_COMPONENT_ADMINISTRATOR.'/statistics', 'php$');
 		$options = array();
 		foreach ($files as $file)
 		{
@@ -59,7 +59,7 @@ class JFormFieldStatstypelist extends JFormFieldList
 		$extensions = JoomleagueHelper::getExtensions(0);		
 		foreach ($extensions as $type)
 		{
-			$path = JLG_PATH_SITE.DS.'extensions'.DS.$type.DS.'admin'.DS.'statistics';
+			$path = JLG_PATH_SITE.'/extensions/'.$type.'/admin/statistics';
 			if (!file_exists($path)) {
 				continue;
 			}

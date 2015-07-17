@@ -153,7 +153,7 @@ class JoomleagueControllerSettings extends JoomleagueController
 			}
 		}
 		
-		$xmlfile = JPATH_ADMINISTRATOR.DS.'components'.DS.$data['option'].DS.'config.xml';
+		$xmlfile = JPATH_ADMINISTRATOR.'/components/'.$data['option'].'/config.xml';
 		$form = JForm::getInstance($data['option'], $xmlfile, array('control'=> 'params'), false, "/config");
 		$data['params'] = $model->validate($form, $params);
 		// Save the rules.

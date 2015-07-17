@@ -285,11 +285,6 @@ if (!empty($this->rows))
 					JText::_('COM_JOOMLEAGUE_GLOBAL_MATCHDAYDATE'),
 					JoomleagueHelper::getTimezone($this->project, $this->overallconfig));
 
-		// echo "<pre>";
-		// echo var_dump($this->playertool[0]);
-		// echo "</pre>";
-
-
 		if (!empty($this->playertool[0]->injury))
 		{
 			$injury_date = "";

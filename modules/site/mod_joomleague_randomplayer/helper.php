@@ -1,9 +1,8 @@
 <?php
 /**
- * @version	 $Id: helper.php 2010-07-04 marco vaninetti$
  * @package	 Joomla
  * @subpackage  Joomleague results module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license	 GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant to the
  * GNU General Public License, and as distributed it includes or is derivative
@@ -11,16 +10,13 @@
  * source software licenses. See COPYRIGHT.php for copyright notices and
  * details.
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
  * Ranking Module helper
  *
  * @package Joomla
  * @subpackage Joomleague randomplayer module
- * @since		1.0
  */
 class modJLGRandomplayerHelper
 {
@@ -31,7 +27,7 @@ class modJLGRandomplayerHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
 		$usedp = $params->get('projects');
 		$usedtid = $params->get('teams', '0');
@@ -62,22 +58,22 @@ class modJLGRandomplayerHelper
 		$db->setQuery( $query );
 		$res=$db->loadRow();
 
-		JRequest::setVar( 'p', $res[1] );
-		JRequest::setVar( 'pid', $res[0]);
-		JRequest::setVar( 'pt', $projectteamid);
+		JRequest::setVar('p', $res[1]);
+		JRequest::setVar('pid', $res[0]);
+		JRequest::setVar('pt', $projectteamid);
 
 		if (!class_exists('JoomleagueModelPlayer')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'player.php');
+			require_once JLG_PATH_SITE.'/models/player.php';
 		}
 
-		$mdlPerson 	= &JLGModel::getInstance('Player', 'JoomleagueModel');
+		$mdlPerson 	= JLGModel::getInstance('Player', 'JoomleagueModel');
 
-		$person 	= &$mdlPerson->getPerson();
-		$project	= &$mdlPerson->getProject();
+		$person 	= $mdlPerson->getPerson();
+		$project	= $mdlPerson->getProject();
 		$current_round = isset($project->current_round) ? $project->current_round : 0;
 		$person_id	= isset($person->id) ? $person->id : 0;
-		$player		= &$mdlPerson->getTeamPlayerByRound($current_round, $person_id);
-		$infoteam	= &$mdlPerson->getTeaminfo($projectteamid);
+		$player		= $mdlPerson->getTeamPlayerByRound($current_round, $person_id);
+		$infoteam	= $mdlPerson->getTeaminfo($projectteamid);
 
 		return array(	'project' 		=> $project,
 						'player' 		=> $person, 

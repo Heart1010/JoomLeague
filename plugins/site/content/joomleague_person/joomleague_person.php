@@ -37,7 +37,7 @@ class plgContentJoomleague_Person extends JPlugin
 
 		if (preg_match_all( $regex, $row->text, $matches ) > 0 )
 		{
-			require_once(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'joomleague.core.php');
+			require_once(JPATH_SITE.'/components/com_joomleague/joomleague.core.php');
 			foreach ($matches[0] as $match)
 			{
 				$name = preg_replace("/{.+?}/", "", $match);

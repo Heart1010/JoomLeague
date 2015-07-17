@@ -145,8 +145,8 @@ class JoomleagueControllerTemplate extends JoomleagueController
 				$model=$this->getModel('template');
 				$model->setId($post['id']);
 				$template 		= $model->getData();
-				$templatepath	= JPATH_COMPONENT_SITE.DS.'settings';
-				$xmlfile 		= $templatepath.DS.'default'.DS.$template->template;
+				$templatepath	= JPATH_COMPONENT_SITE.'/settings';
+				$xmlfile 		= $templatepath.'/default/'.$template->template;
 				$jlParams 		= new JLParameter($template->params,$xmlfile);
 				$results		= array();
 				$params 		= null;

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,18 +8,15 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-require_once(JPATH_COMPONENT.DS.'models'.DS.'item.php');
+require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
  * Joomleague Component Club Model
  *
  * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueModelClub extends JoomleagueModelItem
 {
@@ -45,7 +42,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since	0.1
 	 */
 	function delete(&$pks=array())
 	{
@@ -77,7 +73,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _loadData()
 	{
@@ -95,7 +90,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _initData()
 	{
@@ -146,7 +140,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	*
 	* @access  public
 	* @return  array
-	* @since 0.1
 	*/
 	function getPlaygrounds()
 	{
@@ -168,7 +161,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
 	 */
 	public function getTable($type = 'club', $prefix = 'table', $config = array())
 	{
@@ -181,7 +173,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.7
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -199,7 +190,6 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.7
 	 */
 	protected function loadFormData()
 	{
@@ -212,4 +202,3 @@ class JoomleagueModelClub extends JoomleagueModelItem
 		return $data;
 	}
 }
-?>

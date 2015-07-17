@@ -1,6 +1,5 @@
 <?php
 /**
- * @version	 $Id: helper.php 4905 2010-01-30 08:51:33Z and_one $
  * @package	 Joomla
  * @subpackage  Joomleague ranking module
  * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
@@ -11,16 +10,13 @@
  * source software licenses. See COPYRIGHT.php for copyright notices and
  * details.
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
  * Ranking Module helper
  *
  * @package Joomla
  * @subpackage Joomleague ranking module
- * @since		1.0
  */
 class modJLGRankingHelper
 {
@@ -36,12 +32,12 @@ class modJLGRankingHelper
 		global $mainframe;
 
 		if (!class_exists('JoomleagueModelRanking')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'ranking.php');
+			require_once JLG_PATH_SITE.'/models/ranking.php';
 		}
-		$model = &JLGModel::getInstance('project', 'JoomleagueModel');
+		$model = JLGModel::getInstance('project', 'JoomleagueModel');
 		$model->setProjectId($params->get('p'));
 
-		$project = &$model->getProject();
+		$project = $model->getProject();
 
 		$ranking = JLGRanking::getInstance($project);
 		$ranking->setProjectId($params->get('p'));
@@ -62,7 +58,7 @@ class modJLGRankingHelper
 		}
 		$colors = array();
 		if ($params->get('show_rank_colors', 0)) {
-			$mdlRanking = &JLGModel::getInstance("Ranking", "JoomleagueModel");
+			$mdlRanking = JLGModel::getInstance("Ranking", "JoomleagueModel");
 			$mdlRanking->setProjectid($params->get('p'));
 			$config = $mdlRanking->getTemplateConfig("ranking");
 			$colors = $mdlRanking->getColors($config["colors"]);

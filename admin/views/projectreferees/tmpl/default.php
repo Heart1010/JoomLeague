@@ -227,7 +227,7 @@ $uri=JUri::root();
 								elseif ($row->picture == !'')
 								{
 									$playerName = JoomleagueHelper::formatName(null ,$row->firstname, $row->nickname, $row->lastname, $default_name_format);
-									$picture=JPATH_SITE.DS.$row->picture;
+									$picture=JPATH_SITE.'/'.$row->picture;
 									echo JoomleagueHelper::getPictureThumb($picture, $playerName, 0, 21, 4);
 								}
 								?>

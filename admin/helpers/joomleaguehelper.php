@@ -253,8 +253,8 @@ class JoomleagueHelper
 				$excludeExtension = explode(",", $res->extension);
 			}
 		}
-		if(JFolder::exists(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'extensions')) {
-			$folderExtensions  = JFolder::folders(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'extensions',
+		if(JFolder::exists(JPATH_SITE.'/components/com_joomleague/extensions')) {
+			$folderExtensions  = JFolder::folders(JPATH_SITE.'/components/com_joomleague/extensions',
 					'.', false, false, $excludeExtension);
 			if($folderExtensions !== false) {
 				foreach ($folderExtensions as $ext)
@@ -382,7 +382,7 @@ class JoomleagueHelper
 	public static function getPictureThumb($picture, $alttext, $width=40, $height=40, $type=0)
 	{
 		$ret = "";
-		$picturepath 	= 	JPath::clean(JPATH_SITE.DS.str_replace(JPATH_SITE.DS, '', $picture));
+		$picturepath 	= 	JPath::clean(JPATH_SITE.'/'.str_replace(JPATH_SITE.'/', '', $picture));
 		$params		 	=	JComponentHelper::getParams('com_joomleague');
 		$ph_player		=	$params->get('ph_player',0);
 		$ph_logo_big	=	$params->get('ph_logo_big',0);
@@ -393,7 +393,7 @@ class JoomleagueHelper
 		$ph_flag_small	=	$params->get('ph_flag_small',0);
 		$ph_flag_big	=	$params->get('ph_flag_big',0);
 
-		if (!file_exists($picturepath) || $picturepath == JPATH_SITE.DS)
+		if (!file_exists($picturepath) || $picturepath == JPATH_SITE.'/')
 		{
 			//setup the different placeholders
 			switch ($type) {
@@ -427,7 +427,7 @@ class JoomleagueHelper
 			}
 		}
 
-		if (!empty($picture) && is_file(JPath::clean(JPATH_SITE.DS.str_replace(JPATH_SITE.DS, '', $picture))))
+		if (!empty($picture) && is_file(JPath::clean(JPATH_SITE.'/'.str_replace(JPATH_SITE.'/', '', $picture))))
 		{
 			$params = JComponentHelper::getParams('com_joomleague');
 			$format = "JPG"; //PNG is not working in IE8
@@ -435,7 +435,7 @@ class JoomleagueHelper
 			$bUseThumbLib = $params->get('usethumblib', false);
 			$useThumbCache = $params->get('usethumbnailcache', false);
 // Set vars to check if thumbnailcreation is needed
-			list($source_width, $source_height) = getimagesize(JPath::clean(JPATH_SITE.DS.str_replace(JPATH_SITE.DS, '', $picture)));
+			list($source_width, $source_height) = getimagesize(JPath::clean(JPATH_SITE.'/'.str_replace(JPATH_SITE.'/', '', $picture)));
 			$needthumb=1;
 
 // Check if thumbnailcreation with phpThumb is really needed
@@ -495,7 +495,7 @@ class JoomleagueHelper
 				}
 			} elseif($useThumbCache==0){
 				$picturepath = $picture;
-				$picture = JUri::root(true).'/'.str_replace(JPATH_SITE.DS, "", $picture);
+				$picture = JUri::root(true).'/'.str_replace(JPATH_SITE.'/', "", $picture);
 				$title = $alttext;
 				//height and width set, let the browser resize it
 				$bUseHighslide = $params->get('use_highslide', false);
@@ -539,7 +539,7 @@ class JoomleagueHelper
 			}
 
 // Use phpThumb to create cached images and check if the source-file really exists
-			$picturepath 	= 	JPath::clean(JPATH_SITE.DS.str_replace(JPATH_SITE.DS, '', $picture));
+			$picturepath 	= 	JPath::clean(JPATH_SITE.'/'.str_replace(JPATH_SITE.'/', '', $picture));
 			if($bUseThumbLib && $useThumbCache==1 && file_exists($picturepath))
 			{
 				$thumb_cache=PhpThumbFactory::create($picturepath);
@@ -548,20 +548,20 @@ class JoomleagueHelper
 				{
 // check if the cache-directory exitst if not create one
 					$image_path_parts = pathinfo($picture);
-					$image_cache_path=JPATH::clean(JPATH_SITE.DS.'cache'.DS.'joomleague'.DS.$image_path_parts[dirname]);
+					$image_cache_path=JPATH::clean(JPATH_SITE.'/cache/joomleague/'.$image_path_parts[dirname]);
 					if (!file_exists($image_cache_path))
 					{
 						mkdir($image_cache_path, 0750, true);
 					}
 // check if there is a chached actual image if not, create one
 					$image_timestamp=date("mdY_His", filectime($picturepath));
-					$cached_thumb=JPATH::clean(JPATH_SITE.DS.'cache'.DS.'joomleague'.DS.$image_path_parts[dirname].DS.$image_timestamp.'_'.$height.'_'.$width.'_'.$image_path_parts[filename].'.'.$format);
-					$web_cached_thumb=JUri::root(true).'/'.str_replace(JPATH_SITE.DS, "", $cached_thumb);
+					$cached_thumb=JPATH::clean(JPATH_SITE.'/cache/joomleague/'.$image_path_parts[dirname].'/'.$image_timestamp.'_'.$height.'_'.$width.'_'.$image_path_parts[filename].'.'.$format);
+					$web_cached_thumb=JUri::root(true).'/'.str_replace(JPATH_SITE.'/', "", $cached_thumb);
 
 					if (!file_exists($cached_thumb))
 					{
 // Check if there is are older files. If Yes, delete them.
-					$matches = glob(JPATH::clean(JPATH_SITE.DS.'cache'.DS.'joomleague'.DS.$image_path_parts[dirname].DS.'*_'.$height.'_'.$width.'_'.$image_path_parts[filename].'*'));
+					$matches = glob(JPATH::clean(JPATH_SITE.'/cache/joomleague/'.$image_path_parts[dirname].'/'.'*_'.$height.'_'.$width.'_'.$image_path_parts[filename].'*'));
 					foreach ($matches as $delete_matches) {
 						unlink($delete_matches);
 					}
@@ -579,13 +579,13 @@ class JoomleagueHelper
 					}
 					//width==0 and height==0, do nothing
 					if($height==0 && $width==0) {
-						$web_cached_thumb=JUri::root(true).'/'.str_replace(JPATH_SITE.DS, "", $picture);
+						$web_cached_thumb=JUri::root(true).'/'.str_replace(JPATH_SITE.'/', "", $picture);
 					}
 					}
 				}
 				else
 				{
-					$web_cached_thumb=JUri::root(true).'/'.str_replace(JPATH_SITE.DS, "", $picture);
+					$web_cached_thumb=JUri::root(true).'/'.str_replace(JPATH_SITE.'/', "", $picture);
 				}
 // If windows Server is used, replace backslashes with slashes befor return.
 				$web_cached_thumb=str_replace('\\', '/', $web_cached_thumb);
@@ -798,7 +798,7 @@ class JoomleagueHelper
 		return $result;
 	}
 
-	function showTeamIcons(&$team,&$config)
+	static function showTeamIcons(&$team,&$config)
 	{
 		if(!isset($team->projectteamid)) return "";
 		$projectteamid = $team->projectteamid;
@@ -885,7 +885,7 @@ class JoomleagueHelper
 		return $output;
 	}
 
-	function formatTeamName($team, $containerprefix, &$config, $isfav=0, $link=null)
+	static function formatTeamName($team, $containerprefix, &$config, $isfav=0, $link=null)
 	{
 		$output			= '';
 		$desc			= '';
@@ -1004,7 +1004,7 @@ class JoomleagueHelper
 		}
 	}
 
-	function showColorsLegend($colors, $showfavteam = null)
+	static function showColorsLegend($colors, $showfavteam = null)
 	{
 		if ($showfavteam == 1)
 		{

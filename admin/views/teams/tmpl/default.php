@@ -165,7 +165,7 @@ JHtml::_('behavior.tooltip');
 								echo JHtml::_(	'image','administrator/components/com_joomleague/assets/images/information.png',
 				  								$imageTitle,'title= "'.$imageTitle.'"');
 							} else {
-								if (JFile::exists(JPATH_SITE.DS.$row->picture)) {
+								if (JFile::exists(JPATH_SITE.'/'.$row->picture)) {
 									$imageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_TEAMS_CUSTOM_IMAGE');
 									echo JHtml::_(	'image','administrator/components/com_joomleague/assets/images/ok.png',
 													$imageTitle,'title= "'.$imageTitle.'"');

@@ -48,11 +48,11 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 	private function _getXml()
 	{
-		if (JFile::exists(JPATH_SITE.DS.'tmp'.DS.'joomleague_import.jlg'))
+		if (JFile::exists(JPATH_SITE.'/tmp/joomleague_import.jlg'))
 		{
 			if (function_exists('simplexml_load_file'))
 			{
-				return @simplexml_load_file(JPATH_SITE.DS.'tmp'.DS.'joomleague_import.jlg','SimpleXMLElement',LIBXML_NOCDATA);
+				return @simplexml_load_file(JPATH_SITE.'/tmp/joomleague_import.jlg','SimpleXMLElement',LIBXML_NOCDATA);
 			}
 			else
 			{
@@ -646,7 +646,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	// Should be called as the last function in importData() to delete
 	private function _deleteImportFile()
 	{
-		$importFileName=JPATH_SITE.DS.'tmp'.DS.'joomleague_import.jlg';
+		$importFileName=JPATH_SITE.'/tmp/joomleague_import.jlg';
 		if (JFile::exists($importFileName)){JFile::delete($importFileName);}
 		return true;
 	}
@@ -2322,8 +2322,8 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 	private function _checklist()
 	{
 		$project_id=$this->_project_id;
-		$defaultpath=JPATH_COMPONENT_SITE.DS.'settings';
-		$extensiontpath=JPATH_COMPONENT_SITE.DS.'extensions'.DS;
+		$defaultpath=JPATH_COMPONENT_SITE.'/settings';
+		$extensiontpath=JPATH_COMPONENT_SITE.'/extensions/';
 		$predictionTemplatePrefix='prediction';
 
 		if (!$project_id){return;}
@@ -2348,14 +2348,14 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 		// first check extension template folder if template is not default
 		if ((isset($params->extension)) && ($params->extension!=''))
 		{
-			if (is_dir($extensiontpath.$params->extension.DS.'settings'))
+			if (is_dir($extensiontpath.$params->extension.'/settings'))
 			{
-				$xmldirs[]=$extensiontpath.$params->extension.DS.'settings';
+				$xmldirs[]=$extensiontpath.$params->extension.'/settings';
 			}
 		}
 
 		// add default folder
-		$xmldirs[]=$defaultpath.DS.'default';
+		$xmldirs[]=$defaultpath.'/default';
 
 		// now check for all xml files in these folders
 		foreach ($xmldirs as $xmldir)
@@ -2378,7 +2378,7 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 						if ((empty($records)) || (!in_array($template,$records)))
 						{
-							$xmlfile=$xmldir.DS.$file;
+							$xmlfile=$xmldir.'/'.$file;
 							$arrStandardSettings=array();
 							if(file_exists($xmlfile)) {
 								$strXmlFile = $xmlfile;

@@ -28,7 +28,7 @@ class JoomleagueViewSettings extends JLGView
 	{
 		$option = JRequest::getCmd('option');
 		$params = JComponentHelper::getParams($option);
-		$xmlfile = JPATH_ADMINISTRATOR.DS.'components'.DS.$option.DS.'config.xml';
+		$xmlfile = JPATH_ADMINISTRATOR.'/components/'.$option.'/config.xml';
 		
 		$jRegistry = new JRegistry;
 		$jRegistry->loadString($params->toString('ini'), 'ini');
@@ -42,8 +42,6 @@ class JoomleagueViewSettings extends JLGView
 
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{

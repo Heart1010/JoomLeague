@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
  * Ranking helper.
@@ -106,7 +104,7 @@ class JLGRanking
 				$classname = 'JLGRanking'. ucfirst($type);
 				if (!class_exists($classname))
 				{
-					$file = JLG_PATH_SITE.DS.'extensions'.DS.$type.DS.'ranking.php';
+					$file = JLG_PATH_SITE.'/extensions/'.$type.'/ranking.php';
 					if (file_exists($file))
 					{
 						require_once($file);
@@ -241,7 +239,7 @@ class JLGRanking
 			$cache->setCaching( 1 );
 		}
 
-		$data = $cache->call( array( get_class($this), '_cachedGetData' ), $this->_projectid, $this->_division );
+		$data = $cache->call(array($this, '_cachedGetData' ), $this->_projectid, $this->_division);
 
 		return $data;
 	}
@@ -585,7 +583,7 @@ class JLGRanking
 	 *
 	 * @return array of JLGRankingTeam objects
 	 */
-	function _initTeams($pid, $division=0)
+	static function _initTeams($pid, $division=0)
 	{
 
 		$db = JFactory::getDbo();
@@ -666,7 +664,7 @@ class JLGRanking
 	 *
 	 * @return array
 	 */
-	function _getMatches($pid, $division=0)
+	static function _getMatches($pid, $division=0)
 	{
 		$db = JFactory::getDbo();
 

@@ -5,16 +5,11 @@
  * @author   Justo Gonzalez de Rivera
  * @license    GNU/GPL
  * modified by johncage for use with joomleague
- * @version    1.5.0.1
  */
+defined('_JEXEC') or die;
 
-
-// no direct access
-
-// Include the syndicate functions only once
-
-require_once (dirname(__FILE__).DS.'helper.php');
-require_once(JPATH_SITE.DS.'components'.DS.'com_joomleague'.DS.'joomleague.core.php');
+require_once dirname(__FILE__).'/helper.php';
+require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 
 JHtml::_('behavior.tooltip');
 $ajax= JRequest::getVar('ajaxCalMod',0,'default','POST');
@@ -26,9 +21,9 @@ if(!$params->get('cal_start_date')){
 }
 else{
 	$startDate= new JDate($params->get('cal_start_date'));
-	$year = JRequest::getVar('year', $startDate->toFormat('%Y'));
-	$month  = JRequest::getVar('month', $startDate->toFormat('%m'));
-	$day  = $ajax? '' : JRequest::getVar('day', $startDate->toFormat('%d'));
+	$year = JRequest::getVar('year', $startDate->format('%Y'));
+	$month  = JRequest::getVar('month', $startDate->format('%m'));
+	$day  = $ajax? '' : JRequest::getVar('day', $startDate->format('%d'));
 }
 $helper = new modJLCalendarHelper;
 $doc = JFactory::getDocument();
@@ -64,6 +59,4 @@ if (!defined('JLC_MODULESCRIPTLOADED')) {
 }
 $calendar = $helper->showCal($params,$year,$month,$ajax,$module->id);
 
-require(JModuleHelper::getLayoutPath('mod_joomleague_calendar'));
-
-?>
+require JModuleHelper::getLayoutPath('mod_joomleague_calendar');

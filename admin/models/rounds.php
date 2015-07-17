@@ -326,7 +326,7 @@ class JoomleagueModelRounds extends JoomleagueModelList
 		
 		if ($scheduling < 2)
 		{
-			require_once(JPATH_COMPONENT_ADMINISTRATOR.DS.'helpers'.DS.'rrobin.php');
+			require_once(JPATH_COMPONENT_ADMINISTRATOR.'/helpers/rrobin.php');
 			$helper = new RRobin();
 			$helper->create($teams);
 			$schedule = $helper->getSchedule($scheduling+1);			

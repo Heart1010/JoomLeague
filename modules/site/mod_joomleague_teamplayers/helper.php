@@ -58,7 +58,7 @@ class modJLGTeamPlayersHelper
 		JRequest::setVar( 'ttid', $projectteamid);
 
 		if (!class_exists('JoomleagueModelRoster')) {
-			require_once(JLG_PATH_SITE.DS.'models'.DS.'roster.php');
+			require_once JLG_PATH_SITE.'/models/roster.php';
 		}
 		$model 	= &JLGModel::getInstance('Roster', 'JoomleagueModel');
 		$model->setProjectId($p);

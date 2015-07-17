@@ -9,7 +9,7 @@ window.addEvent('domready', function(){
 		$$('.nav-item').setStyle( "display", "none");
 		$$('.team-select').setStyle( "display", "none");
 		$$('.division-select').setStyle( "display", "none");
-	    var url = 'index.php?option=com_joomleague&task=ajax.getprojectsoptions&tmpl=component&format=json';
+	    var url = 'index.php?option=com_joomleague&task=ajax.getprojectsoptions&format=json&tmpl=component';
 	    var myXhr = new Request(
 	                    {
 	                    	url: url,
@@ -84,7 +84,7 @@ var modjlnav = {
 			query += '&tid='+form.tid.value;
 		}
 
-	    var url = 'index.php?option=com_joomleague&ajax&task=ajax.getroute&tmpl=component&format=json';
+	    var url = 'index.php?option=com_joomleague&task=ajax.getroute&format=json&tmpl=component';
 	    var myXhr = new Request(
 	                    {
 	                    	url: url,

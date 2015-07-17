@@ -85,14 +85,14 @@ class MatchesJoomleagueConnector extends modMatchesHelper {
 			$p = $this->params->get('project');
 			if (!empty ($p)) {
 				$projectstring = (is_array($p)) ? implode(",", $p) : $p;
-				if($projectstring != '-1' AND $projectstring != '') {
+				if($projectstring != '-1' && $projectstring != '') {
 					$this->conditions[] = "(pt1.project_id IN (" . $projectstring . ") OR pt2.project_id IN (" . $projectstring . "))";
 				}
 			}
 			$nu = $this->params->get('project_not_used');
 			if (!empty ($nu)) {
 				$notusedstring = (is_array($nu)) ? implode(",", $nu) : $nu;
-				if($notusedstring != '-1' AND $notusedstring != '') {
+				if($notusedstring != '-1' && $notusedstring != '') {
 					$this->conditions[] = "(pt1.project_id NOT IN (" . $notusedstring . ") OR pt2.project_id NOT IN (" . $notusedstring . "))";
 				}
 			}
@@ -303,13 +303,13 @@ class MatchesJoomleagueConnector extends modMatchesHelper {
 
 			if (!empty ($projectid)) {
 				$projectstring = (is_array($projectid)) ? implode(',', $projectid) : $projectid;
-				if($projectstring != '-1' AND $projectstring != '') {
+				if($projectstring != '-1' && $projectstring != '') {
 					$query .= " AND id IN (" . $projectstring . ")";
 				}
 			}
 			if (!empty ($notused)) {
 				$notusedstring = (is_array($notused)) ? implode(',', $notused) : $notused;
-				if($notusedstring != '-1' AND $notusedstring != '') {
+				if($notusedstring != '-1' && $notusedstring != '') {
 					$query .= " AND id NOT IN (" . $notusedstring . ")";
 				}
 			}
@@ -327,7 +327,7 @@ class MatchesJoomleagueConnector extends modMatchesHelper {
 		}
 
 		// For teams without project_id
-		if (!empty ($customteams) AND $customteams[0] != '0' AND $customteams[0] != '') {
+		if (!empty ($customteams) && $customteams[0] != '0' && $customteams[0] != '') {
 			//$this->usedteams[0] = $customteams;
 			//$other_teams = implode(',', $customteams);
 			$other_teams = (is_array($teams)) ? implode(',', $teams) : $teams;
@@ -363,7 +363,7 @@ class MatchesJoomleagueConnector extends modMatchesHelper {
 				'p' => $match->project_id
 			),
 		);
-		if ($this->params->get('show_act_report_link', 0) == 1 AND $match->show_report == 1) {
+		if ($this->params->get('show_act_report_link', 0) == 1 && $match->show_report == 1) {
 			$uri = 'index.php?option=com_joomleague' . $this->arrayToUri($linkstructure['report']) . $this->itemid;
 			$row['reportlink'] = '<a href="' . JRoute :: _($uri) . '" title="' . $this->params->get('show_act_report_text') . '">';
 			$row['reportlink'] .= ($useicons) ? JHtml :: _('image', $this->iconpath . 'report.png', $this->params->get('show_act_report_text'), array (
@@ -399,7 +399,7 @@ class MatchesJoomleagueConnector extends modMatchesHelper {
 	public function createLocation(& $row, & $match, & $team) {
 
 		$thisvenue = false;
-		if ($team AND $this->params->get('show_venue') != 0) {
+		if ($team && $this->params->get('show_venue') != 0) {
 			$location_id = 0;
 			$usedvenuename = $this->params->get('venue_name');
 			$venue = array (

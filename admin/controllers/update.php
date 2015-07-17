@@ -52,11 +52,11 @@ class JoomleagueControllerUpdate extends JoomleagueController
 		$path=explode('/',$file_name);
 		if (count($path) > 1)
 		{
-			$filepath=JPATH_COMPONENT_SITE.DS.'extensions'.DS.$path[0].DS.'admin'.DS.'install'.DS.$path[1];
+			$filepath=JPATH_COMPONENT_SITE.'/extensions/'.$path[0].'/admin/install/'.$path[1];
 		}
 		else
 		{
-			$filepath=JPATH_COMPONENT_ADMINISTRATOR.DS.'assets'.DS.'updates'.DS.$path[0];
+			$filepath=JPATH_COMPONENT_ADMINISTRATOR.'/assets/updates/'.$path[0];
 		}
 		$model=$this->getModel('updates');
 		echo JText::sprintf('Updating from file [ %s ]','<b>'.JPath::clean($filepath).'</b>');
