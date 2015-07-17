@@ -1,12 +1,11 @@
 /**
  * @copyright Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license GNU/GPL, see LICENSE.php Joomla! is free software. This version may
- *          have been modified pursuant to the GNU General Public License, and
- *          as distributed it includes or is derivative of works licensed under
- *          the GNU General Public License or other free or open source software
- *          licenses. See COPYRIGHT.php for copyright notices and details.
+ * have been modified pursuant to the GNU General Public License, and
+ * as distributed it includes or is derivative of works licensed under
+ * the GNU General Public License or other free or open source software
+ * licenses. See COPYRIGHT.php for copyright notices and details.
  */
-
 window.addEvent('domready', function() {
 	updatePlayerSelect();
 	if($('team_id')) {
@@ -50,6 +49,7 @@ window.addEvent('domready', function() {
     $('save-new-comment').addEvent(
 			'click',
 			function() {
+				$('ajaxresponse').set('text','');
 				var url = baseajaxurl + '&task=match.saveevent';
 				var player = 0;
 				var event = 0;
@@ -63,6 +63,11 @@ window.addEvent('domready', function() {
 				+ matchid + '&event_sum='
 				+ ctype + '&notes='
 				+ comnt;
+				
+				if (comnt == '') {
+					$('ajaxresponse').set('text','fill in notes').style.color='red';
+				}
+				
 				if (ctype != 0 && comnt != '') {
 					var myXhr = new Request.JSON( {
 						url: url + querystring,
@@ -96,25 +101,25 @@ function eventsaved(response) {
 			id : 'row-' + resp[0]
 		});
 		new Element('td').set('text', $('team_id').options[$('team_id').selectedIndex].text)
-				.injectInside(newrow);
+				.inject(newrow,'inside');
 		new Element('td')
 				.set('text', $('teamplayer_id').options[$('teamplayer_id').selectedIndex].text)
-				.injectInside(newrow);
+				.inject(newrow,'inside');
 		new Element('td')
 				.set('text', $('event_type_id').options[$('event_type_id').selectedIndex].text)
-				.injectInside(newrow);
-		new Element('td').set('text',$('event_sum').value).injectInside(newrow);
-		new Element('td').set('text',$('event_time').value).injectInside(newrow);
+				.inject(newrow,inside);
+		new Element('td').set('text',$('event_sum').value).inject(newrow,'inside');
+		new Element('td').set('text',$('event_time').value).inject(newrow,'inside');
 		new Element('td', {
 			title : $('notice').value
-		}).addClass("hasTip").set('text',trimstr($('notice').value, 20)).injectInside(newrow);
+		}).addClass("hasTooltip").set('text',trimstr($('notice').value, 20)).inject(newrow,'inside');
 		var deletebutton = new Element('input', {
 			id : 'delete-' + resp[0],
 			type : 'button',
 			value : str_delete
 		}).addClass('inputbox button-delete').addEvent('click', deleteevent);
-		new Element('td').appendChild(deletebutton).injectInside(newrow);
-		newrow.injectBefore($('row-new'));
+		new Element('td').appendChild(deletebutton).inject(newrow,'inside');
+		newrow.inject($('row-new'),'before');
 		$('ajaxresponse').set('text','Event saved');
 	} else {
 		$('ajaxresponse').set('text',resp[1]);
@@ -123,26 +128,32 @@ function eventsaved(response) {
 
 function commentsaved(response) {
 	$('ajaxresponse').removeClass('ajax-loading');
-	// first line contains the status, second line contains the new row.
+	// first line contains the row, second line contains status.
 	var resp = response.split("\n");
 	if (resp[0] != '0') {
 		// create new row in comments table
 		var newrow = new Element('tr', {
 			id : 'row-' + resp[0]
 		});
-		new Element('td').injectInside(newrow);
-		new Element('td').set('text',$('c_event_time').value).injectInside(newrow);
+		
+		// add td's
+		new Element('td').set('text', $('ctype').options[$('ctype').selectedIndex].text)
+			.inject(newrow,'inside');
+		new Element('td').set('text',$('c_event_time').value).inject(newrow,'inside');
 		new Element('td', {
 			title : $('notes').value
-		}).addClass("hasTip").set('text',$('notes').value).injectInside(newrow);
+		}).addClass("hasTooltip").set('text',$('notes').value).inject(newrow,'inside');
+		
+		// Append deletebutton
 		var deletebutton = new Element('input', {
 			id : 'delete-' + resp[0],
 			type : 'button',
 			value : str_delete
 		}).addClass('inputbox button-delete').addEvent('click', deleteevent);
-		new Element('td').appendChild(deletebutton).injectInside(newrow);
-		newrow.injectBefore($('row-new-comment'));
-		$('ajaxresponse').set('text','Comment saved').style.color='green';
+		new Element('td').appendChild(deletebutton).inject(newrow,'inside');
+		newrow.inject($('row-new-comment'),'before');
+		
+		$('ajaxresponse').set('text',resp[1]).style.color='green';
 	} else {
 		$('ajaxresponse').set('text',resp[1]).style.color='red';
 	}
@@ -199,7 +210,7 @@ function getPlayerSelect(index) {
 	for ( var i = 0, n = roster.length; i < n; i++) {
 		new Element('option', {
 			value : roster[i].value
-		}).set('text',roster[i].text).injectInside(select);
+		}).set('text',roster[i].text).inject(select,'inside');
 	}
 	return select;
 }
