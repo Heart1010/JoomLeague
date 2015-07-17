@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_statistic_ranking</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_TEAMSTATS_RANKING_XML_DESC</description>
 
 	<files>
-		<filename module="mod_joomleague_teamstats_ranking">mod_joomleague_teamstats_ranking.php
-		</filename>
+		<filename module="mod_joomleague_teamstats_ranking">mod_joomleague_teamstats_ranking.php</filename>
 		<filename>index.html</filename>
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>css</folder>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_teamstats_ranking.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_teamstats_ranking.sys.ini</language>
-	</languages>
 
 	<config>
 		<fields name="params">

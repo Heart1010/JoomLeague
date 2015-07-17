@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_eventsranking</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_RANKING_XML_DESC</description>
 
 	<files>
@@ -17,16 +17,11 @@
 		<filename>mod_joomleague_eventsranking.xml</filename>
 		<folder>tmpl</folder>
 		<folder>css</folder>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_eventsranking.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_eventsranking.sys.ini</language>
-	</languages>
 
 	<config>
 		<fields name="params">
-
 			<fieldset	name="basic"
 						addfieldpath="/administrator/components/com_joomleague/models/fields" >
 
@@ -56,7 +51,7 @@
 						label="MOD_JOOMLEAGUE_EVENTSRANKING_SELECT_MATCH_LABEL"
 						description="MOD_JOOMLEAGUE_EVENTSRANKING_SELECT_MATCH_DESCR" />
 				
-				<field 	name="ranking_order" type="radio" default="DESC" 
+				<field 	name="ranking_order" type="radio" class="btn-group btn-group-yesno" default="DESC" 
 						label="MOD_JOOMLEAGUE_EVENTSRANKING_RANKING_ORDER_LABEL"
 						description="MOD_JOOMLEAGUE_EVENTSRANKING_RANKING_ORDER_DESCR" >
 					<option value="ASC">MOD_JOOMLEAGUE_EVENTSRANKING_ASCENDING</option>

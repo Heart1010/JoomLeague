@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_matches</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.
-	</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_MATCHES_XML_DESC</description>
 
 	<files>
@@ -20,14 +19,9 @@
 		<folder>fields</folder>
 		<folder>tmpl</folder>
 		<folder>assets</folder>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_matches.ini
-		</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_matches.sys.ini
-		</language>
-	</languages>
+	
 	<config>
 		<fields name="params">
 
@@ -52,19 +46,19 @@
 					required="false" label="MOD_JOOMLEAGUE_MATCHES_NOT_USED_PROJECTS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_NOT_USED_PROJECTS_DESCR" />
 
-				<field name="order_by_project" type="radio" default="0"
+				<field name="order_by_project" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_ORDER_BY_PROJECT_TITLE" description="MOD_JOOMLEAGUE_MATCHES_ORDER_BY_PROJECT_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="nextlast_from_same_project" type="radio" default="1"
+				<field name="nextlast_from_same_project" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_MATCHES_NEXT_LAST_TITLE" description="MOD_JOOMLEAGUE_MATCHES_NEXT_LAST_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="use_fav" type="radio" default="0"
+				<field name="use_fav" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_USE_FAVORITE_TEAM_TITLE" description="MOD_JOOMLEAGUE_MATCHES_USE_FAVORITE_TEAM_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -95,7 +89,7 @@
 				label="MOD_JOOMLEAGUE_MATCHES_SETTINGS_FOR_LAST_RESULTS_TITLE"
 				addfieldpath="/modules/mod_joomleague_matches/elements/">
 
-				<field name="show_played" type="radio" default="0"
+				<field name="show_played" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_PLAYED_TITLE" description="MOD_JOOMLEAGUE_MATCHES_SHOW_PLAYED_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -115,14 +109,14 @@
 					<option value="YEAR">MOD_JOOMLEAGUE_MATCHES_YEARS</option>
 				</field>
 
-				<field name="upcoming_first" type="radio" default="1"
+				<field name="upcoming_first" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_MATCHES_UPCOMING_MATCH_FIRST_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_UPCOMING_MATCH_FIRST_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="lastsortorder" type="radio" default="asc"
+				<field name="lastsortorder" type="radio" class="btn-group btn-group-yesno" default="asc"
 					label="MOD_JOOMLEAGUE_MATCHES_ORDERING_OF_LAST_MATCHES_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_ORDERING_OF_LAST_MATCHES_DESCR">
 					<option value="asc">MOD_JOOMLEAGUE_MATCHES_ASC</option>
@@ -160,7 +154,7 @@
 				label="MOD_JOOMLEAGUE_MATCHES_SETTINGS_FOR_HEADINGS_TITLE"
 				addfieldpath="/modules/mod_joomleague_matches/elements/">
 
-				<field name="show_status_notice" type="radio" default="0"
+				<field name="show_status_notice" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_HEADING_ALREADY_PLAYED_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_SHOW_HEADING_ALREADY_PLAYED_TITLE">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -198,13 +192,13 @@
 					label="MOD_JOOMLEAGUE_MATCHES_SECOND_MATCHES_CLASS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_SECOND_MATCHES_CLASS_DESCR" />
 
-				<field name="show_project_title" type="radio" default="0"
+				<field name="show_project_title" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_PROJECT_NAME_TITLE" description="MOD_JOOMLEAGUE_MATCHES_SHOW_PROJECT_NAME_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="link_project_title" type="radio" default="0"
+				<field name="link_project_title" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_PROJECT_TITLE" description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_PROJECT_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -221,14 +215,14 @@
 					</option>
 				</field>
 
-				<field name="show_matchday_title" type="radio" default="0"
+				<field name="show_matchday_title" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_MATCHDAY_NAME_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_SHOW_MATCHDAY_NAME_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="link_matchday_title" type="radio" default="0"
+				<field name="link_matchday_title" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_MATCHDAY_TITLE" description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_MATCHDAY_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -245,13 +239,13 @@
 					</option>
 				</field>
 
-				<field name="show_referee" type="radio" default="0"
+				<field name="show_referee" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_REFEREE_LABEL" description="MOD_JOOMLEAGUE_MATCHES_SHOW_REFEREE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="show_spectators" type="radio" default="0"
+				<field name="show_spectators" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_SPECTATORS_LABEL" description="MOD_JOOMLEAGUE_MATCHES_SHOW_SPECTATORS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -263,7 +257,7 @@
 				label="MOD_JOOMLEAGUE_MATCHES_TEAM_AND_PICTURE_SETTINGS_TITLE"
 				addfieldpath="/modules/mod_joomleague_matches/elements/">
 
-				<field name="show_picture" type="radio" default="1"
+				<field name="show_picture" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_CLUB_LOGO_TITLE" description="MOD_JOOMLEAGUE_MATCHES_SHOW_CLUB_LOGO_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -288,7 +282,7 @@
 				<field name="xsize" type="text" default=""
 					label="MOD_JOOMLEAGUE_MATCHES_MAX_IMAGE_WIDTH_TITLE" description="MOD_JOOMLEAGUE_MATCHES_MAX_IMAGE_WIDTH_DESCR" />
 
-				<field name="new_line_after_logo" type="radio" default="1"
+				<field name="new_line_after_logo" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_MATCHES_NEWLINE_AFTER_LOGO_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_NEWLINE_AFTER_LOGO_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -298,7 +292,7 @@
 				<field name="ysize" type="text" default=""
 					label="MOD_JOOMLEAGUE_MATCHES_MAX_IMAGE_HEIGHT_TITLE" description="MOD_JOOMLEAGUE_MATCHES_MAX_IMAGE_HEIGHT_DESCR" />
 
-				<field name="show_names" type="radio" default="1"
+				<field name="show_names" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_TEAM_NAMES_TITLE" description="MOD_JOOMLEAGUE_MATCHES_SHOW_TEAM_NAMES_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -327,7 +321,7 @@
 					<option value="block">MOD_JOOMLEAGUE_MATCHES_SHOW_LINKS</option>
 				</field>
 
-				<field name="link_team_plan" type="radio" default="0"
+				<field name="link_team_plan" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_SCHEDULE_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_SCHEDULE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -338,7 +332,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_TEAM_SCHEDULE_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_TEAM_SCHEDULE_LINK_TEXT_DESCR" />
 
-				<field name="link_team_curve" type="radio" default="0"
+				<field name="link_team_curve" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_FEVER_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_FEVER_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -349,7 +343,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_TEAM_FEVER_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_TEAM_FEVER_LINK_TEXT_DESCR" />
 
-				<field name="link_team_teaminfo" type="radio" default="0"
+				<field name="link_team_teaminfo" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_INFO_TITLE" description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_INFO_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -359,7 +353,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_TEAM_INFO_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_TEAM_INFO_LINK_TEXT_DESCR" />
 
-				<field name="link_team_roster" type="radio" default="0"
+				<field name="link_team_roster" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_PLAYERS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_PLAYERS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -370,7 +364,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_TEAM_PLAYERS_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_TEAM_PLAYERS_LINK_TEXT_DESCR" />
 
-				<field name="link_team_club" type="radio" default="0"
+				<field name="link_team_club" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_CLUB_TITLE" description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_CLUB_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -380,7 +374,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_TEAM_CLUB_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_TEAM_CLUB_LINK_TEXT_DESCR" />
 
-				<field name="link_team_www" type="radio" default="0"
+				<field name="link_team_www" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_CLUB_WEBSITE_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_CLUB_WEBSITE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -414,14 +408,14 @@
 					default="MOD_JOOMLEAGUE_MATCHES_TIME_FORMAT_DEFAULT" label="MOD_JOOMLEAGUE_MATCHES_TIME_FORMAT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_TIME_FORMAT_DESCR" />
 
-				<field name="part_result" type="radio" default="0"
+				<field name="part_result" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_PARTS_RESULTS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_SHOW_PARTS_RESULTS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="part_result_count" type="radio" default="0"
+				<field name="part_result_count" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_NUMBER_OF_PARTS_RESULTS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_NUMBER_OF_PARTS_RESULTS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_ALL_MATCH_PARTS
@@ -434,13 +428,13 @@
 					label="MOD_JOOMLEAGUE_MATCHES_PARTS_RESULTS_SEPARATOR_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_PARTS_RESULTS_SEPARATOR_DESCR" />
 
-				<field name="show_venue" type="radio" default="0"
+				<field name="show_venue" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_VENUE_TITLE" description="MOD_JOOMLEAGUE_MATCHES_SHOW_VENUE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="link_venue" type="radio" default="0"
+				<field name="link_venue" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_VENUE_TITLE" description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_VENUE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
@@ -466,7 +460,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_MATCH_REPORT_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_MATCH_REPORT_LINK_TEXT_DESCR" />
 
-				<field name="show_statistic_link" type="radio" default="0"
+				<field name="show_statistic_link" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_SEASON_STATS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_SEASON_STATS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -477,13 +471,13 @@
 					label="MOD_JOOMLEAGUE_MATCHES_SEASON_STATS_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_SEASON_STATS_LINK_TEXT_DESCR" />
 
-				<field name="show_match_notice" type="radio" default="1"
+				<field name="show_match_notice" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_MATCHES_SHOW_MATCH_NOTICE_TITLE" description="MOD_JOOMLEAGUE_MATCHES_SHOW_MATCH_NOTICE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="show_nextmatch_link" type="radio" default="0"
+				<field name="show_nextmatch_link" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_NEXT_MATCH_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LINK_TO_TEAM_NEXT_MATCH_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
@@ -499,7 +493,7 @@
 			<fieldset name="AJAX settings" label="MOD_JOOMLEAGUE_MATCHES_AJAX_SETTINGS_TITLE"
 				addfieldpath="/modules/mod_joomleague_matches/elements/">
 
-				<field name="next_last" type="radio" default="0"
+				<field name="next_last" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_ENABLE_ARROWS_TITLE" description="MOD_JOOMLEAGUE_MATCHES_ENABLE_ARROWS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_USED_TEAMS_ONLY
@@ -507,14 +501,14 @@
 					<option value="2">MOD_JOOMLEAGUE_MATCHES_ALL_TEAMS</option>
 				</field>
 
-				<field name="icons_for_ajax" type="radio" default="0"
+				<field name="icons_for_ajax" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_AJAX_NAVIGATION_ICONS_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_AJAX_NAVIGATION_ICONS_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_MATCHES_YES</option>
 				</field>
 
-				<field name="reset_class" type="text" default="inputbox"
+				<field name="reset_class" type="text" class="btn-group btn-group-yesno" default="inputbox"
 					label="MOD_JOOMLEAGUE_MATCHES_NEXT_LAST_RESET_LINK_STYLE_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_NEXT_LAST_RESET_LINK_STYLE_DESCR" />
 
@@ -526,7 +520,7 @@
 					label="MOD_JOOMLEAGUE_MATCHES_LAST_MATCH_LINK_TEXT_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_LAST_MATCH_LINK_TEXT_TITLE" />
 
-				<field name="reset_start_match" type="radio" default="0"
+				<field name="reset_start_match" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_MATCHES_RESET_TO_FIRST_MATCH_TITLE"
 					description="MOD_JOOMLEAGUE_MATCHES_RESET_TO_FIRST_MATCH_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_MATCHES_NO</option>

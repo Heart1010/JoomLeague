@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_birthday</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.
 	</copyright>
-	<version>2.93.239.9df0b25</version>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_BIRTHDAY_XML_DESC</description>
 
 	<files>
@@ -18,14 +18,8 @@
 		<filename>mod_joomleague_birthday.xml</filename>
 		<folder>tmpl</folder>
 		<folder>css</folder>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_birthday.ini
-		</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_birthday.sys.ini
-		</language>
-	</languages>
 
 	<config>
 		<fields name="params">
@@ -36,7 +30,7 @@
 				<field name="projects" type="projects" default="" required="true"
 					label="MOD_JOOMLEAGUE_BIRTHDAY_SELECT_PROJECTS_LABEL" description="MOD_JOOMLEAGUE_BIRTHDAY_SELECT_PROJECTS_DESCR" />
 
-				<field name="use_fav" type="radio" default="1"
+				<field name="use_fav" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_BIRTHDAY_USE_FAVORITE_TEAM_LABEL"
 					description="MOD_JOOMLEAGUE_BIRTHDAY_USE_FAVORITE_TEAM_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_BIRTHDAY_NO</option>
@@ -84,7 +78,7 @@
 				<field name="name_format" type="nameformat"
 					label="MOD_JOOMLEAGUE_BIRTHDAY_NAME_FORMAT_LABEL" description="MOD_JOOMLEAGUE_BIRTHDAY_NAME_FORMAT_DESCR" />
 
-				<field name="show_player_flag" type="radio" default="1"
+				<field name="show_player_flag" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_BIRTHDAY_SHOW_PLAYER_FLAG_LABEL" description="MOD_JOOMLEAGUE_BIRTHDAY_SHOW_PLAYER_FLAG_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_BIRTHDAY_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_BIRTHDAY_YES</option>
@@ -93,7 +87,7 @@
 				<field name="heading_style" type="text" default="sectiontableheader"
 					label="MOD_JOOMLEAGUE_BIRTHDAY_HEADING_STYLE_LABEL" description="MOD_JOOMLEAGUE_BIRTHDAY_HEADING_STYLE_DESCR" />
 
-				<field name="show_picture" type="radio" default="0"
+				<field name="show_picture" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_BIRTHDAY_SHOW_PLAYER_PICTURE_LABEL"
 					description="MOD_JOOMLEAGUE_BIRTHDAY_SHOW_PLAYER_PICTURE_DESCR">
 					<option value="0">MOD_JOOMLEAGUE_BIRTHDAY_NO</option>

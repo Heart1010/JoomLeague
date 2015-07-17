@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_statranking</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_STATRANKING_XML_DESC</description>
 
 	<files>
@@ -16,12 +16,8 @@
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>css</folder>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_statranking.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_statranking.sys.ini</language>
-	</languages>
 
 	<config>
 		<fields name="params">
@@ -44,7 +40,7 @@
 					task="projectstatsoptions" 
 					label="MOD_JOOMLEAGUE_STATRANKING_SELECT_STAT_LABEL" 
 					description="MOD_JOOMLEAGUE_STATRANKING_SELECT_STAT_DESCR" />
-				<field name="ranking_order" type="radio" default="DESC"
+				<field name="ranking_order" type="radio" class="btn-group btn-group-yesno" default="DESC"
 					label="MOD_JOOMLEAGUE_STATRANKING_STAT_RANKING_ORDER" 
 					description="MOD_JOOMLEAGUE_STATRANKING_STAT_RANKING_ORDER_DESC">
 					<option value="ASC">Ascending</option>
@@ -65,7 +61,7 @@
 					<option value="0">No</option>
 					<option value="1">Yes</option>
 				</field>
-				<field name="show_full_link" type="radio" default="1"
+				<field name="show_full_link" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_STATRANKING_SHOW_FULL_LINK" 
 					description="MOD_JOOMLEAGUE_STATRANKING_SHOW_FULL_LINK_DESC">
 					<option value="0">No</option>
@@ -96,7 +92,7 @@
 				</field>
 				<field name="@spacer" type="spacer" default="" label=""
 					description="" />
-				<field name="show_team" type="radio" default="1" 
+				<field name="show_team" type="radio" class="btn-group btn-group-yesno" default="1" 
 					label="MOD_JOOMLEAGUE_STATRANKING_SHOW_TEAM_LABEL"
 					description="MOD_JOOMLEAGUE_STATRANKING_SHOW_TEAM_DESC">
 					<option value="0">No</option>

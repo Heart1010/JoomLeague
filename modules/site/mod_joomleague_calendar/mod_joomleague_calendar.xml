@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site"
-	method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_calendar</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_CALENDAR_DESC</description>
 
 	<files>
@@ -49,7 +48,7 @@
 					label="MOD_JOOMLEAGUE_CALENDAR_LABEL_TIME_FORMAT"
 					description="MOD_JOOMLEAGUE_CALENDAR_LABEL_TIME_FORMAT_DESC" />
 									
-				<field name="cal_start_day" type="radio" default="1"
+				<field name="cal_start_day" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_CALENDAR_CALSTARTDAYLBL" description="MOD_JOOMLEAGUE_CALENDAR_CALSTARTDAYDESC">
 					<option value="0">0</option>
 					<option value="1">1</option>
@@ -60,7 +59,7 @@
 					<option value="6">6</option>
 				</field>
 
-				<field name="cal_length_days" type="radio" default="2"
+				<field name="cal_length_days" type="radio" class="btn-group btn-group-yesno" default="2"
 					label="MOD_JOOMLEAGUE_CALENDAR_LENGTHDAYSLBL" description="MOD_JOOMLEAGUE_CALENDAR_LENGTHDAYSDESC">
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -70,7 +69,7 @@
 				<field type="spacer">
 				</field>
 
-				<field name="joomleague" type="radio" default="joomleague"
+				<field name="joomleague" type="radio" class="btn-group btn-group-yesno" default="joomleague"
 					label="MOD_JOOMLEAGUE_CALENDAR_JOOMLEAGUECONNECTORLBL" description="MOD_JOOMLEAGUE_CALENDAR_JOOMLEAGUECONNECTORDESC">
 					<option value="joomleague">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="joomleague_legacy">joomleague 0.93b</option>
@@ -80,19 +79,19 @@
 					label="MOD_JOOMLEAGUE_CALENDAR_CUSTOMPREFIXLBL" description="MOD_JOOMLEAGUE_CALENDAR_CUSTOMPREFIXDESC">
 				</field>
 
-				<field name="jlbirthdays" type="radio" default="0"
+				<field name="jlbirthdays" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_CALENDAR_SHOWBIRTHDAYSLBL" description="MOD_JOOMLEAGUE_CALENDAR_SHOWBIRTHDAYSDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="jlbirthdaypix" type="radio" default="0"
+				<field name="jlbirthdaypix" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_CALENDAR_SHOWBIRTHDAYSPIXLBL" description="MOD_JOOMLEAGUE_CALENDAR_SHOWBIRTHDAYSPIXDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="linkbirthday" type="radio" default="0"
+				<field name="linkbirthday" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_CALENDAR_LINKBIRTHDAYSLBL" description="">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
@@ -102,13 +101,13 @@
 					label="MOD_JOOMLEAGUE_CALENDAR_BIRTHDAYTEXT" description="MOD_JOOMLEAGUE_CALENDAR_BIRTHDAYTEXTDESC">
 				</field>
 
-				<field name="jlmatches" type="radio" default="1"
+				<field name="jlmatches" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_CALENDAR_SHOWMATCHESLBL" description="MOD_JOOMLEAGUE_CALENDAR_SHOWMATCHESDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="show_teamslist" type="radio" default="1"
+				<field name="show_teamslist" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_CALENDAR_SHOWTEAMSLISTLBL" description="MOD_JOOMLEAGUE_CALENDAR_SHOWTEAMSLISTDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
@@ -118,13 +117,13 @@
 					label="MOD_JOOMLEAGUE_CALENDAR_TEAMLISTDEFAULTLBL" description="MOD_JOOMLEAGUE_CALENDAR_TEAMLISTDEFAULTDESC">
 				</field>
 
-				<field name="joomleague_use_favteams" type="radio" default="0"
+				<field name="joomleague_use_favteams" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_CALENDAR_USEJLFAVLBL" description="MOD_JOOMLEAGUE_CALENDAR_USEJLFAVDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="team_names" type="radio" default="short_name"
+				<field name="team_names" type="radio" class="btn-group btn-group-yesno" default="short_name"
 					label="MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESLBL" description="MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESDESC">
 					<option value="-">MOD_JOOMLEAGUE_CALENDAR_NONAMES</option>
 					<option value="short_name">MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESOPTION1</option>
@@ -132,7 +131,7 @@
 					<option value="name">MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESOPTION3</option>
 				</field>
 
-				<field name="team_logos" type="radio" default="-" label="MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSLBL"
+				<field name="team_logos" type="radio" class="btn-group btn-group-yesno" default="-" label="MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSLBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSDESC">
 					<option value="-">MOD_JOOMLEAGUE_CALENDAR_NONAMES</option>
 					<option value="logo_small">MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSOPTION1</option>
@@ -148,7 +147,7 @@
 				<field type="spacer">
 				</field>
 
-				<field name="livescore" type="radio" default="" label="MOD_JOOMLEAGUE_CALENDAR_LIVESCORELBL"
+				<field name="livescore" type="radio" class="btn-group btn-group-yesno" default="" label="MOD_JOOMLEAGUE_CALENDAR_LIVESCORELBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_LIVESCOREDESC">
 					<option value="">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="livescore">MOD_JOOMLEAGUE_CALENDAR_YES</option>
@@ -161,7 +160,7 @@
 				<field type="spacer" label="Configuration for Events-Components">
 				</field>
 
-				<field name="jevents" type="radio" default="0" label="MOD_JOOMLEAGUE_CALENDAR_JEVENTSLBL"
+				<field name="jevents" type="radio" class="btn-group btn-group-yesno" default="0" label="MOD_JOOMLEAGUE_CALENDAR_JEVENTSLBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_JEVENTSDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
@@ -174,31 +173,31 @@
 				<field type="spacer">
 				</field>
 
-				<field name="convert" type="radio" default="0" label="MOD_JOOMLEAGUE_CALENDAR_CONVUTFLBL"
+				<field name="convert" type="radio" class="btn-group btn-group-yesno" default="0" label="MOD_JOOMLEAGUE_CALENDAR_CONVUTFLBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_CONVUTFDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="lightbox" type="radio" default="0" label="MOD_JOOMLEAGUE_CALENDAR_USEBOXLBL"
+				<field name="lightbox" type="radio" class="btn-group btn-group-yesno" default="0" label="MOD_JOOMLEAGUE_CALENDAR_USEBOXLBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_USEBOXDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="lightbox_on_pageload" type="radio" default="0" label="MOD_JOOMLEAGUE_CALENDAR_USEBOXLBL_ON_PAGELOAD"
+				<field name="lightbox_on_pageload" type="radio" class="btn-group btn-group-yesno" default="0" label="MOD_JOOMLEAGUE_CALENDAR_USEBOXLBL_ON_PAGELOAD"
 					description="MOD_JOOMLEAGUE_CALENDAR_USEBOX_ON_PAGELOAD_DESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="update_module" type="radio" default="1"
+				<field name="update_module" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_CALENDAR_BELOWCALLBL" description="MOD_JOOMLEAGUE_CALENDAR_BELOWCALDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="inject" type="radio" default="0" label="MOD_JOOMLEAGUE_CALENDAR_INJECTLBL"
+				<field name="inject" type="radio" class="btn-group btn-group-yesno" default="0" label="MOD_JOOMLEAGUE_CALENDAR_INJECTLBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_INJECTDESC">
 					<option value="0">MOD_JOOMLEAGUE_CALENDAR_NO</option>
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_ticker</name>
-	<creationDate>2012</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_TICKER_XML_DESC</description>
 
 	<files>
@@ -17,12 +17,9 @@
 		<folder>tmpl</folder>
 		<folder>js</folder>
 		<folder>css</folder>
+		<folder>language</folder>
 	</files>
 
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_ticker.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_ticker.sys.ini</language>
-	</languages>
 	<config>
 		<fields name="params">
 
@@ -31,11 +28,11 @@
 				<field name="p" type="projects" required="true"
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_PROJECT"
 					description="MOD_JOOMLEAGUE_TICKER_PROJECTID" />
-				<field name="usefavteams" type="radio" default="0"
+				<field name="usefavteams" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_USE_FAV_TEAMS" 
 					description="MOD_JOOMLEAGUE_TICKER_DESC_USE_FAV_TEAMS">
-					<option value="0">NO</option>
-					<option value="1">YES</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				<field name="teamid" type="teams" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_TEAM"
@@ -47,32 +44,32 @@
 				<field name="daysback" type="text" default="14" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_DAYS_BACK"
 					description="MOD_JOOMLEAGUE_TICKER_DESC_DAYS_BACK" />
-				<field name="showproject" type="radio" default="1"
+				<field name="showproject" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_SHOW_PROJECT" 
 					description="MOD_JOOMLEAGUE_TICKER_DESC_SHOW_PROJECT">
-					<option value="0">NO</option>
-					<option value="1">YES</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
-				<field name="refresh" type="radio" default="0" 
+				<field name="refresh" type="radio" class="btn-group btn-group-yesno" default="0" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_REFRESH"
 					description="MOD_JOOMLEAGUE_TICKER_DESC_REFRESH">
-					<option value="0">NO</option>
-					<option value="1">YES</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				<field name="minute" type="text" default="120" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_MINUT_NUMBER"
 					description="MOD_JOOMLEAGUE_TICKER_DESC_MINUT_NUMBER" />
-				<field name="ordering" type="radio" default="asc" 
+				<field name="ordering" type="radio" class="btn-group btn-group-yesno" default="asc" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_MATCHES_ORDERING"
 					description="MOD_JOOMLEAGUE_TICKER_DESC_MATCHES_ORDERING">
 					<option value="asc">ASC</option>
 					<option value="desc">DESC</option>
 				</field>
-				<field name="showdate" type="radio" default="1" 
+				<field name="showdate" type="radio" class="btn-group btn-group-yesno" default="1" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_SHOW_DATE"
 					description="MOD_JOOMLEAGUE_TICKER_DESC_SHOW_DATE">
-					<option value="0">NO</option>
-					<option value="1">YES</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				<field name="matchstatus" type="list" default="4"
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_MATCH_STATUS" 
@@ -148,11 +145,11 @@
 				<field name="scrollspeed" type="text" default="2"
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_SCROLLSPEED" 
 					description="MOD_JOOMLEAGUE_TICKER_DESC_SCROLLSPEED" />
-				<field name="scrollpause" type="radio" default="1"
+				<field name="scrollpause" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_SCROLLPAUSE" 
 					description="MOD_JOOMLEAGUE_TICKER_DESC_SCROLLPAUSE">
-					<option value="0">NO</option>
-					<option value="1">YES</option>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				<field name="height" type="text" default="50" 
 					label="MOD_JOOMLEAGUE_TICKER_LABEL_TICKER_HEIGHT"

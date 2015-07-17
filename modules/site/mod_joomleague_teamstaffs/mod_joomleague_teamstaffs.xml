@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="site" method="upgrade">
+<extension type="module" version="3.1" client="site" method="upgrade">
 	<name>mod_joomleague_teamstaffs</name>
-	<creationDate>2014</creationDate>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.76.190.b5cdefe</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>MOD_JOOMLEAGUE_TEAMSTAFFS_XML_DESC</description>
 
 	<files>
@@ -16,12 +16,8 @@
 		<filename>helper.php</filename>
 		<folder>css</folder>
 		<folder>tmpl</folder>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_teamstaffs.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.mod_joomleague_teamstaffs.sys.ini</language>
-	</languages>
 
 	<config>
 		<fields name="params">
@@ -33,25 +29,25 @@
 					task="projectteamsoptions" 
 					label="MOD_JOOMLEAGUE_TEAMSTAFFS_TEAM_ID_LABEL" 
 					description="MOD_JOOMLEAGUE_TEAMSTAFFS_TEAM_ID_LABEL_DESC" />
-				<field name="show_project_name" type="radio" default="0"
+				<field name="show_project_name" type="radio"  class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_PROJECT_NAME" 
 					description="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_PROJECT_NAME_DESC">
 					<option value="0">No</option>
 					<option value="1">Yes</option>
 				</field>
-				<field name="show_team_name" type="radio" default="0"
+				<field name="show_team_name" type="radio" class="btn-group btn-group-yesno" default="0"
 					label="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_TEAM_NAME" 
 					description="SHOW TEAM NAME DESC">
 					<option value="0">No</option>
 					<option value="1">Yes</option>
 				</field>
-				<field name="show_staff_link" type="radio" default="1"
+				<field name="show_staff_link" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_STAFF_LINK" 
 					description="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_STAFF_LINK_DESC">
 					<option value="0">No</option>
 					<option value="1">Yes</option>
 				</field>
-				<field name="show_flag" type="radio" default="1"
+				<field name="show_flag" type="radio" class="btn-group btn-group-yesno" default="1"
 					label="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_STAFF_FLAG" 
 					description="MOD_JOOMLEAGUE_TEAMSTAFFS_SHOW_STAFF_FLAG_DESC">
 					<option value="0">No</option>
