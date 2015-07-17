@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,18 +8,15 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 // Include library dependencies
 jimport( 'joomla.filter.input' );
 
 /**
-* Project Table class
+* Club Table class
 *
 * @package		Joomleague
-* @since 0.1
 */
 class TableClub extends JLTable
 {
@@ -27,7 +24,6 @@ class TableClub extends JLTable
 	 * Constructor
 	 *
 	 * @param object Database connector object
-	 * @since 1.0
 	 */
 	public function __construct(& $db)
 	{
@@ -39,7 +35,6 @@ class TableClub extends JLTable
 	 *
 	 * @access public
 	 * @return boolean True on success
-	 * @since 1.0
 	 */
 	public function check()
 	{	
@@ -62,4 +57,3 @@ class TableClub extends JLTable
 		return 'com_joomleague.club.'.(int) $this->$k;
 	}
 }
-?>
