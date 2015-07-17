@@ -650,10 +650,14 @@ class JoomleagueControllerMatch extends JoomleagueController
 		
 		$model=$this->getModel('match');
 		$project_id=$app->getUserState($option.'project',0);
+		header('Content-Type: application/json');
+		
 		if (!$result=$model->saveevent($data, $project_id)) {
 			$result="0"."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_SAVED_EVENT').': '.$model->getError();
 		} else {
-			$result=JRequest::getVar('rowid',0).'\n'.JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_SAVED_EVENT');
+			/* $rowid = JRequest::getVar('rowid',0); */ 
+			$rowid = $result;
+			$result= $rowid."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_SAVED_EVENT');
 		}
 		echo json_encode($result);
 		JFactory::getApplication()->close();
@@ -771,6 +775,12 @@ class JoomleagueControllerMatch extends JoomleagueController
 
 		$event_id=JRequest::getInt('event_id');
 		$model=$this->getModel('match');
+		
+		$result = $model->deleteevent($event_id);
+		
+		// Use the correct json mime-type
+		header('Content-Type: application/json');
+		
 		if (!$result=$model->deleteevent($event_id))
 		{
 			$result="0"."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_DELETE_EVENTS').': '.$model->getError();
