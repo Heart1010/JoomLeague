@@ -19,7 +19,8 @@ jimport('joomla.filesystem.folder');
 
 class com_joomleagueInstallerScript
 {
-	private function _install($update=false, $parent) {
+	private function _install($update=false, $parent) 
+	{
 		echo JHtml::_('sliders.start','steps',array('allowAllClose' => true,'startTransition' => true,true));
 		$image = '<img src="../media/com_joomleague/jl_images/ext_com.png">';
 		echo JHtml::_('sliders.panel', $image.' Component', 'panel-component');
@@ -48,15 +49,15 @@ class com_joomleagueInstallerScript
 		include_once($this->install_admin_rootfolder.'/models/databasetools.php');
 		
 		if($update) {
-			self::updateDatabase();
+			// self::updateDatabase();
 		}
 		if($update) {
 			$image = '<img src="../media/com_joomleague/jl_images/ext_esp.png">';
 			echo JHtml::_('sliders.panel', $image.' Migrate Picture Pathes', 'panel-picpath');
-			JoomleagueModelDatabaseTools::migratePicturePath();
+			// JoomleagueModelDatabaseTools::migratePicturePath();
 			
 			echo JHtml::_('sliders.panel', $image.' Update Eventtypes Suspensions', 'panel-picpath');
-			JoomleagueModelDatabaseTools::updateEventtypeSuspensions();
+			// JoomleagueModelDatabaseTools::updateEventtypeSuspensions();
 		}
 		
 		// slider - imagefolder
@@ -73,12 +74,12 @@ class com_joomleagueInstallerScript
 		// slider - modules
 		$image = '<img src="../media/com_joomleague/jl_images/ext_mod.png">';
 		echo JHtml::_('sliders.panel', $image.' Modules', 'panel-modules');
-		self::installModules();
+		// self::installModules();
 		
 		// slider - plugins
 		$image = '<img src="../media/com_joomleague/jl_images/ext_plugin.png">';
 		echo JHtml::_('sliders.panel', $image.' Plugins', 'panel-plugins');
-		self::installPlugins();
+		// self::installPlugins();
 		self::installPermissions();
 		echo JHtml::_('sliders.end');
 		echo self::getFxInitJSCode('steps');
@@ -421,15 +422,19 @@ class com_joomleagueInstallerScript
 	}
 
 	public function postflight($route, $adapter) {
+		
 		//-----------------------------------------------------
 		//Table `#__extensions` Bugfix needed due a wrong client_id for the update system
 		//-----------------------------------------------------
+		
+		/*
 		$db = JFactory::getDbo();
 		$query="UPDATE `#__extensions` SET client_id=0 WHERE name='joomleague'";
 		$db->setQuery($query);
 		if (!$db->query()) {
 			echo $db->getErrorMsg();
 		}
+		*/
 	}
 	
 	public function uninstall($adapter)
