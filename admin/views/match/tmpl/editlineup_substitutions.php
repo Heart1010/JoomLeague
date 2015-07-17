@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,14 +8,13 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 ?>
 <script type="text/javascript">
 <!--
 // url for ajax
-var baseajaxurl='<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&<?php echo JUtility::getToken() ?>=1';
+var baseajaxurl='<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&<?php echo JSession::getFormToken() ?>=1';
 var teamid=<?php echo $this->tid; ?>;
 var matchid=<?php echo $this->match->id; ?>;
 // We need to setup some text variables for translation
