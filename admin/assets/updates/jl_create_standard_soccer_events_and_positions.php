@@ -124,7 +124,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_GOAL';
 		$newEventIcon='images/com_joomleague/database/events/soccer/goal.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query				= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,1); $db->setQuery($query);
@@ -139,7 +139,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_ASSISTS';
 		$newEventIcon='images/com_joomleague/database/events/soccer/assists.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query				= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,2); $db->setQuery($query);
@@ -154,7 +154,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_YELLOW_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/yellow_card.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,3); $db->setQuery($query);
@@ -175,7 +175,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_YELLOW-RED_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/yellow_red_card.png';
 		$suspension=1;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,4); $db->setQuery($query);
@@ -196,7 +196,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_RED_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/red_card.png';
 		$suspension=1;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,5); $db->setQuery($query);
@@ -217,7 +217,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_FOUL';
 		$newEventIcon='images/com_joomleague/database/events/soccer/foul.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,6); $db->setQuery($query);
@@ -234,7 +234,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_FOUL_TIME';
 		$newEventIcon='images/com_joomleague/database/events/soccer/foul_time.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,7); $db->setQuery($query);
@@ -251,7 +251,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_OWN_GOAL';
 		$newEventIcon='images/com_joomleague/database/events/soccer/own_goal.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query				= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,8); $db->setQuery($query);
@@ -266,7 +266,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_PENALTY_GOAL';
 		$newEventIcon='images/com_joomleague/database/events/soccer/penalty_goal.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,9); $db->setQuery($query);
@@ -283,7 +283,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_INJURY';
 		$newEventIcon='images/com_joomleague/database/events/soccer/injured.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,10); $db->setQuery($query);
@@ -304,7 +304,7 @@ function addStandardsForSoccer()
 			$newEventName='COM_JOOMLEAGUE_E_BLUE_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/blue_card.png';
 		$suspension=0;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,11); $db->setQuery($query);
@@ -325,7 +325,7 @@ function addStandardsForSoccer()
 		$newEventName='COM_JOOMLEAGUE_E_BLUE_RED_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/blue_red_card.png';
 		$suspension=1;
-		$query=build_SelectQuery('eventtypes',$newEventName); $db->setQuery($query);
+		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
 		if (!$object=$db->loadObject())
 		{
 			$query					= build_InsertQuery_Event('eventtype',$newEventName,$newEventIcon,$suspension,$sports_type->id,12); $db->setQuery($query);
@@ -365,8 +365,8 @@ function addStandardsForSoccer()
 			{
 				$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,1); $db->setQuery($query);
 				$result					= $db->execute();
-				$ParentID				= mysql_insert_id();
-				$PlayersPositions['0']	= mysql_insert_id();
+				$ParentID				= $db->insertid();
+				$PlayersPositions['0']	= $db->insertid();
 			}
 			else
 			{
@@ -385,7 +385,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,2); $db->setQuery($query);
 					$result					= $db->execute();
-					$PlayersPositions['1']	= mysql_insert_id();
+					$PlayersPositions['1']	= $db->insertid();
 				}
 				else
 				{
@@ -399,7 +399,7 @@ function addStandardsForSoccer()
 				{
 					$query	= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,3); $db->setQuery($query);
 					$result	= $db->execute();
-					$PlayersPositions['2']	= mysql_insert_id();
+					$PlayersPositions['2']	= $db->insertid();
 				}
 				else
 				{
@@ -413,7 +413,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,4); $db->setQuery($query);
 					$result					= $db->execute();
-					$PlayersPositions['3']	= mysql_insert_id();
+					$PlayersPositions['3']	= $db->insertid();
 				}
 				else
 				{
@@ -427,7 +427,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,5); $db->setQuery($query);
 					$result					= $db->execute();
-					$PlayersPositions['4']	= mysql_insert_id();
+					$PlayersPositions['4']	= $db->insertid();
 				}
 				else
 				{
@@ -449,8 +449,8 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,6); $db->setQuery($query);
 					$result					= $db->execute();
-					$ParentID				= mysql_insert_id();
-					$StaffPositions['0']	= mysql_insert_id();
+					$ParentID				= $db->insertid();
+					$StaffPositions['0']	= $db->insertid();
 				}
 				else
 				{
@@ -470,8 +470,8 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,7); $db->setQuery($query);
 					$result					= $db->execute();
-					$ParentID				= mysql_insert_id();
-					$StaffPositions['1']	= mysql_insert_id();
+					$ParentID				= $db->insertid();
+					$StaffPositions['1']	= $db->insertid();
 				}
 				else
 				{
@@ -488,7 +488,7 @@ function addStandardsForSoccer()
 					{
 						$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,8); $db->setQuery($query);
 						$result					= $db->execute();
-						$StaffPositions['2']	= mysql_insert_id();
+						$StaffPositions['2']	= $db->insertid();
 					}
 					else
 					{
@@ -502,7 +502,7 @@ function addStandardsForSoccer()
 					{
 						$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,9); $db->setQuery($query);
 						$result					= $db->execute();
-						$StaffPositions['3']	= mysql_insert_id();
+						$StaffPositions['3']	= $db->insertid();
 					}
 					else
 					{
@@ -522,8 +522,8 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,10); $db->setQuery($query);
 					$result					= $db->execute();
-					$ParentID				= mysql_insert_id();
-					$StaffPositions['4']	= mysql_insert_id();
+					$ParentID				= $db->insertid();
+					$StaffPositions['4']	= $db->insertid();
 				}
 				else
 				{
@@ -540,7 +540,7 @@ function addStandardsForSoccer()
 					{
 						$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,11); $db->setQuery($query);
 						$result					= $db->execute();
-						$StaffPositions['5']	= mysql_insert_id();
+						$StaffPositions['5']	= $db->insertid();
 					}
 					else
 					{
@@ -560,8 +560,8 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,12); $db->setQuery($query);
 					$result					= $db->execute();
-					$ParentID				= mysql_insert_id();
-					$StaffPositions['6']	= mysql_insert_id();
+					$ParentID				= $db->insertid();
+					$StaffPositions['6']	= $db->insertid();
 				}
 				else
 				{
@@ -582,8 +582,8 @@ function addStandardsForSoccer()
 			{
 				$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,13); $db->setQuery($query);
 				$result					= $db->execute();
-				$ParentID				= mysql_insert_id();
-				$RefereePositions['0']	= mysql_insert_id();
+				$ParentID				= $db->insertid();
+				$RefereePositions['0']	= $db->insertid();
 			}
 			else
 			{
@@ -600,7 +600,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,14); $db->setQuery($query);
 					$result					= $db->execute();
-					$RefereePositions['1']	= mysql_insert_id();
+					$RefereePositions['1']	= $db->insertid();
 				}
 				else
 				{
@@ -614,7 +614,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,15); $db->setQuery($query);
 					$result					= $db->execute();
-					$RefereePositions['2']	= mysql_insert_id();
+					$RefereePositions['2']	= $db->insertid();
 				}
 				else
 				{
@@ -628,7 +628,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,16); $db->setQuery($query);
 					$result					= $db->execute();
-					$RefereePositions['3']	= mysql_insert_id();
+					$RefereePositions['3']	= $db->insertid();
 				}
 				else
 				{
@@ -642,7 +642,7 @@ function addStandardsForSoccer()
 				{
 					$query					= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,17); $db->setQuery($query);
 					$result					= $db->execute();
-					$RefereePositions['4']	= mysql_insert_id();
+					$RefereePositions['4']	= $db->insertid();
 				}
 				else
 				{
@@ -662,8 +662,8 @@ function addStandardsForSoccer()
 			{
 				$query						= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,18); $db->setQuery($query);
 				$result						= $db->execute();
-				$ParentID					= mysql_insert_id();
-				$ClubStaffPositions['0']	= mysql_insert_id();
+				$ParentID					= $db->insertid();
+				$ClubStaffPositions['0']	= $db->insertid();
 			}
 			else
 			{
@@ -681,7 +681,7 @@ function addStandardsForSoccer()
 				{
 					$query						= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,19); $db->setQuery($query);
 					$result						= $db->execute();
-					$ClubStaffPositions['1']	= mysql_insert_id();
+					$ClubStaffPositions['1']	= $db->insertid();
 				}
 				else
 				{
@@ -694,7 +694,7 @@ function addStandardsForSoccer()
 				{
 					$query						= build_InsertQuery_Position('position',$newPosName,$newPosSwitch,$newPosParent,$newPosContent,$sports_type->id,20); $db->setQuery($query);
 					$result						= $db->execute();
-					$ClubStaffPositions['2']	= mysql_insert_id();
+					$ClubStaffPositions['2']	= $db->insertid();
 				}
 				else
 				{
