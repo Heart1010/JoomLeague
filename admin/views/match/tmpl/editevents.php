@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,22 +8,20 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined('_JEXEC') or die;
 
-defined('_JEXEC') or die('Restricted access');
-#echo '#<pre>'; print_r($this->rosters); echo '</pre>#';
 
 /**
  * Match Form
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
  * @package	JoomLeague
- * @since	0.1
  */
 ?>
 <script type="text/javascript">
 <!--
 var matchid = <?php echo $this->teams->id; ?>;
-var baseajaxurl='<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&<?php echo JUtility::getToken() ?>=1';
+var baseajaxurl='<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&<?php echo JSession::getFormToken() ?>=1';
 var homeroster = new Array;
 <?php
 $i = 0;
@@ -87,7 +85,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 <div id="gamesevents">
 	<fieldset>
 		<div class="fltrt">
-			<button id="cancel" type="button" onclick="<?php echo JRequest::getBool('refresh', 0) ? 'window.parent.location.href=window.parent.location.href;' : '';?>  window.parent.SqueezeBox.close();">
+			<button id="cancel" class="button" type="button" onclick="<?php echo JRequest::getBool('refresh', 0) ? 'window.parent.location.href=window.parent.location.href;' : '';?>  window.parent.SqueezeBox.close();">
 				<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_CLOSE');?></button>
 		</div>
 		<div class="configuration" >
@@ -99,7 +97,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 			<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EE_DESCR'); ?></legend>
 			<!-- Don't remove this "<div id"ajaxresponse"></div> as it is neede for ajax changings -->
 			<div id="ajaxresponse"></div>
-			<table class='adminlist'>
+			<table class='table table-striped'>
 				<thead>
 					<tr>
 						<th><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EE_TEAM'); ?></th>
@@ -126,7 +124,8 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 							if ($event->event_type_id != 0) {
 							?>
 							<tr id="row-<?php echo $event->id; ?>" class="<?php echo "row$k"; ?>">
-								<td><?php echo $event->team; ?></td>
+								<td>
+								<?php echo $event->team; ?></td>
 								<td>
 								<?php
 								// TODO: now remove the empty nickname quotes, but that should probably be solved differently
@@ -169,7 +168,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 		</fieldset>
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_LIVE_COMMENTARY_DESCR'); ?></legend>		
-		<table class='adminlist' >
+		<table class='table table-striped' >
 			<thead>
 				<tr>
 					<th><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EE_LIVE_TYPE' ); ?></th>
@@ -192,7 +191,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 					{
 						if ($event->event_type_id == 0) {
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr id="row-<?php echo $event->id; ?>" class="<?php echo "row$k"; ?>">
 							<td>
 								<?php 
 								switch ($event->event_sum) {
