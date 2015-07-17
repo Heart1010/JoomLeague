@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.1" method="upgrade">
-	<name>joomleague</name>
+	<name>com_joomleague</name>
 	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
@@ -26,8 +26,6 @@
 		<folder>helpers</folder>
 		<folder>language</folder>
 		<folder>models</folder>
-		<folder>modules</folder>
-		<folder>plugins</folder>
 		<folder>views</folder>
 	</files>
 
@@ -66,7 +64,9 @@
 		<!-- Administration Menu Section -->
 		<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE</menu>
 		<submenu>
+			<menu link="option=com_joomleague&amp;view=clubs">COM_JOOMLEAGUE_MENU_CLUBS</menu>
 			<menu link="option=com_joomleague&amp;view=projects">COM_JOOMLEAGUE_MENU_PROJECTS</menu>
+			<menu link="option=com_joomleague&amp;view=teams">COM_JOOMLEAGUE_MENU_TEAMS</menu>
 		</submenu>
 		
 		<files folder="admin">
@@ -82,7 +82,6 @@
 			<folder>helpers</folder>
 			<folder>language</folder>
 			<folder>models</folder>
-			<folder>modules</folder>
 			<folder>sql</folder>
 			<folder>statistics</folder>
 			<folder>tables</folder>
