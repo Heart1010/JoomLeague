@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL,see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License,and as distributed it includes or
@@ -8,21 +8,20 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
+defined ('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+jimport('joomla.application.component.view');
+jimport('joomla.filesystem.file');
+JHtml::_('behavior.framework');
 
-jimport ( 'joomla.application.component.view' );
-jimport ( 'joomla.filesystem.file' );
-JHtml::_ ( 'behavior.framework' );
 /**
  * HTML View class for the Joomleague component
  *
  * @author Marco Vaninetti <martizva@tiscali.it>
  * @package JoomLeague
- * @since 0.1
  */
-class JoomleagueViewMatch extends JLGView {
+class JoomleagueViewMatch extends JLGView 
+{
 	function display($tpl = null) {
 		if ($this->getLayout () == 'form') {
 			$this->_displayForm ( $tpl );
@@ -46,6 +45,8 @@ class JoomleagueViewMatch extends JLGView {
 
 		parent::display ( $tpl );
 	}
+	
+	
 	function _displayEditReferees($tpl) {
 		$option = JRequest::getCmd ( 'option' );
 		$mainframe = JFactory::getApplication ();
@@ -115,6 +116,8 @@ class JoomleagueViewMatch extends JLGView {
 		$this->lists = $lists;
 		parent::display ($tpl);
 	}
+	
+	
 	function _displayEditevents($tpl) {
 		$option = JRequest::getCmd ( 'option' );
 		$mainframe = JFactory::getApplication ();
@@ -184,6 +187,8 @@ class JoomleagueViewMatch extends JLGView {
 
 		parent::display ( $tpl );
 	}
+	
+	
 	function _displayEditeventsbb($tpl) {
 		$option = JRequest::getCmd ( 'option' );
 		$mainframe = JFactory::getApplication ();
@@ -229,10 +234,10 @@ class JoomleagueViewMatch extends JLGView {
 		$this->addToolbar_Editeventsbb ();
 		parent::display ( $tpl );
 	}
+	
+	
 	/**
 	 * Add the page title and toolbar.
-	 *
-	 * @since 1.7
 	 */
 	protected function addToolbar_Editeventsbb($showSave = true) {
 		// set toolbar items for the page
@@ -244,6 +249,8 @@ class JoomleagueViewMatch extends JLGView {
 		JToolBarHelper::back ( 'back', 'index.php?option=com_joomleague&view=matches&task=match.display' );
 		JToolBarHelper::help ( 'screen.joomleague', true );
 	}
+	
+	
 	function _displayEditstats($tpl) {
 		$option = JRequest::getCmd ( 'option' );
 		$mainframe = JFactory::getApplication ();
@@ -305,6 +312,8 @@ class JoomleagueViewMatch extends JLGView {
 
 		parent::display ( $tpl );
 	}
+	
+	
 	function _displayEditlineup($tpl) {
 		$option = JRequest::getCmd ( 'option' );
 		$mainframe = JFactory::getApplication ();
@@ -551,6 +560,8 @@ class JoomleagueViewMatch extends JLGView {
 
 		parent::display ( $tpl );
 	}
+	
+	
 	function _displayForm($tpl) {
 		$mainframe = JFactory::getApplication ();
 		$option = JRequest::getCmd ( 'option' );
@@ -644,16 +655,23 @@ class JoomleagueViewMatch extends JLGView {
 
 		parent::display ( $tpl );
 	}
-	protected function _handlePreFillRoster(&$teams, &$model, &$params, &$tid, &$teamname) {
-		if ($params->get ( 'use_prefilled_match_roster' ) > 0) {
-			$bDeleteCurrrentRoster = $params->get ( 'on_prefill_delete_current_match_roster', 0 );
-			$prefillType = JRequest::getInt ( 'prefill', 0 );
+	
+	
+	protected function _handlePreFillRoster(&$teams, &$model, &$params, &$tid, &$teamname) 
+	{
+		# $preFillSuccess does not exist so set one
+		$preFillSuccess = false;
+		
+		if ($params->get('use_prefilled_match_roster') > 0) {
+			$bDeleteCurrrentRoster = $params->get('on_prefill_delete_current_match_roster', 0);
+			$prefillType = JRequest::getInt('prefill', 0);
 			if ($prefillType == 0) {
-				$prefillType = $params->get ( 'use_prefilled_match_roster' );
+				$prefillType = $params->get('use_prefilled_match_roster');
 			}
 			$projectteam_id = ($tid == $teams->projectteam1_id) ? $teams->projectteam1_id : $teams->projectteam2_id;
 
-			if ($prefillType == 2) {
+			if ($prefillType == 2) 
+			{
 				$preFillSuccess = false;
 				if (! $model->prefillMatchPlayersWithProjectteamPlayers ( $projectteam_id, $bDeleteCurrrentRoster )) {
 					if ($model->getError () != '') {
@@ -665,7 +683,9 @@ class JoomleagueViewMatch extends JLGView {
 				} else {
 					$preFillSuccess = true;
 				}
-			} elseif ($prefillType == 1) {
+			} 
+			elseif ($prefillType == 1) 
+			{
 				if (! $model->prefillMatchPlayersWithLastMatch ( $projectteam_id, $bDeleteCurrrentRoster )) {
 					if ($model->getError () != '') {
 						JError::raiseWarning ( 440, '<br />' . $model->getError () . '<br /><br />' );
@@ -678,6 +698,8 @@ class JoomleagueViewMatch extends JLGView {
 				}
 			}
 		}
+		
+		// @todo check/fix!		
 		$this->preFillSuccess = $preFillSuccess;
 	}
 }
