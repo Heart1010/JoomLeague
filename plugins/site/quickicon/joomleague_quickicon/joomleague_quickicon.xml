@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="quickicon"
-	method="upgrade">	<name>plg_quickicon_joomleague_quickicon</name>
-	<creationDate>2012</creationDate>
+<extension version="3.1" type="plugin" group="quickicon" method="upgrade">	<name>plg_quickicon_joomleague_quickicon</name>
+	<creationDate>July 2015</creationDate>
 	<author>JoomLeague Developers</author>
 	<authorEmail>andone@mfga.at</authorEmail>
 	<authorUrl>http://www.joomleague.at</authorUrl>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<copyright>(C) 2005-2014 joomleague.at. All rights reserved.</copyright>
-	<version>2.93.239.9df0b25</version>
+	<copyright>(C) 2005-2015 joomleague.at. All rights reserved.</copyright>
+	<version>3.0.1</version>
 	<description>PLG_QUICKICON_JOOMLEAGUE_QUICKICON_XML_DESC</description>
 
 	<files>
 		<filename plugin="joomleague_quickicon">joomleague_quickicon.php</filename>
 		<filename>index.html</filename>
+		<folder>language</folder>
 	</files>
-
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_quickicon_joomleague_quickicon.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_quickicon_joomleague_quickicon.sys.ini</language>
-	</languages>
 
 	<config>		<fields name="params">			<fieldset name="basic">
 				<field name="context"
