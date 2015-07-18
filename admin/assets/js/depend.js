@@ -10,8 +10,6 @@
 
 /**
  * javascript for dependant element xml parameter
- * 
- * 
  */
 
 // add update of field when fields it depends on change.
@@ -79,14 +77,14 @@ function update_depend(element) {
 			}
 			combo.empty();
 			if (headingLine != null) {
-				new Element('option', headingLine).injectInside(combo);
+				new Element('option', headingLine).injec(combo,'inside');
 			}
 			options.each(function(el) {
 				if (typeof el == "undefined") return;
 				if (selectedItems != null && selectedItems.indexOf(el.value) != -1) {
 					el.selected = "selected";
 				}
-				new Element('option', el).injectInside(combo);
+				new Element('option', el).inject(combo,'inside');
 			});
 			// Make sure to inform others who are dependent on us, so they also update
 			combo.fireEvent('change');
