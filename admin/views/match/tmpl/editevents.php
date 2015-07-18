@@ -85,7 +85,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 <div id="gamesevents">
 	<fieldset>
 		<div class="fltrt">
-			<button id="cancel" class="button" type="button" onclick="<?php echo JRequest::getBool('refresh', 0) ? 'window.parent.location.href=window.parent.location.href;' : '';?>  window.parent.SqueezeBox.close();">
+			<button id="cancel" class="btn" type="button" onclick="<?php echo JRequest::getBool('refresh', 0) ? 'window.parent.location.href=window.parent.location.href;' : '';?>  window.parent.SqueezeBox.close();">
 				<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_CLOSE');?></button>
 		</div>
 		<div class="configuration" >
@@ -93,6 +93,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 		</div>
 	</fieldset>
 	
+	<!-- Events -->
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EE_DESCR'); ?></legend>
 			<!-- Don't remove this "<div id"ajaxresponse"></div> as it is neede for ajax changings -->
@@ -123,7 +124,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 						{
 							if ($event->event_type_id != 0) {
 							?>
-							<tr id="row-<?php echo $event->id; ?>" class="<?php echo "row$k"; ?>">
+							<tr id="rowe-<?php echo $event->id; ?>" class="<?php echo "row$k"; ?>">
 								<td>
 								<?php echo $event->team; ?></td>
 								<td>
@@ -132,14 +133,14 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 								echo preg_replace('/\'\' /', "", $event->player1);
 								?>
 								</td>
-								<td style='text-align:center; ' ><?php echo JText::_($event->event); ?></td>
-								<td style='text-align:center; ' ><?php echo $event->event_sum; ?></td>
-								<td style='text-align:center; ' ><?php echo $event->event_time; ?></td>
-								<td title="" class="hasTip">
+								<td class="center"><?php echo JText::_($event->event); ?></td>
+								<td class="center"><?php echo $event->event_sum; ?></td>
+								<td class="center"><?php echo $event->event_time; ?></td>
+								<td title="" class="hasTooltip">
 									<?php echo (strlen($event->notice) > 20) ? substr($event->notice, 0, 17).'...' : $event->notice; ?>
 								</td>
-								<td style='text-align:center; ' >
-									<input	id="delete-<?php echo $event->id; ?>" type="button" class="inputbox button-delete"
+								<td class="center">
+									<input	id="delete-<?php echo $event->id; ?>" type="button" class="inputbox button-delete-e btn"
 											value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_DELETE'); ?>" />
 								</td>
 							</tr>
@@ -153,12 +154,12 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 						<td><?php echo $this->lists['teams']; ?></td>
 						<td id="cell-player">&nbsp;</td>
 						<td><?php echo $this->lists['events']; ?></td>
-						<td style='text-align:center; ' ><input type="text" size="3" value="" id="event_sum" name="event_sum" class="inputbox" /></td>
-						<td style='text-align:center; ' ><input type="text" size="3" value="" id="event_time" name="event_time" class="inputbox" /></td>
-						<td style='text-align:center; ' ><input type="text" size="20" value="" id="notice" name="notice" class="inputbox" /></td>
-						<td style='text-align:center; ' >
+						<td class="center"><input type="text" size="3" value="" id="event_sum" name="event_sum" class="inputbox" /></td>
+						<td class="center"><input type="text" size="3" value="" id="event_time" name="event_time" class="inputbox" /></td>
+						<td class="center"><input type="text" size="20" value="" id="notice" name="notice" class="inputbox" /></td>
+						<td class="center">
 							<?php echo JHtml::_('form.token'); ?>
-							<input id="save-new" type="button" class="inputbox button-save" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_SAVE'); ?>" />
+							<input id="save-new" type="button" class="btn inputbox button-save" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_SAVE'); ?>" />
 						</td>
 					</tr>
 				</tbody>
@@ -166,6 +167,8 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 			
 			<br>
 		</fieldset>
+		
+		<!-- Comments -->
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_LIVE_COMMENTARY_DESCR'); ?></legend>		
 		<table class='table table-striped' >
@@ -191,7 +194,7 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 					{
 						if ($event->event_type_id == 0) {
 						?>
-						<tr id="row-<?php echo $event->id; ?>" class="<?php echo "row$k"; ?>">
+						<tr id="rowc-<?php echo $event->id; ?>" class="<?php echo "row$k"; ?>">
 							<td>
 								<?php 
 								switch ($event->event_sum) {
@@ -204,18 +207,18 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 		                        } ?>
 							</td>
 
-							<td style='text-align:center; ' >
+							<td class="center">
 								<?php
 								echo $event->event_time;
 								?>
 							</td>
-							<td title='' class='hasTip' style="width: 500px;">
+							<td title='' class='hasTooltip' style="width: 500px;">
 								<?php
 								echo $event->notes;
 								?>
 							</td>
-							<td style='text-align:center; ' >
-								<input	id="delete-<?php echo $event->id; ?>" type="button" class="inputbox button-delete"
+							<td class="center">
+								<input	id="delete-<?php echo $event->id; ?>" type="button" class="inputbox btn button-delete-c"
 										value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_DELETE' ); ?>" />
 							</td>
 						</tr>
@@ -233,14 +236,14 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
                             <option value="2"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EE_LIVE_TYPE_2' ); ?></option>
                         </select> 
 					</td>
-					<td style='text-align:center; ' >
+					<td class="center">
 						<input type="text" size="3" value="" id="c_event_time" name="c_event_time" class="inputbox" />
 					</td>
-					<td style='text-align:center; ' >
+					<td class="center">
 						<textarea rows="2" cols="70" id="notes" name="notes" ></textarea>
 					</td>
-					<td style='text-align:center; ' >
-						<input id="save-new-comment" type="button" class="inputbox button-save-c" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_SAVE' ); ?>" />
+					<td class="center">
+						<input id="save-new-comment" type="button" class="inputbox button-save-c btn" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_SAVE' ); ?>" />
 					</td>
 				</tr>
 			</tbody>

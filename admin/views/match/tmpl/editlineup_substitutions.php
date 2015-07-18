@@ -23,7 +23,7 @@ var str_delete="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_REMOVE'); ?>";
 </script>
 <!-- SUBSTITUTIONS START -->
 <div id="io">
-	<!-- Don't remove this "<div id"ajaxresponse"></div> as it is neede for ajax changings -->
+	<!-- Don't remove this "<div id"ajaxresponse"></div> as it is needs for ajax changings -->
 	<div id="ajaxresponse"></div>
 		<fieldset class="adminform">
 			<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_ELUSUBST_SUBST'); ?></legend>

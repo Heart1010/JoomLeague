@@ -11,9 +11,14 @@ window.addEvent('domready', function() {
 	if($('team_id')) {
 		$('team_id').addEvent('change', updatePlayerSelect);
 
-		//ajax remove event
-		$$('input.button-delete').addEvent('click', deleteevent);
+		
+		// button-delete: click function for comments
+		$$('input.button-delete-c').addEvent('click', deletecomment);
+		
+		// button-delete: click function for events
+		$$('input.button-delete-e').addEvent('click', deleteevent);
 
+		// button-newevent: click function
 		$('save-new').addEvent(
 				'click',
 				function() {
@@ -46,11 +51,12 @@ window.addEvent('domready', function() {
 					}
 				});
 	}
+	// button-newcomment: click function
     $('save-new-comment').addEvent(
 			'click',
 			function() {
 				$('ajaxresponse').set('text','');
-				var url = baseajaxurl + '&task=match.saveevent';
+				var url = baseajaxurl + '&task=match.savecomment';
 				var player = 0;
 				var event = 0;
 				var team = 0;
@@ -81,51 +87,39 @@ window.addEvent('domready', function() {
 			});
 	});
 
-function reqsent() {
-	$('ajaxresponse').addClass('ajax-loading');
-	$('ajaxresponse').set('text','');
-}
-
-function reqfailed() {
-	$('ajaxresponse').removeClass('ajax-loading');
-	$('ajaxresponse').set('text',response);
-}
-
-function eventsaved(response) {
-	$('ajaxresponse').removeClass('ajax-loading');
-	// first line contains the status, second line contains the new row.
-	var resp = response.split("\n");
-	if (resp[0] != '0') {
-		// create new row in events table
-		var newrow = new Element('tr', {
-			id : 'row-' + resp[0]
+// comment delete
+function deletecomment() {
+	var eventid = this.id.substr(7);
+	var url = baseajaxurl + '&task=match.removeComment';
+	var querystring = '&event_id=' + eventid;
+	if (eventid) {
+		var myXhr = new Request.JSON( {
+			url: url + querystring,
+			method : 'post',
+			onRequest : reqsent,
+			onFailure : reqfailed,
+			onSuccess : commentdeleted,
+			rowid : eventid
 		});
-		new Element('td').set('text', $('team_id').options[$('team_id').selectedIndex].text)
-				.inject(newrow,'inside');
-		new Element('td')
-				.set('text', $('teamplayer_id').options[$('teamplayer_id').selectedIndex].text)
-				.inject(newrow,'inside');
-		new Element('td')
-				.set('text', $('event_type_id').options[$('event_type_id').selectedIndex].text)
-				.inject(newrow,inside);
-		new Element('td').set('text',$('event_sum').value).inject(newrow,'inside');
-		new Element('td').set('text',$('event_time').value).inject(newrow,'inside');
-		new Element('td', {
-			title : $('notice').value
-		}).addClass("hasTooltip").set('text',trimstr($('notice').value, 20)).inject(newrow,'inside');
-		var deletebutton = new Element('input', {
-			id : 'delete-' + resp[0],
-			type : 'button',
-			value : str_delete
-		}).addClass('inputbox button-delete').addEvent('click', deleteevent);
-		new Element('td').appendChild(deletebutton).inject(newrow,'inside');
-		newrow.inject($('row-new'),'before');
-		$('ajaxresponse').set('text','Event saved');
-	} else {
-		$('ajaxresponse').set('text',resp[1]);
+		myXhr.post();
 	}
 }
 
+
+// comment deleted
+function commentdeleted(response) {
+	var resp = response.split("\n");
+	if (resp[0] != '0') {
+		var currentrow = $('rowc-' + this.options.rowid);
+		currentrow.dispose();
+	}
+
+	$('ajaxresponse').removeClass('ajax-loading');
+	$('ajaxresponse').set('text',resp[1]);
+}
+
+
+//  comment saved
 function commentsaved(response) {
 	$('ajaxresponse').removeClass('ajax-loading');
 	// first line contains the row, second line contains status.
@@ -133,7 +127,7 @@ function commentsaved(response) {
 	if (resp[0] != '0') {
 		// create new row in comments table
 		var newrow = new Element('tr', {
-			id : 'row-' + resp[0]
+			id : 'rowc-' + resp[0]
 		});
 		
 		// add td's
@@ -149,16 +143,17 @@ function commentsaved(response) {
 			id : 'delete-' + resp[0],
 			type : 'button',
 			value : str_delete
-		}).addClass('inputbox button-delete').addEvent('click', deleteevent);
+		}).addClass('inputbox button-delete-c btn').addEvent('click', deletecomment);
 		new Element('td').appendChild(deletebutton).inject(newrow,'inside');
 		newrow.inject($('row-new-comment'),'before');
 		
-		$('ajaxresponse').set('text',resp[1]).style.color='green';
+		$('ajaxresponse').set('text',resp[1]);
 	} else {
 		$('ajaxresponse').set('text',resp[1]).style.color='red';
 	}
 }
 
+// event delete
 function deleteevent() {
 	var eventid = this.id.substr(7);
 	var url = baseajaxurl + '&task=match.removeEvent';
@@ -176,10 +171,12 @@ function deleteevent() {
 	}
 }
 
+
+// event deleted
 function eventdeleted(response) {
 	var resp = response.split("\n");
 	if (resp[0] != '0') {
-		var currentrow = $('row-' + this.options.rowid);
+		var currentrow = $('rowe-' + this.options.rowid);
 		currentrow.dispose();
 	}
 
@@ -187,6 +184,56 @@ function eventdeleted(response) {
 	$('ajaxresponse').set('text',resp[1]);
 }
 
+// event saved
+function eventsaved(response) {
+	$('ajaxresponse').removeClass('ajax-loading');
+	// first line contains the row, second line contains the status.
+	var resp = response.split("\n");
+	if (resp[0] != '0') {
+		// create new row in events table
+		var newrow = new Element('tr', {
+			id : 'rowe-' + resp[0]
+		});
+		new Element('td').set('text', $('team_id').options[$('team_id').selectedIndex].text)
+				.inject(newrow,'inside');
+		new Element('td')
+				.set('text', $('teamplayer_id').options[$('teamplayer_id').selectedIndex].text)
+				.inject(newrow,'inside');
+		new Element('td')
+				.set('text', $('event_type_id').options[$('event_type_id').selectedIndex].text)
+				.inject(newrow,'inside');
+		new Element('td').set('text',$('event_sum').value).inject(newrow,'inside');
+		new Element('td').set('text',$('event_time').value).inject(newrow,'inside');
+		new Element('td', {
+			title : $('notice').value
+		}).addClass("hasTooltip").set('text',trimstr($('notice').value, 20)).inject(newrow,'inside');
+		var deletebutton = new Element('input', {
+			id : 'delete-' + resp[0],
+			type : 'button',
+			value : str_delete
+		}).addClass('inputbox button-delete-e btn').addEvent('click', deleteevent);
+		new Element('td').appendChild(deletebutton).inject(newrow,'inside');
+		newrow.inject($('row-new'),'before');
+		$('ajaxresponse').set('text',resp[1]);
+	} else {
+		$('ajaxresponse').set('text',resp[1]);
+	}
+}
+
+// request: failed
+function reqfailed() {
+	$('ajaxresponse').removeClass('ajax-loading');
+	$('ajaxresponse').set('text',response);
+}
+
+// request: sent
+function reqsent() {
+	$('ajaxresponse').addClass('ajax-loading');
+	$('ajaxresponse').set('text','');
+}
+
+
+// player select
 function updatePlayerSelect() {
 	if($('cell-player'))
 	$('cell-player').empty().appendChild(

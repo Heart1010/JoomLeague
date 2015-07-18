@@ -31,6 +31,132 @@ class JoomleagueControllerMatch extends JoomleagueController
 		$this->registerTask('edit','display');
 		$this->registerTask('apply','save');
 	}
+	
+	public function copyfrom()
+	{
+		$app = JFactory::getApplication();
+		$option = JRequest::getCmd('option');
+		$msg='';
+		$post=JRequest::get('post');
+		$model=$this->getModel('match');
+		$add_match_count=JRequest::getInt('add_match_count');
+		$round_id=JRequest::getInt('rid');
+		$post['project_id']=$app->getUserState($option.'project',0);
+		$post['round_id']=$app->getUserState($option.'round_id',0);
+		$project_tz = new DateTimeZone($model->getProject()->timezone);
+	
+		// Add matches (type=1)
+		if ($post['addtype']==1)
+		{
+			if ($add_match_count > 0) // Only MassAdd a number of new and empty matches
+			{
+				if (!empty($post['autoPublish'])) // 1=YES Publish new matches
+				{
+					$post['published']=1;
+				}
+	
+				$matchNumber= JRequest::getInt('firstMatchNumber',1);
+				$roundFound=false;
+	
+				if ($projectRounds=$model->getProjectRoundCodes($post['project_id']))
+				{
+					// convert date and time to utc
+					$uiDate = $post['match_date'];
+					$uiTime = $post['startTime'];
+					$post['match_date'] = $this->convertUiDateTimeToMatchDate($uiDate, $uiTime, $project_tz);
+						
+					foreach ($projectRounds AS $projectRound)
+					{
+						if ($projectRound->id==$post['round_id']){
+							$roundFound=true;
+						}
+						if ($roundFound)
+						{
+							$post['round_id']=$projectRound->id;
+							$post['roundcode']=$projectRound->roundcode;
+							for ($x=1; $x <= $add_match_count; $x++)
+							{
+							if (!empty($post['firstMatchNumber'])) // 1=YES Add continuous match Number to new matches
+							{
+							$post['match_number']=$matchNumber;
+							}
+	
+							if ($model->store($post))
+							{
+							$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ADD_MATCH');
+									$matchNumber++;
+							}
+							else
+							{
+							$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_ADD_MATCH').$model->getError();
+							break;
+							}
+							}
+							if (empty($post['addToRound'])) // 1=YES Add matches to all rounds
+							{
+							break;
+					}
+					}
+							}
+							}
+							}
+					}
+					// Copy matches (type=2)
+					if ($post['addtype']==2)// Copy or mirror new matches from a selected existing round
+					{
+							if ($matches=$model->getRoundMatches($round_id))
+							{
+							// convert date and time to utc
+								$uiDate = $post['date'];
+								$uiTime = $post['startTime'];
+										$post['match_date'] = $this->convertUiDateTimeToMatchDate($uiDate, $uiTime, $project_tz);
+	
+										foreach($matches as $match)
+										{
+											//aufpassen,was uebernommen werden soll und welche daten durch die aus der post ueberschrieben werden muessen
+											//manche daten muessen auf null gesetzt werden
+	
+ 					$dmatch['match_date'] = $post['match_date'];
+	 						
+	 								if ($post['mirror'] == '1')
+					{
+						$dmatch['projectteam1_id']	= $match->projectteam2_id;
+						$dmatch['projectteam2_id']	= $match->projectteam1_id;
+										}
+											else
+					{
+											$dmatch['projectteam1_id']	= $match->projectteam1_id;
+											$dmatch['projectteam2_id']	= $match->projectteam2_id;
+										}
+													$dmatch['project_id']	= $post['project_id'];
+													$dmatch['round_id']		= $post['round_id'];
+													if ($post['start_match_number'] != '')
+					{
+															$dmatch['match_number']=$post['start_match_number'];
+															$post['start_match_number']++;
+															}
+	
+					if ($model->store($dmatch))
+						{
+						$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_COPY_MATCH');
+					}
+					else
+					{
+								$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_COPY_MATCH').$model->getError();
+					}
+				}
+			}
+			else
+			{
+										$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_COPY_MATCH2').$model->getError();
+			}
+		}
+		//echo $msg;
+			$link='index.php?option=com_joomleague&view=matches&task=match.display';
+			$link .= '&hidemainmenu='.JRequest::getVar('hidemainmenu',0);
+			$this->setRedirect($link,$msg);
+		}
+	
 
 	public function display($cachable = false, $urlparams = false) {
 		$option = JRequest::getCmd('option');
@@ -379,131 +505,7 @@ class JoomleagueControllerMatch extends JoomleagueController
 		$this->setRedirect($link,$msg);
 	}
 
-	public function copyfrom()
-	{
-		$app = JFactory::getApplication();
-		$option = JRequest::getCmd('option');
-		$msg='';
-		$post=JRequest::get('post');
-		$model=$this->getModel('match');
-		$add_match_count=JRequest::getInt('add_match_count');
-		$round_id=JRequest::getInt('rid');
-		$post['project_id']=$app->getUserState($option.'project',0);
-		$post['round_id']=$app->getUserState($option.'round_id',0);
-		$project_tz = new DateTimeZone($model->getProject()->timezone);
-		
-		// Add matches (type=1)
-		if ($post['addtype']==1)
-		{
-			if ($add_match_count > 0) // Only MassAdd a number of new and empty matches
-			{
-				if (!empty($post['autoPublish'])) // 1=YES Publish new matches
-				{
-					$post['published']=1;
-				}
-
-				$matchNumber= JRequest::getInt('firstMatchNumber',1);
-				$roundFound=false;
-				
-				if ($projectRounds=$model->getProjectRoundCodes($post['project_id']))
-				{
-					// convert date and time to utc
-					$uiDate = $post['match_date'];
-					$uiTime = $post['startTime'];
-					$post['match_date'] = $this->convertUiDateTimeToMatchDate($uiDate, $uiTime, $project_tz);
-			
-					foreach ($projectRounds AS $projectRound)
-					{
-						if ($projectRound->id==$post['round_id']){
-							$roundFound=true;
-						}
-						if ($roundFound)
-						{
-							$post['round_id']=$projectRound->id;
-							$post['roundcode']=$projectRound->roundcode;
-							for ($x=1; $x <= $add_match_count; $x++)
-							{
-								if (!empty($post['firstMatchNumber'])) // 1=YES Add continuous match Number to new matches
-								{
-									$post['match_number']=$matchNumber;
-								}
-
-								if ($model->store($post))
-								{
-									$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ADD_MATCH');
-									$matchNumber++;
-								}
-								else
-								{
-									$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_ADD_MATCH').$model->getError();
-									break;
-								}
-							}
-							if (empty($post['addToRound'])) // 1=YES Add matches to all rounds
-							{
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		// Copy matches (type=2)
-		if ($post['addtype']==2)// Copy or mirror new matches from a selected existing round
-		{
-			if ($matches=$model->getRoundMatches($round_id))
-			{
-				// convert date and time to utc
-				$uiDate = $post['date'];
-				$uiTime = $post['startTime'];
-				$post['match_date'] = $this->convertUiDateTimeToMatchDate($uiDate, $uiTime, $project_tz);
-
-				foreach($matches as $match)
-				{
-					//aufpassen,was uebernommen werden soll und welche daten durch die aus der post ueberschrieben werden muessen
-					//manche daten muessen auf null gesetzt werden
-
- 					$dmatch['match_date'] = $post['match_date'];
-					
-					if ($post['mirror'] == '1')
-					{
-						$dmatch['projectteam1_id']	= $match->projectteam2_id;
-						$dmatch['projectteam2_id']	= $match->projectteam1_id;
-					}
-					else
-					{
-						$dmatch['projectteam1_id']	= $match->projectteam1_id;
-						$dmatch['projectteam2_id']	= $match->projectteam2_id;
-					}
-					$dmatch['project_id']	= $post['project_id'];
-					$dmatch['round_id']		= $post['round_id'];
-					if ($post['start_match_number'] != '')
-					{
-						$dmatch['match_number']=$post['start_match_number'];
-						$post['start_match_number']++;
-					}
-
-					if ($model->store($dmatch))
-					{
-						$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_COPY_MATCH');
-					}
-					else
-					{
-						$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_COPY_MATCH').$model->getError();
-					}
-				}
-			}
-			else
-			{
-				$msg=JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_COPY_MATCH2').$model->getError();
-			}
-		}
-		//echo $msg;
-		$link='index.php?option=com_joomleague&view=matches&task=match.display';
-		$link .= '&hidemainmenu='.JRequest::getVar('hidemainmenu',0);
-		$this->setRedirect($link,$msg);
-	}
-
+	
 	//	add a match to round
 	public function addmatch()
 	{
@@ -629,6 +631,41 @@ class JoomleagueControllerMatch extends JoomleagueController
 		$link .= '&hidemainmenu='.JRequest::getVar('hidemainmenu',0);
 		$this->setRedirect($link,$msg,$type);
 	}
+	
+	
+	public function savecomment()
+	{
+		$option = JRequest::getCmd('option');
+	
+		// Check for request forgeries
+		JSession::checkToken("GET") or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
+	
+		$app = JFactory::getApplication();
+		$data = array();
+		$data['teamplayer_id']	= JRequest::getInt('teamplayer_id');
+		$data['projectteam_id']	= JRequest::getInt('projectteam_id');
+		$data['event_type_id']	= JRequest::getInt('event_type_id');
+		$data['event_time']		= JRequest::getVar('event_time', '');
+		$data['match_id']		= JRequest::getInt('match_id');
+		$data['event_sum']		= JRequest::getVar('event_sum', '');
+		$data['notice']			= JRequest::getVar('notice', '');
+		$data['notes']			= JRequest::getVar('notes', '');
+	
+		$model=$this->getModel('match');
+		$project_id=$app->getUserState($option.'project',0);
+		header('Content-Type: application/json');
+	
+		if (!$result=$model->savecomment($data, $project_id)) {
+			$result="0"."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_SAVED_COMMENT').': '.$model->getError();
+		} else {
+			/* $rowid = JRequest::getVar('rowid',0); */
+			$rowid = $result;
+			$result= $rowid."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_SAVED_COMMENT');
+		}
+		echo json_encode($result);
+		JFactory::getApplication()->close();
+	}
+	
 
 	public function saveevent()
 	{
@@ -768,6 +805,34 @@ class JoomleagueControllerMatch extends JoomleagueController
 		$this->setRedirect($link, $msg);
 	}
 
+	
+	public function removeComment()
+	{
+		// Check for request forgeries
+		JSession::checkToken("GET") or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
+	
+		$event_id=JRequest::getInt('event_id');
+		$model=$this->getModel('match');
+	
+		$result = $model->deletecomment($event_id);
+	
+		// Use the correct json mime-type
+		header('Content-Type: application/json');
+	
+		if (!$result=$model->deletecomment($event_id))
+		{
+			$result="0"."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_ERROR_DELETE_COMMENTS').': '.$model->getError();
+		}
+		else
+		{
+			$result="1"."\n".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_CTRL_DELETE_COMMENTS');
+		}
+		echo json_encode($result);
+		JFactory::getApplication()->close();
+	}
+	
+	
+	
 	public function removeEvent()
 	{
 		// Check for request forgeries

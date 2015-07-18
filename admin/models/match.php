@@ -1276,6 +1276,24 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		}
 		return true;
 	}
+	
+	
+	function savecomment($data, $project_id)
+	{
+		$object = JTable::getInstance('MatchEvent','Table');
+		$object->bind($data);
+		if (!$object->check())
+		{
+			$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_CHECK_FAILED'));
+			return false;
+		}
+		if (!$object->store())
+		{
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		}
+		return $object->id;
+	}
 
 	function saveevent($data, $project_id)
 	{
@@ -1439,6 +1457,27 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		return true;
 	}
 
+	
+	function deletecomment($event_id)
+	{
+		$object = JTable::getInstance('MatchEvent','Table');
+		$object->load($event_id);
+	
+		$res = $this->canDelete($event_id);
+	
+		if (!$res){
+			$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_ERROR_DELETE'));
+			return false;
+		}
+		if (!$object->delete($event_id))
+		{
+			$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_DELETE_FAILED'));
+			return false;
+		}
+		return true;
+	}
+	
+	
 	function deleteevent($event_id)
 	{
 		$object = JTable::getInstance('MatchEvent','Table');
@@ -1447,8 +1486,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		$res = $this->canDelete($event_id);
 		
 		if (!$res){
-			// $this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_ERROR_DELETE'));
-			$this->setError($res);
+			$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_MODEL_ERROR_DELETE'));
 			return false;
 		}
 		if (!$object->delete($event_id))
