@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
+ * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -8,9 +8,7 @@
  * other free or open source software licenses.
  * See COPYRIGHT.php for copyright notices and details.
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
@@ -18,9 +16,8 @@ jimport('joomla.application.component.controller');
  * Joomleague Ajax Controller
  *
  * @package		Joomleague
- * @since 1.5
  */
-class JoomleagueControllerAjax extends JController
+class JoomleagueControllerAjax extends JControllerLegacy
 {
 
 	public function __construct()
@@ -38,6 +35,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectDivisionsOptions(JRequest::getInt('p'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projecteventsoptions()
@@ -46,6 +44,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectEventsOptions(JRequest::getInt('p'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectteamsbydivisionoptions()
@@ -54,6 +53,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectTeamsByDivisionOptions(JRequest::getInt('p'), JRequest::getInt( 'division' ), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectsbysportstypesoptions()
@@ -62,6 +62,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectsBySportsTypesOptions(JRequest::getInt('sportstype'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectsbycluboptions()
@@ -70,6 +71,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectsByClubOptions(JRequest::getInt( 'cid' ), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectteamsoptions()
@@ -78,6 +80,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectTeamOptions(JRequest::getInt('p'),JRequest::getInt('division'),$required));
+		JFactory::getApplication()->close();
 	}
 	
 	public function projectplayeroptions()
@@ -86,6 +89,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectPlayerOptions(JRequest::getInt('p'),JRequest::getInt('division'),$required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectstaffoptions()
@@ -94,6 +98,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectStaffOptions(JRequest::getInt('p'),JRequest::getInt('division'),$required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectclubsoptions()
@@ -102,6 +107,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectClubOptions(JRequest::getInt('p'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projectstatsoptions()
@@ -110,6 +116,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectStatOptions(JRequest::getInt('p'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function matchesoptions()
@@ -118,6 +125,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getMatchesOptions(JRequest::getInt('p'),JRequest::getInt('division'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function refereesoptions()
@@ -126,6 +134,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getRefereesOptions(JRequest::getInt('p'), $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function roundsoptions()
@@ -133,6 +142,7 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) JoomleagueHelper::getRoundsOptions(JRequest::getInt('p'),'ASC', $required));
+		JFactory::getApplication()->close();
 	}
 
 	public function projecttreenodeoptions()
@@ -141,11 +151,13 @@ class JoomleagueControllerAjax extends JController
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
 		echo json_encode((array) $model->getProjectTreenodeOptions(JRequest::getInt('p'), $required));
+		JFactory::getApplication()->close();
 	}
 	
 	public function sportstypesoptions()
 	{
 		echo json_encode((array) JoomleagueModelSportsTypes::getSportsTypes());
+		JFactory::getApplication()->close();
 	}
 
 }
