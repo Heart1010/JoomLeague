@@ -1,24 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Controller
- *
- * @package	JoomLeague
- * @since	0.1
+ * Season Controller
  */
 class JoomleagueControllerSeason extends JoomleagueController
 {
@@ -36,7 +29,7 @@ class JoomleagueControllerSeason extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		
+				
 		$task = $this->getTask();
 		
 		switch ($task)
@@ -149,7 +142,6 @@ class JoomleagueControllerSeason extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Season', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{
@@ -157,4 +149,3 @@ class JoomleagueControllerSeason extends JoomleagueController
 		return $model;
 	}
 }
-?>

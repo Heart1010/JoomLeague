@@ -1,12 +1,10 @@
 <?php
 /**
- * @copyright   Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license	 GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,21 +12,22 @@ jimport('joomla.application.component.view');
 jimport('joomla.html.pane');
 jimport('joomla.filesystem.file');
 
-/**
- * HTML View class for the Joomleague component
- *
- * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
- */
 require_once JPATH_COMPONENT.'/models/sportstypes.php';
 require_once JPATH_COMPONENT.'/models/leagues.php';
+
+/**
+ * HTML View class
+ *
+ * @author	Marco Vaninetti <martizva@tiscali.it>
+ */
+
 class JoomleagueViewJoomleague extends JLGView
 {
 
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
 		// hide main menu in result/match edit view
-		$viewName=JRequest::getCmd('view');
+		$viewName = $this->input->getCmd('view');
 		if ($viewName == 'matches')
 		{
 			return;
@@ -94,8 +93,8 @@ class JoomleagueViewJoomleague extends JLGView
 	// diplay left Menu
 	function _displayMenu($tpl=null)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		JHtml::_('behavior.framework');
 		$db = JFactory::getDbo();
 		$document = JFactory::getDocument();
@@ -105,48 +104,48 @@ class JoomleagueViewJoomleague extends JLGView
 		$model = $this->getModel('project') ;
 		$params = JComponentHelper::getParams($option);
 		
-		$pid=JRequest::getVar('pid',array(0),'','array');
-		$stid=JRequest::getVar('stid',array(0),'','array');
+		$pid = JRequest::getVar('pid',array(0),'','array');
+		$stid = JRequest::getVar('stid',array(0),'','array');
 		if($pid[0] > 0 && $stid[0] == '') {
 			$model->setId($pid[0]);
 			$project = $this->get('Data');
 			$sports_type_id = $project->sports_type_id;
 		} else {
-			$sports_type_id = $mainframe->getUserState($option.'sportstypes',0);
+			$sports_type_id = $app->getUserState($option.'sportstypes',0);
 		}
 		if($stid[0] > 0 || $sports_type_id >0)
 		{
 			if($stid[0] > 0) {
-				$mainframe->setUserState($option.'sportstypes',$stid[0]);
+				$app->setUserState($option.'sportstypes',$stid[0]);
 			}
 			if($sports_type_id > 0) {
-				$mainframe->setUserState($option.'sportstypes', $sports_type_id);
+				$app->setUserState($option.'sportstypes', $sports_type_id);
 			}
 		} else {
 			$defsportstype = $params->get("defsportstype");
 			$defsportstype = (empty($defsportstype)) ? "1" : $params->get("defsportstype");
-			$mainframe->setUserState($option.'sportstypes', $defsportstype);
+			$app->setUserState($option.'sportstypes', $defsportstype);
 		}
-		$seasonnav = $mainframe->getUserState($option.'seasonnav');
+		$seasonnav = $app->getUserState($option.'seasonnav');
 		
 		$pid=JRequest::getVar('pid',array(0),'','array');
 		if($pid[0] > 0)
 		{
-			$mainframe->setUserState($option.'project',$pid[0]);
+			$app->setUserState($option.'project',$pid[0]);
 			$model->setId($pid[0]);
 		}
 
 		$project = $this->get('Data');
 		$model = $this->getModel();
 
-		$use_seasons=$params->get('cfg_show_seasons_in_project_drop_down',0); //Use seasons in dropdown or not
+		$use_seasons = $params->get('cfg_show_seasons_in_project_drop_down',0); //Use seasons in dropdown or not
 
 		//build the html select list for sports-types
-		$sports_type_id=$mainframe->getUserState($option.'sportstypes',0);
+		$sports_type_id=$app->getUserState($option.'sportstypes',0);
 		$project_id=$pid[0];
 		if($sports_type_id > 0)
 		{
-			$project_id = $mainframe->getUserState($option.'project', 0);
+			$project_id = $app->getUserState($option.'project', 0);
 		}
 
 		$allSportstypes = JoomleagueModelSportsTypes::getSportsTypes();
@@ -160,7 +159,7 @@ class JoomleagueViewJoomleague extends JLGView
 										'name',
 										$sports_type_id);
 
-		if($mainframe->getUserState($option.'sportstypes',0))
+		if($app->getUserState($option.'sportstypes',0))
 		{
 			// seasons
 			$seasons[] = JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_SEASON'),'id','name');
@@ -205,7 +204,7 @@ class JoomleagueViewJoomleague extends JLGView
 		{
 			$team_id = JRequest::getInt("ptid", 0);
 			if($team_id==0) {
-				$team_id = $mainframe->getUserState($option.'project_team_id');
+				$team_id = $app->getUserState($option.'project_team_id');
 			}
 			$projectteams[]=JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TEAM'),'value','text');
 
@@ -224,8 +223,8 @@ class JoomleagueViewJoomleague extends JLGView
 											'text',
 											$team_id);
 
-			$round_id=$mainframe->getUserState($option.'round_id');
-			$projectrounds[]=JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_ROUND'),'value','text');
+			$round_id = $app->getUserState($option.'round_id');
+			$projectrounds[] = JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_ROUND'),'value','text');
 			
 			$mdlRound = JModelLegacy::getInstance("Round", "JoomleagueModel");
 			$mdlRound->setId($project->current_round);
@@ -413,7 +412,7 @@ class JoomleagueViewJoomleague extends JLGView
 		// active pane selector
 		if ($project->id)
 		{
-			switch (JRequest::getVar('view'))
+			switch ($this->input->getCmd('view'))
 			{
 				case 'projects':			
 				case 'leagues':
@@ -436,13 +435,13 @@ class JoomleagueViewJoomleague extends JLGView
 
 				break;
 
-				default:					$active=JRequest::getInt("active",1);
+				default:					$active=$this->input->getInt("active",1);
 
 			}
 		}
 		else
 		{
-			switch (JRequest::getVar('view'))
+			switch ($this->input->getCmd('view'))
 			{
 				case 'projects':			
 				case 'leagues':
@@ -463,7 +462,7 @@ class JoomleagueViewJoomleague extends JLGView
 				case 'databasetools':		$active=1;
 				break;
 
-				default:					$active=JRequest::getInt("active",0);
+				default:					$active=$this->input->getInt("active",0);
 
 			}
 		}

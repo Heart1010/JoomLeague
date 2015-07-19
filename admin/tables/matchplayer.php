@@ -1,25 +1,18 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 // Include library dependencies
-jimport( 'joomla.filter.input' );
+jimport('joomla.filter.input');
 
 /**
-* Match player Table class
-*
-* @package		Joomleague
-* @since 1.5
+* Matchplayer Table class
 */
 class TableMatchplayer extends JLTable
 {
@@ -27,7 +20,6 @@ class TableMatchplayer extends JLTable
 	 * Constructor
 	 *
 	 * @param object Database connector object
-	 * @since 1.0
 	 */
 	public function __construct( & $db )
 	{
@@ -39,7 +31,6 @@ class TableMatchplayer extends JLTable
 	 *
 	 * @access public
 	 * @return boolean True on success
-	 * @since 1.0
 	 */
 	public function check()
 	{
@@ -51,4 +42,3 @@ class TableMatchplayer extends JLTable
 		return true;
 	}
 }
-?>

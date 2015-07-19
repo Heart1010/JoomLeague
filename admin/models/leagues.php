@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,9 +12,7 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Model Leagues
- *
- * @package	JoomLeague
+ * Leagues Model
  */
 class JoomleagueModelLeagues extends JoomleagueModelList
 {
@@ -39,10 +35,10 @@ class JoomleagueModelLeagues extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$filter_order		= $app->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
 		if ($filter_order == 'obj.ordering')
 		{
 			$orderby=' ORDER BY obj.ordering '.$filter_order_Dir;
@@ -56,11 +52,11 @@ class JoomleagueModelLeagues extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'l_search',			'search',			'',				'string');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$filter_order		= $app->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($option.'l_search',				'search',			'',				'string');
 		$search=JString::strtolower($search);
 		$where=array();
 		if ($search)

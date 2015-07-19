@@ -62,13 +62,11 @@ JHtml::_('behavior.tooltip');
 				<tfoot><tr><td colspan='12'><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 				<tbody>
 					<?php
-					$k=0;
-					for ($i=0, $n=count($this->positiontool); $i < $n; $i++)
-					{
-						$row = $this->positiontool[$i];
+					$n = count($this->positiontool);
+					foreach ($this->positiontool as $i => $row) :
 						$imageFileOk='administrator/components/com_joomleague/assets/images/ok.png';
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>
 							<td><?php echo $row->name; ?></td>
 							<td><?php if ($row->name != JText::_($row->name)){echo JText::_($row->name);} ?></td>
@@ -166,10 +164,7 @@ JHtml::_('behavior.tooltip');
 							</td>
 							<td class="center"><?php echo $row->positiontoolid; ?></td>
 						</tr>
-						<?php
-						$k=1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 		</fieldset>

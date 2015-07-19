@@ -1,19 +1,17 @@
 /**
- * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
- * @license	GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
- */
-
-/**
- * javascript for dependant element xml parameter
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ * 
+ * @description
+ * javascript for dependant element xml paramater 
  */
 
 // add update of field when fields it depends on change.
 window.addEvent('domready', function() {
+	
 	$$('.mdepend').addEvent('click', function() {
 		// rebuild hidden field list
 		var sel = new Array();
@@ -27,14 +25,24 @@ window.addEvent('domready', function() {
 	});
 
 	$$('.depend').each(function(element) {
+		// get value of attribute "depends", can be multiple
 		var depends = element.getProperty('depends');
+		// create array
+		var dependsArray = depends.split(',');
+		// gets the active element
 		var myelement = element;
+		
+		// gets the prefix of the current element
 		var prefix = getElementIdPrefix(element);
-
+		
 		// Attach update_depend to the change event of all elements it depends upon,
 		// so that when (one of) the dependencies change, the element is refreshed. 
-		depends.split(',').each(function(el) {
-			$(prefix + el).addEvent('change', function(event) {
+		dependsArray.each(function(el) {
+				
+			// incoming: string, without prefix so let's attach the prefix
+			var combined = '#'+String(prefix)+String(el);
+			var newid = document.id(combined);
+			jQuery(combined).change(function() {
 				update_depend(myelement);
 			});
 		});
@@ -46,10 +54,21 @@ window.addEvent('domready', function() {
 
 // update dependant element function
 function update_depend(element) {
+	
+	// the element that will be changed upon change of depend
 	var combo = element;
+	// prefix
 	var prefix = getElementIdPrefix(element);
+	// do we have a required attributed?
 	var required = element.getProperty('required') || 'false';
-	required = (required=='true') ? "&required=true" : "&required=false" ;
+	
+	if (required == 'true') {
+		var required = "&required=true";
+	} 
+	if (required == 'false') {
+		var required = "&required=false";
+	}
+	
 	var selectedItems = combo.getProperty('current').split('|');
 	var depends = combo.getProperty('depends').split(',');
 	var dependquery = '';
@@ -66,8 +85,15 @@ function update_depend(element) {
 		method : 'post',
 		postBody : postStr,
 		onSuccess : function(response) {
+			/* var JSON_output = JSON.stringify(response); */
+			
+			// options is equal to the response
 			var options = response;
+			
+			
 			var headingLine = null;
+			
+			// @todo: check!
 			if (combo.getProperty('isrequired') == 0) {
 				// In case the element is not mandatory, then first option is 'select': keep it
 				// Remark : the old solution options.unshift(combo.options[0]); does not work properly
@@ -76,20 +102,26 @@ function update_depend(element) {
 				headingLine = {value: combo.options[0].value, text: combo.options[0].text};
 			}
 			combo.empty();
+			
+			// adding first option
 			if (headingLine != null) {
 				new Element('option', headingLine).injec(combo,'inside');
 			}
+						
 			options.each(function(el) {
+				/*
 				if (typeof el == "undefined") return;
 				if (selectedItems != null && selectedItems.indexOf(el.value) != -1) {
 					el.selected = "selected";
 				}
-				new Element('option', el).inject(combo,'inside');
+				*/
+				
+				new Element('option', {'value': el.value, 'text':el.text}).inject(combo,'inside');
 			});
 			// Make sure to inform others who are dependent on us, so they also update
-			combo.fireEvent('change');
+			//combo.fireEvent('change');
 			// For mdepend make sure that the hidden input is updated
-			combo.fireEvent('click');
+			//combo.fireEvent('click');
 		}
 	});
 

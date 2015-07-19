@@ -1,12 +1,10 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -22,9 +20,8 @@ class JoomleagueHelper
 	 *
 	 * @access	public
 	 * @return	array project
-	 * @since	1.5
 	 */
-	function getProjects()
+	public static function getProjects()
 	{
 		$db = JFactory::getDbo();
 
@@ -52,9 +49,8 @@ class JoomleagueHelper
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since	0.1
 	 */
-	function getProjectteams($project_id)
+	public static function getProjectteams($project_id)
 	{
 		$db = JFactory::getDbo();
 		$query='	SELECT	pt.id AS value,
@@ -83,9 +79,8 @@ class JoomleagueHelper
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since	1.5.03a
 	 */
-	function getProjectteamsNew($project_id)
+	public static function getProjectteamsNew($project_id)
 	{
 		$db = JFactory::getDbo();
 
@@ -110,7 +105,7 @@ class JoomleagueHelper
 		}
 	}
 
-	function getProjectFavTeams($project_id)
+	public static function getProjectFavTeams($project_id)
 	{
 		$db = JFactory::getDbo();
 
@@ -164,7 +159,6 @@ class JoomleagueHelper
 	 *
 	 * @access	public
 	 * @return	array seasons
-	 * @since	1.5.0a
 	 */
 	function getSportsTypes()
 	{
@@ -652,13 +646,13 @@ class JoomleagueHelper
 		$extensions = JoomleagueHelper::getExtensions(JRequest::getInt('p'));
 		foreach ($templatesToLoad as $template)
 		{
-			$view->addTemplatePath(JPATH_COMPONENT . DS . 'views' . DS . $template . DS . 'tmpl');
+			$view->addTemplatePath(JPATH_COMPONENT.'/views/'.$template.'/tmpl');
 			if (is_array($extensions) && count($extensions) > 0)
 			{
 				foreach ($extensions as $e => $extension)
 				{
-					$extension_views = JPATH_COMPONENT_SITE . DS . 'extensions' . DS . $extension . DS . 'views';
-					$tmpl_path = $extension_views . DS . $template . DS . 'tmpl';
+					$extension_views = JPATH_COMPONENT_SITE.'/extensions/'. $extension.'/views';
+					$tmpl_path = $extension_views.'/'.$template.'/tmpl';
 					if (JFolder::exists($tmpl_path))
 					{
 						$view->addTemplatePath($tmpl_path);
@@ -1539,5 +1533,12 @@ class JoomleagueHelper
 			return $overallconfig['time_zone'];
 		}
 	}
+	
+	
+	public static function sideMenu() {
+		
+		
+	}
+	
 }
-?>
+

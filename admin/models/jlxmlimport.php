@@ -1,15 +1,12 @@
 <?php
 /**
- * @copyright   Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 $maxImportTime=JComponentHelper::getParams('com_joomleague')->get('max_import_time',0);
 if (empty($maxImportTime))
@@ -29,11 +26,9 @@ jimport('joomla.application.component.model');
 jimport('joomla.filesystem.file');
 
 /**
- * Joomleague Component JoomLeague XML-Import Model
+ * XML-Import Model
  *
  * @author	Zoltan Koteles & Kurt Norgaz
- * @package	JoomLeague
- * @since	1.5.0a
  */
 class JoomleagueModelJLXMLImport extends JModelLegacy
 {
@@ -426,14 +421,23 @@ class JoomleagueModelJLXMLImport extends JModelLegacy
 
 	public function getUserList($is_admin=false)
 	{
-		$query='SELECT id,username FROM #__users';
+		/* $user	= JFactory::getUser(); */
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('u.id, u.username,g.title');
+		$query->from('#__users AS u'); 
+		$query->leftJoin('#__user_usergroup_map AS map ON map.user_id = u.id');
+		$query->leftJoin('#__usergroups AS g ON g.id = map.group_id');
 		if ($is_admin==true)
-		{
-			$query .= " WHERE usertype='Super Administrator' OR usertype='Administrator'";
+		{		
+			$query->where('g.title = '.$db->quote("Super Users").' OR g.title = '.$db->quote("Administrator"));
 		}
-		$query .= ' ORDER BY username ASC';
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		$query->order('u.username ASC');
+		$db->setQuery($query);
+		$users = $db->loadObjectList();
+				
+		return $users;
 	}
 
 	public function getTemplateList()

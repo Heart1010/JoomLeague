@@ -1,39 +1,32 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
-jimport('joomla.filesystem.file');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @packag	JoomLeague
+ * HTML View class
  */
 class JoomleagueViewStatistics extends JLGView
 {
 	public function display($tpl=null)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 		$user = JFactory::getUser();
 		$uri = JFactory::getURI();
 		
-		$filter_sports_type	= $mainframe->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_sports_type',	'filter_sports_type','',	'int');
-		$filter_state		= $mainframe->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'.'.$this->get('identifier').'.search',			'search',			'',				'string');
+		$filter_sports_type	= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_sports_type',	'filter_sports_type','',	'int');
+		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.search',			'search',			'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
@@ -44,17 +37,17 @@ class JoomleagueViewStatistics extends JLGView
 		$lists['state']=JHtml::_('grid.state',$filter_state);
 
 		// table ordering
-		$lists['order_Dir']=$filter_order_Dir;
-		$lists['order']=$filter_order;
+		$lists['order_Dir'] = $filter_order_Dir;
+		$lists['order'] = $filter_order;
 
 		// search filter
-		$lists['search']=$search;
+		$lists['search'] = $search;
 		
 				//build the html select list for sportstypes
-		$sportstypes[]=JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_ADMIN_EVENTS_SPORTSTYPE_FILTER'),'id','name');
+		$sportstypes[] = JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_ADMIN_EVENTS_SPORTSTYPE_FILTER'),'id','name');
 		$allSportstypes = JoomleagueModelSportsTypes::getSportsTypes();
-		$sportstypes=array_merge($sportstypes,$allSportstypes);
-		$lists['sportstypes']=JHtml::_( 'select.genericList',
+		$sportstypes = array_merge($sportstypes,$allSportstypes);
+		$lists['sportstypes'] = JHtml::_( 'select.genericList',
 										$sportstypes,
 										'filter_sports_type',
 										'class="inputbox" onChange="this.form.submit();" style="width:120px"',

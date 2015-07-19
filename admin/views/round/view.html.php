@@ -1,30 +1,21 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
- * @since	0.1
+ * HTML View class
  */
 
 class JoomleagueViewRound extends JLGView
 {
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
 		if ($this->getLayout() == 'form')
 		{
@@ -36,8 +27,8 @@ class JoomleagueViewRound extends JLGView
 
 	function _displayForm($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
 		$user = JFactory::getUser();
@@ -52,7 +43,7 @@ class JoomleagueViewRound extends JLGView
 		if ($model->isCheckedOut($user->get('id')))
 		{
 			$msg=JText::sprintf('DESCBEINGEDITTED',JText::_('The matchday'),$round->name);
-			$mainframe->redirect('index.php?option='.$option,$msg);
+			$app->redirect('index.php?option='.$option,$msg);
 		}
 
 		// Edit or Create?
@@ -77,15 +68,14 @@ class JoomleagueViewRound extends JLGView
 		$this->addToolbar();		
 		parent::display($tpl);
 	}
+	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.6
 	*/
 	protected function addToolbar()
 	{ 
 		// Set toolbar items for the page
-		$edit = JRequest::getVar('edit', true);
+		$edit = $this->input->get('edit', true);
 		$text = !$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT');
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_ROUND_TITLE'). ': ' . $this->matchday->name,'clubs','Matchdays');
 
@@ -97,7 +87,6 @@ class JoomleagueViewRound extends JLGView
 		}
 		else
 		{
-			// for existing items the button is renamed `close`
 			JLToolBarHelper::cancel('round.cancel', 'COM_JOOMLEAGUE_GLOBAL_CLOSE');
 		}
 		JToolBarHelper::help('screen.joomleague', true);	

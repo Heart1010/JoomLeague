@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined ('_JEXEC') or die;
 
@@ -15,14 +13,11 @@ jimport('joomla.filesystem.file');
 JHtml::_('behavior.framework');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @author Marco Vaninetti <martizva@tiscali.it>
- * @package JoomLeague
+ * HTML View class
  */
 class JoomleagueViewMatch extends JLGView 
 {
-	function display($tpl = null) {
+	public function display($tpl = null) {
 		if ($this->getLayout () == 'form') {
 			$this->_displayForm ( $tpl );
 			return;
@@ -48,25 +43,25 @@ class JoomleagueViewMatch extends JLGView
 	
 	
 	function _displayEditReferees($tpl) {
-		$option = JRequest::getCmd ( 'option' );
-		$mainframe = JFactory::getApplication ();
-		$document = JFactory::getDocument ();
-		$project_id = $mainframe->getUserState ( $option . 'project' );
-		$params = JComponentHelper::getParams ( $option );
-		$default_name_format = $params->get ( "name_format" );
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$document = JFactory::getDocument();
+		$project_id = $app->getUserState($option.'project');
+		$params = JComponentHelper::getParams($option);
+		$default_name_format = $params->get("name_format");
 
 		// add the js script
-		$version = urlencode ( JoomleagueHelper::getVersion () );
-		$document->addScript ( JUri::base () . 'components/com_joomleague/assets/js/startinglineup.js?v=' . $version );
+		$version = urlencode(JoomleagueHelper::getVersion());
+		$document->addScript(JUri::base().'components/com_joomleague/assets/js/startinglineup.js?v='.$version);
 
-		$model = $this->getModel ();
-		$match = $this->get ( 'data' );
+		$model = $this->getModel();
+		$match = $this->get('data');
 
-		$allreferees = array ();
-		$allreferees = $model->getRefereeRoster ();
-		$inroster = array ();
-		$projectreferees = array ();
-		$projectreferees2 = array ();
+		$allreferees = array();
+		$allreferees = $model->getRefereeRoster();
+		$inroster = array();
+		$projectreferees = array();
+		$projectreferees2 = array();
 
 		if (isset ( $allreferees )) {
 			foreach ( $allreferees as $referee ) {
@@ -119,9 +114,11 @@ class JoomleagueViewMatch extends JLGView
 	
 	
 	function _displayEditevents($tpl) {
-		$option = JRequest::getCmd ( 'option' );
-		$mainframe = JFactory::getApplication ();
-		$project_id = $mainframe->getUserState ( $option . 'project' );
+		$option = $this->input->getCmd('option');		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+
+		$project_id = $app->getUserState($option . 'project' );
 		$document = JFactory::getDocument ();
 		$tid = JRequest::getVar ( 'team', '0' );
 		$params = JComponentHelper::getParams ( $option );
@@ -191,8 +188,8 @@ class JoomleagueViewMatch extends JLGView
 	
 	function _displayEditeventsbb($tpl) {
 		$option = JRequest::getCmd ( 'option' );
-		$mainframe = JFactory::getApplication ();
-		$project_id = $mainframe->getUserState ( $option . 'project' );
+		$app = JFactory::getApplication ();
+		$project_id = $app->getUserState ( $option . 'project' );
 		$document = JFactory::getDocument ();
 		$params = JComponentHelper::getParams ( $option );
 		$default_name_format = $params->get ( "name_format", 14 );
@@ -210,7 +207,7 @@ class JoomleagueViewMatch extends JLGView
 		$events = $model->getEventsOptions ( $project_id );
 		if (! $events) {
 			$msg = '<br />' . JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_NO_EVENTS_POS' ) . '<br /><br />';
-			$mainframe->enqueueMessage ( $msg, 'warning' );
+			$app->enqueueMessage ( $msg, 'warning' );
 			$this->addToolbar_Editeventsbb ( false );
 			return false;
 		}
@@ -253,8 +250,8 @@ class JoomleagueViewMatch extends JLGView
 	
 	function _displayEditstats($tpl) {
 		$option = JRequest::getCmd ( 'option' );
-		$mainframe = JFactory::getApplication ();
-		$project_id = $mainframe->getUserState ( $option . 'project' );
+		$app = JFactory::getApplication ();
+		$project_id = $app->getUserState ( $option . 'project' );
 		$document = JFactory::getDocument ();
 		$params = JComponentHelper::getParams ( $option );
 		$default_name_format = $params->get ( "name_format" );
@@ -316,8 +313,8 @@ class JoomleagueViewMatch extends JLGView
 	
 	function _displayEditlineup($tpl) {
 		$option = JRequest::getCmd ( 'option' );
-		$mainframe = JFactory::getApplication ();
-		$project_id = $mainframe->getUserState ( $option . 'project' );
+		$app = JFactory::getApplication ();
+		$project_id = $app->getUserState ( $option . 'project' );
 		$document = JFactory::getDocument ();
 		$tid = JRequest::getVar ( 'team', '0' );
 		$params = JComponentHelper::getParams ( $option );
@@ -563,7 +560,7 @@ class JoomleagueViewMatch extends JLGView
 	
 	
 	function _displayForm($tpl) {
-		$mainframe = JFactory::getApplication ();
+		$app = JFactory::getApplication ();
 		$option = JRequest::getCmd ( 'option' );
 		$user = JFactory::getUser ();
 		$model = $this->getModel ();
@@ -581,7 +578,7 @@ class JoomleagueViewMatch extends JLGView
 		// fail if checked out not by 'me'
 		if ($model->isCheckedOut ( $user->get ( 'id' ) )) {
 			$msg = JText::sprintf ( 'DESCBEINGEDITTED', JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_THE_MATCH' ), $match->name );
-			$mainframe->redirect ( 'index.php?option=com_joomleague', $msg );
+			$app->redirect ( 'index.php?option=com_joomleague', $msg );
 		}
 
 		// Edit or Create?
@@ -623,7 +620,7 @@ class JoomleagueViewMatch extends JLGView
 		$oldmatches [] = JHtml::_ ( 'select.option', '0', JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_OLD_MATCH' ) );
 		$res = array ();
 		$new_match_id = ($match->new_match_id) ? $match->new_match_id : 0;
-		if ($res = $mdlMatch->getMatchRelationsOptions ( $mainframe->getUserState ( $option . 'project', 0 ), $match->id . "," . $new_match_id )) {
+		if ($res = $mdlMatch->getMatchRelationsOptions ( $app->getUserState ( $option . 'project', 0 ), $match->id . "," . $new_match_id )) {
 			foreach ( $res as $m ) {
 				$m->text = '(' . JoomleagueHelper::getMatchStartTimestamp ( $m ) . ') - ' . $m->t1_name . ' - ' . $m->t2_name;
 			}
@@ -634,7 +631,7 @@ class JoomleagueViewMatch extends JLGView
 		$newmatches [] = JHtml::_ ( 'select.option', '0', JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_NEW_MATCH' ) );
 		$res = array ();
 		$old_match_id = ($match->old_match_id) ? $match->old_match_id : 0;
-		if ($res = $mdlMatch->getMatchRelationsOptions ( $mainframe->getUserState ( $option . 'project', 0 ), $match->id . "," . $old_match_id )) {
+		if ($res = $mdlMatch->getMatchRelationsOptions ( $app->getUserState ( $option . 'project', 0 ), $match->id . "," . $old_match_id )) {
 			foreach ( $res as $m ) {
 				$m->text = '(' . JoomleagueHelper::getMatchStartTimestamp ( $m ) . ') - ' . $m->t1_name . ' - ' . $m->t2_name;
 			}

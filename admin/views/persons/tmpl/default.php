@@ -1,12 +1,10 @@
 <?php 
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -29,8 +27,10 @@ function onupdatebirthday(cal)
 	$($(cal.params.inputField).getProperty('cb')).setProperty('checked','checked');
 }
 </script>
+
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 
+<!-- Filter -->
 <div class="clearfix">
 	<div class="btn-wrapper input-append pull-left">
 		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER' ); ?>:
@@ -51,8 +51,9 @@ function onupdatebirthday(cal)
 		</div>
 	</div>
 </div>
-	<div id="editcell">
-		<table class="adminlist table table-striped">
+
+<!-- Rows -->
+		<table class="table table-striped" id="articleList">
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
@@ -239,7 +240,9 @@ function onupdatebirthday(cal)
 				?>
 			</tbody>
 		</table>
-	</div>
+
+	
+	<!-- Input fields -->
 	<input type="hidden" name="search_mode" value="<?php echo $this->lists['search_mode'];?>" id="search_mode" />
 	<input type="hidden" name="task" value="person.display" />
 	<input type="hidden" name="boxchecked" value="0" />

@@ -1,24 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Model
- *
- * @package	JoomLeague
- * @since	0.1
+ * Treetomatch controller
  */
 class JoomleagueControllerTreetomatch extends JoomleagueController
 {
@@ -35,8 +28,8 @@ class JoomleagueControllerTreetomatch extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 
 	 	$model=$this->getModel('treetomatchs');
@@ -45,19 +38,19 @@ class JoomleagueControllerTreetomatch extends JoomleagueController
 		$view->setModel($model,true);	// true is for the default model;
 
 		$projectws=$this->getModel('project');
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws);
-			if ( $nid = JRequest::getVar( 'nid', null, '', 'array' ) )
+			if ( $nid = JRequest::getVar('nid', null, '', 'array'))
 		{
-			$mainframe->setUserState( $option . 'node_id', $nid[0] );
+			$app->setUserState($option.'node_id', $nid[0]);
 		}
-		if ( $tid = JRequest::getVar( 'tid', null, '', 'array' ) )
+		if ( $tid = JRequest::getVar('tid', null, '', 'array'))
 		{
-			$mainframe->setUserState( $option . 'treeto_id', $tid[0] );
+			$app->setUserState($option.'treeto_id', $tid[0]);
 		}
-		$nodews = $this->getModel( 'treetonode' );
-		$nodews->setId( $mainframe->getUserState( $option.'node_id') );
-		$view->setModel( $nodews );
+		$nodews = $this->getModel('treetonode');
+		$nodews->setId($app->getUserState( $option.'node_id'));
+		$view->setModel($nodews);
 		
 		$task = $this->getTask();
 		
@@ -91,9 +84,9 @@ class JoomleagueControllerTreetomatch extends JoomleagueController
 
 	public function editlist()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
 		$document	= JFactory::getDocument();
 		$model		= $this->getModel ('treetomatchs');
 		$viewType	= $document->getType();
@@ -101,23 +94,23 @@ class JoomleagueControllerTreetomatch extends JoomleagueController
 		$view->setModel($model, true);  // true is for the default model;
 
 		$projectws = $this->getModel ('project');
-		$projectws->setId($mainframe->getUserState($option . 'project', 0));
+		$projectws->setId($app->getUserState($option . 'project', 0));
 		$view->setModel($projectws);
 		
-			if ( $nid = JRequest::getVar( 'nid', null, '', 'array' ) )
+		if ($nid = JRequest::getVar('nid', null, '', 'array'))
 		{
-			$mainframe->setUserState( $option . 'node_id', $nid[0] );
+			$app->setUserState($option.'node_id', $nid[0]);
 		}
-		if ( $tid = JRequest::getVar( 'tid', null, '', 'array' ) )
+		if ($tid = JRequest::getVar( 'tid', null, '', 'array'))
 		{
-			$mainframe->setUserState( $option . 'treeto_id', $tid[0] );
+			$app->setUserState($option.'treeto_id', $tid[0]);
 		}
-		$nodews = $this->getModel( 'treetonode' );
-		$nodews->setId( $mainframe->getUserState( $option.'node_id') );
-		$view->setModel( $nodews );
+		$nodews = $this->getModel('treetonode');
+		$nodews->setId($app->getUserState($option.'node_id'));
+		$view->setModel($nodews);
 		
 		JRequest::setVar('hidemainmenu', 0);
-		JRequest::setVar('layout', 'editlist' );
+		JRequest::setVar('layout', 'editlist');
 		JRequest::setVar('view', 'treetomatchs');
 		JRequest::setVar('edit', true);
 
@@ -170,4 +163,3 @@ class JoomleagueControllerTreetomatch extends JoomleagueController
 		$this->setRedirect('index.php?option=com_joomleague&task=treetomatch.display&view=treetomatchs');
 	}
 }
-?>

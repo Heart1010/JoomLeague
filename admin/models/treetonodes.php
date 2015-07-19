@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,16 +12,14 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Treetonodes Model
- *
- * @package	JoomLeague
+ * Treetonodes Model
  */
 
 class JoomleagueModelTreetonodes extends JoomleagueModelList
 {
 	var $_identifier = "treetonodes";
 	
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 		$limit=130;
@@ -61,10 +57,10 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
-		$treeto_id = $mainframe->getUserState( $option . 'treeto_id' );
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
+		$treeto_id = $app->getUserState($option . 'treeto_id');
 		$where = ' WHERE  ttn.treeto_id = ' . $treeto_id ;
 		return $where;
 	}
@@ -83,10 +79,10 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 
 	function setRemoveNode()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$treeto_id = 	$mainframe->getUserState( $option . 'treeto_id' );
-		$post	= 	JRequest::get( 'post' );
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
+		$treeto_id = 	$app->getUserState($option . 'treeto_id');
+		$post	= 	JRequest::get('post');
 		$treeto_id = 	(int) $post['treeto_id'];
 		
 		$query= ' DELETE ttn, ttm ';
@@ -117,14 +113,14 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 	// UPDATE selected node as a leaf AND unpublish ALL children node
 	function storeshortleaf($cid,$post)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		//$project_id = $mainframe->getUserState( $option . 'project' );
-		$post	= 	JRequest::get( 'post' );
-		$result=true;
-		$tree_i = 	$post['tree_i'];
-		$treeto_id = 	$post['treeto_id'];
-		$global_fake = 	$post['global_fake'];
+		$option = $this->option->getCmd('option');
+		$app	= JFactory::getApplication();
+		//$project_id = $app->getUserState( $option . 'project' );
+		$post	= JRequest::get( 'post' );
+		$result = true;
+		$tree_i = $post['tree_i'];
+		$treeto_id = $post['treeto_id'];
+		$global_fake = $post['global_fake'];
 		//if user checked at least ONE node as leaf
 		for ($x=0; $x < count($cid); $x++)
 		{
@@ -191,9 +187,9 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 	
 	function storefinishleaf()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState($option . 'project');
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
 		$post	= 	JRequest::get( 'post' );
 		$tree_i = 	$post['tree_i'];
 		$treeto_id = 	$post['treeto_id'];
@@ -211,10 +207,10 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 
 	function getProjectTeamsOptions()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState($option . 'project');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
 
 		$query = ' SELECT	pt.id AS value, '
 		. ' CASE WHEN CHAR_LENGTH(t.name) < 45 THEN t.name ELSE t.middle_name END AS text '
@@ -238,8 +234,8 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 
 	function storeshort($cid,$post)
 	{
-		$option = JRequest::getCmd('option');
-		$result=true;
+		$option = $this->input->getCmd('option');
+		$result = true;
 		$post	= 	JRequest::get( 'post' );
 		
 		for ($x=0; $x < count($cid); $x++)

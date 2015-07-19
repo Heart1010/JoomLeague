@@ -1,25 +1,16 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
-* @license	GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-/**
- * Joomleague Component script file to CREATE/UPDATE all tables of JoomLeague
+ * Joomleague
  *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ *
+ * Joomleague Component script file to CREATE/UPDATE all tables of JoomLeague
  * @author	Kurt Norgaz
  * @author	And_One <andone@mfga.at>
- * @package	JoomLeague
- * @since	1.5 - 2010-08-18
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 $version			= '2.93.239.9df0b25-b';
 $updateFileDate		= '2012-09-13';
@@ -44,16 +35,16 @@ if ((int)ini_get('memory_limit') < (int)$maxImportMemory){ini_set('memory_limit'
 function getUpdatePart()
 {
 	$option = JRequest::getCmd('option');
-	$mainframe = JFactory::getApplication();
-	$update_part=$mainframe->getUserState($option.'update_part');
+	$app = JFactory::getApplication();
+	$update_part=$app->getUserState($option.'update_part');
 	return $update_part;
 }
 
 function setUpdatePart($val=1)
 {
 	$option = JRequest::getCmd('option');
-	$mainframe = JFactory::getApplication();
-	$update_part=$mainframe->getUserState($option.'update_part');
+	$app = JFactory::getApplication();
+	$update_part=$app->getUserState($option.'update_part');
 	if ($val!=0)
 	{
 		if ($update_part=='')
@@ -69,7 +60,7 @@ function setUpdatePart($val=1)
 	{
 		$update_part=0;
 	}
-	$mainframe->setUserState($option.'update_part',$update_part);
+	$app->setUserState($option.'update_part',$update_part);
 }
 
 ?>

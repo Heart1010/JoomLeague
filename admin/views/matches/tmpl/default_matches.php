@@ -1,4 +1,12 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 JHtml::_('behavior.framework');
 $modalheight = JComponentHelper::getParams('com_joomleague')->get('modal_popup_height', 600);
 $modalwidth = JComponentHelper::getParams('com_joomleague')->get('modal_popup_width', 900);
@@ -28,8 +36,8 @@ fieldset button {
 				<thead>
 					<tr>
 						<th width="5" ><?php echo count($this->matches).'/'.$this->pagination->total; ?></th>
-						<th width="20" >
-							<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+						<th width="1%" class="center">
+							<?php echo JHtml::_('grid.checkall'); ?>
 						</th>
 						<th width="20" >&nbsp;</th>
 						<th width="20" >
@@ -81,15 +89,13 @@ fieldset button {
 				<tfoot><tr><td colspan="<?php echo $colspan; ?>"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 				<tbody>
 					<?php
-					$k=0;
-					for ($i=0,$n=count($this->matches); $i < $n; $i++)
-					{
-						$row		= $this->matches[$i];
+					$n = count($this->items);
+					foreach ($this->matches as $i => $row) :
 						$checked	= JHtml::_('grid.checkedout',$row,$i,'id');
 						$published	= JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','match.');
 
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 						<?php if(($row->cancel)>0)
 								{
 									$style="text-align:center;  background-color: #FF9999;";
@@ -404,10 +410,7 @@ fieldset button {
 								?>
 							</td>
 						</tr>
-						<?php
-						$k=1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 

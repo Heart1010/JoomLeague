@@ -1,24 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Controller
- *
- * @package	JoomLeague
- * @since	0.1
+ * Treetonode Controller
  */
 class JoomleagueControllerTreetonode extends JoomleagueController
 {
@@ -34,8 +27,8 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 
 	 	$model=$this->getModel('treetonodes');
@@ -44,15 +37,15 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 		$view->setModel($model,true);	// true is for the default model;
 
 		$projectws=$this->getModel('project');
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws);
-		if ( $tid = JRequest::getVar( 'tid', null, '', 'array' ) )
+		if ($tid = JRequest::getVar('tid', null, '', 'array'))
 		{
-			$mainframe->setUserState( $option . 'treeto_id', $tid[0] );
+			$app->setUserState($option . 'treeto_id', $tid[0]);
 		}
-		$treetows = $this->getModel( 'treeto' );
-		$treetows->setId( $mainframe->getUserState( $option.'treeto_id') );
-		$view->setModel( $treetows );
+		$treetows = $this->getModel('treeto');
+		$treetows->setId($app->getUserState($option.'treeto_id'));
+		$view->setModel($treetows);
 		
 		$task = $this->getTask();
 		
@@ -82,9 +75,9 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 	public function removenode()
 	{
 		
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 		$post	= JRequest::get( 'post' );
-		$post['treeto_id']=$mainframe->getUserState($option.'treeto_id',0);
+		$post['treeto_id']=$app->getUserState($option.'treeto_id',0);
 		$model		= $this->getModel( 'treetonodes' );
 		if ( $model->setRemoveNode() )
 		{
@@ -100,16 +93,16 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 
 	public function unpublishnode()
 	{
-		$mainframe	= JFactory::getApplication();
-		$post	= JRequest::get( 'post' );
-		$model		= $this->getModel( 'treetonode' );
-		if ( $model->setUnpublishNode() )
+		$app	= JFactory::getApplication();
+		$post	= JRequest::get('post');
+		$model	= $this->getModel('treetonode');
+		if ($model->setUnpublishNode())
 		{
-			$msg = JText::_( 'COM_JOOMLEAGUE_ADMIN_TREETONODE_CTRL_UNPUBLISHNODE' );
+			$msg = JText::_('COM_JOOMLEAGUE_ADMIN_TREETONODE_CTRL_UNPUBLISHNODE');
 		}
 		else
 		{
-			$msg = JText::_( 'COM_JOOMLEAGUE_ADMIN_TREETONODE_CTRL_ERROR_UNPUBLISHNODE' );
+			$msg = JText::_('COM_JOOMLEAGUE_ADMIN_TREETONODE_CTRL_ERROR_UNPUBLISHNODE');
 		}
 		$link = 'index.php?option=com_joomleague&view=treetonodestreetonode.display';
 		$this->setRedirect( $link, $msg );
@@ -119,13 +112,13 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 	public function saveshortleaf()
 	{
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$post=JRequest::get('post');
-		$post['treeto_id']=$mainframe->getUserState($option.'treeto_id',0);
-		$cid=JRequest::getVar('cid',array(),'post','array');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$post = JRequest::get('post');
+		$post['treeto_id'] = $app->getUserState($option.'treeto_id',0);
+		$cid = JRequest::getVar('cid',array(),'post','array');
 		JArrayHelper::toInteger($cid);
-		$model=$this->getModel('treetonodes');
+		$model = $this->getModel('treetonodes');
 
 		if ($model->storeshortleaf($cid,$post))
 		{
@@ -138,16 +131,17 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 		$link='index.php?option=com_joomleague&view=treetonodes&task=treetonode.display';
 		$this->setRedirect($link,$msg);
 	}
+	
 	public function savefinishleaf()
 	{
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$post	= JRequest::get( 'post' );
-		$post['treeto_id']=$mainframe->getUserState($option.'treeto_id',0);
-		$model		= $this->getModel( 'treetonodes' );
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
+		$post	= JRequest::get('post');
+		$post['treeto_id']=$app->getUserState($option.'treeto_id',0);
+		$model		= $this->getModel('treetonodes');
 
-		if ( $model->storefinishleaf() )
+		if ($model->storefinishleaf())
 		{
 			$msg = JText::_( 'COM_JOOMLEAGUE_ADMIN_TREETONODE_CTRL_LEAFS_SAVED' );
 		}
@@ -162,10 +156,10 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 	public function saveshort()
 	{
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$post=JRequest::get('post');
-		$cid=JRequest::getVar('cid',array(),'post','array');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$post = JRequest::get('post');
+		$cid = JRequest::getVar('cid',array(),'post','array');
 		JArrayHelper::toInteger($cid);
 		$model=$this->getModel('treetonodes');
 		if ($model->storeshort($cid,$post))
@@ -183,8 +177,8 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 	public function save()
 	{
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$post=JRequest::get('post');
 		$model=$this->getModel('treetonode');
 
@@ -215,11 +209,11 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 	//	assign (empty)match to node	from editmatches view
 	public function assignmatch()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$post=JRequest::get('post');
-		$post['project_id']=$mainframe->getUserState($option.'project',0);
-		$post['node_id']=$mainframe->getUserState($option.'node_id',0);
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$post = JRequest::get('post');
+		$post['project_id'] = $app->getUserState($option.'project',0);
+		$post['node_id'] = $app->getUserState($option.'node_id',0);
 		$model=$this->getModel('treetonode');
 		if ($model->store($post))
 		{
@@ -232,6 +226,4 @@ class JoomleagueControllerTreetonode extends JoomleagueController
 		$link='index.php?option=com_joomleague&view=matches&task=match.display';
 		$this->setRedirect($link,$msg);
 	}
-
 }
-?>

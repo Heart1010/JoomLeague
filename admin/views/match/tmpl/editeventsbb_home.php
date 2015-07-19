@@ -1,4 +1,12 @@
 <?php
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 if(isset($this->preFillSuccess) && $this->preFillSuccess) {
   JFactory::getApplication()->enqueueMessage($this->teams->team1.": ".JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_PREFILL_DONE'), 'message');
 }
@@ -11,18 +19,18 @@ if(isset($this->preFillSuccess) && $this->preFillSuccess) {
 		<thead>
 			<tr>
 				<th style="text-align: left; width: 10px;"></th>
-				<th style="text-align: left;"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EEBB_PERSON' ); ?></th>
+				<th style="text-align: left;"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_MATCH_EEBB_PERSON'); ?></th>
 				<?php
 				foreach ( $this->events as $ev ) {
 					?>
 					<th style="text-align: center;">
 					<?php
-					if (JFile::exists ( JPATH_SITE . DS . $ev->icon )) {
-						$imageTitle = JText::sprintf ( '%1$s', JText::_ ( $ev->text ) );
+					if (JFile::exists(JPATH_SITE.'/'.$ev->icon )) {
+						$imageTitle = JText::sprintf('%1$s',JText::_($ev->text));
 						$iconFileName = $ev->icon;
-						echo JHtml::_ ( 'image', $iconFileName, $imageTitle, 'title= "' . $imageTitle . '"' );
+						echo JHtml::_('image', $iconFileName, $imageTitle, 'title= "' . $imageTitle . '"');
 					} else {
-						echo JText::_ ( $ev->text );
+						echo JText::_($ev->text);
 					}
 					?>
 					</th>

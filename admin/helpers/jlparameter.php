@@ -1,16 +1,12 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die;
 
 class JLParameter extends JRegistry
 {
@@ -34,18 +30,19 @@ class JLParameter extends JRegistry
 	 * @access	public
 	 * @param string	path to xml setup file
 	 * @return	object
-	 * @since 1.5
 	 */
 	public function loadSetupFile( $path )
 	{
 		$result = false;
 
-		if ( $path )
+		if ($path)
 		{
-			$xml = JFactory::getXMLParser( 'Simple' );
-
-			if ( $xml->loadFile( $path ) )
+			// @todo check!
+			$xml = simplexml_load_file($path);
+			
+			if ($xml)
 			{
+				// check for params
 				if ( $params = $xml->document->params )
 				{
 					foreach ( $params as $param )
@@ -54,12 +51,14 @@ class JLParameter extends JRegistry
 						$result = true;
 					}
 				}
-
+				
+				// check for name
 				if ( $name = $xml->document->name )
 				{
 					$this->name = JText::_( $name[0]->_data );
 				}
 
+				// check for description
 				if ( $description = $xml->document->description )
 				{
 					$this->description = JText::_( $description[0]->_data );
@@ -102,13 +101,11 @@ class JLParameter extends JRegistry
 
 	/**
 	 * @var    string  The raw params string
-	 * @since  11.1
 	 */
 	protected $_raw = null;
 
 	/**
 	 * @var    object  The XML params element
-	 * @since  11.1
 	 */
 	protected $_xml = null;
 
@@ -129,9 +126,6 @@ class JLParameter extends JRegistry
 	 *
 	 * @param   string  $data  The raw parms text.
 	 * @param   string  $path  Path to the XML setup file.
-	 *
-	 * @deprecated  12.1
-	 * @since   11.1
 	 */
 	public function __construct($data = '', $path = '')
 	{

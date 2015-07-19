@@ -1,30 +1,21 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package	JoomLeague
- * @since	0.1
+ * HTML View class
  */
 class JoomleagueViewSportsType extends JLGView
 {
 
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
 		$this->form =  $this->get('form');
 		//$extended = $this->getExtended($sportstype->extended, 'sporttype');
@@ -35,14 +26,12 @@ class JoomleagueViewSportsType extends JLGView
 
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{	
 		// Set toolbar items for the page
-		$edit=JRequest::getVar('edit',true);
-		$text=!$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT');
+		$edit = $this->input->get('edit',true);
+		$text = !$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT');
 
 		JLToolBarHelper::save('sportstype.save');
 

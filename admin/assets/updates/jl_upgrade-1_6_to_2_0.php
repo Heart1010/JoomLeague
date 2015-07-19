@@ -1,19 +1,16 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
-* @license	GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// ToDo:
-// - Remove old checks for already existing records in different functions as it was done with matches table
-// - check ranking class changes in tables or templates etc...
-// no direct access
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ * 
+ * @todo
+ * - remove old checks for already existing records in different functions as it was done with matches table
+ * - check ranking class changes in tables or templates etc...
+ */
+defined('_JEXEC') or die;
 
 $version = '2.93.239.9df0b25-b';
 $updateFileDate = '2013-02-09';
@@ -157,7 +154,7 @@ function UpdateTemplateMasters() {
 	if ($projects = $db->loadObjectList ()) 	// check that there are projects...
 	{
 		// echo '<br />';
-		$xmldir = JPATH_SITE . DS . 'components' . DS . 'com_joomleague' . DS . 'settings' . DS . 'default';
+		$xmldir = JPATH_SITE.'/components/com_joomleague/settings/default';
 		
 		if ($handle = JFolder::files ( $xmldir )) {
 			// check that each xml template has a corresponding record in the
@@ -169,7 +166,7 @@ function UpdateTemplateMasters() {
 				if ((strtolower ( substr ( $file, - 3 ) ) == 'xml') && (substr ( $file, 0, (strlen ( $file ) - 4) ) != 'table') && (substr ( $file, 0, 10 ) != 'prediction')) {
 					$defaultconfig = array ();
 					$template = substr ( $file, 0, (strlen ( $file ) - 4) );
-					$out = simplexml_load_file ( $xmldir . DS . $file, 'SimpleXMLElement', LIBXML_NOCDATA );
+					$out = simplexml_load_file($xmldir.'/'.$file,'SimpleXMLElement',LIBXML_NOCDATA);
 					$temp = '';
 					$arr = obj2Array ( $out );
 					$outName = JText::_($out->name[0]);
@@ -337,8 +334,8 @@ function getVersion() {
 function getUpdatePart() {
 	$option = 'com_joomleague';
 	
-	$mainframe = JFactory::getApplication ();
-	$update_part = $mainframe->getUserState ( $option . 'update_part' );
+	$app = JFactory::getApplication ();
+	$update_part = $app->getUserState ( $option . 'update_part' );
 	if ($update_part == '') {
 		$update_part = 1;
 	}
@@ -348,8 +345,8 @@ function getUpdatePart() {
 
 function setUpdatePart($val = 1) {
 	$option = 'com_joomleague';
-	$mainframe = JFactory::getApplication ();
-	$update_part = $mainframe->getUserState ( $option . 'update_part' );
+	$app = JFactory::getApplication ();
+	$update_part = $app->getUserState ( $option . 'update_part' );
 	if ($val != 0) {
 		if ($update_part == '') {
 			$update_part = 1; // 1;
@@ -359,7 +356,7 @@ function setUpdatePart($val = 1) {
 	} else {
 		$update_part = 0;
 	}
-	$mainframe->setUserState ( $option . 'update_part', $update_part );
+	$app->setUserState ( $option . 'update_part', $update_part );
 }
 
 // ------------------------------------------------------------------------------------------------------------------------

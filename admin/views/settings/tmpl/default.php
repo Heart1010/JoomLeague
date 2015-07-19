@@ -1,10 +1,14 @@
 <?php
-defined('_JEXEC') or die('Restricted access');
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-$option = JRequest::getCmd('option');
-
-$i      = 1;
-
+$option = $this->input->getCmd('option');
 ?>
 <style type="text/css">
 	<!--
@@ -15,38 +19,41 @@ $i      = 1;
 	}
 	-->
 </style>
-<form action="index.php" method="post" id="adminForm">
-    <?php
-    echo JHtml::_('tabs.start','tabs', array('useCookie'=>1));
-        $fieldSets = $this->form->getFieldsets();
-        foreach ($fieldSets as $name => $fieldSet) :
-            $label = $fieldSet->name;
-            echo JHtml::_('tabs.panel',JText::_($label), 'panel'.$i++);
-			?>
-			<fieldset class="panelform">
-				<?php
-				if (isset($fieldSet->description) && !empty($fieldSet->description)) :
-					echo '<fieldset class="adminform">'.JText::_($fieldSet->description).'</fieldset>';
-				endif;
-				?>
-				<ul class="config-option-list">
-				<?php foreach ($this->form->getFieldset($name) as $field): ?>
-					<li>
-					<?php if (!$field->hidden) : ?>
-					<?php echo $field->label; ?>
-					<?php endif; ?>
-					<?php echo $field->input; ?>
-					</li>
-				<?php endforeach; ?>
-				</ul>
-			</fieldset>
- 
-    <div class="clr"></div>
-    <?php endforeach; ?>
-    <?php echo JHtml::_('tabs.end'); ?>
-	<div>	
+<form action="index.php" method="post" id="adminForm" name="adminForm"> 
+   <?php
+   	$p=1;
+	echo JHtml::_('bootstrap.startTabSet', 'tabs', array('active' => 'panel1'));
+	
+	$fieldSets = $this->form->getFieldsets();
+	foreach ($fieldSets as $name => $fieldSet) :
+	$label = $fieldSet->name;
+	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_($label,true));
+	?>
+				<fieldset class="form-horizontal">
+					<?php
+					if (isset($fieldSet->description) && !empty($fieldSet->description)) :
+						echo '<fieldset class="adminform">'.JText::_($fieldSet->description).'</fieldset>';
+					endif;
+					?>
+					<ul class="config-option-list">
+					<?php foreach ($this->form->getFieldset($name) as $field): ?>
+						<li>
+						<?php if (!$field->hidden) : ?>
+						<?php echo $field->label; ?>
+						<?php endif; ?>
+						<?php echo $field->input; ?>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+				</fieldset>
+	 	<?php 
+	 	echo JHtml::_('bootstrap.endTab'); 
+	    endforeach; 
+	    echo JHtml::_('bootstrap.endTabSet');
+   		?>
+   		<div class="clr"></div>
+	<!-- Input fields -->
 	<input type="hidden" name="task" value="setting.display">
 	<input type="hidden" name="option" value="<?php echo $option; ?>">
 	<?php echo JHtml::_('form.token'); ?>
-	</div>
 </form>

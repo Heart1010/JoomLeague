@@ -1,24 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Controller
- *
- * @package	JoomLeague
- * @since	0.1
+ * Teamstaff Controller
  */
 class JoomleagueControllerTeamSTaff extends JoomleagueController
 {
@@ -36,8 +29,8 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 		$model=$this->getModel('teamstaffs');
 		$viewType=$document->getType();
@@ -46,11 +39,11 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 
 		$projectws=$this->getModel('project');
 
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws);
 
 		$teamws=$this->getModel('projectteam');
-		$teamws->setId($mainframe->getUserState($option.'project_team_id',0));
+		$teamws->setId($app->getUserState($option.'project_team_id',0));
 		$view->setModel($teamws);
 
 		$task = $this->getTask();
@@ -75,12 +68,12 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 					$view=$this->getView('teamstaff',$viewType);
 					$view->setModel($model,true);  // true is for the default model;
 
-					$projectws->setId($mainframe->getUserState($option.'project',0));
+					$projectws->setId($app->getUserState($option.'project',0));
 					$view->setModel($projectws);
 
 					$teamws=$this->getModel('projectteam');
 
-					$teamws->setId($mainframe->getUserState($option.'project_team_id',0));
+					$teamws->setId($app->getUserState($option.'project_team_id',0));
 					$view->setModel($teamws);
 
 					JRequest::setVar('hidemainmenu',0);
@@ -99,8 +92,8 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 
 	public function editlist()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 		$model=$this->getModel('teamstaffs');
 		$viewType=$document->getType();
@@ -108,11 +101,11 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 		$view->setModel($model,true);  // true is for the default model;
 
 		$projectws=$this->getModel('project');
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws);
 		$teamws=$this->getModel('projectteam');
 
-		$teamws->setId($mainframe->getUserState($option.'project_team_id',0));
+		$teamws->setId($app->getUserState($option.'project_team_id',0));
 		$view->setModel($teamws);
 
 		JRequest::setVar('hidemainmenu',1);
@@ -202,9 +195,9 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 
 	public function remove()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 		$app = JFactory::getApplication();
-		$project_id=$app->getUserState($option.'project',0);
+		$project_id = $app->getUserState($option.'project',0);
 		$user = JFactory::getUser();
 		$cid=JRequest::getVar('cid',array(),'post','array');
 		JArrayHelper::toInteger($cid);
@@ -228,11 +221,11 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 
 	public function select()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$mainframe->setUserState($option.'project_team_id',JRequest::getVar('project_team_id'));
-		$mainframe->setUserState($option.'team_id',JRequest::getVar('team_id'));
-		$mainframe->setUserState($option.'team',JRequest::getVar('project_team_id'));
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$app->setUserState($option.'project_team_id',JRequest::getVar('project_team_id'));
+		$app->setUserState($option.'team_id',JRequest::getVar('team_id'));
+		$app->setUserState($option.'team',JRequest::getVar('project_team_id'));
 		$this->setRedirect('index.php?option=com_joomleague&view=teamstaffs&task=teamstaff.display');
 	}
 
@@ -269,7 +262,6 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Teamstaff', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{
@@ -277,4 +269,3 @@ class JoomleagueControllerTeamSTaff extends JoomleagueController
 		return $model;
 	}
 }
-?>

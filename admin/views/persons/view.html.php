@@ -1,22 +1,16 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package	JoomLeague
+ * HTML View class
  */
 class JoomleagueViewPersons extends JLGView
 {
@@ -28,24 +22,24 @@ class JoomleagueViewPersons extends JLGView
 			$this->_displayAssignPlayers($tpl);
 			return;
 		}
-		JHtml::_('behavior.calendar'); //load the calendar behavior
-		$option = JRequest::getCmd('option');
-		$params			= JComponentHelper::getParams( $option );
-		$mainframe = JFactory::getApplication();
+		JHtml::_('behavior.calendar');
+		$option = $this->input->getCmd('option');
+		$params	= JComponentHelper::getParams( $option );
+		$app = JFactory::getApplication();
 		
 		$model	= $this->getModel();
 
-		$filter_state		= $mainframe->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering', 'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'pl_filter_order_Dir', 'filter_order_Dir', '', 'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'pl_search', 'search', '', 'string');
-		$search_mode		= $mainframe->getUserStateFromRequest($option.'pl_search_mode', 'search_mode', '', 'string');
+		$filter_state		= $app->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'pl_filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$search				= $app->getUserStateFromRequest($option.'pl_search', 'search', '', 'string');
+		$search_mode		= $app->getUserStateFromRequest($option.'pl_search_mode', 'search_mode', '', 'string');
 
 		$items = $this->get('Data');
 		$total = $this->get('Total');
 		$pagination = $this->get('Pagination');
 
-		$mainframe->setUserState($option.'task','');
+		$app->setUserState($option.'task','');
 
 		// state filter
 		$lists['state']=JHtml::_('grid.state',$filter_state);
@@ -78,28 +72,34 @@ class JoomleagueViewPersons extends JLGView
 		$this->pagination = $pagination;
 		$this->request_url = JFactory::getURI()->toString();
 		$this->component_params = $params;
+		
+		
+		$sideMenu = JoomleagueHelper::sideMenu();
+		
+		$this->sidebar = $sideMenu;
+		
 		$this->addToolbar();
 		parent::display($tpl);
 	}
 
 	function _displayAssignPlayers($tpl=null)
 	{
-		$option 		= JRequest::getCmd('option');
+		$option 		= $this->input->getCmd('option');
 		$params			= JComponentHelper::getParams( $option );
-		$mainframe 		= JFactory::getApplication();
+		$app 		= JFactory::getApplication();
 		$model 			= $this->getModel();
-		$project_id 	= $mainframe->getUserState($option.'project');
+		$project_id 	= $app->getUserState($option.'project');
 		$mdlProject 	= JModelLegacy::getInstance("project", "JoomLeagueModel");
 		$project_name 	= $mdlProject->getProjectName($project_id);
-		$project_team_id = $mainframe->getUserState($option.'project_team_id');
+		$project_team_id = $app->getUserState($option.'project_team_id');
 		$team_name = $model->getProjectTeamName($project_team_id);
 		$mdlQuickAdd = JLGModel::getInstance('Quickadd','JoomleagueModel');
 
-		$filter_state		= $mainframe->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'pl_filter_order_Dir', 'filter_order_Dir', '', 'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'pl_search', 'search', '', 'string');
-		$search_mode		= $mainframe->getUserStateFromRequest($option.'pl_search_mode',	'search_mode', '', 'string');
+		$filter_state		= $app->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'pl_filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$search				= $app->getUserStateFromRequest($option.'pl_search', 'search', '', 'string');
+		$search_mode		= $app->getUserStateFromRequest($option.'pl_search_mode',	'search_mode', '', 'string');
 
 		//save icon should be replaced by the apply
 		JLToolBarHelper::apply('person.saveassigned','COM_JOOMLEAGUE_ADMIN_PERSONS_SAVE_SELECTED');		
@@ -130,10 +130,10 @@ class JoomleagueViewPersons extends JLGView
 
 		JToolBarHelper::help('screen.joomleague',true);		
 		
-		$limit = $mainframe->getUserStateFromRequest('global.list.limit','limit',$mainframe->getCfg('list_limit'),'int');
+		$limit = $app->getUserStateFromRequest('global.list.limit','limit',$app->getCfg('list_limit'),'int');
 
 		jimport('joomla.html.pagination');
-		$pagination = new JPagination($mdlQuickAdd->_total,JRequest::getVar('limitstart',0,'','int'),$limit);
+		$pagination = new JPagination($mdlQuickAdd->_total,$this->input->getÍnt('limitstart',0),$limit);
 		$mdlQuickAdd->_pagination=$pagination;
 
 		// table ordering

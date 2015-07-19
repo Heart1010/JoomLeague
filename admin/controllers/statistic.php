@@ -1,25 +1,18 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 jimport('joomla.filesystem.file');
 
 /**
- * Joomleague Component Event Controller
- *
- * @package	JoomLeague
- * @since	0.1
+ * Statistic Controller
  */
 class JoomleagueControllerStatistic extends JoomleagueController
 {
@@ -39,10 +32,10 @@ class JoomleagueControllerStatistic extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe 		= JFactory::getApplication();
-		$sports_type	= JRequest::getInt('filter_sports_type',0);
-		$mainframe->setUserState($option.'.statistics.filter_sports_type',$sports_type);
+		$option = $this->input->getCmd('option');
+		$app 	= JFactory::getApplication();
+		$sports_type	= $this->input->getInt('filter_sports_type',0);
+		$app->setUserState($option.'.statistics.filter_sports_type',$sports_type);
 		
 		$task = $this->getTask();
 		
@@ -176,7 +169,6 @@ class JoomleagueControllerStatistic extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Statistic', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{
@@ -184,4 +176,3 @@ class JoomleagueControllerStatistic extends JoomleagueController
 		return $model;
 	}
 }
-?>

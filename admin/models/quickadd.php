@@ -1,26 +1,18 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-
-require_once ( JPATH_COMPONENT . DS . 'models' . DS . 'list.php' );
+require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component person search Model
- *
- * @package	JoomLeague
- * @since	1.5
+ * Quickadd Model
  */
 class JoomleagueModelQuickAdd extends JoomleagueModelList
 {
@@ -45,11 +37,11 @@ class JoomleagueModelQuickAdd extends JoomleagueModelList
 								WHERE	projectteam_id = ". $this->_db->Quote($projectteam_id) . " AND
 										tp.person_id = pl.id ) ";
 
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
 
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
 
 		if ( $filter_order == 'pl.lastname' )
 		{
@@ -88,11 +80,11 @@ class JoomleagueModelQuickAdd extends JoomleagueModelList
 		$query .= "                     WHERE projectteam_id = ". $this->_db->Quote($projectteam_id);
 		$query .= "                     AND ts.person_id = pl.id ) ";
 		
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
 
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
 
 		if ( $filter_order == 'pl.lastname' )
 		{
@@ -131,11 +123,11 @@ class JoomleagueModelQuickAdd extends JoomleagueModelList
 		$query .= "                     FROM #__joomleague_project_referee AS pr ";
 		$query .= "                     WHERE project_id = ". $this->_db->Quote($projectid);
 		$query .= "                     AND pr.person_id = pl.id ) ";
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
 
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
 
 		if ( $filter_order == 'pl.lastname' )
 		{
@@ -292,4 +284,3 @@ class JoomleagueModelQuickAdd extends JoomleagueModelList
 		return true;
 	}
 }
-?>

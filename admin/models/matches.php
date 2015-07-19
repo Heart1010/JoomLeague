@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,10 +12,9 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Matches Model
+ * Matches Model
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
  */
 
 class JoomleagueModelMatches extends JoomleagueModelList
@@ -112,11 +109,11 @@ class JoomleagueModelMatches extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		$filter_order		= $mainframe->getUserStateFromRequest($option . 'mc_filter_order', 'filter_order', 'mc.match_date', 'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option . 'mc_filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$app	= JFactory::getApplication();
+		$filter_order		= $app->getUserStateFromRequest($option . 'mc_filter_order', 'filter_order', 'mc.match_date', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option . 'mc_filter_order_Dir', 'filter_order_Dir', '', 'word');
 
 		if ($filter_order == 'mc.match_number')
 		{
@@ -136,13 +133,13 @@ class JoomleagueModelMatches extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 		$where=array();
 		
-		$mainframe	= JFactory::getApplication();
-		// $project_id = $mainframe->getUserState($option . 'project');
-		$division	= (int) $mainframe->getUserStateFromRequest($option.'mc_division', 'division', 0);
-		$round_id = $mainframe->getUserState($option . 'round_id');
+		$app	= JFactory::getApplication();
+		// $project_id = $app->getUserState($option . 'project');
+		$division	= (int) $app->getUserStateFromRequest($option.'mc_division', 'division', 0);
+		$round_id = $app->getUserState($option . 'round_id');
 
 		$where[] = ' mc.round_id = ' . $round_id;
 		if ($division>0)
@@ -162,10 +159,10 @@ class JoomleagueModelMatches extends JoomleagueModelList
 	 */
 	function getProjectTeams()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState($option . 'project');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
 
 		$query = '	SELECT	pt.id AS value,
 							t.name AS text,
@@ -197,10 +194,10 @@ class JoomleagueModelMatches extends JoomleagueModelList
 	 */
 	function getProjectTeamsOptions($iDivisionId=0)
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState($option . 'project');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
 
 		$query = ' SELECT	pt.id AS value, '
 		. ' CASE WHEN CHAR_LENGTH(t.name) < 25 THEN t.name ELSE t.middle_name END AS text '

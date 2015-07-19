@@ -1,33 +1,26 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.view' );
 
 /**
- * HTML View class for the Joomleague component
+ * HTML View class
  *
- * @static
  * @author	Kurt Norgaz
- * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueViewTeamStaff extends JLGView
 {
 
-	function display( $tpl = null )
+	public function display( $tpl = null )
 	{
-		$mainframe	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
+		$jinput		= $app->input;
 		$uri		= JFactory::getURI();
 		$user		= JFactory::getUser();
 		$model		= $this->getModel();
@@ -43,7 +36,7 @@ class JoomleagueViewTeamStaff extends JLGView
 		if ( $model->isCheckedOut( $user->get( 'id' ) ) )
 		{
 			$msg = JText::sprintf( 'DESCBEINGEDITTED', JText::_( 'COM_JOOMLEAGUE_ADMIN_TEAMSTAFF_THEPLAYER' ), $project_teamstaff->name );
-			$mainframe->redirect( 'index.php?option=com_joomleague', $msg );
+			$app->redirect( 'index.php?option=com_joomleague', $msg );
 		}
 
 		// Edit or Create?
@@ -166,14 +159,15 @@ class JoomleagueViewTeamStaff extends JLGView
 
 	/**
 	 * Add the page title and toolbar.
-	 *
-	 * @since	1.7
 	 */
 	protected function addToolbar()
 	{
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
 		// Set toolbar items for the page
-		$edit = JRequest::getVar( 'edit', true );
-		$option = JRequest::getCmd('option');
+		$edit = $jinput->get('edit', true);
+		$option = $jinput->getCmd('option');
 		$params = JComponentHelper::getParams( $option );
 		$default_name_format = $params->get("name_format");
 		$name = JoomleagueHelper::formatName(null, $this->project_teamstaff->firstname, $this->project_teamstaff->nickname, $this->project_teamstaff->lastname, $default_name_format);

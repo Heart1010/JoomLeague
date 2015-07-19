@@ -1,32 +1,24 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.view' );
+jimport('joomla.application.component.view');
 //jimport('joomla.filesystem.file');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package		Joomleague
- * @since 0.1
+ * HTML View class
 */
 class JoomleagueViewTreeto extends JLGView
 {
-	function display( $tpl = null )
+	public function display($tpl = null)
 	{
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		if ( $this->getLayout() == 'form' )
 		{
 			$this->_displayForm( $tpl );
@@ -42,8 +34,10 @@ class JoomleagueViewTreeto extends JLGView
 
 	function _displayForm($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$option = $jinput->getCmd('option');
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
 		$user = JFactory::getUser();
@@ -61,7 +55,7 @@ class JoomleagueViewTreeto extends JLGView
 		if ($model->isCheckedOut($user->get('id')))
 		{
 			$msg=JText::sprintf('DESCBEINGEDITTED',JText::_('The treeto'),$treeto->id);
-			$mainframe->redirect('index.php?option='.$option,$msg);
+			$app->redirect('index.php?option='.$option,$msg);
 		}
 
 		$this->form = $this->get('form');
@@ -74,8 +68,10 @@ class JoomleagueViewTreeto extends JLGView
 
 	function _displayGennode($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$option = $jinput->getCmd('option');
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
 		$user = JFactory::getUser();

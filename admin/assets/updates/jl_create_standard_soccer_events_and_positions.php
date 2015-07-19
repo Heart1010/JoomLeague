@@ -1,24 +1,15 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
-* @license	GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-/**
- * Joomleague Component script file to CREATE standard soccer events,positions and position-eventtypes of JoomLeague 1.5
+ * Joomleague
  *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ *
+ * Joomleague Component script file to CREATE standard soccer events,positions and position-eventtypes of JoomLeague 1.5
  * @author	Kurt Norgaz
- * @package	JoomLeague
- * @since	1.5 - 2010-06-17
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 $version			= '2.93.239.9df0b25-b';
 $updateFileDate		= '2012-09-13';
@@ -46,9 +37,9 @@ function addSportsType()
 	$db		= JFactory::getDbo();
 
 	echo JText::sprintf	(	'Adding the sports-type [%1$s] to table [%2$s] if it does not exist yet!',
-							'<strong>'.'COM_JOOMLEAGUE_ST_SOCCER'.'</strong>',
-							'<strong>'.'#__joomleague_sports_type'.'</strong>'
-						);
+			'<strong>'.'COM_JOOMLEAGUE_ST_SOCCER'.'</strong>',
+			'<strong>'.'#__joomleague_sports_type'.'</strong>'
+	);
 
 	$query="SELECT id FROM #__joomleague_sports_type WHERE name='COM_JOOMLEAGUE_ST_SOCCER'";
 	$db->setQuery($query);
@@ -301,7 +292,7 @@ function addStandardsForSoccer()
 			$events_referees['9']	= $object->id;
 		}
 
-			$newEventName='COM_JOOMLEAGUE_E_BLUE_CARD';
+		$newEventName='COM_JOOMLEAGUE_E_BLUE_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/blue_card.png';
 		$suspension=0;
 		$query=build_SelectQuery('eventtype',$newEventName); $db->setQuery($query);
@@ -321,7 +312,7 @@ function addStandardsForSoccer()
 			$events_clubstaff['10']	= $object->id;
 			$events_referees['10']	= $object->id;
 		}
-		
+
 		$newEventName='COM_JOOMLEAGUE_E_BLUE_RED_CARD';
 		$newEventIcon='images/com_joomleague/database/events/soccer/blue_red_card.png';
 		$suspension=1;
@@ -342,7 +333,7 @@ function addStandardsForSoccer()
 			$events_clubstaff['11']	= $object->id;
 			$events_referees['11']	= $object->id;
 		}
-		
+
 		echo PrintStepResult($result).'<br />';
 		if (!$result) { echo JText::_ ('DO NOT WORRY... Surely at least one of the events was already existing in your database!!!').'<br />'; }
 		echo '<br />';

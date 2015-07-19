@@ -1,13 +1,11 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
@@ -16,10 +14,9 @@ jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.archive');
 
 /**
- * Joomleague Component JLXMLImport Controller
+ * JLXMLImport Controller
  *
  * @author	Kurt Norgaz
- * @package	JoomLeague
  */
 class JoomleagueControllerJLXMLImport extends JoomleagueController
 {
@@ -59,11 +56,11 @@ class JoomleagueControllerJLXMLImport extends JoomleagueController
 
 	public function select()
 	{
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$selectType=JRequest::getVar('type',0,'get','int');
 		$recordID=JRequest::getVar('id',0,'get','int');
-		$mainframe->setUserState('com_joomleague'.'selectType',$selectType);
-		$mainframe->setUserState('com_joomleague'.'recordID',$recordID);
+		$app->setUserState('com_joomleague'.'selectType',$selectType);
+		$app->setUserState('com_joomleague'.'recordID',$recordID);
 
 		JRequest::setVar('hidemainmenu',1);
 		JRequest::setVar('layout','selectpage');
@@ -78,7 +75,7 @@ class JoomleagueControllerJLXMLImport extends JoomleagueController
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
 		$msg='';
 		JToolBarHelper::back(JText::_('COM_JOOMLEAGUE_GLOBAL_BACK'),JRoute::_('index.php?option=com_joomleague&task=jlxmlimport.display'));
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$post=JRequest::get('post');
 
 		// first step - upload
@@ -86,7 +83,7 @@ class JoomleagueControllerJLXMLImport extends JoomleagueController
 		{
 			$upload=JRequest::getVar('import_package',null,'files','array');
 			$tempFilePath=$upload['tmp_name'];
-			$mainframe->setUserState('com_joomleague'.'uploadArray',$upload);
+			$app->setUserState('com_joomleague'.'uploadArray',$upload);
 			$filename='';
 			$msg='';
 			$dest=JPATH_SITE.'/tmp/'.$upload['name'];
@@ -179,4 +176,3 @@ class JoomleagueControllerJLXMLImport extends JoomleagueController
 	}
 
 }
-?>

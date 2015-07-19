@@ -1,45 +1,36 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined( '_JEXEC' ) or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.view' );
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package		Joomleague
- * @since 0.1
+ * HTML View class
  */
 class JoomleagueViewDivision extends JLGView
 {
-	function display( $tpl = null )
+	public function display($tpl = null)
 	{
-		if ( $this->getLayout() == 'form' )
+		if ($this->getLayout() == 'form')
 		{
-			$this->_displayForm( $tpl );
+			$this->_displayForm($tpl);
 			return;
 		}
 
-		parent::display( $tpl );
+		parent::display($tpl);
 	}
 
-	function _displayForm( $tpl )
+	function _displayForm($tpl)
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState('com_joomleagueproject');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState('com_joomleagueproject');
 		$db		= JFactory::getDbo();
 		$uri 	= JFactory::getURI();
 		$user 	= JFactory::getUser();
@@ -54,7 +45,7 @@ class JoomleagueViewDivision extends JLGView
 		if ($model->isCheckedOut($user->get('id')))
 		{
 			$msg = JText::sprintf('DESCBEINGEDITTED', JText::_('COM_JOOMLEAGUE_ADMIN_DIVISION_THE_DIVISION'), $division->name );
-			$mainframe->redirect('index.php?option=' . $option, $msg);
+			$app->redirect('index.php?option=' . $option, $msg);
 		}
 
 		// Edit or Create?
@@ -92,13 +83,11 @@ class JoomleagueViewDivision extends JLGView
 	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{	
-		$edit	= JRequest::getVar( 'edit', true );
-		$text	= !$edit ? JText::_( 'New' ) : JText::_( 'Edit' ) . ': ' . JText::_( $this->projectws->name ) . ' / ' . $this->division->name;
+		$edit	= $this->input->get('edit',true);
+		$text	= !$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT') . ': ' . JText::_($this->projectws->name) . ' / ' . $this->division->name;
 		// Set toolbar items for the page
 		JToolBarHelper::title( $text);
 
@@ -109,12 +98,9 @@ class JoomleagueViewDivision extends JLGView
 		}
 		else
 		{
-			// for existing items the button is renamed `close` and the apply button is showed
 			JLToolBarHelper::apply('division.apply');
-			JLToolBarHelper::cancel( 'division.cancel', 'Close' );
+			JLToolBarHelper::cancel('division.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');
 		}
-		JToolBarHelper::help( 'screen.joomleague', true );
-	}		
-
+		JToolBarHelper::help('screen.joomleague',true);
+	}
 }
-?>

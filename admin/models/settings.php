@@ -1,24 +1,16 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport('joomla.application.component.modelform');
 
 /**
- * Joomleague Component Club Model
- *
- * @package	JoomLeague
- * @since	1.5.4
+ * Settings Model
  */
 class JoomleagueModelSettings extends JModelForm
 {
@@ -28,7 +20,6 @@ class JoomleagueModelSettings extends JModelForm
 	 * @author  And_One <andone@mfga.at>
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since	1.5.4
 	 */
 	function updatePlaceholder($table, $field, $oldPlaceholder, $newPlaceholder)
 	{
@@ -52,7 +43,6 @@ class JoomleagueModelSettings extends JModelForm
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.6
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -81,4 +71,3 @@ class JoomleagueModelSettings extends JModelForm
 		return $form;
 	}
 }
-?>

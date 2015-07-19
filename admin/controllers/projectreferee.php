@@ -1,25 +1,19 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport( 'joomla.application.component.controller' );
 
 /**
- * Joomleague Component Controller
+ * Projectreferee Controller
  *
  * @author	Kurt Norgaz
- * @package	Joomleague
- * @since	1.5.02a
  */
 class JoomleagueControllerProjectReferee extends JoomleagueController
 {
@@ -39,17 +33,16 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 	public function display($cachable = false, $urlparams = false)
 	{
 		$option = JRequest::getCmd('option');
-
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 		$document	= JFactory::getDocument();
-		$model		= $this->getModel ( 'projectreferees' );
+		$model		= $this->getModel('projectreferees');
 		$viewType	= $document->getType();
-		$view		= $this->getView  ( 'projectreferees', $viewType );
-		$view->setModel( $model, true );  // true is for the default model;
+		$view		= $this->getView('projectreferees', $viewType);
+		$view->setModel($model, true);  // true is for the default model;
 
-		$projectws	= $this->getModel ( 'project' );
-		$projectws->setId( $mainframe->getUserState( $option . 'project', 0 ) );
-		$view->setModel( $projectws );
+		$projectws	= $this->getModel('project');
+		$projectws->setId($app->getUserState($option.'project', 0));
+		$view->setModel($projectws);
 
 		$task = $this->getTask();
 		
@@ -58,30 +51,30 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 			case 'add'	 :
 				{
 					JRequest::setVar('hidemainmenu',JRequest::getVar('hidemainmenu',0));
-					JRequest::setVar( 'layout', 'form' );
-					JRequest::setVar( 'view', 'projectreferee' );
-					JRequest::setVar( 'edit', false );
+					JRequest::setVar('layout', 'form');
+					JRequest::setVar('view', 'projectreferee');
+					JRequest::setVar('edit', false);
 
-					$model = $this->getModel( 'projectreferee' );
+					$model = $this->getModel('projectreferee');
 					#$model->checkout();
 				} break;
 
 			case 'edit'	:
 				{
-					$model = $this->getModel ( 'projectreferee' );
+					$model = $this->getModel('projectreferee');
 					$viewType = $document->getType();
-					$view = $this->getView  ( 'projectreferee', $viewType );
-					$view->setModel( $model, true );  // true is for the default model;
+					$view = $this->getView('projectreferee', $viewType);
+					$view->setModel($model, true);  // true is for the default model;
 
 					$view->setModel( $projectws );
 
 					JRequest::setVar('hidemainmenu',JRequest::getVar('hidemainmenu',0));
-					JRequest::setVar( 'layout', 'form' );
-					JRequest::setVar( 'view', 'projectreferee' );
-					JRequest::setVar( 'edit', true );
+					JRequest::setVar('layout', 'form');
+					JRequest::setVar('view', 'projectreferee');
+					JRequest::setVar('edit', true);
 
 					// Checkout the project
-					$model = $this->getModel( 'projectreferee' );
+					$model = $this->getModel('projectreferee');
 					#$model->checkout();
 				} break;
 
@@ -92,25 +85,25 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 	public function editlist()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 		$document = JFactory::getDocument();
 
-		$model = $this->getModel ( 'projectreferees' );
+		$model = $this->getModel('projectreferees');
 		$viewType = $document->getType();
-		$view = $this->getView  ( 'projectreferees', $viewType );
-		$view->setModel( $model, true );  // true is for the default model;
+		$view = $this->getView('projectreferees', $viewType);
+		$view->setModel($model, true);  // true is for the default model;
 
-		$projectws = $this->getModel ( 'project' );
-		$projectws->setId( $mainframe->getUserState( $option . 'project', 0 ) );
-		$view->setModel( $projectws );
+		$projectws = $this->getModel('project');
+		$projectws->setId( $app->getUserState($option . 'project', 0));
+		$view->setModel($projectws);
 
-		$teamws->setId(  $mainframe->getUserState( $option . 'team', 0 ) );
-		$view->setModel( $teamws );
+		$teamws->setId($app->getUserState($option . 'team', 0));
+		$view->setModel($teamws);
 
 		JRequest::setVar('hidemainmenu',JRequest::getVar('hidemainmenu',1));
-		JRequest::setVar( 'layout', 'editlist' );
-		JRequest::setVar( 'view', 'projectreferees' );
-		JRequest::setVar( 'edit', true );
+		JRequest::setVar('layout', 'editlist');
+		JRequest::setVar('view', 'projectreferees');
+		JRequest::setVar('edit', true);
 
 		parent::display();
 	}
@@ -118,22 +111,22 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 
 	public function save_projectrefereeslist()
 	{
-		$post 		= JRequest::get( 'post' );
-		$cid 		= JRequest::getVar( 'cid', array(0), 'post', 'array' );
-		$project 	= JRequest::getVar( 'project', 'post' );
-		$team_id 	= JRequest::getVar( 'team', 'post' );
+		$post 		= JRequest::get('post');
+		$cid 		= JRequest::getVar('cid', array(0), 'post', 'array');
+		$project 	= JRequest::getVar('project', 'post');
+		$team_id 	= JRequest::getVar('team', 'post');
 		$post['id'] 		= (int) $cid[0];
 		$post['project_id']	= (int) $project;
 		$post['team_id']   	= (int) $team_id;
-		$model = $this->getModel( 'projectreferees' );
+		$model = $this->getModel('projectreferees');
 
-		if ( $model->store( $post ) )
+		if ($model->store($post))
 		{
-			$msg = JText::_( 'COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_SAVED' );
+			$msg = JText::_('COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_SAVED');
 		}
 		else
 		{
-			$msg = JText::_( 'COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_ERROR_SAVE' ) . $model->getError();
+			$msg = JText::_('COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_ERROR_SAVE') . $model->getError();
 		}
 
 		$link = 'index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display';
@@ -254,9 +247,9 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 	public function select()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 
-		$mainframe->setUserState( $option . 'team', JRequest::getVar( 'team' ) );
+		$app->setUserState( $option . 'team', JRequest::getVar( 'team' ) );
 		$this->setRedirect( 'index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display' );
 	}
 
@@ -292,7 +285,6 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Projectreferee', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{
@@ -301,4 +293,3 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 	}
 	
 }
-?>

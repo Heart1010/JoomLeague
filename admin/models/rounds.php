@@ -1,23 +1,19 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 require_once (JLG_PATH_ADMIN.'/models/list.php');
 
 /**
- * Joomleague Component Matchday Model
+ * Rounds Model
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
  */
 
 class JoomleagueModelRounds extends JoomleagueModelList
@@ -25,17 +21,17 @@ class JoomleagueModelRounds extends JoomleagueModelList
 	var $_identifier = "rounds";
 	var $_project_id;
 	
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 		
-		$option     = 'com_joomleague';
-		$mainframe	= JFactory::getApplication();
+		$option     = $this->input->getCmd('option');
+		$app		= JFactory::getApplication();
 		$params     = JComponentHelper::getParams('com_joomleague');
 		$defaultorder_dir = $params->get('cfg_be_show_matchdays_order', '');
 		
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'rounds_filter_order', 'filter_order', 'r.roundcode', 'cmd' );
-		$filter_order_Dir 	= $mainframe->getUserStateFromRequest( $option . 'rounds__filter_order_Dir', 'filter_order_Dir', $defaultorder_dir, 'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'rounds_filter_order', 'filter_order', 'r.roundcode', 'cmd' );
+		$filter_order_Dir 	= $app->getUserStateFromRequest( $option . 'rounds__filter_order_Dir', 'filter_order_Dir', $defaultorder_dir, 'word' );
 		
 		$this->setState('filter_order',     $filter_order);
 		$this->setState('filter_order_Dir', $filter_order_Dir);
@@ -68,7 +64,7 @@ class JoomleagueModelRounds extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{		
-		$filter_order		    = $this->getState('filter_order');
+		$filter_order		= $this->getState('filter_order');
 		$filter_order_Dir 	= $this->getState('filter_order_Dir');
 
 		$orderby = ' ORDER BY ' . $filter_order .' '. $filter_order_Dir . ', r.round_date_first ';
@@ -92,17 +88,17 @@ class JoomleagueModelRounds extends JoomleagueModelList
 	}
 	
 	/**
-	* Method to return the project teams array (id,name)
+	* Method to return the projectTeams array (id,name)
 	*
 	* @access  public
 	* @return  array
 	*/
 	function getProjectTeams()
 	{
-		$option 	= JRequest::getCmd('option');
+		$option 	= $this->input->getCmd('option');
 		$app		= JFactory::getApplication();
 		$project_id	= $app->getUserState($option.'project');
-		$division_id = JRequest::getInt('division_id',0);
+		$division_id = $this->input->getInt('division_id',0);
 		
 		$query="	SELECT	t.id AS value,
 							t.name As text,
@@ -527,4 +523,3 @@ class JoomleagueModelRounds extends JoomleagueModelList
 	}
 	
 }
-?>

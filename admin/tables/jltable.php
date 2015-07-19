@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,9 +12,7 @@ defined('_JEXEC') or die;
 jimport('joomla.filter.input');
 
 /**
- * Joomleague JLTable Table class
- *
- * @package	Joomleague
+ * JLTable Table class
  */
 class JLTable extends JTable {
 
@@ -105,7 +101,6 @@ class JLTable extends JTable {
 	 * @return  boolean  True if checked out.
 	 *
 	 * @link    http://docs.joomla.org/JTable/isCheckedOut
-	 * @since   11.1
 	 * @todo    This either needs to be static or not.
 	 */
 	public static function _isCheckedOut($with = 0, $against = null)

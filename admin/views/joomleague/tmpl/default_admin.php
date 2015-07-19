@@ -1,48 +1,22 @@
 <?php 
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die; 
 $option = 'com_joomleague';
 ?>
-<!--[if gt IE 5.5]>
-<script type="text/javascript">
-window.addEvent('domready', function() {
-	for(var i=0;i<$$('select').length;i++) {
-		$$('select')[i].addEvent('focus', function () {
-			$('area').setStyle('width', '140px');
-			this.setProperty('rel',this.getStyle('width'));
-			this.setStyle('width','auto');
-			this.setStyle('min-width','138px');
-			$('area').setStyle('border-right', '1px solid silver');
-		});
-		$$('select')[i].addEvent('click', function () {
-			this.setProperty('rel',this.getStyle('width'));
-			this.setStyle('width','auto');
-			this.setStyle('min-width','138px');
-			$('area').setStyle('border-right', '1px solid silver');
-			$('area').setStyle('max-width', '150px');
-		});
-		$$('select')[i].addEvent('blur', function () {
-			this.setStyle('width',this.getProperty('rel'));
-		});
-	}}
-)
-</script>
-<![endif]-->
-<table>
-	<tr>
-		<td width="140px" valign="top">
+<!-- Start Joomleague content -->
+
+<div class="test">
+<div id="j-sidebar-container" class="span2">
 		<div id="element-box">
 			<div class="m">
 			<div id="navbar">
-			<a href='#' style='text-decoration: none; color: green; padding: 2px;'>v<?php echo $this->version; ?></a>
+			<a href='javascript:void(0);' style='text-decoration: none; color: green; padding: 2px;'>v<?php echo $this->version; ?></a>
 			<form action="index.php?option=com_joomleague" method="post" id="adminForm1">
 				<div id="area" style="overflow:hidden; width:100%; max-width: 150px;">
 				<?php echo $this->lists['sportstypes']; ?>
@@ -128,12 +102,14 @@ window.addEvent('domready', function() {
 					}
 				}
 				?>
-			<div style="text-align: center;"><br />
-			<?php
-			echo JHtml::_('image','administrator/components/com_joomleague/assets/images/jl.png',JText::_('JoomLeague'),array("title" => JText::_('JoomLeague')));
-			?></div>
+			<div class="center"><br />
+				<?php
+					echo JHtml::_('image','administrator/components/com_joomleague/assets/images/jl.png',JText::_('JoomLeague'),array("title" => JText::_('JoomLeague')));
+				?>
 			</div>
 			</div>
 			</div>
-		</td>
-		<td valign="top">
+			</div>
+			
+	</div>
+	<div id="j-main-container" class="span10">

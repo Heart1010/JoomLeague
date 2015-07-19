@@ -1,5 +1,11 @@
 <?php 
-
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.tooltip');
@@ -37,62 +43,57 @@ JToolBarHelper::help('screen.joomleague',true);
 				<tfoot><tr><td colspan="<?php echo $colspan; ?>"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>				
 				<tbody>
 					<?php
-					$k=0;
-					for ($i=0,$n=count($this->match); $i < $n; $i++)
-					{
-						$row		= $this->match[$i];
+					$n = count($this->match);
+					foreach ($this->match as $i => $row) :
 						$checked	= JHtml::_('grid.checkedout',$row,$i,'mid');
 						$published	= JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','treetomatch.');
 						?>
-						<tr class="<?php echo "row$k"; ?>">
+						<tr class="row<?php echo $i % 2; ?>">
 					
-							<td style="text-align:center; ">
+							<td class="center">
 								<?php
 								echo $checked;
 								?>
 							</td>
-							<td style="text-align: center; " nowrap="nowrap">
+							<td class="center" nowrap="nowrap">
 								<?php
 								echo $row->match_number;
 								?>
 							</td>
-							<td style="text-align: center; " class="nowrap">
+							<td class="center" class="nowrap">
 								<?php
 								echo $row->roundcode;
 								?>
 							</td>
-							<td style="text-align: center; " class="nowrap">
+							<td class="center" class="nowrap">
 								<?php
 								echo $row->projectteam1;
 								?>
 							</td>
-							<td style="text-align:center; ">
+							<td class="center">
 								<?php
 								echo $row->projectteam1result;
 								echo ' : ';
 								echo $row->projectteam2result;
 								?>
 							</td>
-							<td style="text-align: center; " class="nowrap">
+							<td class="center" class="nowrap">
 								<?php
 								echo $row->projectteam2;
 								?>
 							</td>
-							<td style="text-align:center; ">
+							<td class="center">
 								<?php
 								echo $published;
 								?>
 							</td>
-							<td style="text-align:center; ">
+							<td class="center">
 								<?php
 								echo $row->mid;
 								?>
 							</td>
 						</tr>
-						<?php
-						$k=1 - $k;
-					}
-					?>
+						<?php endforeach; ?>
 				</tbody>
 			</table>
 			<input type="hidden" name="boxchecked" value="0" />

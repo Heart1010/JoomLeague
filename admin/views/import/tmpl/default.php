@@ -1,6 +1,12 @@
 <?php
-
-defined('_JEXEC') or die('Restricted access');
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 ?>
 <script type="text/javascript">
 window.addEvent('domready', function() {
@@ -20,7 +26,7 @@ window.addEvent('domready', function() {
 	}
 	-->
 </style>
-<form method="post" id="adminForm" enctype="multipart/form-data">
+<form method="post" id="adminForm" name="adminForm" enctype="multipart/form-data">
 	<fieldset class="adminform">
 		<legend>
 			<?php echo JText::sprintf('CSV-IMPORT [%1$s]', '<i>' . $this->table . '</i>'); ?>

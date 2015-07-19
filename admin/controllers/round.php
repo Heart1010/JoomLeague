@@ -1,25 +1,19 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Matchday Model
+ * Round Model
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueControllerRound extends JoomleagueController
 {
@@ -37,7 +31,7 @@ class JoomleagueControllerRound extends JoomleagueController
 	public function display($cachable = false, $urlparams = false)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
 		$document = JFactory::getDocument();
 
 	 	$model=$this->getModel('rounds');
@@ -46,7 +40,7 @@ class JoomleagueControllerRound extends JoomleagueController
 		$view->setModel($model,true);	// true is for the default model;
 
 		$projectws=$this->getModel('project');
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws);
 
 		$task = $this->getTask();
@@ -65,7 +59,7 @@ class JoomleagueControllerRound extends JoomleagueController
 				$view->setModel($model,true);	// true is for the default model;
 
  				$projectws=$this->getModel('project');
-				$projectws->setId($mainframe->getUserState($option.'project',0));
+				$projectws->setId($app->getUserState($option.'project',0));
 				$view->setModel($projectws);
 
 				$model=$this->getModel('round');
@@ -80,7 +74,7 @@ class JoomleagueControllerRound extends JoomleagueController
 				$view->setModel($model,true);	// true is for the default model;
 
 				$projectws=$this->getModel('project');
-				$projectws->setId($mainframe->getUserState($option.'project',0));
+				$projectws->setId($app->getUserState($option.'project',0));
 				$view->setModel($projectws);
 
 				JRequest::setVar('hidemainmenu',0);
@@ -107,7 +101,7 @@ class JoomleagueControllerRound extends JoomleagueController
 		// Check for request forgeries
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
 		$post=JRequest::get('post');
 		$model=$this->getModel('round');
 		// convert dates back to mysql date format
@@ -127,16 +121,16 @@ class JoomleagueControllerRound extends JoomleagueController
 		{
 			$post['round_date_last']=null;
 		}
-		$max=$model->getMaxRound($mainframe->getUserState($option.'project',0));
+		$max=$model->getMaxRound($app->getUserState($option.'project',0));
 		$max++;
 		if (!isset($post['roundcode']) || empty($post['roundcode']))
 		{
-			//$max=$model->getMaxRound($mainframe->getUserState($option.'project',0));
+			//$max=$model->getMaxRound($app->getUserState($option.'project',0));
 			$post['roundcode']=$max;
 		}
 		if (!isset($post['name']) || empty($post['name']))
 		{
-			//$max=$model->getMaxRound($mainframe->getUserState($option.'project',0));
+			//$max=$model->getMaxRound($app->getUserState($option.'project',0));
 			//$mrc=$max + 1;
 			$post['name']=JText::sprintf('COM_JOOMLEAGUE_ADMIN_ROUNDS_CTRL_ROUND_NAME',$max);
 		}
@@ -170,7 +164,7 @@ class JoomleagueControllerRound extends JoomleagueController
 		// Check for request forgeries
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$post=JRequest::get('post');
 		$cid=JRequest::getVar('cid',array(),'post','array');
 		JArrayHelper::toInteger($cid);
@@ -183,7 +177,7 @@ class JoomleagueControllerRound extends JoomleagueController
 			{
 				if ($post['roundcode'.$cid[$x]]=='0')
 				{
-					$max=$model->getMaxRound($mainframe->getUserState($option.'project',0));
+					$max=$model->getMaxRound($app->getUserState($option.'project',0));
 					$post['roundcode'.$cid[$x]]=$max + 1;
 				}
 			}
@@ -333,4 +327,3 @@ class JoomleagueControllerRound extends JoomleagueController
 		$this->setRedirect('index.php?option=com_joomleague&view=rounds&task=round.display', $msg, $msgType);
 	}
 }
-?>

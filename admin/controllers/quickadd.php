@@ -1,22 +1,17 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Controller
- *
- * @package	 joomleague
- * @since 1.5
+ * Quickadd Controller
  */
 class JoomleagueControllerQuickadd extends JoomleagueController
 {
@@ -83,11 +78,11 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 
 	public function searchReferee()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option 	= JRequest::getCmd('option');
+		$app		= JFactory::getApplication();
 		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 		= JRequest::getVar("query", "", "", "string");
-		$projectid 	= $mainframe->getUserState($option."project");
+		$projectid 	= $app->getUserState($option."project");
 		$results 	= $model->getNotAssignedReferees($query, $projectid);
 		$response = array(
 			"totalCount" => count($results),
@@ -108,11 +103,11 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 
 	public function searchTeam()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option 	= JRequest::getCmd('option');
+		$app		= JFactory::getApplication();
 		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 		= JRequest::getVar("query", "", "", "string");
-		$projectid 	= $mainframe->getUserState($option."project");
+		$projectid 	= $app->getUserState($option."project");
 		$results 	= $model->getNotAssignedTeams($query, $projectid);
 		$response = array(
 			"totalCount" => count($results),
@@ -239,12 +234,12 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 	public function addReferee()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app	= JFactory::getApplication();
 
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		$personid = JRequest::getInt("cpersonid", 0);
 		$name = JRequest::getVar("quickadd", '', 'request', 'string');
-		$project_id = $mainframe->getUserState($option."project");
+		$project_id = $app->getUserState($option."project");
 		
 		// add the new individual as their name was sent through.
 		if (!$personid)
@@ -322,12 +317,12 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 	public function addTeam()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app	= JFactory::getApplication();
 
 		$db = JFactory::getDbo();
 		$teamid = JRequest::getInt("cteamid", 0);
 		$name = JRequest::getVar("quickadd", '', 'request', 'string');
-		$project_id = $mainframe->getUserState($option."project");
+		$project_id = $app->getUserState($option."project");
 
 		// add the new team as their name was sent through.
 		if (!$teamid)

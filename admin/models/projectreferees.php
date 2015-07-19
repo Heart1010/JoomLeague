@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,10 +12,9 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component projectreferees Model
+ * Projectreferees Model
  *
  * @author	Kurt Norgaz
- * @package	JoomLeague
 */
 class JoomleagueModelProjectReferees extends JoomleagueModelList
 {
@@ -49,10 +46,10 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'p_filter_order',		'filter_order',		'p.lastname',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'p_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$filter_order		= $app->getUserStateFromRequest($option.'p_filter_order',		'filter_order',		'p.lastname',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'p_filter_order_Dir',	'filter_order_Dir',	'',				'word');
 		if ($filter_order=='p.lastname')
 		{
 			$orderby=' ORDER BY p.lastname '.$filter_order_Dir;
@@ -66,11 +63,11 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
-		$search			= $mainframe->getUserStateFromRequest($option.'p_search',		'search',		'',		'string');
-		$search_mode	= $mainframe->getUserStateFromRequest($option.'p_search_mode',	'search_mode',	'',		'string');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState($option.'project');
+		$search			= $app->getUserStateFromRequest($option.'p_search',			'search',		'',		'string');
+		$search_mode	= $app->getUserStateFromRequest($option.'p_search_mode',	'search_mode',	'',		'string');
 		$search=JString::strtolower($search);
 		$where=array();
 		$where[]='pref.project_id='.$project_id;
@@ -168,8 +165,8 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 	function getPositions()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$app = JFactory::getApplication();
+		$project_id=$app->getUserState($option.'project');
 		$query='	SELECT	pp.id AS value,
 				name AS text
 
@@ -201,8 +198,8 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 	function getRefereePositions()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState($option.'project');
 		$query='	SELECT	ppos.id AS value,
 				pos.name AS text
 				FROM #__joomleague_position AS pos

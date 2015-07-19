@@ -1,22 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
- * Joomleague Component Event Model
- *
- * @package	JoomLeague
+ * Eventtype Model
  */
 class JoomleagueModelEventtype extends JoomleagueModelItem
 {
@@ -32,7 +27,7 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 		$result=false;
 		if (count($cid))
 		{
-			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexports", 'JoomleagueModel');
+			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexport", 'JoomleagueModel');
 			JArrayHelper::toInteger($cid);
 			$cids=implode(',',$cid);
 			$query="SELECT * FROM #__joomleague_eventtype WHERE id IN ($cids)";
@@ -84,7 +79,7 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 			// close events
 			$output .= '</events>';
 			
-			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexports", 'JoomleagueModel');
+			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexport", 'JoomleagueModel');
 			$mdlJLXExports->downloadXml($output, $table);
 			
 			// close the application

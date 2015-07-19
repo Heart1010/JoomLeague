@@ -1,38 +1,32 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
-jimport('joomla.filesystem.file');
+
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package	JoomLeague
+ * HTML View class
  */
 class JoomleagueViewClubs extends JLGView
 {
 
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
-		$option 	= JRequest::getCmd('option');
+		$option 	= $this->input->getCmd('option');
 		$params		= JComponentHelper::getParams( $option );
-		$mainframe 	= JFactory::getApplication();
+		$app 		= JFactory::getApplication();
 		$uri		= JFactory::getURI();
 
-		$filter_state		= $mainframe->getUserStateFromRequest($option.'a_filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'a_filter_order',		'filter_order',		'a.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'a_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'a_search',			'search',			'',				'string');
-		$search_mode		= $mainframe->getUserStateFromRequest($option.'a_search_mode',		'search_mode',		'',				'string');
+		$filter_state		= $app->getUserStateFromRequest($option.'a_filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'a_filter_order',		'filter_order',		'a.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'a_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($option.'a_search',				'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($option.'a_search_mode',		'search_mode',		'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items		= $this->get('Data');
@@ -64,8 +58,6 @@ class JoomleagueViewClubs extends JLGView
 	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{
@@ -81,4 +73,3 @@ class JoomleagueViewClubs extends JLGView
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }
-?>

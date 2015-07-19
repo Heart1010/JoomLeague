@@ -1,22 +1,17 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
- * Joomleague Component Club Model
- *
- * @package	JoomLeague
+ * Club Model
  */
 class JoomleagueModelClub extends JoomleagueModelItem
 {
@@ -24,10 +19,8 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 * Method to test whether a record can be deleted.
 	 *
 	 * @param   object  $record  A record object.
-	 *
+	 * 
 	 * @return  boolean  True if allowed to delete the record. Defaults to the permission for the component.
-	 *
-	 * @since   11.1
 	 */
 	protected function canDelete($record)
 	{

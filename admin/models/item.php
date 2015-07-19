@@ -1,25 +1,19 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modeladmin');
 
 /**
- * Joomleague Component Item Model
+ * Item Model
  *
  * @author Julien Vonthron <julien.vonthron@gmail.com>
- * @package   Joomleague
- * @since 0.1
 */
 if(!class_exists('JoomleagueModelItem')) {
 	class JoomleagueModelItem extends JModelAdmin
@@ -44,14 +38,19 @@ if(!class_exists('JoomleagueModelItem')) {
 		 */
 		var $_project=null;
 
+		
+		protected $input;
+		
+		
 		/**
 		 * Constructor
 		 *
-		 * @since 0.1
 		 */
-		function __construct()
+		public function __construct()
 		{
 			parent::__construct();
+			
+			$this->input = JFactory::getApplication()->input;
 
 			$array=JRequest::getVar('cid',array(0),'','array');
 			$edit=JRequest::getVar('edit',true);
@@ -76,7 +75,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		/**
 		 * Method to get an item
 		 *
-		 * @since 0.1
 		 */
 		function getData()
 		{
@@ -93,7 +91,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 * @access	public
 		 * @param	int	A user id
 		 * @return	boolean	True if checked out
-		 * @since	0.1
 		 */
 		function isCheckedOut($uid=0)
 		{
@@ -111,7 +108,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 *
 		 * @access	public
 		 * @return	boolean	True on success
-		 * @since	1.5
 		 */
 		function store($data,$table='')
 		{
@@ -163,7 +159,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 *
 		 * @access	public
 		 * @return	boolean	True on success
-		 * @since	1.5
 		 */
 		function move($direction)
 		{
@@ -189,9 +184,9 @@ if(!class_exists('JoomleagueModelItem')) {
 		function getProject($id=0)
 		{
 			$option = JRequest::getCmd('option');
-			$mainframe=JFactory::getApplication();
+			$app	= JFactory::getApplication();
 			if (!$id) {
-				$id=$mainframe->getUserState($option.'project',0);
+				$id = $app->getUserState($option.'project',0);
 			}
 
 			if (empty($this->_project) || $id != $this->_project->id)
@@ -208,7 +203,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 *
 		 * @access	public
 		 * @return	boolean	True on success
-		 * @since	1.5.0a
 		 */
 		function export($cid=array(),$table, $record_name)
 		{
@@ -254,7 +248,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 * @param	string	A prefix for the table class name. Optional.
 		 * @param	array	Configuration array for model. Optional.
 		 * @return	JTable	A database object
-		 * @since	1.6
 		 */
 		public function getTable($type = 'tablename', $prefix = '', $config = array())
 		{
@@ -267,7 +260,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 * @param	array	$data		Data for the form.
 		 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 		 * @return	mixed	A JForm object on success, false on failure
-		 * @since	1.7
 		 */
 		public function getForm($data = array(), $loadData = true)
 		{
@@ -285,7 +277,6 @@ if(!class_exists('JoomleagueModelItem')) {
 		 * Method to get the data that should be injected in the form.
 		 *
 		 * @return	mixed	The data for the form.
-		 * @since	1.7
 		 */
 		protected function loadFormData()
 		{
@@ -299,4 +290,3 @@ if(!class_exists('JoomleagueModelItem')) {
 		}
 	}
 }
-?>

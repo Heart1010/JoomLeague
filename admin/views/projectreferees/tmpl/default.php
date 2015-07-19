@@ -1,15 +1,11 @@
 <?php
-
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
- */
- 
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */ 
 defined('_JEXEC') or die;
 JHtml::_('behavior.framework');
 ?>
@@ -40,18 +36,18 @@ JHtml::_('behavior.framework');
 </style>
 <script>
 
-	var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&task=quickadd.searchreferee';
+var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&task=quickadd.searchreferee';
 
-	function searchPlayer(val)
+function searchPlayer(val)
+{
+	var f = $('adminForm');
+	if(f)
 	{
-		var f = $('adminForm');
-		if(f)
-		{
-			f.elements['search'].value=val;
-			f.elements['search_mode'].value='matchfirst';
-			f.submit();
-		}
+		f.elements['search'].value=val;
+		f.elements['search_mode'].value='matchfirst';
+		f.submit();
 	}
+}
 </script>
 <?php
 $uri=JUri::root();

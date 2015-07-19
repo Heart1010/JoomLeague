@@ -1,6 +1,12 @@
 <?php 
-
-defined('_JEXEC') or die('Restricted access');
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 //Ordering allowed ?
 $ordering=($this->lists['order'] == 't.ordering');
@@ -21,7 +27,7 @@ JHtml::_('behavior.tooltip');
 	}
 
 </script>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 
 <div class="clearfix">
 	<div class="btn-wrapper input-append pull-left">
@@ -48,8 +54,8 @@ JHtml::_('behavior.tooltip');
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
-					<th width="20">
-						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+					<th width="1%" class="center">
+							<?php echo JHtml::_('grid.checkall'); ?>
 					</th>
 					<th width="20">&nbsp;</th>
 					<th class="left">

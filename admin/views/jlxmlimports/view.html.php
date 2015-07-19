@@ -1,25 +1,17 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport( 'joomla.application.component.view' );
+defined('_JEXEC') or die;
 
 /**
- * HTML View class for the Joomleague component
+ * HTML View class
  *
  * @author	Kurt Norgaz
- * @package	JoomLeague
- * @since	1.5.0a
  */
 class JoomleagueViewJLXMLImports extends JLGView
 {
@@ -27,16 +19,15 @@ class JoomleagueViewJLXMLImports extends JLGView
 	 * The list of available timezone groups to use.
 	 *
 	 * @var    array
-	 *
-	 * @since  11.1
 	 */
 	protected static $zones = array('Africa', 'America', 'Antarctica', 'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');
 	
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
 		if ($this->getLayout()=='form')
 		{
 			$this->_displayForm($tpl);
@@ -72,18 +63,20 @@ class JoomleagueViewJLXMLImports extends JLGView
 
 	private function _displayForm($tpl)
 	{
+		$app			= JFactory::getApplication();
+		$jinput			= $app->input;
+		
 		$mtime			= microtime();
 		$mtime 			= explode(" ",$mtime);
 		$mtime			= $mtime[1] + $mtime[0];
 		$starttime		= $mtime;
 		$option			= 'com_joomleague';
-		$mainframe		= JFactory::getApplication();
 		$document		= JFactory::getDocument();
 		$db				= JFactory::getDbo();
 		$uri			= JFactory::getURI();
 		$model			= JModelLegacy::getInstance('jlxmlimport', 'joomleaguemodel');
 		$data			= $model->getData();
-		$uploadArray	= $mainframe->getUserState($option.'uploadArray',array());
+		$uploadArray	= $app->getUserState($option.'uploadArray',array());
 		$tzValue  		= isset($data['project']->timezone) ? $data['project']->timezone: null;
 		$zones = DateTimeZone::listIdentifiers();				
 		$options = array();
@@ -155,8 +148,11 @@ class JoomleagueViewJLXMLImports extends JLGView
 
 	private function _displaySelectpage($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe 	= JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$option 	= $jinput->getCmd('option');
+		$app	 	= JFactory::getApplication();
 		$document 	= JFactory::getDocument();
 		$db 		= JFactory::getDbo();
 		$uri 		= JFactory::getURI();
@@ -164,8 +160,8 @@ class JoomleagueViewJLXMLImports extends JLGView
 		$lists 		= array();
 
 		$this->request_url = $uri->toString();
-		$this->selectType = $mainframe->getUserState($option.'selectType');
-		$this->recordID = $mainframe->getUserState($option.'recordID');
+		$this->selectType = $app->getUserState($option.'selectType');
+		$this->recordID = $app->getUserState($option.'recordID');
 
 		switch ($this->selectType)
 		{
@@ -277,5 +273,4 @@ class JoomleagueViewJLXMLImports extends JLGView
 
 		parent::display($tpl);
 	}
-
 }

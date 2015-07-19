@@ -1,17 +1,14 @@
 <?php 
 /**
-* @copyright	Copyright (C) 2007-2013 joomleague.at. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-defined( '_JEXEC' ) or die( 'Restricted access' ); // Check to ensure this file is included in Joomla!
-
-JHtml::_( 'behavior.framework' );
+JHtml::_('behavior.framework');
 
 /**
  * Renders a Dynamic SQL element
@@ -19,9 +16,6 @@ JHtml::_( 'behavior.framework' );
  * in the xml element, the following elements must be defined:
  * - depends: list of elements name this element depends on, separated by comma (e.g: "p, tid")
  * - task: the task used to return the query, using defined depends element names as parameters for query (=> 'index.php?option=com_joomleague&controller=ajax&task=<task>&p=1&tid=34')
- * @package Joomleague
- * @subpackageParameter
- * @since1.5
  */
 class JFormFieldMultiDependSQL extends JFormField
 {

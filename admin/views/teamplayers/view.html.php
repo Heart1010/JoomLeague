@@ -1,30 +1,21 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.view' );
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package	JoomLeague
- * @since	0.1
+ * HTML View class
  */
 class JoomleagueViewteamPlayers extends JLGView
 {
 
-	function display( $tpl = null )
+	public function display( $tpl = null )
 	{
 		if ( $this->getLayout() == 'editlist' )
 		{
@@ -43,18 +34,20 @@ class JoomleagueViewteamPlayers extends JLGView
 
 	function _displayEditlist_remove( $tpl )
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-
-		$project_id	= $mainframe->getUserState( $option . 'project' );
-		$team_id	= $mainframe->getUserState( $option . 'team' );
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$option = $app->getCmd('option');
+		
+		$project_id	= $app->getUserState( $option . 'project' );
+		$team_id	= $app->getUserState( $option . 'team' );
 		$uri		= JFactory::getURI();
 
-		$filter_state		= $mainframe->getUserStateFromRequest( $option . 'tp_filter_state',		'filter_state',		'',				'word' );
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'tp_filter_order',		'filter_order',		'ppl.ordering',	'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'tp_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-		$search				= $mainframe->getUserStateFromRequest( $option . 'tp_search',			'search',			'',				'string' );
-		$search_mode		= $mainframe->getUserStateFromRequest( $option . 'tp_search_mode',		'search_mode',		'',				'string' );
+		$filter_state		= $app->getUserStateFromRequest( $option . 'tp_filter_state',		'filter_state',		'',				'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'tp_filter_order',		'filter_order',		'ppl.ordering',	'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'tp_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
+		$search				= $app->getUserStateFromRequest( $option . 'tp_search',				'search',			'',				'string' );
+		$search_mode		= $app->getUserStateFromRequest( $option . 'tp_search_mode',		'search_mode',		'',				'string' );
 
 		$model			= $this->getModel();
 		$projectplayer	= $this->get( 'Data' );
@@ -158,8 +151,9 @@ class JoomleagueViewteamPlayers extends JLGView
 
 	function _displayDefault( $tpl )
 	{
-		$mainframe	= JFactory::getApplication();
-		$option = JRequest::getCmd('option');
+		$app	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
 
 		$document = JFactory::getDocument();
 	
@@ -170,16 +164,14 @@ class JoomleagueViewteamPlayers extends JLGView
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/quickaddperson.js');
 		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');			
 
-		
-		$mainframe	= JFactory::getApplication();
 		$uri		= JFactory::getURI();
-		$project_id	= $mainframe->getUserState( $option . 'project' );
+		$project_id	= $app->getUserState( $option . 'project' );
 
-		$filter_state		= $mainframe->getUserStateFromRequest( $option . 'tp_filter_state',		'filter_state',		'',				'word' );
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'tp_filter_order',		'filter_order',		'ppl.ordering',	'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'tp_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-		$search				= $mainframe->getUserStateFromRequest( $option . 'ppl1_search',				'search',			'',				'string' );
-		$search_mode		= $mainframe->getUserStateFromRequest( $option . 'tp_search_mode',			'search_mode',		'',				'string' );
+		$filter_state		= $app->getUserStateFromRequest( $option . 'tp_filter_state',		'filter_state',		'',				'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'tp_filter_order',		'filter_order',		'ppl.ordering',	'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'tp_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
+		$search				= $app->getUserStateFromRequest( $option . 'ppl1_search',				'search',			'',				'string' );
+		$search_mode		= $app->getUserStateFromRequest( $option . 'tp_search_mode',			'search_mode',		'',				'string' );
 		$teamws	= $this->get( 'Data', 'project_team' );
 
 		$items		= $this->get( 'Data' );
@@ -219,10 +211,9 @@ class JoomleagueViewteamPlayers extends JLGView
 		$this->addToolbar();		
 		parent::display( $tpl );
 	}
+	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{

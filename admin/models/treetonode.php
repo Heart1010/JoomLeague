@@ -1,26 +1,20 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.model' );
-require_once ( JPATH_COMPONENT . DS . 'models' . DS . 'item.php' );
+jimport('joomla.application.component.model');
+require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
- * Joomleague Component treeto Model
+ * Treeto Model
  *
  * @author	comraden
- * @package	JoomLeague
- * @
  */
 class JoomleagueModelTreetonode extends JoomleagueModelItem
 {
@@ -72,10 +66,10 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 
 	function getNodeMatch()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->option->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		//$division_id = $mainframe->getUserState( $option . 'division_id' );
+		$app	= JFactory::getApplication();
+		//$division_id = $app->getUserState( $option . 'division_id' );
 		$query = ' SELECT mc.id AS mid ';
 	//	$query .=	' CONCAT(t1.name, \'_\', mc.team1_result, \':\', mc.team2_result, \'_\',  t2.name) AS text ';
 		$query .=	' ,mc.match_number AS match_number';
@@ -112,10 +106,10 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 
 	function setUnpublishNode()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$post	= 	JRequest::get( 'post' );
-		$id = 	(int) $post['id'];
+		$option = $this->option->getCmd('option');
+		$app	= JFactory::getApplication();
+		$post	= JRequest::get( 'post' );
+		$id 	= 	(int) $post['id'];
 		
 		$query = ' UPDATE #__joomleague_treeto_node AS ttn ';
 		$query .= ' SET ';
@@ -134,7 +128,6 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
 	 */
 	public function getTable($type = 'treetonode', $prefix = 'table', $config = array())
 	{
@@ -147,7 +140,6 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.7
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -165,7 +157,6 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.7
 	 */
 	protected function loadFormData()
 	{
@@ -178,4 +169,3 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 		return $data;
 	}
 }
-?>

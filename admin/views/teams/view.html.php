@@ -1,42 +1,32 @@
 <?php
 /**
- * @copyright	Copyright(C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ * 
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport('joomla.application.component.view');
-jimport('joomla.filesystem.file');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package	JoomLeague
- * @since	0.1
+ * HTML View class
  */
 class JoomleagueViewTeams extends JLGView
 {
 
 	function display($tpl=null)
 	{
-		$option 	= JRequest::getCmd('option');
-		$params		= JComponentHelper::getParams( $option );
-		$mainframe 	= JFactory::getApplication();
+		$option 	= $this->input->getCmd('option');
+		$params		= JComponentHelper::getParams($option);
+		$app 		= JFactory::getApplication();
 		$uri 		= JFactory::getURI();
 
-		$filter_state		= $mainframe->getUserStateFromRequest($option.'t_filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'t_filter_order',		'filter_order',		't.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'t_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'t_search',			'search',			'',				'string');
-		$search_mode		= $mainframe->getUserStateFromRequest($option.'t_search_mode',		'search_mode',		'',				'string');
+		$filter_state		= $app->getUserStateFromRequest($option.'t_filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'t_filter_order',		'filter_order',		't.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'t_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($option.'t_search',				'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($option.'t_search_mode',		'search_mode',		'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
@@ -47,12 +37,12 @@ class JoomleagueViewTeams extends JLGView
 		$lists['state']=JHtml::_('grid.state',$filter_state);
 
 		// table ordering
-		$lists['order_Dir']=$filter_order_Dir;
-		$lists['order']=$filter_order;
+		$lists['order_Dir'] = $filter_order_Dir;
+		$lists['order'] = $filter_order;
 
 		// search filter
-		$lists['search']=$search;
-		$lists['search_mode']=$search_mode;
+		$lists['search'] = $search;
+		$lists['search_mode'] = $search_mode;
 
 		$this->user = JFactory::getUser();
 		$this->config = JFactory::getConfig();
@@ -68,8 +58,6 @@ class JoomleagueViewTeams extends JLGView
 	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{ 

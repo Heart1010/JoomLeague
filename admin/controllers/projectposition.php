@@ -1,24 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Controller
- *
- * @package	JoomLeague
- * @since	0.1
+ * Projectposition Controller
  */
 class JoomleagueControllerProjectposition extends JoomleagueController
 {
@@ -35,7 +28,7 @@ class JoomleagueControllerProjectposition extends JoomleagueController
 	public function display($cachable = false, $urlparams = false)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 		$model=$this->getModel('projectposition');
 		$viewType=$document->getType();
@@ -43,7 +36,7 @@ class JoomleagueControllerProjectposition extends JoomleagueController
 		$view->setModel($model,true);  // true is for the default model;
 
 		$projectws=$this->getModel('project');
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws);
 
 		$task = $this->getTask();
@@ -216,6 +209,4 @@ class JoomleagueControllerProjectposition extends JoomleagueController
 		$link='index.php?option=com_joomleague&view=projectposition&layout=editlist&task=projectposition.display';
 		$this->setRedirect($link,$msg);
 	}
-
 }
-?>

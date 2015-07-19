@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,10 +12,9 @@ jimport('joomla.application.component.model');
 require_once(JPATH_COMPONENT.'/models/item.php');
 
 /**
- * Joomleague Component projectTeam Model
+ * ProjectTeam Model
  *
  * @author	Marco Vaninetti <martizva@libero.it>
- * @package	JoomLeague
  */
 class JoomleagueModelProjectteam extends JoomleagueModelItem
 {
@@ -125,9 +122,9 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 	function getDivisions()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 
- 		$project_id = $mainframe->getUserState($option.'project');
+ 		$project_id = $app->getUserState($option.'project');
 		$query = "	SELECT id AS value, name As text FROM #__joomleague_division WHERE project_id=$project_id ORDER BY name ASC ";
 		$this->_db->setQuery($query);
 		if (!$result = $this->_db->loadObjectList())
@@ -249,9 +246,9 @@ class JoomleagueModelProjectteam extends JoomleagueModelItem
 	function getTrainigData($projectTeamID)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 
- 		$project_id = $mainframe->getUserState($option . 'project');
+ 		$project_id = $app->getUserState($option . 'project');
 		$query = "SELECT * FROM #__joomleague_team_trainingdata WHERE project_id=$project_id AND project_team_id=$projectTeamID ORDER BY dayofweek ASC ";
 		$this->_db->setQuery($query);
 		if (!$result = $this->_db->loadObjectList())

@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,24 +12,22 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Templates Model
+ * Templates Model
  *
  * @author	JoomLeague Team
- * @package	JoomLeague
  */
 
 class JoomleagueModelTemplates extends JoomleagueModelList
 {
 	var $_identifier = "templates";
-	
-	var $_project_id=null;
+	var $_project_id = null;
 
-	function __construct()
+	public function __construct()
 	{
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 
 		parent::__construct();
-		$project_id=$mainframe->getUserState('com_joomleague'.'project',0);
+		$project_id = $app->getUserState('com_joomleague'.'project',0);
 		$this->set('_project_id',$project_id);
 		$this->set('_getALL',0);
 	}
@@ -58,9 +54,9 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$mainframe = JFactory::getApplication();
-		$option = JRequest::getCmd('option');
-		$project_id=$mainframe->getUserState($option.'project');
+		$app = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$project_id = $app->getUserState($option.'project');
 
 		$where=array();
 		$where[]=' tmpl.project_id='.(int) $this->_project_id;
@@ -78,11 +74,11 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$mainframe = JFactory::getApplication();
-		$option = JRequest::getCmd('option');
+		$app = JFactory::getApplication();
+		$option = $this->input->getCmd('option');
 
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'tmpl_filter_order',		'filter_order',		'tmpl.template',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'tmpl_filter_order_Dir',	'filter_order_Dir',	'',					'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'tmpl_filter_order',		'filter_order',		'tmpl.template',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'tmpl_filter_order_Dir',	'filter_order_Dir',	'',					'word');
 
 		if ($filter_order=='tmpl.template')
 		{
@@ -126,7 +122,7 @@ class JoomleagueModelTemplates extends JoomleagueModelList
 		// add default folder
 		$xmldirs[]=$defaultpath.'/default';
 		
-		$extensions = JoomleagueHelper::getExtensions(JRequest::getInt('p'));
+		$extensions = JoomleagueHelper::getExtensions($this->input->getInt('p'));
 		foreach ($extensions as $e => $extension) {
 			$extensiontpath =  JPATH_COMPONENT_SITE.'/extensions/'.$extension;
 			if (is_dir($extensiontpath.'/settings/default'))

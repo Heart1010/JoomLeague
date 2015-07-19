@@ -1,15 +1,12 @@
 <?php 
 /**
-* @copyright	Copyright (C) 2007-2013 joomleague.at. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-defined( '_JEXEC' ) or die( 'Restricted access' ); // Check to ensure this file is included in Joomla!
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 JHtml::_( 'behavior.framework' );
 
@@ -18,10 +15,8 @@ JHtml::_( 'behavior.framework' );
  *
  * in the xml field, the following fields must be defined:
  * - depends: list of fields name this field depends on, separated by comma (e.g: "p, tid")
- * - task: the task used to return the query, using defined depends field names as parameters for query (=> 'index.php?option=com_joomleague&controller=ajax&task=<task>&p=1&tid=34')
- * @package Joomleague
- * @subpackageParameter
- * @since1.5
+ * - task: the task used to return the query, using defined depends field names as parameters for 
+ * query (=> 'index.php?option=com_joomleague&controller=ajax&task=<task>&p=1&tid=34')
  */
 class JFormFieldDependSQL extends JFormField
 {
@@ -35,7 +30,10 @@ class JFormFieldDependSQL extends JFormField
 
 	function getInput()
 	{
-		$required = $this->element['required'] == 'true' ? 'true' : 'false';
+		// $required = $this->element['required'] == 'true' ? 'true' : 'false';
+		$required     = $this->element['required'] ? ' required aria-required="true"' : '';
+		
+		
 		$key = ($this->element['key_field'] ? $this->element['key_field'] : 'value');
 		$val = ($this->element['value_field'] ? $this->element['value_field'] : $this->name);
 		$task = $this->element['task'];
@@ -45,7 +43,7 @@ class JFormFieldDependSQL extends JFormField
 		
 		// Construct the various argument calls that are supported.
 		$attribs	 = ' task="'.$task.'"';
-		$attribs	.= ' required="'.$required.'"';
+		$attribs	.= $required;
 		if ($v = $this->element['size'])
 		{
 			$attribs .= ' size="'.$v.'"';

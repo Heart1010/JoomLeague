@@ -1,44 +1,38 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
-
-jimport ( 'joomla.application.component.view' );
-jimport ( 'joomla.html.parameter.element.timezones' );
+jimport('joomla.application.component.view');
+jimport('joomla.html.parameter.element.timezones');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- *
- *
- * @package JoomLeague
- * @since 0.1
+ * HTML View class
  */
-class JoomleagueViewProject extends JLGView {
-	function display($tpl = null) {
-		$this->form = $this->get ( 'form' );
+class JoomleagueViewProject extends JLGView 
+{
+	public function display($tpl = null) 
+	{
+		$this->form = $this->get('form');
 		
-		$isNew = ($this->form->getValue ( 'id' ) < 1);
+		$isNew = ($this->form->getValue('id') < 1);
 		if ($isNew) {
-			$this->form->setValue ( 'is_utc_converted', null, 1 );
+			$this->form->setValue('is_utc_converted', null, 1);
 		}
-		$edit = JRequest::getVar ( 'edit' );
-		$copy = JRequest::getVar ( 'copy' );
+		$edit = JRequest::getVar('edit');
+		$copy = JRequest::getVar('copy');
 		
 		// add javascript
-		$document = JFactory::getDocument ();
-		$version = urlencode ( JoomleagueHelper::getVersion () );
-		$document->addScript ( JUri::root () . 'administrator/components/com_joomleague/models/forms/project.js?v=' . $version );
+		$document = JFactory::getDocument();
+		$version = urlencode(JoomleagueHelper::getVersion () );
+		
+		// @todo: check!
+		$document->addScript(JUri::root().'administrator/components/com_joomleague/models/forms/project.js?v='.$version);
 		
 		$this->edit = $edit;
 		$this->copy = $copy;
@@ -51,8 +45,6 @@ class JoomleagueViewProject extends JLGView {
 	
 	/**
 	 * Add the page title and toolbar.
-	 *
-	 * @since 1.7
 	 */
 	protected function addToolbar() {
 		// Set toolbar items for the page
@@ -77,7 +69,6 @@ class JoomleagueViewProject extends JLGView {
 			// for existing items the button is renamed `close`
 			JLToolBarHelper::cancel ( 'project.cancel', 'COM_JOOMLEAGUE_GLOBAL_CLOSE' );
 		}
-		JToolBarHelper::help ( 'screen.joomleague', true );
+		JToolBarHelper::help('screen.joomleague', true);
 	}
 }
-?>

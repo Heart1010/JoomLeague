@@ -1,29 +1,21 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ * 
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @package	JoomLeague
- * @since	0.1
+ * HTML View class
  */
 class JoomleagueViewTreetomatchs extends JLGView
 {
 
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
 		if ($this->getLayout() == 'editlist')
 		{
@@ -41,10 +33,12 @@ class JoomleagueViewTreetomatchs extends JLGView
 
 	function _displayEditlist($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
-		$node_id = $mainframe->getUserState( $option . 'node_id' );
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$option = $jinput->getCmd('option');
+		$project_id = $app->getUserState($option . 'project');
+		$node_id = $app->getUserState($option . 'node_id');
 		
 		$uri = JFactory::getURI();
 
@@ -156,8 +150,10 @@ class JoomleagueViewTreetomatchs extends JLGView
 
 	function _displayDefault($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$option = $jinput->getCmd('option');
 		$uri = JFactory::getURI();
 
 		$match = $this->get('Data');

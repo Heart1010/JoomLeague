@@ -1,26 +1,20 @@
 <?php
 /**
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.model' );
-require_once ( JPATH_COMPONENT . DS . 'models' . DS . 'project.php' );
+jimport('joomla.application.component.model');
+require_once JPATH_COMPONENT.'/models/project.php';
 
 /**
- * Joomleague Component Adminmenu Model
+ * Joomleague Model
  *
  * @author Marco Vaninetti <martizva@alice.it>
- * @package   Joomleague
- * @since 0.1
  */
 class JoomleagueModelJoomleague extends JoomleagueModelItem
 {
@@ -29,7 +23,6 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _loadData()
 	{
@@ -54,7 +47,6 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _initData()
 	{
@@ -83,7 +75,6 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*
 	* @access  public
 	* @return  array project
-	* @since 1.5
 	*/
 	function getProjects()
 	{
@@ -112,14 +103,13 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*
 	* @access  public
 	* @return  array
-	* @since 0.1
 	*/
 	function getProjectteams()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 
-		$project_id = $mainframe->getUserState( $option . 'project' );
+		$project_id = $app->getUserState( $option . 'project' );
 
 		$query = '	SELECT	pt.id AS value,
 							t.name As text,
@@ -146,7 +136,6 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*
 	* @access  public
 	* @return  array
-	* @since 0.1
 	*/
 	function getProjectRounds()
 	{
@@ -176,7 +165,6 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array seasons
-	* @since	1.5.0a
 	*/
 	function getSeasons()
 	{
@@ -195,7 +183,6 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*
 	* @access	public
 	* @return	array project
-	* @since	1.5.0a
 	*/
 	function getProjectsBySportsType($sportstype_id, $season = null)
 	{
@@ -230,4 +217,3 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	}
 
 }
-?>

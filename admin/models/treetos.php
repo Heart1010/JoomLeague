@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,9 +12,7 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Treetos Model
- *
- * @package	JoomLeague
+ * Treetos Model
  */
 
 class JoomleagueModelTreetos extends JoomleagueModelList
@@ -44,11 +40,11 @@ class JoomleagueModelTreetos extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
-		$division = (int) $mainframe->getUserStateFromRequest( $option.'tt_division', 'division', 0 );
-		$division=JString::strtolower($division);
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
+		$division = (int) $app->getUserStateFromRequest($option.'tt_division', 'division', 0);
+		$division = JString::strtolower($division);
 		$where = ' WHERE  tt.project_id = ' . $project_id ;
 		if($division > 0)
 		{

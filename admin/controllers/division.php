@@ -1,24 +1,16 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.controller' );
 
 /**
- * Joomleague Component Controller
- *
- * @package		Joomleague
- * @since 0.1
+ * Division Controller
  */
 class JoomleagueControllerDivision extends JoomleagueController
 {
@@ -38,7 +30,7 @@ class JoomleagueControllerDivision extends JoomleagueController
 	{
 		$option = JRequest::getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
+		$app	= JFactory::getApplication();
 		$document = JFactory::getDocument();
 
 		$task = $this->getTask();
@@ -52,14 +44,14 @@ class JoomleagueControllerDivision extends JoomleagueController
 				$view = $this->getView( 'division', $viewType );
 				$view->setModel( $model, true );	// true is for the default model;
 
-				$projectws = $this->getModel ( 'project' );
-				$projectws->setId( $mainframe->getUserState( $option . 'project', 0 ) );
-				$view->setModel( $projectws );
+				$projectws = $this->getModel('project');
+				$projectws->setId($app->getUserState($option.'project', 0));
+				$view->setModel($projectws);
 
-				JRequest::setVar( 'hidemainmenu', 0 );
-				JRequest::setVar( 'layout', 'form' );
-				JRequest::setVar( 'view', 'division' );
-				JRequest::setVar( 'edit', false );
+				JRequest::setVar('hidemainmenu', 0);
+				JRequest::setVar('layout', 'form');
+				JRequest::setVar('view', 'division');
+				JRequest::setVar('edit', false);
 
 				// Checkout the project
 				$model->checkout();
@@ -67,19 +59,19 @@ class JoomleagueControllerDivision extends JoomleagueController
 
 			case 'edit'	:
 			{
-				$model = $this->getModel ( 'division' );
+				$model = $this->getModel('division');
 				$viewType = $document->getType();
-				$view = $this->getView( 'division', $viewType );
-				$view->setModel( $model, true );	// true is for the default model;
+				$view = $this->getView('division', $viewType);
+				$view->setModel($model, true);	// true is for the default model;
 
-				$projectws = $this->getModel ( 'project' );
-				$projectws->setId( $mainframe->getUserState( $option . 'project', 0 ) );
-				$view->setModel( $projectws );
+				$projectws = $this->getModel('project');
+				$projectws->setId($app->getUserState($option.'project', 0));
+				$view->setModel($projectws);
 
-				JRequest::setVar( 'hidemainmenu', 0 );
-				JRequest::setVar( 'layout', 'form' );
-				JRequest::setVar( 'view', 'division' );
-				JRequest::setVar( 'edit', true );
+				JRequest::setVar('hidemainmenu', 0);
+				JRequest::setVar('layout', 'form');
+				JRequest::setVar('view', 'division');
+				JRequest::setVar('edit', true);
 
 				// Checkout the project
 				$model->checkout();
@@ -88,15 +80,15 @@ class JoomleagueControllerDivision extends JoomleagueController
 
 			default :
 			{
-				$model = $this->getModel ( 'divisions' );
+				$model = $this->getModel('divisions');
 				$viewType = $document->getType();
-				$view = $this->getView( 'divisions', $viewType );
-				$view->setModel( $model, true );	// true is for the default model;
+				$view = $this->getView('divisions', $viewType);
+				$view->setModel($model, true);	// true is for the default model;
 
-				$projectws = $this->getModel ( 'project' );
+				$projectws = $this->getModel('project');
 				
-				$projectws->setId( $mainframe->getUserState( $option . 'project', 0 ) );
-				$view->setModel( $projectws );
+				$projectws->setId($app->getUserState($option.'project', 0));
+				$view->setModel($projectws);
 			}
 			break;
 
@@ -183,7 +175,6 @@ class JoomleagueControllerDivision extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Division', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{
@@ -191,4 +182,3 @@ class JoomleagueControllerDivision extends JoomleagueController
 		return $model;
 	}
 }
-?>

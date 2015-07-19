@@ -1,26 +1,20 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
 
 /**
- * HTML View class for the Joomleague component
- *
- * @static
- * @package	JoomLeague
+ * HTML View class
  */
 class JoomleagueViewProjectteams extends JLGView
 {
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
 		if ($this->getLayout() == 'editlist')
 		{
@@ -52,8 +46,8 @@ class JoomleagueViewProjectteams extends JLGView
   function _displayChangeTeams($tpl)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
+		$app 	= JFactory::getApplication();
+		$project_id = $app->getUserState( $option . 'project' );
 		
 		$projectteams = $this->get('Data');
 		$model = $this->getModel();
@@ -83,17 +77,17 @@ class JoomleagueViewProjectteams extends JLGView
 	function _displayEditlist($tpl)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState( $option . 'project' );
 		
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
 
-		$filter_state = $mainframe->getUserStateFromRequest($option.'tl_filter_state', 'filter_state', '', 'word');
-		$filter_order = $mainframe->getUserStateFromRequest($option.'tl_filter_order', 'filter_order', 't.name', 'cmd');
-		$filter_order_Dir = $mainframe->getUserStateFromRequest($option.'tl_filter_order_Dir', 'filter_order_Dir', '', 'word');
-		$search	= $mainframe->getUserStateFromRequest($option.'tl_search', 'search', '', 'string');
-		$search_mode = $mainframe->getUserStateFromRequest($option.'tl_search_mode', 'search_mode', '', 'string');
+		$filter_state = $app->getUserStateFromRequest($option.'tl_filter_state', 'filter_state', '', 'word');
+		$filter_order = $app->getUserStateFromRequest($option.'tl_filter_order', 'filter_order', 't.name', 'cmd');
+		$filter_order_Dir = $app->getUserStateFromRequest($option.'tl_filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$search	= $app->getUserStateFromRequest($option.'tl_search', 'search', '', 'string');
+		$search_mode = $app->getUserStateFromRequest($option.'tl_search_mode', 'search_mode', '', 'string');
 		$search	= JString::strtolower($search);
 
 		$projectteam = $this->get('Data');
@@ -217,8 +211,8 @@ class JoomleagueViewProjectteams extends JLGView
 	{
 		$document = JFactory::getDocument();
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
+		$app 	= JFactory::getApplication();
+		$project_id = $app->getUserState( $option . 'project' );
 		
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
@@ -230,13 +224,13 @@ class JoomleagueViewProjectteams extends JLGView
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/quickaddteam.js');
 		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');		
 
-		$filter_state		= $mainframe->getUserStateFromRequest($option.'tl_filter_state',		'filter_state',		'',			'word');
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'tl_filter_order',		'filter_order',		't.name',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'tl_filter_order_Dir',	'filter_order_Dir',	'',			'word');
-		$search				= $mainframe->getUserStateFromRequest($option.'tl_search',				'search',			'',			'string');
-		$division			= $mainframe->getUserStateFromRequest($option.'tl_division',			'division',			'',			'string');
+		$filter_state		= $app->getUserStateFromRequest($option.'tl_filter_state',		'filter_state',		'',			'word');
+		$filter_order		= $app->getUserStateFromRequest($option.'tl_filter_order',		'filter_order',		't.name',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'tl_filter_order_Dir',	'filter_order_Dir',	'',			'word');
+		$search				= $app->getUserStateFromRequest($option.'tl_search',				'search',			'',			'string');
+		$division			= $app->getUserStateFromRequest($option.'tl_division',			'division',			'',			'string');
 		
-		$search_mode		= $mainframe->getUserStateFromRequest($option.'tl_search_mode',			'search_mode',		'',			'string');
+		$search_mode		= $app->getUserStateFromRequest($option.'tl_search_mode',			'search_mode',		'',			'string');
 		$search				= JString::strtolower($search);
 
 		$projectteam	= $this->get('Data');
@@ -287,8 +281,8 @@ class JoomleagueViewProjectteams extends JLGView
 	{
 		$document = JFactory::getDocument();
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id = $mainframe->getUserState( $option . 'project' );
+		$app 	= JFactory::getApplication();
+		$project_id = $app->getUserState( $option . 'project' );
 	
 		$uri = JFactory::getURI();
 			
@@ -314,10 +308,9 @@ class JoomleagueViewProjectteams extends JLGView
 	
 		parent::display($tpl);
 	}
+	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.6
 	*/
 	protected function addToolbar()
 	{ 	
@@ -335,8 +328,6 @@ class JoomleagueViewProjectteams extends JLGView
 	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.6
 	*/
 	protected function addToolbar_Editlist()
 	{ 		

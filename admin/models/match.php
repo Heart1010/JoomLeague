@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,10 +12,9 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
- * Joomleague Component Match Model
+ * Match Model
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
  */
 
 class JoomleagueModelMatch extends JoomleagueModelItem
@@ -34,8 +31,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 * @param   object  $record  A record object.
 	 *
 	 * @return  boolean  True if allowed to delete the record. Defaults to the permission for the component.
-	 *
-	 * @since   11.1
 	 */
 	protected function canDelete($record)
 	{
@@ -62,7 +57,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _loadData()
 	{
@@ -103,7 +97,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _initData()
 	{
@@ -164,7 +157,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since	0.1
 	 */
 
 	function deleteOne($project_id)
@@ -244,7 +236,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	boolean	True on success
-	 * @since	0.1
 	 */
 	function delete(&$pk=array())
 	{
@@ -302,11 +293,10 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	// function save_array changed for date per match and period results
 	// Gucky 2007/05/25
 	
-	// @todo: fix!
 	function save_array($cid=null,$post=null,$zusatz=false,$project_id)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
 		$datatable ='#__joomleague_match';
 		$columns=$this->_db->getTableColumns($datatable);
 		
@@ -422,7 +412,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		*
 		* @access	public
 		* @return	array
-		* @since 0.1
 		*/
 	function getPlaygrounds()
 	{
@@ -441,7 +430,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 		*
 		* @access	public
 		* @return	array
-		* @since 0.1
 		*/
 	function getMatchTeams()
 	{
@@ -599,7 +587,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 0.1
 	 */
 	function getProjectReferees($already_sel=false, $project_id)
 	{
@@ -689,7 +676,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 0.1
 	 */
 	function getGhostPlayer()
 	{
@@ -781,13 +767,12 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 1.5
 	 */
 	function getProjectPositions($id=0)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState($option.'project');
 		$query='	SELECT	pos.id AS value,
 							pos.name AS text,
 							ppos.id AS pposid
@@ -813,13 +798,12 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 1.5
 	 */
 	function getProjectPositionsOptions($id=0, $person_type=1)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState($option.'project');
 		$query='	SELECT	ppos.id AS value,
 							pos.name AS text,
 							pos.id AS posid
@@ -846,13 +830,12 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 1.5
 	 */
 	function getProjectStaffPositions($id=0)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState($option.'project');
 		$query='	SELECT	pos.id AS value,
 							pos.name AS text,
 							ppos.id AS pposid
@@ -878,13 +861,12 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @access	public
 	 * @return	array
-	 * @since 0.1
 	 */
 	function getProjectRefereePositions($id=0)
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$project_id = $app->getUserState($option.'project');
 		$query='	SELECT	ppos.id AS value,
 							pos.name AS text,
 							ppos.id AS pposid
@@ -1090,8 +1072,8 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	function getSubstitutions($tid=0)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$app 	= JFactory::getApplication();
+		$project_id=$app->getUserState($option.'project');
 		$in_out=array();
 		$query='SELECT mp.*,'
 		.' tp1.id AS value,'
@@ -1697,7 +1679,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 *
 	 * @param int $projecteam_id
 	 * @param int $bDeleteCurrrentRoster
-	 * @since 1.5.4
+	 * 
 	 * @author And_One <andone@mfga.at>
 	 * @return boolean
 	 */
@@ -1756,7 +1738,7 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	*
 	* @param int $projecteam_id
 	* @param int $bDeleteCurrrentRoster
-	* @since 1.5.4
+	* 
 	* @author And_One <andone@mfga.at>
 	* @return boolean
 	*/
@@ -1845,7 +1827,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 * @param	string	A prefix for the table class name. Optional.
 	 * @param	array	Configuration array for model. Optional.
 	 * @return	JTable	A database object
-	 * @since	1.6
 	 */
 	public function getTable($type = 'match', $prefix = 'table', $config = array())
 	{
@@ -1858,7 +1839,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 * @param	array	$data		Data for the form.
 	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
 	 * @return	mixed	A JForm object on success, false on failure
-	 * @since	1.7
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -1876,7 +1856,6 @@ class JoomleagueModelMatch extends JoomleagueModelItem
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 * @since	1.7
 	 */
 	protected function loadFormData()
 	{

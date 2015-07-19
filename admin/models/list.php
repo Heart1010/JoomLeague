@@ -1,25 +1,19 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined( '_JEXEC' ) or die;
 
 jimport( 'joomla.application.component.model' );
 
 /**
- * Joomleague Component Admin List Model
+ * List Model
  *
  * @author	Julien Vonthron <julien.vonthron@gmail.com>
- * @package	Joomleague
- * @since	0.1
  */
 class JoomleagueModelList extends JModelLegacy
 {
@@ -47,29 +41,25 @@ class JoomleagueModelList extends JModelLegacy
 	/* current project id */
 	var $_project_id = 0;
 	var $_identifier = "";
+	
+	protected $input;
 
 	/**
 	 * Constructor
-	 *
-	 * @since 0.1
 	 */
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$this->input = JFactory::getApplication()->input;
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
 
 		// Get the pagination request variables
-		$limit = $mainframe->getUserStateFromRequest(	'global.list.limit', 
-														'limit', 
-														$mainframe->getCfg('list_limit'), 
-														'int' );
-		$this->setState('limit', $limit );
-		$limitstart	= $mainframe->getUserStateFromRequest(	$option.'.'.$this->_identifier.'.limitstart',
-															'limitstart', 
-															0, 'int' );
+		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int' );
+		$this->setState('limit',$limit);
+		$limitstart	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.limitstart','limitstart', 0, 'int' );
 		$this->setState('limitstart', $limitstart);
-		$this->_project_id = $mainframe->getUserState( $option . 'project', 0 );
+		$this->_project_id = $app->getUserState($option . 'project', 0);
 	}
 
 	/**
@@ -153,10 +143,10 @@ class JoomleagueModelList extends JModelLegacy
 	 */
 	public function getProject()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
-		$project_id = $mainframe->getUserState($option . 'project');
+		$app	= JFactory::getApplication();
+		$project_id = $app->getUserState($option . 'project');
 
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);

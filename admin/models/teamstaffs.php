@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,10 +12,9 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component TeamStaffs Model
+ * TeamStaffs Model
  *
  * @author	Kurt Norgaz <kurtnorgaz@web.de>
- * @package	JoomLeague
  */
 class JoomleagueModelTeamStaffs extends JoomleagueModelList
 {
@@ -44,10 +41,10 @@ class JoomleagueModelTeamStaffs extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$filter_order		= $mainframe->getUserStateFromRequest($option.'ts_filter_order',		'filter_order',		'ppl.ordering',	'cmd');
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest($option.'ts_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$option = $this->input->getCmd('option');
+		$app = JFactory::getApplication();
+		$filter_order		= $app->getUserStateFromRequest($option.'ts_filter_order',		'filter_order',		'ppl.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($option.'ts_filter_order_Dir',	'filter_order_Dir',	'',				'word');
 		if ($filter_order=='ppl.lastname')
 		{
 			$orderby=' ORDER BY ppl.lastname '.$filter_order_Dir;
@@ -61,13 +58,13 @@ class JoomleagueModelTeamStaffs extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option 		= 'com_joomleague';
-		$mainframe		= JFactory::getApplication();
-		$project_id		= $mainframe->getUserState($option.'project');
-		$team_id		= $mainframe->getUserState($option.'project_team_id');
-		$filter_state	= $mainframe->getUserStateFromRequest( $option . 'ts_filter_state', 'filter_state', '', 'word' );
-		$search			= $mainframe->getUserStateFromRequest($option.'ts_search', 'search', '', 'string');
-		$search_mode	= $mainframe->getUserStateFromRequest($option.'ts_search_mode','search_mode', '', 'string');
+		$option 		= $this->input->getCmd('option');
+		$app			= JFactory::getApplication();
+		$project_id		= $app->getUserState($option.'project');
+		$team_id		= $app->getUserState($option.'project_team_id');
+		$filter_state	= $app->getUserStateFromRequest( $option . 'ts_filter_state', 'filter_state', '', 'word' );
+		$search			= $app->getUserStateFromRequest($option.'ts_search', 'search', '', 'string');
+		$search_mode	= $app->getUserStateFromRequest($option.'ts_search_mode','search_mode', '', 'string');
 		$search			= JString::strtolower($search);
 		$where=array();
 		$where[]='ts.projectteam_id='.$team_id;
@@ -171,8 +168,8 @@ class JoomleagueModelTeamStaffs extends JoomleagueModelList
 	function getDivisions()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$app = JFactory::getApplication();
+		$project_id=$app->getUserState($option.'project');
 		$query="SELECT id AS value, name AS text FROM #__joomleague_division WHERE project_id=$project_id ORDER BY name ASC ";
 		$this->_db->setQuery($query);
 		if (!$result=$this->_db->loadObjectList())
@@ -192,8 +189,8 @@ class JoomleagueModelTeamStaffs extends JoomleagueModelList
 	function getPositions()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$app = JFactory::getApplication();
+		$project_id=$app->getUserState($option.'project');
 		$query="	SELECT ppos.id AS value, pos.name AS text
 					FROM #__joomleague_position AS pos
 					INNER JOIN #__joomleague_project_position AS ppos ON ppos.position_id=pos.id

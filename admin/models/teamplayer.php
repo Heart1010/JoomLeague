@@ -1,24 +1,20 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-
 require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
- * Joomleague Component teamplayer Model
+ * Teamplayer Model
  *
  * @author	Marco Vaninetti <martizva@libero.it>
- * @package	JoomLeague
  */
 class JoomleagueModelTeamPlayer extends JoomleagueModelItem
 {
@@ -128,8 +124,8 @@ class JoomleagueModelTeamPlayer extends JoomleagueModelItem
 	function getProjectPositions()
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$app 	= JFactory::getApplication();
+		$project_id=$app->getUserState($option.'project');
 
 		$query="	SELECT ppos.id AS value,pos.name AS text
 					FROM #__joomleague_position AS pos
@@ -156,9 +152,9 @@ class JoomleagueModelTeamPlayer extends JoomleagueModelItem
 	 */
 	function getProjectMatchdays()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
-		$project_id=$mainframe->getUserState($option.'project');
+		$option	= JRequest::getCmd('option');
+		$app	= JFactory::getApplication();
+		$project_id=$app->getUserState($option.'project');
 		$query="	SELECT	roundcode AS value,
 							name AS text
 					FROM #__joomleague_round

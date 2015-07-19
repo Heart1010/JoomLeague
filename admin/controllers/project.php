@@ -1,25 +1,19 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
-* @license		GNU/GPL,see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License,and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controllerform');
 
 /**
- * Joomleague Component Project Model
+ * Project Controller
  *
  * @author 	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueControllerProject extends JoomleagueController
 {
@@ -38,11 +32,11 @@ class JoomleagueControllerProject extends JoomleagueController
 	public function display($cachable = false, $urlparams = false)
 	{
 		$option = JRequest::getCmd('option');
-		$mainframe 		= JFactory::getApplication();
+		$app 	= JFactory::getApplication();
 		$sports_type	= JRequest::getInt('filter_sports_type',0);
 		$season			= JRequest::getInt('filter_season',0);
-		$mainframe->setUserState($option.'.projects.filter_sports_type', $sports_type);
-		$mainframe->setUserState($option.'.projects.filter_season', $season);
+		$app->setUserState($option.'.projects.filter_sports_type', $sports_type);
+		$app->setUserState($option.'.projects.filter_season', $season);
 		$document = JFactory::getDocument();
 		$model=$this->getModel('project');
 		$viewType=$document->getType();
@@ -199,7 +193,7 @@ class JoomleagueControllerProject extends JoomleagueController
 	{
 		JSession::checkToken() or die(JText::_('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN'));
 		$option = JRequest::getCmd('option');
-		$mainframe = JFactory::getApplication();
+		$app = JFactory::getApplication();
 		$user = JFactory::getUser();
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_PROJECT_DELETE_TITLE'),'generic.png');
 		JToolBarHelper::back('COM_JOOMLEAGUE_PROJECT_BACK','index.php?option=com_joomleague&view=projects&task=project.display');

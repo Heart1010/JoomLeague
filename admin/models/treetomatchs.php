@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -14,9 +12,7 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Treetomatchs Model
- *
- * @package	JoomLeague
+ * Treetomatchs Model
  */
 
 class JoomleagueModelTreetomatchs extends JoomleagueModelList
@@ -60,10 +56,10 @@ class JoomleagueModelTreetomatchs extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
+		$option = $this->input->getCmd('option');
 		
-		$mainframe	= JFactory::getApplication();
-		$node_id = $mainframe->getUserState($option . 'node_id');
+		$app	= JFactory::getApplication();
+		$node_id = $app->getUserState($option . 'node_id');
 		$where = ' WHERE  ttm.node_id = ' . $node_id ;
 		
 		return $where;
@@ -115,11 +111,11 @@ class JoomleagueModelTreetomatchs extends JoomleagueModelList
 	//function getMatchToNode()
 	function getMatches()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
-		$node_id = $mainframe->getUserState($option . 'node_id');
-		$treeto_id = $mainframe->getUserState($option . 'treeto_id');
-		$project_id = $mainframe->getUserState($option . 'project');
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
+		$node_id = $app->getUserState($option . 'node_id');
+		$treeto_id = $app->getUserState($option . 'treeto_id');
+		$project_id = $app->getUserState($option . 'project');
 		
 		$query = ' SELECT mc.id AS value ';
 		$query .=	' ,CONCAT(t1.name, \'_vs_\', t2.name, \' [round:\',r.roundcode,\']\') AS text ';

@@ -1,25 +1,19 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Template Controller
+ * Template Controller
  *
  * @author	Marco Vaninetti <martizva@tiscali.it>
- * @package	JoomLeague
- * @since	0.1
  */
 class JoomleagueControllerTemplate extends JoomleagueController
 {
@@ -38,8 +32,8 @@ class JoomleagueControllerTemplate extends JoomleagueController
 
 	public function display($cachable = false, $urlparams = false)
 	{
-		$option 	= JRequest::getCmd('option');
-		$mainframe 	= JFactory::getApplication();
+		$option 	= $this->input->getCmd('option');
+		$app 		= JFactory::getApplication();
 		$document 	= JFactory::getDocument();
 		$model		= $this->getModel('templates');
 		
@@ -48,7 +42,7 @@ class JoomleagueControllerTemplate extends JoomleagueController
 		$view->setModel($model,true);	// true is for the default model;
 		
 		$projectws=$this->getModel('project');
-		$projectws->setId($mainframe->getUserState($option.'project',0));
+		$projectws->setId($app->getUserState($option.'project',0));
 		$view->setModel($projectws, false);
 
 		$task = $this->getTask();
@@ -67,7 +61,7 @@ class JoomleagueControllerTemplate extends JoomleagueController
 					$view->setModel($model,true);	// true is for the default model;
 
 					$projectws=$this->getModel('project');
-					$projectws->setId($mainframe->getUserState($option.'project',0));
+					$projectws->setId($app->getUserState($option.'project',0));
 					$view->setModel($projectws, false);
 					$view->setLayout('form');
 					
@@ -237,6 +231,4 @@ class JoomleagueControllerTemplate extends JoomleagueController
 		}
 		$this->setRedirect('index.php?option=com_joomleague&view=templates&task=template.display',$msg);
 	}
-
 }
-?>

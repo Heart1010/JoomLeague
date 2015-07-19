@@ -1,24 +1,17 @@
 <?php
 /**
-* @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
 /**
- * Joomleague Component Controller
- *
- * @package	JoomLeague
- * @since	0.1
+ * Projectteam Controller
  */
 class JoomleagueControllerProjectteam extends JoomleagueController
 {
@@ -35,13 +28,13 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 
 	public function edit()
 	{
-		$mainframe	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
 		$document	= JFactory::getDocument();
 		$viewType	= $document->getType();
 		$view		= $this->getView  ('projectteam', $viewType);
 
 		$projectws = $this->getModel ('project');
-		$projectws->setId($mainframe->getUserState('com_joomleagueproject', 0));
+		$projectws->setId($app->getUserState('com_joomleagueproject', 0));
 		$view->setModel($projectws);
 
 		JRequest::setVar('view', 'projectteam');
@@ -65,7 +58,7 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 	{
 		$option = JRequest::getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
 		$document	= JFactory::getDocument();
 	 	$model		= $this->getModel ('projectteams');
 		$viewType	= $document->getType();
@@ -73,7 +66,7 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 		$view->setModel($model, true);  // true is for the default model;
 
 		$projectws = $this->getModel ('project');
-		$projectws->setId($mainframe->getUserState($option . 'project', 0));
+		$projectws->setId($app->getUserState($option . 'project', 0));
 		$view->setModel($projectws);
 
 		parent::display();
@@ -103,7 +96,7 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 	{
 		$option = JRequest::getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
 		$document	= JFactory::getDocument();
 		$model		= $this->getModel ('projectteams');
 		$viewType	= $document->getType();
@@ -111,12 +104,12 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 		$view->setModel($model, true);  // true is for the default model;
 
 		$projectws = $this->getModel ('project');
-		$projectws->setId($mainframe->getUserState($option . 'project', 0));
+		$projectws->setId($app->getUserState($option . 'project', 0));
 		$view->setModel($projectws);
 
 		JRequest::setVar('hidemainmenu',JRequest::getVar('hidemainmenu',0));
 				
-		JRequest::setVar('layout', 'changeteams' );
+		JRequest::setVar('layout', 'changeteams');
 		JRequest::setVar('view', 'projectteams');
 		JRequest::setVar('edit', true);
 
@@ -130,19 +123,19 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 	{
 		$option = JRequest::getCmd('option');
 
-		$mainframe	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
 		$document	= JFactory::getDocument();
-		$model		= $this->getModel ('projectteams');
+		$model		= $this->getModel('projectteams');
 		$viewType	= $document->getType();
-		$view		= $this->getView  ('projectteams', $viewType);
+		$view		= $this->getView ('projectteams', $viewType);
 		$view->setModel($model, true);  // true is for the default model;
 
-		$projectws = $this->getModel ('project');
-		$projectws->setId($mainframe->getUserState($option . 'project', 0));
+		$projectws = $this->getModel('project');
+		$projectws->setId($app->getUserState($option . 'project', 0));
 		$view->setModel($projectws);
 
 		JRequest::setVar('hidemainmenu',JRequest::getVar('hidemainmenu',0));
-		JRequest::setVar('layout', 'editlist' );
+		JRequest::setVar('layout', 'editlist');
 		JRequest::setVar('view', 'projectteams');
 		JRequest::setVar('edit', true);
 
@@ -182,8 +175,8 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
 		//get the projectid
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
- 		$project_id = $mainframe->getUserState($option . 'project');
+		$app	= JFactory::getApplication();
+ 		$project_id = $app->getUserState($option . 'project');
 		
 		$post	= JRequest::get('post');
 		$cid	= JRequest::getVar('cid', array(0), 'post', 'array');
@@ -265,8 +258,8 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 	{
 		//get the projectid
 		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
- 		$project_id = $mainframe->getUserState($option . 'project');
+		$app	= JFactory::getApplication();
+ 		$project_id = $app->getUserState($option . 'project');
 		
 		$post	= JRequest::get('post');
 		$cid	= JRequest::getVar('cid', array(), 'post', 'array');
@@ -386,7 +379,6 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Projectteam', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{
@@ -394,4 +386,3 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 		return $model;
 	}
 }
-?>

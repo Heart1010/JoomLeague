@@ -1,26 +1,20 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined( '_JEXEC' ) or die( 'Restricted access' );
-
-jimport( 'joomla.application.component.model' );
-require_once ( JPATH_COMPONENT . DS . 'models' . DS . 'list.php' );
+jimport('joomla.application.component.model');
+require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
  * Joomleague Component Persons Model
  *
  * @author	Kurt Norgaz
- * @package	JoomLeague
- * @since	1.5
  */
 class JoomleagueModelPersons extends JoomleagueModelList
 {
@@ -44,11 +38,11 @@ class JoomleagueModelPersons extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option = $this->input->getCmd('option');
+		$app	= JFactory::getApplication();
 
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
 
 		if ( $filter_order == 'pl.lastname' )
 		{
@@ -64,17 +58,17 @@ class JoomleagueModelPersons extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = JRequest::getCmd('option');
-		$mainframe	= JFactory::getApplication();
+		$option = $this->option->getCmd('option');
+		$app	= JFactory::getApplication();
 
-		$filter_state		= $mainframe->getUserStateFromRequest( $option . 'pl_filter_state', 'filter_state', '', 'word' );
-		$filter_order		= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $mainframe->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
-		$search				= $mainframe->getUserStateFromRequest( $option . 'pl_search', 'search',	'', 'string');
-		$search_mode		= $mainframe->getUserStateFromRequest( $option . 'pl_search_mode', 'search_mode', '', 'string');
-		$project_id			= $mainframe->getUserState( $option . 'project' );
-		$team_id			= $mainframe->getUserState( $option . 'team_id' );
-		$project_team_id	= $mainframe->getUserState( $option . 'project_team_id' );
+		$filter_state		= $app->getUserStateFromRequest( $option . 'pl_filter_state', 'filter_state', '', 'word' );
+		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
+		$search				= $app->getUserStateFromRequest( $option . 'pl_search', 'search',	'', 'string');
+		$search_mode		= $app->getUserStateFromRequest( $option . 'pl_search_mode', 'search_mode', '', 'string');
+		$project_id			= $app->getUserState( $option . 'project' );
+		$team_id			= $app->getUserState( $option . 'team_id' );
+		$project_team_id	= $app->getUserState( $option . 'project_team_id' );
 		$search				= JString::strtolower( $search );
 		$exludePerson		= '';
 
@@ -278,4 +272,3 @@ class JoomleagueModelPersons extends JoomleagueModelList
 	}
 
 }
-?>
