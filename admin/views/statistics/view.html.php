@@ -72,7 +72,7 @@ class JoomleagueViewStatistics extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTICS_TITLE'),'statistics');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTICS_TITLE'),'jl-statistics');
 		
 		JLToolBarHelper::publishList();
 		JLToolBarHelper::unpublishList();

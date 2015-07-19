@@ -22,8 +22,12 @@ foreach ($this->extended->getFieldsets() as $fieldset)
 	
 	foreach ($fields as $field)
 	{
-		echo $field->label;
-       	echo $field->input;
+	?>
+	<div class="control-group">
+		<div class="control-label"><?php echo $field->label;?></div>
+       	<div class="controls"><?php echo $field->input;?></div>
+    </div>
+    <?php
 	}
 	?>
 	</fieldset>

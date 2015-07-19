@@ -140,7 +140,7 @@ class JoomleagueViewPosition extends JLGView
 		else
 		{
 			// for existing items the button is renamed `close` and the apply button is showed
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_POSITION_EDIT'),'Positions');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_POSITION_EDIT'),'jl-Positions');
 			JLToolBarHelper::apply('position.apply');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('position.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');

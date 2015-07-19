@@ -178,7 +178,7 @@ class JoomleagueViewMatches extends JLGView
 		$massadd = $this->input->getInt('massadd',0);
 
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_MATCHES_TITLE'),'Matchdays');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_MATCHES_TITLE'),'jl-Matchdays');
 
 		if (!$massadd)
 		{

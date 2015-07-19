@@ -54,13 +54,13 @@ class JoomleagueViewProject extends JLGView
 			$toolbarTitle = (! $this->edit) ? JText::_ ( 'COM_JOOMLEAGUE_ADMIN_PROJECT_ADD_NEW' ) : JText::_ ( 'COM_JOOMLEAGUE_ADMIN_PROJECT_EDIT' ) . ': ' . $this->form->getValue ( 'name' );
 			JToolBarHelper::divider ();
 		}
-		JToolBarHelper::title ( $toolbarTitle, 'ProjectSettings' );
+		JToolBarHelper::title($toolbarTitle, 'jl-ProjectSettings');
 		
 		if (! $this->copy) {
-			JLToolBarHelper::apply ( 'project.apply' );
-			JLToolBarHelper::save ( 'project.save' );
+			JLToolBarHelper::apply('project.apply');
+			JLToolBarHelper::save('project.save');
 		} else {
-			JLToolBarHelper::save ( 'project.copysave' );
+			JLToolBarHelper::save('project.copysave');
 		}
 		JToolBarHelper::divider ();
 		if ((! $this->edit) || ($this->copy)) {

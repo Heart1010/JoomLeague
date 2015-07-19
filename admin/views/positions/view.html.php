@@ -80,7 +80,7 @@ class JoomleagueViewPositions extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_POSITIONS_TITLE'),'Positions');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_POSITIONS_TITLE'),'jl-Positions');
 
 		JLToolBarHelper::publishList('position.publish');
 		JLToolBarHelper::unpublishList('position.unpublish');

@@ -36,7 +36,7 @@ class JoomleagueViewSettings extends JLGView
 	protected function addToolbar()
 	{
 		//create the toolbar
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_SETTINGS_TITLE'),'config');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_SETTINGS_TITLE'),'FrontendSettings');
 		JLToolBarHelper::apply('settings.apply');
 		JLToolBarHelper::save('settings.save');
 		JLToolBarHelper::cancel('settings.cancel');

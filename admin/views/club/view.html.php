@@ -35,7 +35,7 @@ class JoomleagueViewClub extends JLGView
 
 		if (!$this->edit)
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_ADD_NEW'),'clubs');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_ADD_NEW'),'jl-clubs');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('club.cancel');
 		}

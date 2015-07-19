@@ -11,28 +11,16 @@ defined('_JEXEC') or die;
 <fieldset class="form-horizontal">
 	<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUE_LEGEND'); ?></legend>
 
-	<table class="table table-striped">
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('name'); ?></td>
-			<td><?php echo $this->form->getInput('name'); ?></td>
-		</tr>
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('middle_name'); ?></td>
-			<td><?php echo $this->form->getInput('middle_name'); ?></td>
-		</tr>
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('short_name'); ?></td>
-			<td><?php echo $this->form->getInput('short_name'); ?></td>
-		</tr>		
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('alias'); ?></td>
-			<td><?php echo $this->form->getInput('alias'); ?></td>
-		</tr>
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('country'); ?></td>
-			<td><?php echo $this->form->getInput('country'); ?>&nbsp;<?php echo Countries::getCountryFlag($this->form->getValue('country')); ?>&nbsp;(<?php echo $this->form->getValue('country'); ?>)</td>
-		</tr>
-	</table>
-	
-	
+	<?php 
+	echo $this->form->renderField('id');
+	echo $this->form->renderField('name');
+	echo $this->form->renderField('middle_name');
+	echo $this->form->renderField('short_name');
+	echo $this->form->renderField('alias');
+	echo $this->form->renderField('admin');
+	?>
+	<div class="control-group">
+		<div class="control-label"><?php echo $this->form->getLabel('country'); ?></div>
+		<div class="controls"><?php echo $this->form->getInput('country'); ?>&nbsp;<?php echo Countries::getCountryFlag($this->form->getValue('country')); ?>&nbsp;(<?php echo $this->form->getValue('country'); ?>)</div>
+	</div>
 </fieldset>

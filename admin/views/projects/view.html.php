@@ -109,7 +109,7 @@ class JoomleagueViewProjects extends JLGView
 	protected function addToolbar()
 	{ 
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTS_TITLE'),'ProjectSettings');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTS_TITLE'),'jl-ProjectSettings');
 		JLToolBarHelper::addNew('project.add');
 		JLToolBarHelper::custom('project.copy','copy.png','copy_f2.png','COM_JOOMLEAGUE_GLOBAL_COPY',false);
 		JLToolBarHelper::editList('project.edit');

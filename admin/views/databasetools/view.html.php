@@ -33,7 +33,7 @@ class JoomleagueViewDatabaseTools extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title( JText::_( 'COM_JOOMLEAGUE_ADMIN_DBTOOLS_TITLE' ), 'config.png' );
+		JToolBarHelper::title( JText::_( 'COM_JOOMLEAGUE_ADMIN_DBTOOLS_TITLE' ), 'config' );
 		JToolBarHelper::back();
 		JToolBarHelper::help( 'screen.joomleague', true );
 	}		

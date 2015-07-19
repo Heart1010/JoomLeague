@@ -71,7 +71,7 @@ class JoomleagueViewEventtypes extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_EVENTS_TITLE'),'events');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_EVENTS_TITLE'),'jl-events');
 
 		JLToolBarHelper::publishList('eventtype.publish');
 		JLToolBarHelper::unpublishList('eventtype.unpublish');

@@ -34,7 +34,7 @@ class JoomleagueViewPlayground extends JLGView
 		JLToolBarHelper::save('playground.save');
 		if (!$edit)
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUND_ADD_NEW'),'playground');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUND_ADD_NEW'),'jl-playground');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('playground.cancel');
 		}

@@ -51,7 +51,7 @@ class JoomleagueViewLeagues extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUES_TITLE'),'leagues');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUES_TITLE'),'jl-leagues');
 		JLToolBarHelper::addNew('league.add');
 		JLToolBarHelper::editList('league.edit');
 		JLToolBarHelper::custom('league.import','upload','upload','COM_JOOMLEAGUE_GLOBAL_CSV_IMPORT',false);

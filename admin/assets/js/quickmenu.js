@@ -7,6 +7,12 @@
  */
 
 window.addEvent('domready', function() {
+	
+	
+	
+	
+	
+	
 	$('stid').addEvent('change', function(){
 		var form = $('adminForm1');
 		form.submit();

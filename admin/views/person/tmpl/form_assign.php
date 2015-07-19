@@ -9,11 +9,7 @@
 defined('_JEXEC') or die;
 ?>
 <fieldset class="form-horizontal">
-	<legend>
-		<?php
-		echo JText::_('COM_JOOMLEAGUE_ADMIN_PERSON_ASSIGN_DESCR');
-		?>
-	</legend>
+	<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PERSON_ASSIGN_DESCR');?></legend>
 	<table class="admintable">
 		<tr>
 			<td colspan="2">
@@ -21,7 +17,7 @@ defined('_JEXEC') or die;
 					<div class="readmore">
 						<?php
 						//create the button code to use in form while selecting a project and team to assign a new person to
-						$button = '<a class="modal-button" title="Select" ';
+						$button = '<a class="modal-button modal btn" title="Select" ';
 						$button .= 'href="index.php?option=com_joomleague&view=person&task=person.personassign" ';
 						$button .= 'rel="{handler: \'iframe\', size: {x: 600, y: 400}}">' . JText::_('Select') . '</a>';
 						echo $button;

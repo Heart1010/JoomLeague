@@ -8,15 +8,12 @@
  */
 defined('_JEXEC') or die;
 ?>
-
-<fieldset class="form-horizontal">
+<fieldset class="form-vertical">
 	<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_DESCRIPTION' );?></legend>
-		<table class="admintable">
-			<?php foreach ($this->form->getFieldset('description') as $field): ?>
-				<tr>
-					<td class="key"><?php echo $field->label; ?></td>
-					<td><?php echo $field->input; ?></td>
-				</tr>					
-			<?php endforeach; ?>
-		</table>
+	<?php foreach ($this->form->getFieldset('description') as $field): ?>
+		<div class="control-group">
+			<div class="control-label"><?php echo $field->label; ?></div>
+			<div class="controls"><?php echo $field->input; ?></div>
+		</div>
+	<?php endforeach; ?>
 </fieldset>

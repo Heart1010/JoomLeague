@@ -136,6 +136,7 @@ class JoomleagueControllerClub extends JoomleagueController
 		{
 			$msg=JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_CTRL_DELETED');
 		}
+		$link = '';
 		$link .= 'index.php?option=com_joomleague&view=clubs&task=club.display';
 		$link .= '&hidemainmenu='.JRequest::getVar('hidemainmenu',0);
 		$this->setRedirect($link,$msg);

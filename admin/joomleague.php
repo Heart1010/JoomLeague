@@ -7,6 +7,7 @@
  * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
+JHtml::_('behavior.tabstate');
 
 // Access check.
 if (!JFactory::getUser()->authorise('core.manage', 'com_joomleague')) {

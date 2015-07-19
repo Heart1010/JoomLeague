@@ -86,13 +86,13 @@ class JoomleagueViewPersons extends JLGView
 	{
 		$option 		= $this->input->getCmd('option');
 		$params			= JComponentHelper::getParams( $option );
-		$app 		= JFactory::getApplication();
+		$app 			= JFactory::getApplication();
 		$model 			= $this->getModel();
 		$project_id 	= $app->getUserState($option.'project');
 		$mdlProject 	= JModelLegacy::getInstance("project", "JoomLeagueModel");
 		$project_name 	= $mdlProject->getProjectName($project_id);
 		$project_team_id = $app->getUserState($option.'project_team_id');
-		$team_name = $model->getProjectTeamName($project_team_id);
+		$team_name 		= $model->getProjectTeamName($project_team_id);
 		$mdlQuickAdd = JLGModel::getInstance('Quickadd','JoomleagueModel');
 
 		$filter_state		= $app->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');

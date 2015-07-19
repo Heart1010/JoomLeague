@@ -37,14 +37,14 @@ class JoomleagueViewLeague extends JLGView
 
 		if (!$edit)
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUE_ADD_NEW'),'leagues');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUE_ADD_NEW'),'jl-leagues');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('league.cancel');
 		}
 		else
 		{
 			// for existing items the button is renamed `close` and the apply button is showed
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUE_EDIT'). ': ' . $this->form->getValue('name'),'leagues');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUE_EDIT'). ': ' . $this->form->getValue('name'),'jl-leagues');
 			JLToolBarHelper::apply('league.apply');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('league.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');

@@ -56,7 +56,7 @@ class JoomleagueViewSeasons extends JLGView
 	protected function addToolbar()
 	{ 
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASONS_TITLE'),'seasons');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASONS_TITLE'),'jl-seasons');
 		JLToolBarHelper::addNew('season.add');
 		JLToolBarHelper::editList('season.edit');
 		JToolBarHelper::divider();

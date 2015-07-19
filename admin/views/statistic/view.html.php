@@ -53,7 +53,7 @@ class JoomleagueViewStatistic extends JLGView
 	{		
 		// Set toolbar items for the page
 		$text = !$this->edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT').': '.JText::_($this->form->getValue('name'));
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_STAT_TITLE').': <small><small>[ ' . $text.' ]</small></small>', 'statistics.png' );
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_STAT_TITLE').': <small><small>[ ' . $text.' ]</small></small>', 'jl-statistics' );
 		if (!$this->edit)
 		{
 			JLToolBarHelper::apply('statistic.apply');

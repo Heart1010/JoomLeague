@@ -62,7 +62,7 @@ class JoomleagueViewClubs extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_CLUBS_TITLE'),'clubs');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_CLUBS_TITLE'),'jl-clubs');
 
 		JLToolBarHelper::addNew('club.add');
 		JLToolBarHelper::editList('club.edit');

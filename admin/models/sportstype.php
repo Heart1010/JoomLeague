@@ -26,12 +26,17 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	 */
 	function delete(&$pks=array())
 	{
+		
 		if (count($pks))
 		{
 			$cids=implode(',',$pks);
+			$total = count($cids);
+				
 			$query="SELECT COUNT(id) FROM #__joomleague_sports_type";
 			$this->_db->setQuery($query);
-			if ($this->_db->loadResult()==count($cid))
+			$qcount = $this->_db->loadResult();
+				
+			if ($qcount == $total)
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTTYPE_MODEL_ERROR_LAST_SPORTSTYPE'));
 				return false;
@@ -57,6 +62,7 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTTYPE_MODEL_ERROR_PROJECT_EXISTS'));
 				return false;
 			}
+			
 			return parent::delete($pks);
 		}
 		return true;

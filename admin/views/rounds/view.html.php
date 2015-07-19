@@ -120,7 +120,7 @@ class JoomleagueViewRounds extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_ROUNDS_TITLE'),'Matchdays');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_ROUNDS_TITLE'),'jl-Matchdays');
 
 		if (!$this->massadd)
 		{

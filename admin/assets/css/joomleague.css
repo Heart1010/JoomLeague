@@ -1,5 +1,27 @@
 @CHARSET "UTF-8";
 
+
+div.container-title {
+	height: 60px;
+}
+
+body.com_joomleague h1.page-title {
+	display: inline-block;
+	margin-top: 5px;
+}
+
+body.com_joomleague h1 span[class^="icon-jl-"] {
+	width: 48px;
+	height: 48px;
+	vertical-align: middle;
+	margin-bottom: 8px;
+}
+
+body.com_joomleague div.container-logo {
+	margin-top: 10px;
+}
+
+
 div#ajaxresponse {
   height:1.2em;
 }
@@ -10,62 +32,62 @@ div#ajaxresponse {
 }
 
 /** header icons **/
-.icon-48-sportstypes{
+.icon-jl-sportstypes{
   background-image: url(../images/icon-48-sportstypes.png); 
 }
 
-.icon-48-leagues { 
+.icon-jl-leagues { 
 	background-image: url(../images/icon-48-leagues.png); 
 }
 
-.icon-48-seasons{
+.icon-jl-seasons{
   background-image: url(../images/icon-48-seasons.png); 
 }
 
-.icon-48-clubs{
+.icon-jl-clubs{
   background-image: url(../images/icon-48-clubs.png); 
 }
 
-.icon-48-statistics { 
+.icon-jl-statistics { 
 	background-image: url(../images/icon-48-statistics.png); 
 }
 
-.icon-48-events { 
+.icon-jl-events { 
 	background-image: url(../images/icon-48-events.png); 
 }
 
-.icon-48-playground { 
+.icon-jl-playground { 
 	background-image: url(../images/icon-48-playground.png); 
 }
 
-.icon-48-ProjectSettings {
+.icon-jl-ProjectSettings {
   background-image: url(../images/icon-48-ProjectSettings.png); 
 }
 
-.icon-48-FrontendSettings{
+.icon-jl-FrontendSettings{
   background-image: url(../images/icon-48-FrontendSettings.png); 
 }
 
-.icon-48-Divisions{
+.icon-jl-Divisions{
   background-image: url(../images/icon-48-Divisions.png); 
 }
-.icon-48-Tree{
+.icon-jl-Tree{
   background-image: url(../images/icon-48-Tree.png); 
 }
 
-.icon-48-Positions{
+.icon-jl-Positions{
   background-image: url(../images/icon-48-Positions.png); 
 }
 
-.icon-48-Referees{
+.icon-jl-Referees{
   background-image: url(../images/icon-48-Referees.png); 
 }
 
-.icon-48-Teams{
+.icon-jl-Teams{
   background-image: url(../images/icon-48-Teams.png); 
 }
 
-.icon-48-Matchdays {
+.icon-jl-Matchdays {
   background-image: url(../images/icon-48-Matchdays.png); 
 }
 
@@ -114,4 +136,93 @@ div.icon-wrapper {
 div.icon-wrapper img{
 	height: 40px;
 	width: 40px;
+}
+
+
+/* -- PANE SLIDER STYLES ----------------------------- */
+/* Taken from Bluestork template */
+.pane-sliders {
+	margin: 18px 0 0 0;
+	position:relative;
+}
+.pane-sliders .title {
+	margin: 0;
+	padding: 2px 2px 2px 5px;
+	color: #666;
+	cursor: pointer;
+}
+
+#content-pane {
+	margin: 8px 10px 15px 15px;
+}
+
+.pane-sliders .panel {
+	margin-bottom: 3px;
+	border:solid 1px #ccc;
+}
+
+.pane-sliders .panel h3 {
+	background: #fafafa;
+	color: #666;
+}
+
+.pane-sliders .content {
+	background: #fff;
+}
+
+.pane-sliders .adminlist {
+	border: 0 none;
+	font-size: 1em;
+}
+
+.pane-sliders .adminlist td {
+	border: 0 none;
+}
+
+.pane-toggler span {
+	background: transparent url(../images/j_arrow.png) 5px 50% no-repeat;
+	padding-left: 20px;
+}
+
+.pane-toggler-down span {
+	background: transparent url(../images/j_arrow_down.png) 5px 50% no-repeat;
+	padding-left: 20px;
+}
+
+.pane-toggler-down {
+	border-bottom: 1px solid #ccc;
+}
+
+h3.pane-toggler-down a:hover,
+h3.pane-toggler a:hover {
+	text-decoration: none;
+}
+
+.pane-slider.pane-hide {
+	display: none;
+}
+
+.pane-slider ol li {
+	list-style: none;
+	margin-left: -25px;
+	margin-top: 10px;
+}
+
+input#jformparams_link_titles1,
+input#jformparams_show_title1,
+input#jformparams_link_category1 {
+	margin-left: 13px;
+}
+
+div#position-icon.pane-sliders div.pane-down div.icon-wrapper {
+	margin: 5px 0 5px 0;
+}
+
+div#position-icon.pane-sliders div.pane-down .icon-wrapper .icon {
+	padding: 5px 0 5px 10px;
+	margin: 0;
+}
+
+div#position-icon.pane-sliders .icon {
+	background: #fff;
 }

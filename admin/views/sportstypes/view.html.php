@@ -53,7 +53,7 @@ class JoomleagueViewSportsTypes extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTSTYPES_TITLE'),'sportstypes');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTSTYPES_TITLE'),'jl-sportstypes');
 		JLToolBarHelper::addNewX('sportstype.add');
 		JLToolBarHelper::editListX('sportstype.edit');
 		JLToolBarHelper::custom('sportstype.import','upload','upload', 'COM_JOOMLEAGUE_GLOBAL_CSV_IMPORT',false);

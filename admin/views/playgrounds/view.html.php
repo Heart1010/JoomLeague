@@ -57,7 +57,7 @@ class JoomleagueViewPlaygrounds extends JLGView
 	protected function addToolbar()
 	{
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUNDS_TITLE'),'playground');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUNDS_TITLE'),'jl-playground');
 		JLToolBarHelper::editList('playground.edit');
 		JLToolBarHelper::addNew('playground.add');
 		JLToolBarHelper::custom('playground.import','upload','upload','COM_JOOMLEAGUE_GLOBAL_CSV_IMPORT',false);

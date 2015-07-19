@@ -32,7 +32,7 @@ class JoomleagueViewEventtype extends JLGView
 		// Set toolbar items for the page
 		$edit = $this->input->get('edit',true);
 		$text = !$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT'). ': ' . JText::_($this->form->getValue('name'));
-		JToolBarHelper::title((JText::_('COM_JOOMLEAGUE_ADMIN_EVENTTYPE_EVENT').': <small><small>[ '.$text.' ]</small></small>'),'events');
+		JToolBarHelper::title((JText::_('COM_JOOMLEAGUE_ADMIN_EVENTTYPE_EVENT').': <small><small>[ '.$text.' ]</small></small>'),'jl-events');
 		JLToolBarHelper::save('eventtype.save');
 		if (!$edit)
 		{

@@ -77,7 +77,7 @@ class JoomleagueViewRound extends JLGView
 		// Set toolbar items for the page
 		$edit = $this->input->get('edit', true);
 		$text = !$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT');
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_ROUND_TITLE'). ': ' . $this->matchday->name,'clubs','Matchdays');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_ROUND_TITLE'). ': ' . $this->matchday->name,'clubs','jl-Matchdays');
 
 		JLToolBarHelper::save('round.save');
 		JLToolBarHelper::apply('round.apply');

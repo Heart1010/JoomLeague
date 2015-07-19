@@ -95,15 +95,16 @@ class JoomleagueControllerSportsType extends JoomleagueController
 		$cid=JRequest::getVar('cid',array(),'post','array');
 		JArrayHelper::toInteger($cid);
 		if (count($cid) < 1){JError::raiseError(500,JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TO_DELETE'));}
+		
 		$model=$this->getModel('sportstype');
 		if (!$model->delete($cid))
 		{
-			echo "<script> alert('".$model->getError()."'); window.history.go(-1); </script>\n";
-			return;
+			$app = JFactory::getApplication()->enqueueMessage($model->getError(),'warning');
+			$this->setRedirect('index.php?option=com_joomleague&view=sportstypes&task=sportstype.display');
 		}
 		else
 		{
-			$msg='COM_JOOMLEAGUE_ADMIN_SPORTTYPE_CTRL_DELETED';
+			$app = JFactory::getApplication()->enqueueMessage(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTTYPE_CTRL_DELETED'),'message');
 		}
 		$this->setRedirect('index.php?option=com_joomleague&view=sportstypes&task=sportstype.display');
 	}

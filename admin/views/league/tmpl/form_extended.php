@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 foreach ($this->extended->getFieldsets() as $fieldset)
 {
 	?>
-	<fieldset class="adminform">
+	<fieldset class="form-vertical">
 	<legend><?php echo JText::_($fieldset->name); ?></legend>
 	<?php
 	$fields = $this->extended->getFieldset($fieldset->name);

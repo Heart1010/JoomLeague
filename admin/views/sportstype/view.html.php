@@ -37,7 +37,7 @@ class JoomleagueViewSportsType extends JLGView
 
 		if (!$edit)
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTSTYPE_ADD_NEW'),'sportstypes');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SPORTSTYPE_ADD_NEW'),'jl-sportstypes');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('sportstype.cancel');
 		}

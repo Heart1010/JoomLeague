@@ -16,9 +16,8 @@ $option = 'com_joomleague';
 		<div id="element-box">
 			<div class="m">
 			<div id="navbar">
-			<a href='javascript:void(0);' style='text-decoration: none; color: green; padding: 2px;'>v<?php echo $this->version; ?></a>
 			<form action="index.php?option=com_joomleague" method="post" id="adminForm1">
-				<div id="area" style="overflow:hidden; width:100%; max-width: 150px;">
+				<div id="area"">
 				<?php echo $this->lists['sportstypes']; ?>
 				<?php if ($this->sports_type_id): ?>
 				<?php echo $this->lists['seasons']; ?><br />
@@ -59,8 +58,8 @@ $option = 'com_joomleague';
 					$title=$tab->title;
 					echo JHtml::_('sliders.panel',$title,'jfcpanel-panel-'.$tab->name);
 					?>
-					<div style="float: left;">
-						<table><?php
+					<div>
+						<table class="table"><?php
 							for ($i=0; $i<count($link[$n]); $i++)
 							{
 								$href	= $link[$n][$i];
