@@ -194,7 +194,7 @@ class JoomleagueControllerTeamPlayer extends JoomleagueController
 
 	public function remove()
 	{
-		$option = $this->option->getCmd('option');
+		$option = $this->input->getCmd('option');
 		$app = JFactory::getApplication();
 		$project_id=$app->getUserState($option.'project',0);
 		$user = JFactory::getUser();
@@ -264,7 +264,7 @@ class JoomleagueControllerTeamPlayer extends JoomleagueController
 
 	public function select()
 	{
-		$option = $this->option->getCmd('option');
+		$option = $this->input->getCmd('option');
 		$app	= JFactory::getApplication();
 		$pid=JRequest::getVar('pid',array(),'','array');
 		$app->setUserState($option.'project',$pid[0]);

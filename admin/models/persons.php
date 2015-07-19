@@ -58,7 +58,7 @@ class JoomleagueModelPersons extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = $this->option->getCmd('option');
+		$option = $this->input->getCmd('option');
 		$app	= JFactory::getApplication();
 
 		$filter_state		= $app->getUserStateFromRequest( $option . 'pl_filter_state', 'filter_state', '', 'word' );

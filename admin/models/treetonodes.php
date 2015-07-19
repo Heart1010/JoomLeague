@@ -113,7 +113,7 @@ class JoomleagueModelTreetonodes extends JoomleagueModelList
 	// UPDATE selected node as a leaf AND unpublish ALL children node
 	function storeshortleaf($cid,$post)
 	{
-		$option = $this->option->getCmd('option');
+		$option = $this->input->getCmd('option');
 		$app	= JFactory::getApplication();
 		//$project_id = $app->getUserState( $option . 'project' );
 		$post	= JRequest::get( 'post' );

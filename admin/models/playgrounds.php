@@ -51,7 +51,7 @@ class JoomleagueModelPlaygrounds extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = $this->option->getCmd('option');
+		$option = $this->input->getCmd('option');
 		$app = JFactory::getApplication();
 		$filter_order		= $app->getUserStateFromRequest($option.'v_filter_order',		'filter_order',		'v.ordering',	'cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest($option.'v_filter_order_Dir',	'filter_order_Dir',	'',				'word');

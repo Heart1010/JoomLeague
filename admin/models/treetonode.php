@@ -66,7 +66,7 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 
 	function getNodeMatch()
 	{
-		$option = $this->option->getCmd('option');
+		$option = $this->input->getCmd('option');
 
 		$app	= JFactory::getApplication();
 		//$division_id = $app->getUserState( $option . 'division_id' );
@@ -106,8 +106,11 @@ class JoomleagueModelTreetonode extends JoomleagueModelItem
 
 	function setUnpublishNode()
 	{
-		$option = $this->option->getCmd('option');
+		
 		$app	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
 		$post	= JRequest::get( 'post' );
 		$id 	= 	(int) $post['id'];
 		
