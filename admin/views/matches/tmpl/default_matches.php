@@ -89,7 +89,7 @@ fieldset button {
 				<tfoot><tr><td colspan="<?php echo $colspan; ?>"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 				<tbody>
 					<?php
-					$n = count($this->items);
+					$n = count($this->matches);
 					foreach ($this->matches as $i => $row) :
 						$checked	= JHtml::_('grid.checkedout',$row,$i,'id');
 						$published	= JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','match.');
