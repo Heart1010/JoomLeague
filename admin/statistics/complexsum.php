@@ -28,7 +28,7 @@ class JLGStatisticComplexsum extends JLGStatistic {
 	
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('stat_ids'))) {
 			$stat_ids = explode(',', $params->get('stat_ids'));
 		} else {
@@ -47,7 +47,7 @@ class JLGStatisticComplexsum extends JLGStatistic {
 	
 	function getFactors()
 	{
-		$params  = &$this->getParams();
+		$params  = $this->getParams();
 		$factors = explode(',', $params->get('factors'));
 		$stat_ids = $this->getSids();
 		
@@ -66,7 +66,7 @@ class JLGStatisticComplexsum extends JLGStatistic {
 	
 	function getQuotedSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('stat_ids'))) {
 			$stat_ids = explode(',', $params->get('stat_ids'));
 		} else {

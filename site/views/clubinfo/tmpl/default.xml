@@ -10,15 +10,14 @@
 		<fieldset	name="request"
 					label="COM_JOOMLEAGUE_XML_BASIC_FIELDSET_LABEL"
 					addfieldpath="/administrator/components/com_joomleague/models/fields">
-
-			<field	name="p" type="dependsql" depends="cid" task="projectsbycluboptions"
-					label="COM_JOOMLEAGUE_XML_SELECT_PROJECT_LABEL"
-					description="COM_JOOMLEAGUE_XML_SELECT_PROJECT_DESCR"
-					required="true">
-			</field>
 			<field	name="cid" type="club"
 					label="COM_JOOMLEAGUE_XML_SELECT_CLUB_LABEL"
 					description="COM_JOOMLEAGUE_XML_SELECT_CLUB_DESCR" 
+					required="true">
+			</field>
+			<field	name="p" type="dependsql" depends="cid" task="projectsbycluboptions"
+					label="COM_JOOMLEAGUE_XML_SELECT_PROJECT_LABEL"
+					description="COM_JOOMLEAGUE_XML_SELECT_PROJECT_DESCR"
 					required="true">
 			</field>
 		</fieldset>

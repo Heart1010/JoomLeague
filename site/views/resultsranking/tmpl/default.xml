@@ -31,7 +31,7 @@
         <fieldset	name="advanced"
         			label="COM_JOOMLEAGUE_XML_ADVANCED_FIELDSET_LABEL">
 
-			<field	name="what_to_show_first" type="radio" default="0"
+			<field	name="what_to_show_first" type="radio" class="btn-group btn-group-yesno" default="0"
 			    	label="COM_JOOMLEAGUE_XML_RESULTS_RANKING_SELECT_SHOWFIRST_LABEL"
 			    	description="COM_JOOMLEAGUE_XML_RESULTS_RANKING_SELECT_SHOWFIRST_DESCR">
 			    <option value="0">Results</option>

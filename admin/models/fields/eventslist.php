@@ -39,7 +39,7 @@ class JFormFieldEventslist extends JFormFieldList
 			$this->value = explode(',', $this->value);
 		}
 		
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 			
 		$query->select('id AS value');

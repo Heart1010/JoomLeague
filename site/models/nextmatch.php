@@ -150,7 +150,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 
 	function getReferees()
 	{
-		$match = &$this->getMatch();
+		$match = $this->getMatch();
 		$query = ' SELECT p.firstname, p.nickname, p.lastname, p.country, pos.name AS position_name, p.id as person_id '
 		. ' FROM #__joomleague_match_referee AS mr '
 		. ' LEFT JOIN #__joomleague_project_referee AS pref ON mr.project_referee_id=pref.id '
@@ -179,8 +179,8 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 
 	function getHomeRanked()
 	{
-		$match = &$this->getMatch();
-		$rankings = &$this->_getRanking();
+		$match = $this->getMatch();
+		$rankings = $this->_getRanking();
 		foreach ($rankings as $ptid => $team)
 		{
 			if ($ptid == $match->projectteam1_id) {
@@ -192,8 +192,8 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 
 	function getAwayRanked()
 	{
-		$match = &$this->getMatch();
-		$rankings = &$this->_getRanking();
+		$match = $this->getMatch();
+		$rankings = $this->_getRanking();
 
 		foreach ($rankings as $ptid => $team)
 		{

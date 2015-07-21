@@ -39,13 +39,13 @@ class JoomleagueViewSeason extends JLGView
 
 		if (!$edit)
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_ADD_NEW'),'seasons');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_ADD_NEW'),'jl-seasons');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('season.cancel');
 		}
 		else
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_EDIT'). ': ' . $this->form->getValue('name') ,'seasons');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_EDIT'). ': ' . $this->form->getValue('name') ,'jl-seasons');
 			JLToolBarHelper::apply('season.apply');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('season.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');

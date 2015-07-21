@@ -88,7 +88,7 @@ class JLGView extends JViewLegacy
 		$jllang 	= new JLLanguage();
 		$jllang->setLanguage($lang);
 		$props 		= $jllang->getProperties();
-		$strings 	= &$props['strings'];
+		$strings 	= $props['strings'];
 		foreach ($strings as $key => $value) {
 			if($app->isAdmin()) {
 				if(strpos($key, 'COM_JOOMLEAGUE_ADMIN_'.strtoupper($this->getName()).'_CSJS') !== false) {

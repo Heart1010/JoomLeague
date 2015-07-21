@@ -33,7 +33,8 @@ class JFormFieldDependSQL extends JFormFieldList
 	protected function getInput()
 	{
 		// elements
-		$required   = $this->element['required'] ? ' required aria-required="true"' : '';
+		//$required   = $this->element['required'] ? ' required aria-required="true"' : '';
+		$required     = $this->required ? ' required aria-required="true"' : '';
 		$key 		= ($this->element['key_field'] ? $this->element['key_field'] : 'value');
 		$val 		= ($this->element['value_field'] ? $this->element['value_field'] : $this->name);
 		$task 		= $this->element['task'];

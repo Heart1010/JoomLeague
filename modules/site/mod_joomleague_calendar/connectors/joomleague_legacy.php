@@ -113,6 +113,8 @@ class JoomleagueConnector extends JLCalendar{
   function formatBirthdays( $rows, &$matches, $dates ) {
     $newrows = array();
     $year = substr($dates['start'], 0, 4);
+    $app = JFactory::getApplication();
+    
     foreach ($rows AS $key => $row) {
       $newrows[$key]['type'] = 'jlb';
       $newrows[$key]['homepic'] = '';
@@ -122,8 +124,7 @@ class JoomleagueConnector extends JLCalendar{
       $newrows[$key]['headingtitle'] = $this->xparams->get('birthday_text', 'Birthday');
       $newrows[$key]['name'] = '';
       $newrows[$key]['team'] = '';
-      global $mainframe;
-      if ($this->xparams->get('jlbirthdaypix', 0) == 1 && $row->default_picture != '' && file_exists($mainframe->getCfg('absolute_path').'/'.str_replace('/', '/', $row->default_picture))) {
+      if ($this->xparams->get('jlbirthdaypix', 0) == 1 && $row->default_picture != '' && file_exists($app->getCfg('absolute_path').'/'.str_replace('/', '/', $row->default_picture))) {
         $linkit = 1;
         $newrows[$key]['image'] = '<img src="'.(JUri::root(true).'/'.parent::jl_utf8_convert ($row->default_picture, 'iso-8859-1', 'utf-8'))
                                 .'" alt="" style="height:40px; vertical-align:middle;margin:0 5px;" />';
@@ -191,12 +192,20 @@ class JoomleagueConnector extends JLCalendar{
     }
     return $teamname;
   }
-  function buildImage($team) {
-    global $mainframe;
+  
+  function buildImage($team) 
+  {
+    $app = JFactory::getApplication();
     $image = $this->xparams->get('team_logos', 'logo_small');
-    if ($image == '-') { return ''; }
+    
+    if ($image == '-') 
+ 	{ 
+ 		return ''; 
+ 	}
     $logo = '';
-    if ($team->$image != '' && file_exists($mainframe->getCfg('absolute_path').'/'.$team->$image)){
+    
+    if ($team->$image != '' && file_exists($mainframe->getCfg('absolute_path').'/'.$team->$image))
+    {
       $h = $this->xparams->get('logo_height', 20);
       $logo = '<img src="'.JUri::root(true).'/'.$team->$image.'" alt="'
            .parent::jl_utf8_convert ($team->short_name, 'iso-8859-1', 'utf-8').'" title="'
@@ -208,6 +217,7 @@ class JoomleagueConnector extends JLCalendar{
     }
     return $logo;
   }
+  
   function getMatches($caldates, $ordering='ASC'){
     $database = JFactory::getDbo();
     
@@ -227,6 +237,7 @@ class JoomleagueConnector extends JLCalendar{
       $limitingconditions[] = $teamCondition;
     }
     $clubid   = $this->xparams->get('club_ids') ;
+    
     if ($clubid && $customteam == 0) {
       $clubids = explode( ',', $clubid );
       JArrayHelper::toInteger( $clubids );

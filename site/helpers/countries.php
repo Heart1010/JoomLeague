@@ -49,13 +49,13 @@ class Countries
 		$country["BLR"]= Array("iso2" => "BY", "name" => "BELARUS__REPUBLIC_OF");
 		$country["BEL"]= Array("iso2" => "BE", "name" => "BELGIUM__KINGDOM_OF");
 		$country["BLZ"]= Array("iso2" => "BZ", "name" => "BELIZE");
-		$country["BEN"]= Array("iso2" => "BJ", "name" => "BENIN_REPUBLIC_OF");
+		$country["BEN"]= Array("iso2" => "BJ", "name" => "BENIN__REPUBLIC_OF");
 		$country["BMU"]= Array("iso2" => "BM", "name" => "BERMUDA");
-		$country["BTN"]= Array("iso2" => "BT", "name" => "BHUTAN_KINGDOM_OF");
+		$country["BTN"]= Array("iso2" => "BT", "name" => "BHUTAN__KINGDOM_OF");
 		$country["BOL"]= Array("iso2" => "BO", "name" => "BOLIVIA__REPUBLIC_OF");
 		$country["BIH"]= Array("iso2" => "BA", "name" => "BOSNIA_AND_HERZEGOVINA");
 		$country["BWA"]= Array("iso2" => "BW", "name" => "BOTSWANA__REPUBLIC_OF");
-		$country["BVT"]= Array("iso2" => "BV", "name" => "BOUVET_ISLAND__BOUVETOYA_");
+		$country["BVT"]= Array("iso2" => "BV", "name" => "BOUVET__ISLAND__BOUVETOYA");
 		$country["BRA"]= Array("iso2" => "BR", "name" => "BRAZIL__FEDERATIVE_REPUBLIC_OF");
 		$country["IOT"]= Array("iso2" => "IO", "name" => "BRITISH_INDIAN_OCEAN_TERRITORY");
 		$country["VGB"]= Array("iso2" => "VG", "name" => "BRITISH_VIRGIN_ISLANDS");
@@ -251,7 +251,7 @@ class Countries
 		$country["TJK"]= Array("iso2" => "TJ", "name" => "TAJIKISTAN__REPUBLIC_OF");
 		$country["TZA"]= Array("iso2" => "TZ", "name" => "TANZANIA__UNITED_REPUBLIC_OF");
 		$country["THA"]= Array("iso2" => "TH", "name" => "THAILAND__KINGDOM_OF");
-		$country["TLS"]= Array("iso2" => "TL", "name" => "TIMORLESTE_DEMOCRATIC_REPUBL");
+		$country["TLS"]= Array("iso2" => "TL", "name" => "TIMOR-LESTE__DEMOCRATIC_REPUBL");
 		$country["TGO"]= Array("iso2" => "TG", "name" => "TOGO__TOGOLESE_REPUBLIC");
 		$country["TKL"]= Array("iso2" => "TK", "name" => "TOKELAU");
 		$country["TON"]= Array("iso2" => "TO", "name" => "TONGA__KINGDOM_OF");

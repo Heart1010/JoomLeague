@@ -1,5 +1,12 @@
 <?php 
-defined('_JEXEC') or die('Restricted access');
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 ?>
 <div id="modJLML<?php echo $module->id.'_row'.$cnt;?>" class="<?php echo $styleclass;?> jlmlmatchholder">
 <!--jlml-mod<?php echo $module->id.'nr'.$cnt;?> start-->

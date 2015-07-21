@@ -1,4 +1,12 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */ 
+?>
 
 <h2><?php echo JText::_('COM_JOOMLEAGUE_PLAYGROUND_CLUB_TEAMS'); ?></h2>
 <!-- Now show teams of this club -->

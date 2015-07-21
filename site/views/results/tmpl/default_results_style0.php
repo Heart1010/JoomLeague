@@ -1,4 +1,13 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
+use Joomla\Registry\Registry;
 
 $nbcols			= 6;
 $nbcols_header	= 0;
@@ -19,10 +28,12 @@ if ($this->config['show_comments_count'] > 0){
 
 	$plugin = JoomleagueHelper::getCommentsIntegrationPlugin();
 	if (is_object($plugin)) {
-		$pluginParams = new JParameter($plugin->params);
+		$params = new Registry();
+		$pluginParams = $params->loadString($plugin->params);
 	}
 	else {
-		$pluginParams = new JParameter('');
+		$params = new Registry();
+		$pluginParams = $params->loadString('');
 	}
 	$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
 }

@@ -50,34 +50,45 @@ class JoomleagueModelPlayground extends JoomleagueModelProject
         return $address_string;
     }
 
-    function getTeams( )
+    /**
+     * @todo check!
+     * Added $divisions = false to be inline with model-Project
+     * @see JoomleagueModelProject::getTeams()
+     */
+    function getTeams($divisions = false)
     {
         $teams = array();
 
-        $playground = $this->getPlayground( );
-        if ( $playground->id > 0 )
+        $playground = $this->getPlayground();
+        if ($playground->id > 0)
         {
-            $query = "SELECT id, team_id, project_id
-                      FROM #__joomleague_project_team
-                      WHERE standard_playground = ".(int)$playground->id;
-            $this->_db->setQuery( $query );
-            $rows = $this->_db->loadObjectList();
+        	$db = $this->getDbo();
+        	$query = $db->getQuery(true);
+        	$query->select('id, team_id,project_id');
+        	$query->from('#__joomleague_project_team');
+        	$query->where('standard_playground = '.$playground->id);
+        	$db->setQuery($query);
+            $rows = $db->loadObjectList();
 			
-            foreach ( $rows as $row )
+            foreach ($rows as $row)
             {
                 $teams[$row->id]->project_team[] = $row;
+           
+                $db = $this->getDbo();
+                $query = $db->getQuery(true);
+                $query->select('name, short_name,notes');
+                $query->from('#__joomleague_team');
+                $query->where('id = '.$row->team_id);
+                $db->setQuery($query);
+                $teams[ $row->id ]->teaminfo[] = $db->loadObjectList();
 
-                $query = "SELECT name, short_name, notes
-                          FROM #__joomleague_team
-                          WHERE id=".(int)$row->team_id;
-                $this->_db->setQuery( $query );
-                $teams[ $row->id ]->teaminfo[] = $this->_db->loadObjectList();
-
-                $query= "SELECT name
-                         FROM #__joomleague_project
-                         WHERE id=".(int)$row->project_id;
-                $this->_db->setQuery( $query );
-            	$teams[ $row->id ]->project = $this->_db->loadResult();
+                $db = $this->getDbo();
+                $query = $db->getQuery(true);
+                $query->select('name');
+                $query->from('#__joomleague_project');
+                $query->where('id = '.$row->project_id);
+                $db->setQuery($query);
+            	$teams[ $row->id ]->project = $db->loadResult();
             }
         }
         return $teams;

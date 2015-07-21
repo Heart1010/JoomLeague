@@ -40,8 +40,7 @@ class JoomleagueViewPlayground extends JLGView
 		}
 		else
 		{
-			// for existing items the button is renamed `close` and the apply button is showed
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUND_EDIT'),'playground');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUND_EDIT'),'jl-playground');
 			JLToolBarHelper::apply('playground.apply');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('playground.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');

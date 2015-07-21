@@ -187,7 +187,7 @@ class JoomleagueViewProjectReferees extends JLGView
 	*/
 	protected function addToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PREF_TITLE'),'Referees');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PREF_TITLE'),'jl-Referees');
 		
 		JLToolBarHelper::apply('projectreferee.saveshort','COM_JOOMLEAGUE_ADMIN_PREF_APPLY');
 		JLToolBarHelper::custom('projectreferee.assign','upload.png','upload_f2.png','COM_JOOMLEAGUE_ADMIN_PREF_ASSIGN',false);

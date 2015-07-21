@@ -133,7 +133,7 @@ class JoomleagueViewPosition extends JLGView
 
 		if (!$edit)
 		{
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_POSITION_ADD_NEW'));
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_POSITION_ADD_NEW'),'jl-Positions');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('position.cancel');
 		}

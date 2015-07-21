@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 /**
  * provides html code snippets for the views
  */
-class JoomleagueHelperHtml {
+abstract class JoomleagueHelperHtml {
 
 
 	/**
@@ -106,7 +106,7 @@ class JoomleagueHelperHtml {
 	 * @param array $config
 	 * @return string html
 	 */
-	public function showDivisonRemark(&$hometeam,&$guestteam,&$config)
+	public static function showDivisonRemark(&$hometeam,&$guestteam,&$config)
 	{
 		$output='';
 		if ($config['switch_home_guest']) {
@@ -164,9 +164,10 @@ class JoomleagueHelperHtml {
 	 * @param int $mode
 	 * @return string html
 	 */
-	public function showMatchdaysTitle($title, $current_round, &$config, $mode=0)
+	public static function showMatchdaysTitle($title, $current_round, &$config, $mode=0,$project = false,$overallconfig = false)
 	{
-		$projectid = JRequest::getInt('p',0);
+		/* $projectid = JRequest::getInt('p',0); */
+		$projectid = $project->id;
 
 		echo ($title != '') ? $title.' - ' : $title;
 		if ($current_round > 0)
@@ -198,39 +199,41 @@ class JoomleagueHelperHtml {
 				{
 					echo JHtml::date($thisround->round_date_first .' UTC',
 										'COM_JOOMLEAGUE_GLOBAL_CALENDAR_DATE',
-										JoomleagueHelper::getTimezone($this->project, $this->overallconfig));
+										JoomleagueHelper::getTimezone($project, $overallconfig));
 				}
 				if (($thisround->round_date_last != $thisround->round_date_first) &&
 				(! strstr($thisround->round_date_last,"0000-00-00")))
 				{
 					echo " - ".JHtml::date($thisround->round_date_last .' UTC',
 											'COM_JOOMLEAGUE_GLOBAL_CALENDAR_DATE',
-											JoomleagueHelper::getTimezone($this->project, $this->overallconfig));
+											JoomleagueHelper::getTimezone($project, $overallconfig));
 				}
 				echo ")";
 			}
 		}
 	}
 
-	public function getRoundSelectNavigation($form)
+	/**
+	 * @todo check!
+	 */
+	public static function getRoundSelectNavigation($form,$project = false,$rounds = false,$roundid = false)
 	{
-		$rounds = $this->get('RoundOptions');
 		$division = JRequest::getInt('division',0);
-
+	
 		if($form){
-			$currenturl=JoomleagueHelperRoute::getResultsRoute($this->project->slug, $this->roundid, $division);
+			$currenturl=JoomleagueHelperRoute::getResultsRoute($project->slug, $roundid, $division);
 			$options=array();
 			foreach ($rounds as $r)
 			{
-				$link=JoomleagueHelperRoute::getResultsRoute($this->project->slug, $r->value, $division);
+				$link=JoomleagueHelperRoute::getResultsRoute($project->slug, $r->value, $division);
 				$options[]=JHtml::_('select.option', $link, $r->text);
 			}
 		} else {
-			$currenturl=JoomleagueHelperRoute::getResultsRoute($this->project->slug, $this->roundid, $division);
+			$currenturl=JoomleagueHelperRoute::getResultsRoute($project->slug, $roundid, $division);
 			$options=array();
 			foreach ($rounds as $r)
 			{
-				$link=JoomleagueHelperRoute::getResultsRoute($this->project->slug, $r->value, $division);
+				$link=JoomleagueHelperRoute::getResultsRoute($project->slug, $r->value, $division);
 				$options[]=JHtml::_('select.option', $link, $r->text);
 			}
 		}
@@ -242,7 +245,7 @@ class JoomleagueHelperHtml {
 	 *
 	 * @param object $game
 	 */
-	public function showMatchPlayground(&$game)
+	public static function showMatchPlayground(&$game)
 	{
 		if (($this->config['show_playground'] || $this->config['show_playground_alert']) && isset($game->playground_id))
 		{
@@ -307,7 +310,7 @@ class JoomleagueHelperHtml {
 	 * @param object $project
 	 * @return string
 	 */
-	public function mark_now_playing($thistime,$match_stamp,&$config,&$project)
+	public static function mark_now_playing($thistime,$match_stamp,&$config,&$project)
 	{
 		$whichpart=1;
 		$gone_since_begin=intval(($thistime - $match_stamp)/60);
@@ -345,7 +348,7 @@ class JoomleagueHelperHtml {
 	 * @param array attributes
 	 * @return string image html code
 	 */
-	public function getThumbUpDownImg($game, $projectteam_id, $attributes = null)
+	public static function getThumbUpDownImg($game, $projectteam_id, $attributes = null)
 	{
 		$res = JoomleagueHelper::getTeamMatchResult($game, $projectteam_id);
 		if ($res === false) {

@@ -26,7 +26,7 @@ class JLGStatisticDifference extends JLGStatistic {
 	
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('add_ids'))) {
 			$add_ids = explode(',', $params->get('add_ids'));
 		} else {

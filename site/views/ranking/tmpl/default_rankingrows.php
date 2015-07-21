@@ -1,10 +1,17 @@
 <?php
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
 JHtml::_('behavior.tooltip');
 
-$current  = &$this->current;
-$previous = &$this->previousRanking[$this->division];
+$current  = $this->current;
+$previous = $this->previousRanking[$this->division];
 
-$config   = &$this->tableconfig;
+$config   = $this->tableconfig;
 
 $counter = 1;
 $k = 0;

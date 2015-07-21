@@ -268,7 +268,7 @@ class JoomleagueModelRanking extends JoomleagueModelProject
 			{
 				if ( $this->to == 1 || ( $this->to == $this->from ) )
 				{
-					$this->previousRanking[$division] = &$this->currentRanking[$division];
+					$this->previousRanking[$division] = $this->currentRanking[$division];
 				}
 				else
 				{	

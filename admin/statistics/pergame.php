@@ -28,7 +28,7 @@ class JLGStatisticPergame extends JLGStatistic {
 	
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('numerator_ids'))) {
 			$numerator_ids = explode(',', $params->get('numerator_ids'));
 		} else {
@@ -48,7 +48,7 @@ class JLGStatisticPergame extends JLGStatistic {
 	function getQuotedSids()
 	{
 		$db = JFactory::getDbo();
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('numerator_ids'))) {
 			$numerator_ids = explode(',', $params->get('numerator_ids'));
 		} else {

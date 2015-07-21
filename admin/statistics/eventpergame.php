@@ -28,7 +28,7 @@ class JLGStatisticEventPergame extends JLGStatistic {
 	
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('event_ids'))) {
 			$event_ids = explode(',', $params->get('event_ids'));
 		} else {

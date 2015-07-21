@@ -1,4 +1,12 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 JHtml::_('behavior.tooltip');
 jimport('joomla.html.pane');
@@ -34,7 +42,7 @@ JToolBarHelper::help('screen.joomleague',true);
 	}
 </style>
 
-<form action="index.php" method="post" id="adminForm">
+<form action="index.php" method="post" id="adminForm" name="adminForm">
 	<div class="col50">
 
 <?php

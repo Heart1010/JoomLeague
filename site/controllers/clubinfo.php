@@ -52,7 +52,7 @@ class JoomleagueControllerClubInfo extends JoomleagueController
 
 		if( $cid > 0 )
 		{
-			$club = & JTable::getInstance( "Club", "Table" );
+			$club = JTable::getInstance( "Club", "Table" );
 			$club->load( $cid );
 			$club->bind( $post );
 			$params = JComponentHelper::getParams('com_joomleague');

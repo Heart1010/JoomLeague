@@ -22,16 +22,16 @@ class JoomleagueModelAbout extends JoomleagueModelProject
 		$about = new stdClass();
 		
 		//Translations Hosted by
-		$about->translations = '<a href="https://opentranslators.transifex.com/projects/p/joomleague/">https://opentranslators.transifex.com/projects/p/joomleague/</a>';
+		$about->translations = '<a href="https://opentranslators.transifex.com/projects/p/joomleague/" target="_blank">https://opentranslators.transifex.com/projects/p/joomleague/</a>';
 		//Repository Hosted by
-		$about->repository = '<a href="http://gitorious.org/joomleague">http://gitorious.org/joomleague</a>';
+		$about->repository = '<a href="https://gitlab.com/joomleague/joomleague" target="_blank">https://gitlab.com/joomleague/joomleague</a>';
 		//version
 		$version = JoomleagueHelper::getVersion();
 		$revision = explode('.', $version);
-		$about->version = '<a href="http://gitorious.org/joomleague/joomleague/commits/'.$revision[0].'.'.$revision[1].'.0/">' . $version . '</a>';
+		$about->version = $version;
 		
 		//author
-		$about->author = '<a href="http://stats.joomleague.at/authors.html">Joomleague-Team</a>';
+		$about->author = 'Joomleague-Team';
 
 		//page
 		$about->page = 'http://www.joomleague.at';
@@ -64,13 +64,13 @@ class JoomleagueModelAbout extends JoomleagueModelProject
 		$about->icons .= ', Panel images (Kasi)';
 
 		//flash
-		$about->flash = '<a href="http://teethgrinder.co.uk/open-flash-chart-2/" target="_blank">Open Flash Chart 2.x</a>';
+		$about->flash = 'Open Flash Chart 2.x';
 
 		//graphoc library
 		$about->graphic_library = '<a href="http://www.walterzorn.com" target="_blank">www.walterzorn.com</a>';
 		
 		//phpthumb class
-		$about->phpthumb = '<a href="http://phpthumb.gxdlabs.com/" target="_blank">phpthumb.gxdlabs.com</a>';
+		$about->phpthumb = 'phpthumb.gxdlabs.com';
 
 
 		$this->_about = $about;

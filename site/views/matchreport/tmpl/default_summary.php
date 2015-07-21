@@ -54,14 +54,18 @@ if (!$commentsDisabled) {
 	$comments = '';
 
 	$plugin = JoomleagueHelper::getCommentsIntegrationPlugin();
+		
 	if (is_object($plugin)) {
-		$pluginParams = new JParameter($plugin->params);
+		$params = new JRegistry();
+		$pluginParams = $params->loadString($plugin->params);
 	}
 	else {
-		$pluginParams = new JParameter('');
+		$params = new JRegistry();
+		$pluginParams = $params->loadString('');
+	
 	}
 	$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
-
+	
 	if ($separate_comments) {
 
 	// Comments integration trigger when separate_comments in plugin is set to yes/1

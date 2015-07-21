@@ -32,11 +32,16 @@ class JoomleagueViewMatchReport extends JLGView
 		$this->overallconfig = $model->getOverallConfig();
 		$this->config = $config;
 		$this->match = $match;
-		$ret=$model->getMatchText($match->new_match_id);
-		$this->newmatchtext = $ret->text;
-		$ret=$model->getMatchText($match->old_match_id);
-		$this->oldmatchtext = $ret->text;
-
+		
+		$ret = $model->getMatchText($match->new_match_id);
+		if ($ret) {
+			$this->newmatchtext = $ret->text;
+		}
+		$ret = $model->getMatchText($match->old_match_id);
+		if ($ret) {
+			$this->oldmatchtext = $ret->text;
+		}
+		
 		$this->round = $model->getRound();
 		$this->team1 = $model->getTeaminfo($this->match->projectteam1_id);
 		$this->team2 = $model->getTeaminfo($this->match->projectteam2_id);

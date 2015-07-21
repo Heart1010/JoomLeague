@@ -269,27 +269,9 @@ class JoomleagueModelProject extends JModelLegacy
 		}
 		return $colors;
 	}
+	
 
-	function getDivisionsId($divLevel=0)
-	{
-		$query="SELECT id from #__joomleague_division
-				  WHERE project_id=".$this->projectid;
-		if ($divLevel==1)
-		{
-			$query .= " AND (parent_id=0 OR parent_id IS NULL) ";
-		}
-		else if ($divLevel==2)
-		{
-			$query .= " AND parent_id>0";
-		}
-		$query .= " ORDER BY ordering";
-		$this->_db->setQuery($query);
-		$res = $this->_db->loadColumn();
-		if(count($res) == 0) {
-			echo JText::_('COM_JOOMLEAGUE_RANKING_NO_SUBLEVEL_DIVISION_FOUND') . $divLevel;
-		}
-		return $res;
-	}
+	
 
 	/**
 	 * return an array of division id and it's subdivision ids
@@ -312,6 +294,7 @@ class JoomleagueModelProject extends JModelLegacy
 		return $res;
 	}
 
+	
 	function getDivision($id)
 	{
 		$divs=$this->getDivisions();
@@ -323,7 +306,8 @@ class JoomleagueModelProject extends JModelLegacy
 		$div->name = '';
 		return $div;
 	}
-
+	
+	
 	function getDivisions($divLevel=0)
 	{
 		$project = $this->getProject();
@@ -353,35 +337,29 @@ class JoomleagueModelProject extends JModelLegacy
 		return array();
 	}
 
-	/**
-	 * return project rounds objects ordered by roundcode
-	 *
-	 * @param string ordering 'ASC or 'DESC'
-	 * @return array
-	 */
-	function getRounds($ordering='ASC')
+	
+	function getDivisionsId($divLevel=0)
 	{
-		if (empty($this->_rounds))
+		$query="SELECT id from #__joomleague_division
+				  WHERE project_id=".$this->projectid;
+		if ($divLevel==1)
 		{
-			$query=" 	SELECT id,round_date_first,round_date_last,
-				   			CASE LENGTH(name)
-				    			when 0 then roundcode
-				    			else name
-				    		END as name,
-				   			roundcode
-			       		FROM #__joomleague_round
-			         	WHERE project_id=". $this->projectid.
-			       		" ORDER BY roundcode ASC ";
-
-			$this->_db->setQuery($query);
-			$this->_rounds=$this->_db->loadObjectList();
+			$query .= " AND (parent_id=0 OR parent_id IS NULL) ";
 		}
-		if ($ordering == 'DESC') {
-			return array_reverse($this->_rounds);
+		else if ($divLevel==2)
+		{
+			$query .= " AND parent_id>0";
 		}
-		return $this->_rounds;
+		$query .= " ORDER BY ordering";
+		$this->_db->setQuery($query);
+		$res = $this->_db->loadColumn();
+		if(count($res) == 0) {
+			echo JText::_('COM_JOOMLEAGUE_RANKING_NO_SUBLEVEL_DIVISION_FOUND') . $divLevel;
+		}
+		return $res;
 	}
-
+	
+	
 	/**
 	 * return project rounds as array of objects(roundid as value,name as text)
 	 *
@@ -403,7 +381,39 @@ class JoomleagueModelProject extends JModelLegacy
 		$this->_db->setQuery($query);
 		return $this->_db->loadObjectList();
 	}
-
+	
+	
+	/**
+	 * return project rounds objects ordered by roundcode
+	 *
+	 * @param string ordering 'ASC or 'DESC'
+	 * @return array
+	 */
+	function getRounds($ordering='ASC')
+	{
+		if (empty($this->_rounds))
+		{
+			$query=" 	SELECT id,round_date_first,round_date_last,
+				   			CASE LENGTH(name)
+				    			when 0 then roundcode
+				    			else name
+				    		END as name,
+				   			roundcode
+			       		FROM #__joomleague_round
+			         	WHERE project_id=". $this->projectid.
+				         	" ORDER BY roundcode ASC ";
+	
+			$this->_db->setQuery($query);
+			$this->_rounds=$this->_db->loadObjectList();
+		}
+		if ($ordering == 'DESC') {
+			return array_reverse($this->_rounds);
+		}
+		return $this->_rounds;
+	}
+	
+	
+	
 	function getTeaminfo($projectteamid)
 	{
 		$query=' SELECT t.*, pt.division_id, t.id as team_id,
@@ -570,58 +580,49 @@ class JoomleagueModelProject extends JModelLegacy
 		return $teams;
 	}
 
-	function getFavTeams()
+	/**
+	 * @todo check!
+	 * Added $project = false to be inline with model-Results
+	 */
+	function getFavTeams($project = false)
 	{
-		$project = $this->getProject();
-		if(!is_null($project))
-		return explode(",",$project->fav_team);
-		else
-		return array();
+		if ($project) {
+			//
+		} else {
+			$project = $this->getProject();
+		}
+		
+		if(!is_null($project)) {
+			return explode(",",$project->fav_team);
+		} else {
+			return array();
+		}
 	}
+	
 
 	function getEventTypes($evid=0)
 	{
-		$query="SELECT	et.id AS etid,
-							me.event_type_id AS id,
-							et.*
-							FROM #__joomleague_eventtype AS et
-							LEFT JOIN #__joomleague_match_event AS me ON et.id=me.event_type_id";
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select('et.id AS etid, me.event_type_id AS id,et.*');
+		$query->from('#__joomleague_eventtype AS et');
+		$query->join('LEFT', '#__joomleague_match_event AS me ON et.id = me.event_type_id');
+		
 		if ($evid != 0)
 		{
-			if ($this->projectid > 0)
-			{
-				$query .= " AND";
-			}
-			else
-			{
-				$query .= " WHERE";
-			}
-			$query .= " me.event_type_id=".(int)$evid;
+			$query->where('me.event_type_id = '.$evid);
 		}
 
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList('etid');
+		$db->setQuery($query);
+		return $db->loadObjectList('etid');
 	}
-
-	function getprojectteamID($teamid)
-	{
-		$query="SELECT id
-				  FROM #__joomleague_project_team
-				  WHERE team_id=".(int)$teamid."
-					AND project_id=".(int)$this->projectid;
-
-		$this->_db->setQuery($query);
-		$result=$this->_db->loadResult();
-
-		return $result;
-	}
-
+	
+	
 	/**
 	 * Method to return a playgrounds array (id,name)
 	 *
 	 * @access  public
 	 * @return  array
-	 * @since 0.1
 	 */
 	function getPlaygrounds()
 	{
@@ -640,7 +641,24 @@ class JoomleagueModelProject extends JModelLegacy
 			return $result;
 		}
 	}
+	
+	
 
+	function getprojectteamID($teamid)
+	{
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_project_team');
+		$query->where('team_id = '.$teamid);
+		$query->where('project_id = '.$this->projectid);
+		$db->setQuery($query);
+		$result = $db->loadResult();
+
+		return $result;
+	}
+
+	
 	function getReferees()
 	{
 		$project=$this->getProject();

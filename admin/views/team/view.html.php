@@ -31,7 +31,7 @@ class JoomleagueViewTeam extends JLGView
 		// Set toolbar items for the page
 		$edit		= $this->input->get('edit',true);
 		$text = !$edit ? JText::_('COM_JOOMLEAGUE_GLOBAL_NEW') : JText::_('COM_JOOMLEAGUE_GLOBAL_EDIT') . ': ' . $this->form->getValue('name');
-		JToolBarHelper::title((JText::_( 'COM_JOOMLEAGUE_ADMIN_TEAM' ).': <small><small>[ ' . $text.' ]</small></small>' ),'Teams');
+		JToolBarHelper::title((JText::_( 'COM_JOOMLEAGUE_ADMIN_TEAM' ).': <small><small>[ ' . $text.' ]</small></small>' ),'jl-Teams');
 		JLToolBarHelper::save('team.save');
 
 		if (!$edit)  {

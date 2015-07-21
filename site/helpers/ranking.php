@@ -291,7 +291,7 @@ class JLGRanking
 
 			if ($mode == 0 || $mode == 1)
 			{
-				$home = &$data->_teams[$homeId];
+				$home = $data->_teams[$homeId];
 			}
 			else
 			{
@@ -299,7 +299,7 @@ class JLGRanking
 			}
 			if ($mode == 0 || $mode == 2)
 			{
-				$away = &$data->_teams[$awayId];
+				$away = $data->_teams[$awayId];
 			}
 			else
 			{
@@ -720,7 +720,7 @@ class JLGRanking
 		}
 		else if (empty($this->_divisions))
 		{
-			$db = &JFactory::getDbo();
+			$db = JFactory::getDbo();
 			$query = ' SELECT id from #__joomleague_division '
 			. ' WHERE project_id = '. $db->Quote($this->_projectid)
 			. '   AND parent_id = '. $db->Quote($this->_division)

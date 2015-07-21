@@ -1,5 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access');?>
-<form action="index.php" method="post" id="adminForm">
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
+?>
+<form action="index.php" method="post" id="adminForm" name="adminForm">
 	<div class="col50">
 		<?php
 		echo JHtml::_('tabs.start','tabs', array('useCookie'=>1));

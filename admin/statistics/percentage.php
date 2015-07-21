@@ -30,7 +30,7 @@ class JLGStatisticPercentage extends JLGStatistic {
 
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('numerator_ids'))) {
 			$numerator_ids = explode(',', $params->get('numerator_ids'));
 		} else {
@@ -63,7 +63,7 @@ class JLGStatisticPercentage extends JLGStatistic {
 	function getQuotedSids()
 	{
 		$db = JFactory::getDbo();
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('numerator_ids'))) {
 			$numerator_ids = explode(',', $params->get('numerator_ids'));
 		} else {
@@ -439,7 +439,7 @@ class JLGStatisticPercentage extends JLGStatistic {
 
 	function getShowPercentageSymbol()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		return $params->get('show_percent_symbol', 1);
 	}
 

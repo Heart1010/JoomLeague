@@ -366,6 +366,11 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 		return $info;
 	}
 
+	/**
+	 * @todo fix!
+	 * this function is not inline with model-Project
+	 * @see JoomleagueModelPerson::getInOutStats()
+	 */
 	function getInOutStats($project_id, $projectteam_id, $teamplayer_id)
 	{
 		$quotedTpId = $this->_db->Quote($teamplayer_id);

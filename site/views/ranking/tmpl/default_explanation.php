@@ -1,6 +1,14 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-$config   = &$this->tableconfig;
+$config   = $this->tableconfig;
 
 $columns = explode( ",", $config['ordered_columns'] );
 $column_names	= explode( ',', $config['ordered_columns_names'] );

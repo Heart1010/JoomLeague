@@ -36,6 +36,7 @@ class JoomleagueViewResults extends JLGView
 		$rounds = JoomleagueHelper::getRoundsOptions($project->id, 'ASC', true);
 
 
+		$this->roundsoptions = $rounds;
 		$this->project = $project;
 		$lists=array();
 

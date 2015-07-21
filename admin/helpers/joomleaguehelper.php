@@ -1474,7 +1474,7 @@ class JoomleagueHelper
 	 * @param int $ptid project team id
 	 * @return false|int
 	 */
-	function getTeamMatchResult($game, $ptid)
+	public static function getTeamMatchResult($game, $ptid)
 	{
 		if (!isset($game->team1_result)) {
 			return false;

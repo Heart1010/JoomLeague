@@ -1,8 +1,17 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
+
 JHtml::_('behavior.tooltip');
 ?>
 
-<form method="post" id="adminForm" action="<?php echo $this->request_url; ?>">
+<form method="post" id="adminForm" name="adminForm" action="<?php echo $this->request_url; ?>">
 	<fieldset class='adminform'>	
 	<fieldset class="adminform">
 	<?php echo Jtext::_('COM_JOOMLEAGUE_ADMIN_ROUNDS_POPULATE_DESC'); ?>

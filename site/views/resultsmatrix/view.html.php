@@ -21,8 +21,8 @@ class JoomleagueViewResultsmatrix extends JoomleagueViewResults  {
 	public function display($tpl = null)
 	{
 		JHtml::_('behavior.framework');
-		$mainframe = JFactory::getApplication();
-		$params = $mainframe->getParams();
+		$app = JFactory::getApplication();
+		$params = $app->getParams();
 		// get a reference of the page instance in joomla
 		$document = JFactory :: getDocument();
 		$uri = JFactory :: getURI();
@@ -48,7 +48,6 @@ class JoomleagueViewResultsmatrix extends JoomleagueViewResults  {
 		$mdlRound = JModelLegacy::getInstance("Round", "JoomleagueModel");
 		$roundcode = $mdlRound->getRoundcode($resultsmodel->roundid);
 		$rounds = JoomleagueHelper::getRoundsOptions($project->id, 'ASC', true);
-		
 		
 		if (!isset($resultsconfig['switch_home_guest'])){$resultsconfig['switch_home_guest']=0;}
 		if (!isset($resultsconfig['show_dnp_teams_icons'])){$resultsconfig['show_dnp_teams_icons']=0;}

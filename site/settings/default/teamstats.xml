@@ -43,7 +43,7 @@
 			attendance ranking?" description="Shows a ranking based on the attendance 
 			of each team."> <option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option> <option 
 			value="1">COM_JOOMLEAGUE_GLOBAL_YES</option> </field> <field name="show_events_stats" 
-			type="radio" default="0" label="Show event stats?" description="Shows stats 
+			type="radio" class="btn-group btn-group-yesno" default="0" label="Show event stats?" description="Shows stats 
 			about the events of the selected project. Only funtions in case you are working 
 			with events!"> <option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option> <option 
 			value="1">COM_JOOMLEAGUE_GLOBAL_YES</option> </field> -->

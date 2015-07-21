@@ -8,8 +8,9 @@
  */
 defined('_JEXEC') or die;
 JHtml::_('behavior.framework');
-$modalheight = JComponentHelper::getParams('com_joomleague')->get('modal_popup_height', 600);
-$modalwidth = JComponentHelper::getParams('com_joomleague')->get('modal_popup_width', 900);
+$modalheight = JComponentHelper::getParams('com_joomleague')->get('modal_popup_height', 300);
+$modalwidth = JComponentHelper::getParams('com_joomleague')->get('modal_popup_width', 800);
+
 ?>
 <style>
 fieldset input,

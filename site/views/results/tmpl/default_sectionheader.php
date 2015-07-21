@@ -1,4 +1,13 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die; 
+?>
 
 <!-- section header e.g. ranking, results etc. -->
 <a id="jl_top"></a>
@@ -17,7 +26,7 @@
 			{
 				$title = JText::sprintf( 'COM_JOOMLEAGUE_RESULTS_ROUND_RESULTS2', '<i>' . $this->division->name . '</i>' );
 			}
-			JoomleagueHelperHtml::showMatchdaysTitle($title, $this->roundid, $this->config, 0);
+			JoomleagueHelperHtml::showMatchdaysTitle($title, $this->roundid, $this->config, 0,$this->project,$this->overallconfig);
 
 			if ( $this->showediticon )
 			{
@@ -35,13 +44,13 @@
 		{
 			//1 request for current round
 			// seems to be this shall show a plan of matches of a team???
-			JoomleagueHelperHtml::showMatchdaysTitle( JText::_( 'COM_JOOMLEAGUE_RESULTS_PLAN' ) , 0, $this->config, 0);
+			JoomleagueHelperHtml::showMatchdaysTitle( JText::_( 'COM_JOOMLEAGUE_RESULTS_PLAN' ) , 0, $this->config, 0,$this->project,$this->overallconfig);
 		}
 		?>
 		</td>
 			<?php if ($this->config['show_matchday_dropdown']==1) { ?>
-	            <td class="contentheading" style="text-align:right; font-size: 100%;">
-			<?php echo JoomleagueHelperHtml::getRoundSelectNavigation(FALSE); ?>
+	            <td class="contentheading" style="text-align:right; font-size: 100%;"> 
+			<?php echo JoomleagueHelperHtml::getRoundSelectNavigation(false,$this->project,$this->roundsoptions,$this->roundid); ?>
 				</td>
     	    <?php } ?>
 		</tr>

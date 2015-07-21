@@ -47,7 +47,12 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $this->divisionid;
 	}
 
-	function getDivision()
+	/**
+	 * @todo check!
+	 * Added $division = false to be inline with model-Project
+	 * @see JoomleagueModelProject::getDivision()
+	 */
+	function getDivision($division = false)
 	{
 		$division=null;
 		if ($this->divisionid > 0)
@@ -250,9 +255,4 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $showediticon;
 	}
 
-	function getFavTeams(&$project)
-	{
-		$favteams=explode(',',$project->fav_team);
-		return $favteams;
-	}
 }

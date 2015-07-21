@@ -8,28 +8,21 @@
  */
 defined('_JEXEC') or die;
 ?>
-<fieldset class="adminform">
-	<legend><?php echo JText::_( 'COM_JOOMLEAGUE_ADMIN_DIVISION' );?></legend>
-	<table class="admintable">
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('name'); ?></td>
-			<td><?php echo $this->form->getInput('name'); ?></td>
-		</tr>
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('alias'); ?></td>
-			<td><?php echo $this->form->getInput('alias'); ?></td>
-		</tr>		
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('middle_name'); ?></td>
-			<td><?php echo $this->form->getInput('middle_name'); ?></td>
-		</tr>
-		<tr>
-			<td class="key"><?php echo $this->form->getLabel('shortname'); ?></td>
-			<td><?php echo $this->form->getInput('shortname'); ?></td>
-		</tr>		
-		<tr>
-			<td class="key"><?php echo JText::_( 'COM_JOOMLEAGUE_ADMIN_DIVISION_PARENT' );?></td>
-			<td><?php echo $this->lists['parents'];?></td>
-		</tr>
-	</table>
+
+<fieldset class="form-horizontal">
+	<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_DIVISION');?></legend>
+	<?php 
+	echo $this->form->renderField('name');
+	echo $this->form->renderField('alias');
+	echo $this->form->renderField('middle_name');
+	echo $this->form->renderField('shortname');
+	echo $this->form->renderField('id');
+	echo $this->form->renderField('id');
+	echo $this->form->renderField('id');
+	echo $this->form->renderField('id');
+	?>
+	<div class="control-group">
+		<div class="control-label"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_DIVISION_PARENT');?></div>
+		<div class="controls"><?php echo $this->lists['parents'];?></div>
+	</div>
 </fieldset>

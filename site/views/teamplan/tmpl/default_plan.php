@@ -7,16 +7,24 @@
  * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
+use Joomla\Registry\Registry;
 
 if ($this->config['show_comments_count'] == 1 || $this->config['show_comments_count'] == 2)
 {
 	$plugin = JoomleagueHelper::getCommentsIntegrationPlugin();
-
-	$pluginParams = is_object($plugin) ? new JParameter($plugin->params) : new JParameter('');
+	
+	if (is_object($plugin)) {
+		$params = new Registry();
+		$pluginParams = $params->loadString($plugin->params);
+	}
+	else {
+		$params = new Registry();
+		$pluginParams = $params->loadString('');
+	}
 	$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
 }
 ?>
-<a name="jl_top" id="jl_top"></a>
+<a id="jl_top"></a>
 <?php
 if (!empty($this->matches))
 {

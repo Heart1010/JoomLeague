@@ -44,29 +44,41 @@ class JoomleagueModelTeamPlan extends JoomleagueModelProject
 		return $this->mode;
 	}
 
-	function getDivision()
+	/**
+	 * @todo check!
+	 * added "$id = false" to be inline with model-Project
+	 * @see JoomleagueModelProject::getDivision()
+	 */
+	function getDivision($id = false)
 	{
 		$division=null;
 		if ($this->divisionid > 0)
 		{
-			$query='	SELECT	*,
-								CASE WHEN CHAR_LENGTH(alias) THEN CONCAT_WS(\':\',id,alias) ELSE id END AS slug
-						FROM #__joomleague_division AS d
-						WHERE d.id='.$this->_db->Quote($this->divisionid);
-			$this->_db->setQuery($query,0,1);
-			$division=$this->_db->loadObject();
+			$db = $this->getDbo();
+			$query = $db->getQuery(true);
+			$query->select('*','CASE WHEN CHAR_LENGTH(alias) THEN CONCAT_WS(\':\',id,alias) ELSE id END AS slug');
+			$query->from('#__joomleague_division AS d');
+			$query->where('d.id = '.$db->quote($this->divisionid));
+			$db->setQuery($query,0,1);
+			$division = $db->loadObject();
 		}
 		return $division;
 	}
 
-	function getProjectTeamId()
+	/**
+	 * @todo check!
+	 * added $teamid to be inline with model-project
+	 */
+	function getProjectTeamId($teamid = false)
 	{
-		$query='	SELECT	id
-					FROM #__joomleague_project_team
-					WHERE	team_id='.$this->teamid.' AND
-							project_id='.$this->projectid;
-		$this->_db->setQuery($query,0,1);
-		if (! $result=$this->_db->loadResult())
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_project_team');
+		$query->where('team_id = '.$this->teamid);
+		$query->where('project_id = '.$this->projectid);
+		$db->setQuery($query,0,1);
+		if (! $result=$db->loadResult())
 		{
 			return 0;
 		}
@@ -315,18 +327,24 @@ class JoomleagueModelTeamPlan extends JoomleagueModelProject
 		return $matches;
 	}
 
-	function getEventTypes($match_id)
+	/**
+	 * @todo check!
+	 * added "= false" to be inline with model-Project
+	 * @see JoomleagueModelProject::getEventTypes()
+	 */
+	function getEventTypes($match_id = false)
 	{
-		$query=' SELECT	et.id as etid,me.event_type_id as id,et.* '
-		. ' FROM #__joomleague_eventtype as et '
-		. ' INNER JOIN #__joomleague_match_event as me ON et.id=me.event_type_id '
-		. ' INNER JOIN #__joomleague_match as m ON m.id=me.match_id '
-		. ' WHERE me.match_id='.$match_id;
-
-		$query .= " ORDER BY et.ordering";
-
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList('etid');
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select('et.id AS etid, me.event_type_id AS id,et.*');
+		$query->from('#__joomleague_eventtype AS et');
+		$query->join('INNER', '#__joomleague_match_event AS me ON et.id = me.event_type_id');
+		$query->join('INNER', '#__joomleague_match AS m ON m.id = me.match_id');
+		$query->where('me.match_id = '.$match_id);
+		$query->order('et.ordering');
+		
+		$db->setQuery($query);
+		return $db->loadObjectList('etid');
 	}
 
 }

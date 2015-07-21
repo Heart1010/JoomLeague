@@ -31,7 +31,7 @@
 					description="COM_JOOMLEAGUE_XML_CURVE_SELECT_TEAM2_DESCR"
 					required="false">
 			</field>
-			<field	name="both" type="radio" default="1" 
+			<field	name="both" type="radio" class="btn-group btn-group-yesno" default="1" 
 					label="COM_JOOMLEAGUE_XML_CURVE_BOTH_LABEL"
 					description="COM_JOOMLEAGUE_XML_CURVE_BOTH_DESCR">
 				<option value="0">COM_JOOMLEAGUE_GLOBAL_NO</option>

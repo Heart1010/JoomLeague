@@ -238,7 +238,7 @@ class JoomleagueViewMatch extends JLGView
 	 */
 	protected function addToolbar_Editeventsbb($showSave = true) {
 		// set toolbar items for the page
-		JToolBarHelper::title ( JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_EEBB_TITLE' ), 'events' );
+		JToolBarHelper::title ( JText::_ ( 'COM_JOOMLEAGUE_ADMIN_MATCH_EEBB_TITLE' ), 'jl-events' );
 		if ($showSave) {
 			JLToolBarHelper::apply ( 'match.saveeventbb' );
 		}

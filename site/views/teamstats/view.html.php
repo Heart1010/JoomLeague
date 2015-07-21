@@ -69,7 +69,11 @@ class JoomleagueViewTeamStats extends JLGView
 			$titleInfo->leagueName = $this->project->league_name;
 			$titleInfo->seasonName = $this->project->season_name;
 		}
+		
+		
+		// @todo check! (undefined function)
 		$division = $model->getDivision(JRequest::getInt('division',0));
+		
 		if (!empty( $division ) && $division->id != 0)
 		{
 			$titleInfo->divisionName = $division->name;

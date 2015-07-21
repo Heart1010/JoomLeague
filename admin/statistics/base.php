@@ -203,13 +203,13 @@ class JLGStatistic extends JObject {
 	 */
 	function getParam($name, $default = '')
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		return $params->get($name, $default);
 	}
 	
 	function getPrecision()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		return $params->get('precision', 2);
 	}
 	

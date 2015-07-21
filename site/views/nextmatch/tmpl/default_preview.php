@@ -7,6 +7,8 @@
  * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die; 
+use Joomla\Registry\Registry;
+
 ?>
 <!-- START of match preview -->
 <?php
@@ -51,12 +53,17 @@ if (!$commentsDisabled) {
 	$comments = '';
 
 	$plugin = JoomleagueHelper::getCommentsIntegrationPlugin();
+	
+
 	if (is_object($plugin)) {
-		$pluginParams = new JParameter($plugin->params);
+		$params = new Registry();
+		$pluginParams = $params->loadString($plugin->params);
 	}
 	else {
-		$pluginParams = new JParameter('');
+		$params = new Registry();
+		$pluginParams = $params->loadString('');
 	}
+	
 	$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
 
 	if ($separate_comments) {

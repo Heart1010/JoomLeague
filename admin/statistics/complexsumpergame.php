@@ -28,7 +28,7 @@ class JLGStatisticComplexsumpergame extends JLGStatistic {
 	
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('stat_ids'))) {
 			$stat_ids = explode(',', $params->get('stat_ids'));
 		} else {
@@ -48,7 +48,7 @@ class JLGStatisticComplexsumpergame extends JLGStatistic {
 	
 	function getFactors()
 	{
-		$params  = &$this->getParams();
+		$params  = $this->getParams();
 		$factors = explode(',', $params->get('factors'));
 		$stat_ids = $this->getSids();
 		
@@ -67,7 +67,7 @@ class JLGStatisticComplexsumpergame extends JLGStatistic {
 	
 	function getQuotedSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('stat_ids'))) {
 			$stat_ids = explode(',', $params->get('stat_ids'));
 		} else {

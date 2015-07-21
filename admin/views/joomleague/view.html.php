@@ -312,7 +312,7 @@ class JoomleagueViewJoomleague extends JLGView
 		$link[]=$link1;
 		$label[]=$label1;
 		$limage[]=$limage1;
-
+	
 		if ($project->id)
 		{
 			$link2=array();
@@ -320,7 +320,7 @@ class JoomleagueViewJoomleague extends JLGView
 			$limage2=array();
 
 			$project_type=$project->project_type;
-
+			
 			if ($project_type == 0) // No divisions
 			{
 				$pane=new stdClass();

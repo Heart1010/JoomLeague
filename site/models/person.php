@@ -166,6 +166,11 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 		return $contact_id;
 	}
 
+	/**
+	 * @todo fix!
+	 * this function is not inline with model-Project
+	 * @see JoomleagueModelProject::getRounds()
+	 */
 	function getRounds( $roundcodestart, $roundcodeend )
 	{
 		$projectid = $this->projectid;
@@ -200,7 +205,7 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 	 */
 	function getAllEvents()
 	{
-		$history = &$this->getPlayerHistory();
+		$history = $this->getPlayerHistory();
 		$positionhistory = array();
 		foreach($history as $h)
 		{
@@ -290,9 +295,9 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 
 	function sendMailTo($listOfRecipients, $subject, $message)
 	{
-		$mainframe	= JFactory::getApplication();
-		$mailFrom = $mainframe->getCfg('mailfrom');
-		$fromName = $mainframe->getCfg('fromname');
+		$app	= JFactory::getApplication();
+		$mailFrom = $app->getCfg('mailfrom');
+		$fromName = $app->getCfg('fromname');
 		JMail::sendMail( $mailFrom, $fromName, $listOfRecipients, $subject, $message );
 	}
 

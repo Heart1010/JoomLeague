@@ -33,10 +33,10 @@
 			label="COM_JOOMLEAGUE_SETTINGS_MAX_IMPORT_MEMORY_TITLE" description="COM_JOOMLEAGUE_SETTINGS_MAX_IMPORT_MEMORY_DESCR">
 		</field>
 
-		<field name="modal_popup_width" type="text" default="1200"
+		<field name="modal_popup_width" type="text" default="800"
 			label="COM_JOOMLEAGUE_SETTINGS_MODALPOPUP_WIDTH" description="COM_JOOMLEAGUE_SETTINGS_MODALPOPUP_WIDTH_DESCR">
 		</field>
-		<field name="modal_popup_height" type="text" default="800"
+		<field name="modal_popup_height" type="text" default="300"
 			label="COM_JOOMLEAGUE_SETTINGS_MODALPOPUP_HEIGHT" description="COM_JOOMLEAGUE_SETTINGS_MODALPOPUP_HEIGHT_DESCR">
 		</field>
 	</fieldset>

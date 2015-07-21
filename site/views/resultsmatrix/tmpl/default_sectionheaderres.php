@@ -24,7 +24,7 @@ if ( $this->config['show_sectionheader'] == 1 )
 						$title = JText::sprintf( 'COM_JOOMLEAGUE_RESULTS_ROUND_RESULTS2', '<i>' . $this->division->name . '</i>' );
 					}
 
-					JoomleagueHelperHtml::showMatchdaysTitle(	$title, $this->roundid, $this->config );
+					JoomleagueHelperHtml::showMatchdaysTitle($title, $this->roundid, $this->config,$this->project,$this->overallconfig);
 
 					if ( $this->showediticon )
 						{
@@ -40,7 +40,7 @@ if ( $this->config['show_sectionheader'] == 1 )
 				{
 					//1 request for current round
 					// seems to be this shall show a plan of matches of a team???
-					JoomleagueHelperHtml::showMatchdaysTitle( JText::_( 'COM_JOOMLEAGUE_RESULTS_PLAN' ) . " - " . $team->name, 0, $this->config );
+					JoomleagueHelperHtml::showMatchdaysTitle( JText::_( 'COM_JOOMLEAGUE_RESULTS_PLAN' ) . " - " . $team->name, 0, $this->config,$this->project,$this->overallconfig );
 				}
 				?>
 			</td>

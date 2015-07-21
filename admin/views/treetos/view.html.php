@@ -58,13 +58,14 @@ class JoomleagueViewTreetos extends JLGView
 
 	protected function addToolbar()
 	{
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TREETOS_TITLE'),'Tree');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TREETOS_TITLE'),'jl-Tree');
 
 		JLToolBarHelper::apply('treeto.saveshort');
 		JLToolBarHelper::publishList('treeto.publish');
 		JLToolBarHelper::unpublishList('treeto.unpublish');
 		JToolBarHelper::divider();
 
+		// @todo check!
 		JLToolBarHelper::addNew('treeto.save');
 		JLToolBarHelper::deleteList(JText::_('COM_JOOMLEAGUE_ADMIN_TREETOS_WARNING'), 'treeto.remove');
 		JToolBarHelper::divider();

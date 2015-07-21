@@ -12,23 +12,28 @@ JHtml::_('behavior.tooltip');
 JHtml::_('behavior.modal');
 ?>
 <div id="gamesevents">
-	<form method="post" id="adminForm">
+	<form method="post" id="adminForm" name="adminForm">
 		<?php
 		$option		= JRequest::getCmd('option');
 		$params		= JComponentHelper::getParams( $option );
 		$model		= $this->getModel();
 		if(!empty($this->teams)) {
-			echo JHtml::_('tabs.start','tabs', array('useCookie'=>1, 'onclick'=>'alert(1)'));
-			echo JHtml::_('tabs.panel', $this->teams->team1, 'panel1');
-			$teamname	= $this->teams->team1;
-			$this->_handlePreFillRoster($this->teams, $model, $params, $this->teams->projectteam1_id, $teamname);
-			echo $this->loadTemplate('home');
 			
-			echo JHtml::_('tabs.panel', $this->teams->team2, 'panel2');
-			$teamname = $this->teams->team2;
-			$this->_handlePreFillRoster($this->teams, $model, $params, $this->teams->projectteam2_id, $teamname);
-			echo $this->loadTemplate('away');
-			echo JHtml::_('tabs.end');
+			$p=1;
+			echo JHtml::_('bootstrap.startTabSet', 'tabs', array('active' => 'panel1'));
+			echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, $this->teams->team1);
+				$teamname	= $this->teams->team1;
+				$this->_handlePreFillRoster($this->teams, $model, $params, $this->teams->projectteam1_id, $teamname);
+				echo $this->loadTemplate('home');
+			echo JHtml::_('bootstrap.endTab');
+			
+			echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, $this->teams->team2);
+				$teamname = $this->teams->team2;
+				$this->_handlePreFillRoster($this->teams, $model, $params, $this->teams->projectteam2_id, $teamname);
+				echo $this->loadTemplate('away');
+			echo JHtml::_('bootstrap.endTab');
+			
+			echo JHtml::_('bootstrap.endTabSet');
 		}
 		?>
 		<input type="hidden" name="task" value="match.saveeventbb" />

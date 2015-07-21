@@ -28,7 +28,7 @@ class JLGStatisticSumstats extends JLGStatistic {
 	
 	function getSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('stat_ids'))) {
 			$stat_ids = explode(',', $params->get('stat_ids'));
 		} else {
@@ -47,7 +47,7 @@ class JLGStatisticSumstats extends JLGStatistic {
 	
 	function getQuotedSids()
 	{
-		$params = &$this->getParams();
+		$params = $this->getParams();
 		if(!is_array($params->get('stat_ids'))) {
 			$stat_ids = explode(',', $params->get('stat_ids'));
 		} else {

@@ -1676,7 +1676,7 @@ class vcalendar {
     elseif( is_array( $unparsedtext ))
       $rows =  implode( '\n'.$nl, $unparsedtext );
     else
-      $rows = & $unparsedtext;
+      $rows = $unparsedtext;
             /* fix line folding */
     $rows = explode( $nl, iCalUtilityFunctions::convEolChar( $rows, $nl ));
             /* skip leading (empty/invalid) lines */
@@ -1702,7 +1702,7 @@ class vcalendar {
         $rows[] = 'END:VCALENDAR';
       break;
     }
-    $comp    = & $this;
+    $comp    = $this;
     $calsync = $compsync = 0;
             /* identify components and update unparsed data within component */
     $config = $this->getConfig();
@@ -5827,7 +5827,7 @@ class calendarComponent {
         break;
     }
     $this->unparsed = array();
-    $comp           = & $this;
+    $comp           = $this;
     $config         = $this->getConfig();
     $compsync = $subsync = 0;
     foreach ( $unparsedtext as $lix => $line ) {
@@ -7386,7 +7386,7 @@ class iCalUtilityFunctions {
       } // end daylight timezone
       $transTemp[$tix]   = $trans;
     } // end foreach( $transitions as $tix => $trans )
-    $tz  = & $calendar->newComponent( 'vtimezone' );
+    $tz  = $calendar->newComponent( 'vtimezone' );
     $tz->setproperty( 'tzid', $timezone );
     if( !empty( $xProp )) {
       foreach( $xProp as $xPropName => $xPropValue )
@@ -7413,7 +7413,7 @@ class iCalUtilityFunctions {
     unset( $transitions, $date, $prevTrans );
     foreach( $transTemp as $tix => $trans ) {
       $type  = ( TRUE !== $trans['isdst'] ) ? 'standard' : 'daylight';
-      $scomp = & $tz->newComponent( $type );
+      $scomp = $tz->newComponent( $type );
       $scomp->setProperty( 'dtstart',         $trans['time'] );
 //      $scomp->setProperty( 'x-utc-timestamp', $tix.' : '.$trans['ts'] );   // test ###
       if( !empty( $trans['abbr'] ))
@@ -8232,12 +8232,12 @@ class iCalUtilityFunctions {
         }
         if( $bysetpos ) {
           if( isset( $recur['BYWEEKNO'] )) {
-            $bysetposarr1 = & $bysetposw1;
-            $bysetposarr2 = & $bysetposw2;
+            $bysetposarr1 = $bysetposw1;
+            $bysetposarr2 = $bysetposw2;
           }
           else {
-            $bysetposarr1 = & $bysetposymd1;
-            $bysetposarr2 = & $bysetposymd2;
+            $bysetposarr1 = $bysetposymd1;
+            $bysetposarr2 = $bysetposymd2;
           }
 // echo 'test före out startYMD (weekno)='.$wdateStart['year'].':'.$wdateStart['month'].':'.$wdateStart['day']." ($weekStart) "; // test ###
           foreach( $recur['BYSETPOS'] as $ix ) {

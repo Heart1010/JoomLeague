@@ -175,7 +175,7 @@ function addSportsType()
 	$jllang = new JLLanguage();
 	$jllang->setLanguage($lang);
 	$props 		= $jllang->getProperties();
-	$strings 	= &$props['strings'];
+	$strings 	= $props['strings'];
 	$praefix = 'COM_JOOMLEAGUE_ST_';
 	foreach ($strings as $key => $value) {
 		// Add all Sport-types e.g. Soccer to #__joomleague_sports_type

@@ -62,7 +62,7 @@ class JoomleagueViewTeams extends JLGView
 	protected function addToolbar()
 	{ 
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TEAMS_TITLE'),'Teams');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TEAMS_TITLE'),'jl-Teams');
 		
 		JLToolBarHelper::addNew('team.add');
 		JLToolBarHelper::editList('team.edit');

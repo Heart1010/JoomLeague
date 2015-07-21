@@ -22,8 +22,8 @@ class JoomleagueViewResultsranking extends JoomleagueViewResults {
 	public function display($tpl = null)
 	{
 		JHtml::_('behavior.framework');
-		$mainframe = JFactory::getApplication();
-		$params = $mainframe->getParams();
+		$app = JFactory::getApplication();
+		$params = $app->getParams();
 		// get a reference of the page instance in joomla
 		$document = JFactory :: getDocument();
 		$uri = JFactory :: getURI();

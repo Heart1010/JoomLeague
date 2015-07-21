@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 <form action="index.php" method="post" id="adminForm" name="adminForm" class="form-validate">
 <div class="col50">
 <?php
-	
 	$p=1;
 	echo JHtml::_('bootstrap.startTabSet', 'tabs', array('active' => 'panel1'));
 	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_('COM_JOOMLEAGUE_TABS_DETAILS', true));

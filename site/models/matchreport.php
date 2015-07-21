@@ -271,19 +271,24 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $result;
 	}
 
-	function getEventTypes()
+	/**
+	 * @todo check!
+	 * added "$evid = false" to be inline with model-Project
+	 * @see JoomleagueModelProject::getEventTypes()
+	 */
+	function getEventTypes($evid = false)
 	{
-		$query='	SELECT	et.id,
-							et.name,
-							et.icon
-					FROM #__joomleague_eventtype AS et
-					INNER JOIN #__joomleague_position_eventtype AS pet ON pet.eventtype_id=et.id					
-					LEFT JOIN #__joomleague_match_event AS me ON et.id=me.event_type_id
-					WHERE me.match_id='.(int)$this->matchid.'
-					GROUP BY et.id
-					ORDER BY pet.ordering ';
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		$query->select('et.id,et.name,et.icon');
+		$query->from('#__joomleague_eventtype AS et');
+		$query->join('INNER', '#__joomleague_position_eventtype AS pet ON pet.eventtype_id = et.id');
+		$query->join('LEFT', '#__joomleague_match_event AS me ON et.id = me.event_type_id');
+		$query->where('me.match_id = '.$this->matchid);
+		$query->group('et.id');
+		$query->order('pet.ordering');
+		$db->setQuery($query);
+		return $db->loadObjectList();
 	}
 
 	function getPlayground($pgid)
@@ -417,7 +422,8 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 				AND m.published=1
 				ORDER BY m.match_date,t1.short_name";
 		$this->_db->setQuery($query);
-		return $this->_db->loadObject();
+		$result = $this->_db->loadObject();
+		return $result;
 	}
 
 }

@@ -43,22 +43,24 @@ class JoomleagueModelClubPlan extends JoomleagueModelProject
 		return $this->club;
 	}
 
-	function getTeams()
+	/**
+	 * @todo check!
+	 * added $division = false to be inline with Model-Project
+	 * @see JoomleagueModelProject::getTeams()
+	 */
+	function getTeams($division = false)
 	{
-		$teams=array(0);
+		$teams = array(0);
+		
 		if ($this->clubid > 0)
 		{
-			$database = JFactory::getDbo();
-
-			$query=' SELECT id,'
-			. ' name as team_name,'
-			. ' short_name as team_shortcut,'
-			. ' info as team_description '
-			. ' FROM #__joomleague_team '
-			. ' WHERE club_id='.(int) $this->clubid;
-
-			$this->_db->setQuery($query);
-			$teams=$this->_db->loadObjectList();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id, name AS team_name,short_name AS team_shortcut, info AS team_description');
+			$query->from('#__joomleague_team');
+			$query->where('club_id = '.$this->clubid);
+			$db->setQuery($query);
+			$teams = $db->loadObjectList();
 		}
 		return $teams;
 	}
