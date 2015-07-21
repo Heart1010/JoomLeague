@@ -1,13 +1,19 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.view' );
-
-require_once( JPATH_COMPONENT . DS . 'helpers' . DS . 'pagination.php' );
+require_once JPATH_COMPONENT.'/helpers/pagination.php';
 
 class JoomleagueViewClubInfo extends JLGView
 {
 
-	function display( $tpl = null )
+	public function display( $tpl = null )
 	{
 		// Get a refrence of the page instance in joomla
 		$document		= JFactory::getDocument();
@@ -27,7 +33,7 @@ class JoomleagueViewClubInfo extends JLGView
 		$this->overallconfig = $overallconfig;
 		$this->config = $config;
 
-		$this->showclubconfig = $showclubconfig;
+		/* $this->showclubconfig = $showclubconfig; */
 		$this->club = $club;
 
 		$extended = $this->getExtended($club->extended, 'club');

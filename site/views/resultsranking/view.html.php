@@ -1,10 +1,17 @@
 <?php
-defined('_JEXEC') or die('Restricted access');
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-require_once (JPATH_COMPONENT . DS . 'helpers' . DS . 'pagination.php');
-require_once( JLG_PATH_SITE . DS . 'models' . DS . 'ranking.php' );
-require_once( JLG_PATH_SITE . DS . 'models' . DS . 'results.php' );
-require_once( JLG_PATH_SITE . DS . 'views' . DS . 'results' . DS . 'view.html.php' );
+require_once JPATH_COMPONENT.'/helpers/pagination.php';
+require_once JLG_PATH_SITE.'/models/ranking.php';
+require_once JLG_PATH_SITE.'/models/results.php';
+require_once JLG_PATH_SITE.'/views/results/view.html.php';
 
 jimport('joomla.application.component.view');
 jimport('joomla.filesystem.file');
@@ -12,11 +19,11 @@ jimport('joomla.html.pane');
 
 class JoomleagueViewResultsranking extends JoomleagueViewResults {
 
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		JHtml::_('behavior.framework');
 		$mainframe = JFactory::getApplication();
-		$params = &$mainframe->getParams();
+		$params = $mainframe->getParams();
 		// get a reference of the page instance in joomla
 		$document = JFactory :: getDocument();
 		$uri = JFactory :: getURI();

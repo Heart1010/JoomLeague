@@ -148,7 +148,10 @@ class JLGStatistic extends JObject {
 	{
 		$paramsdata = $this->baseparams;
 		$paramsdefs = JLG_PATH_ADMIN.'/statistics/base.xml';
-		return new JLParameter( $paramsdata, $paramsdefs );
+		
+		$params = new JLParameter( $paramsdata, $paramsdefs );
+		
+		return $params;
 	}
 	
 	/**
@@ -162,6 +165,7 @@ class JLGStatistic extends JObject {
 		$currentdir = dirname($rc->getFileName());
 		$paramsdata = $this->params;
 		$paramsdefs = $currentdir.'/'. $this->_name .'.xml';
+		
 		return new JLParameter( $paramsdata, $paramsdefs );
 	}
 	

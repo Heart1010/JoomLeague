@@ -1,21 +1,15 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport( 'joomla.application.component.model');
-
-require_once( JLG_PATH_SITE . DS . 'models' . DS . 'project.php' );
-
+jimport('joomla.application.component.model');
+require_once JLG_PATH_SITE.'/models/project.php';
 
 class JoomleagueModelStats extends JoomleagueModelProject
 {
@@ -28,12 +22,14 @@ class JoomleagueModelStats extends JoomleagueModelProject
 	var $totalrounds = null;
 	var $attendanceranking = null;
 
-	function __construct( )
+	public function __construct()
 	{
 		parent::__construct();
 
-		$this->projectid = JRequest::getInt( "p", 0 );
-		$this->divisionid = JRequest::getint( "division", 0 );
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		$this->projectid = $jinput->getInt("p",0);
+		$this->divisionid = $jinput->getint("division",0);
 	}
 
 	function getDivision()
@@ -46,9 +42,9 @@ class JoomleagueModelStats extends JoomleagueModelProject
 		return $division;
 	}
 
-	function getHighestHome( )
+	function getHighestHome()
 	{
-		if ( is_null( $this->highest_home ) )
+		if (is_null($this->highest_home))
 		{
 			$query  = ' SELECT t1.name AS hometeam, '
 				. ' t2.name AS guestteam, '
@@ -82,9 +78,9 @@ class JoomleagueModelStats extends JoomleagueModelProject
 		return $this->highest_home;
 	}
 
-	function getHighestAway( )
+	function getHighestAway()
 	{
-		if ( is_null( $this->highest_away ) )
+		if (is_null($this->highest_away))
 		{
 			$query  = ' SELECT t1.name AS hometeam, '
 				. ' t1.id AS hometeam_id, '
@@ -118,9 +114,9 @@ class JoomleagueModelStats extends JoomleagueModelProject
 		return $this->highest_away;
 	}
 
-	function getSeasonTotals( )
+	function getSeasonTotals()
 	{
-		if ( is_null( $this->totals ) )
+		if (is_null($this->totals))
 		{
 			$query  = ' SELECT '
 				. ' COUNT(matches.id) AS totalmatches, '
@@ -153,9 +149,9 @@ class JoomleagueModelStats extends JoomleagueModelProject
 		return $this->totals;
 	}
 
-	function getChartData( )
+	function getChartData()
 	{
-		if ( is_null( $this->matchdaytotals ) )
+		if (is_null($this->matchdaytotals))
 		{
 			$query  = ' SELECT rounds.id,'
 				. ' COUNT(matches.id) AS totalmatchespd,'
@@ -185,9 +181,9 @@ class JoomleagueModelStats extends JoomleagueModelProject
 		return $this->matchdaytotals;
 	}
 
-	function getTotalRounds( )
+	function getTotalRounds()
 	{
-		if ( is_null( $this->totalrounds ) )
+		if (is_null($this->totalrounds))
 		{
 			$query  = ' SELECT COUNT(id)'
 				. ' FROM #__joomleague_round'
@@ -199,9 +195,9 @@ class JoomleagueModelStats extends JoomleagueModelProject
 		return $this->totalrounds;
 	}
 
-	function getAttendanceRanking( )
+	function getAttendanceRanking()
 	{
-		if ( is_null( $this->attendanceranking ) )
+		if (is_null($this->attendanceranking))
 		{
 			$query  = ' SELECT '
 				. ' SUM(matches.crowd) AS sumspectatorspt, '
@@ -300,5 +296,3 @@ class JoomleagueModelStats extends JoomleagueModelProject
 	  return $res;
 	}
 }
-
-?>

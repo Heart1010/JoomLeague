@@ -1,20 +1,19 @@
 <?php
 /**
-* @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
-* @license	GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ * 
+ * @author		And_One
+ */
+defined('_JEXEC') or die;
+
 require_once ('joomleague.core.php');
 
 /**
  * this array will be used to build and parse the segments
- *
- * @author And_One
- * @since 2.x
  * @return object
  */
 function getRouteParametersObject() {
@@ -169,12 +168,12 @@ function JoomleagueBuildRoute(&$query) {
 	// include extensions routers for custom views - if extension does have a route file, use it
 	$extensions = JoomleagueHelper::getExtensions ( 0 );
 	foreach ( $extensions as $type ) {
-		$file = JLG_PATH_SITE . DS . 'extensions' . DS . $type . DS . 'route.php';
+		$file = JLG_PATH_SITE.'/extensions/'.$type.'/route.php';
 		if (file_exists ( $file )) {
 			require_once ($file);
 			$obj = new $classname ();
-			$func = 'JoomleagueBuildRoute' . ucfirst ( $type );
-			if ($segs = $func ( $query )) {
+			$func = 'JoomleagueBuildRoute' . ucfirst($type);
+			if ($segs = $func ($query)) {
 				return $segs;
 			}
 		}
@@ -205,7 +204,7 @@ function JoomleagueParseRoute($segments) {
 	// include extensions routers for custom views - if extension route file exists, use it
 	$extensions = JoomleagueHelper::getExtensions ( 0 );
 	foreach ( $extensions as $type ) {
-		$file = JLG_PATH_SITE . DS . 'extensions' . DS . $type . DS . 'route.php';
+		$file = JLG_PATH_SITE.'/extensions/'.$type.'/route.php';
 		if (file_exists ( $file )) {
 			require_once ($file);
 			$obj = new $classname ();
@@ -230,4 +229,3 @@ function JoomleagueParseRoute($segments) {
 	}
 	return $vars;
 }
-?>

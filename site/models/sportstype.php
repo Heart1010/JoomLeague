@@ -1,26 +1,18 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
 require_once ('item.php');
 
 /**
- * Joomleague Component sportstype Model
- *
- * @author	Julien Vonthron <julien.vonthron@gmail.com>
- * @package	JoomLeague
- * @since	0.1
+ * Sportstype Model
 */
 class JoomleagueModelSportsType extends JoomleagueModelItem
 {
@@ -30,7 +22,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	 *
 	 * @access	private
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	function _loadData()
 	{
@@ -46,7 +37,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projects for this sports_type
 	 */
 	public function getProjectsCount() {
@@ -63,7 +53,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectleagues for this sports_type
 	 */
 	public function getLeaguesCount() {
@@ -81,7 +70,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related seasons for this sports_type
 	 */
 	public function getSeasonsCount() {
@@ -99,7 +87,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectteams for this sports_type
 	 */
 	public function getProjectTeamsCount() {
@@ -117,7 +104,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectteamsplayers for this sports_type
 	 */
 	public function getProjectTeamsPlayersCount() {
@@ -137,7 +123,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectdivisions for this sports_type
 	 */
 	public function getProjectDivisionsCount() {
@@ -156,7 +141,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectrounds for this sports_type
 	 */
 	public function getProjectRoundsCount() {
@@ -175,7 +159,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectmatches for this sports_type
 	 */
 	public function getProjectMatchesCount() {
@@ -195,7 +178,6 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 
 	/**
-	 *
 	 * get count of related projectmatchesevents for this sports_type
 	 */
 	public function getProjectMatchesEventsCount() {
@@ -216,35 +198,35 @@ class JoomleagueModelSportsType extends JoomleagueModelItem
 	}
 	
 	/**
-	 *
 	 * get count of related projectmatcheseventnames for this sports_type
 	 */
 	public function getProjectMatchesEventNames()
 	{
-		$query = 'SELECT count(me.id) as count, me.event_type_id, et.name, et.icon
-				FROM #__joomleague_match_event as me
-				INNER JOIN #__joomleague_match AS m
-				ON me.match_id= m.id
-				INNER JOIN #__joomleague_round AS r
-				ON m.round_id = r.id
-				INNER JOIN #__joomleague_project AS p
-				ON r.project_id = p.id
-				INNER JOIN #__joomleague_eventtype AS et
-				ON me.event_type_id = et.id
-				WHERE p.sports_type_id = '.(int) $this->_id.'
-				ORDER BY et.ordering
-				GROUP BY me.event_type_id';
-		$this->_db->setQuery($query);
-		if (!$result = $this->_db->loadObjectList())
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('count(me.id) AS count','me.event_type_id','et.name','et.icon');
+		$query->from('#__joomleague_match_event as me');
+		$query->join('INNER', '#__joomleague_match AS m ON me.match_id = m.id');
+		$query->join('INNER', '#__joomleague_round AS r ON m.round_id = r.id');
+		$query->join('INNER', '#__joomleague_project AS p ON r.project_id = p.id');
+		$query->join('INNER', '#__joomleague_eventtype AS et ON me.event_type_id = et.id');
+		$query->where('p.sports_type_id = '.$this->_id);
+		$query->order('et.ordering');
+		$query->group('me.event_type_id');
+		$db->setQuery($query);
+	
+		$result = $db->loadObjectList();
+			
+		if (!$result)
 		{
 			$this->setError($this->_db->getErrorMsg());
 			return array();
 		}
+		
 		return $result;
 	}
 	
 	/**
-	 *
 	 * get count of related projectmatchesstats for this sports_type
 	 */
 	public function getProjectMatchesStatsCount() {

@@ -39,16 +39,12 @@ var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?optio
 	?>
 	</legend>
 	<form id="quickaddForm" action="<?php echo JRoute::_(JUri::root().'administrator/index.php?option=com_joomleague&task=quickadd.addteam'); ?>" method="post">
-	<input type="hidden" name="project_id" id="project_id" value="<?php echo $this->projectws->id; ?>" />
-	<input type="hidden" id="cteamid" name="cteamid" value="">
-	<table>
-		<tr>
-			<td><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_QUICKADD_DESCR'); ?></td>
-			<td><input type="text" name="quickadd" id="quickadd" size="50" /></td>
-			<td><input type="submit" name="submit" id="submit" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_ADD');?>" /></td>
-		</tr>
-	</table>
-	<?php echo JHtml::_('form.token')."\n"; ?>
+		<?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_QUICKADD_DESCR'); ?>
+		<input type="text" name="quickadd" id="quickadd" size="50" />
+		<input type="submit" name="submit" id="submit" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_ADD');?>" />
+		<input type="hidden" name="project_id" id="project_id" value="<?php echo $this->projectws->id; ?>" />
+		<input type="hidden" id="cteamid" name="cteamid" value="">
+		<?php echo JHtml::_('form.token')."\n"; ?>
 	</form>
 </fieldset>
 

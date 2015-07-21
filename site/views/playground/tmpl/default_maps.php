@@ -1,4 +1,7 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
+<?php 
+defined('_JEXEC') or die; 
+?>
+
 <div style="width: 100%; float: left">
 	<div class="contentpaneopen">
 		<div class="contentheading">

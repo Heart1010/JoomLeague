@@ -93,7 +93,7 @@ class JoomleagueModelAjax extends JModelLegacy
 	
 	function getProjectTeamOptions($project_id, $division_id=0, $required = false)
 	{
-		$query = "	SELECT CASE WHEN CHAR_LENGTH(t.alias) THEN CONCAT_WS(':', t.id, t.alias) ELSE t.id END AS value,
+		$query = "	SELECT t.id AS value,
 					t.name AS text
 					FROM #__joomleague_project_team AS pt
 					JOIN #__joomleague_team t ON t.id = pt.team_id

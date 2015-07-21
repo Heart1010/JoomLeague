@@ -24,8 +24,7 @@ JHtml::_('behavior.tooltip');
 	</div>
 </div>
 
-	<div id="editcell">
-		<table class="adminlist table table-striped">
+<table class="table table-striped" id="adminlist">
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
@@ -115,7 +114,7 @@ JHtml::_('behavior.tooltip');
 					<?php endforeach; ?>
 			</tbody>
 		</table>
-	</div>
+	<!-- input fiels -->
 	<input type="hidden" name="task" value="sportstype.display" />
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />

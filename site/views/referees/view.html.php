@@ -1,13 +1,19 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-require_once( JPATH_COMPONENT . DS . 'helpers' . DS . 'pagination.php' );
-
-jimport( 'joomla.application.component.view' );
+require_once JPATH_COMPONENT.'/helpers/pagination.php';
 
 class JoomleagueViewReferees extends JLGView
 {
 
-	function display( $tpl = null )
+	public function display($tpl = null)
 	{
 		// Get a refrence of the page instance in joomla
 		$document	= JFactory::getDocument();
@@ -15,9 +21,9 @@ class JoomleagueViewReferees extends JLGView
 		$model	= $this->getModel();
 		$config = $model->getTemplateConfig($this->getName());
 		
-		if ( !$config )
+		if (!$config)
 		{
-			$config	= $model->getTemplateConfig( 'players' );
+			$config	= $model->getTemplateConfig('players');
 		}
 
 		$this->project = $model->getProject();
@@ -43,6 +49,6 @@ class JoomleagueViewReferees extends JLGView
 		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
-		parent::display( $tpl );
+		parent::display($tpl);
 	}
 }

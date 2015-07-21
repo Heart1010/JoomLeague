@@ -1,4 +1,12 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
 $style  = 'style="background-color: '.$this->config['tree_bg_colour'].';';
 $style .= 'border: 1px solid  '.$this->config['tree_border_colour'].';';

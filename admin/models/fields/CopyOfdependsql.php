@@ -8,8 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
-
 JHtml::_( 'behavior.framework' );
 
 /**
@@ -20,7 +18,7 @@ JHtml::_( 'behavior.framework' );
  * - task: the task used to return the query, using defined depends field names as parameters for 
  * query (=> 'index.php?option=com_joomleague&controller=ajax&task=<task>&p=1&tid=34')
  */
-class JFormFieldDependSQL extends JFormFieldList
+class JFormFieldDependSQL extends JFormField
 {
 	/**
 	 * field name
@@ -30,17 +28,20 @@ class JFormFieldDependSQL extends JFormFieldList
 	 */
 	protected $type = 'dependsql';
 
-	protected function getInput()
+	function getInput()
 	{
-		// elements
-		$required   = $this->element['required'] ? ' required aria-required="true"' : '';
-		$key 		= ($this->element['key_field'] ? $this->element['key_field'] : 'value');
-		$val 		= ($this->element['value_field'] ? $this->element['value_field'] : $this->name);
-		$task 		= $this->element['task'];
-		$depends 	= $this->element['depends'];
-		$ctrl 		= $this->name;
+		// $required = $this->element['required'] == 'true' ? 'true' : 'false';
+		$required     = $this->element['required'] ? ' required aria-required="true"' : '';
 		
-		// Attribs
+		
+		$key = ($this->element['key_field'] ? $this->element['key_field'] : 'value');
+		$val = ($this->element['value_field'] ? $this->element['value_field'] : $this->name);
+		$task = $this->element['task'];
+		$depends = $this->element['depends'];
+
+		$ctrl = $this->name;
+		
+		// Construct the various argument calls that are supported.
 		$attribs	 = ' task="'.$task.'"';
 		$attribs	.= $required;
 		if ($v = $this->element['size'])
@@ -63,17 +64,13 @@ class JFormFieldDependSQL extends JFormFieldList
 		}
 		$attribs	.= ' current="'.$this->value.'"';
 		
-		// language
 		$lang = JFactory::getLanguage();
 		$lang->load("com_joomleague", JPATH_ADMINISTRATOR);
-		
-		
 		if ($required=='true') {
 			$options = array();
 		}
 		else {
-			// $options = array(JHtml::_('select.option', '', JText::_('Loading..'), $key, JText::_($val)));
-			$options = array();
+			$options = array(JHtml::_('select.option', '', JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT'), $key, JText::_($val)));
 		}
 
 		$query = $this->element['query'];
@@ -90,7 +87,6 @@ class JFormFieldDependSQL extends JFormFieldList
 			$doc->addScript(JUri::base() . 'components/com_joomleague/assets/js/depend.js' );
 		}
 
-		return JHtml::_('select.genericlist',  $options, $this->name, trim($attribs), $key, $val, $this->value, $this->id);
-		
+		return JHtml::_('select.genericlist',  $options, $ctrl, $attribs, $key, $val, $this->value, $this->id);
 	}
 }

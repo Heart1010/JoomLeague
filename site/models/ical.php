@@ -1,20 +1,15 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.model');
-
-require_once( JLG_PATH_SITE . DS . 'models' . DS . 'project.php' );
+require_once JLG_PATH_SITE.'/models/project.php';
 
 class JoomleagueModelIcal extends JoomleagueModelProject
 {
@@ -23,14 +18,17 @@ class JoomleagueModelIcal extends JoomleagueModelProject
 	var $divisionid	= 0;
 	var $playgroundid = 0;
 
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 
-		$this->projectid	= JRequest::getInt( 'p',	0 );
-		$this->teamid		= JRequest::getInt( 'teamid',	0 );
-		$this->divisionid	= JRequest::getInt( 'division',	0 );
-		$this->playgroundid	= JRequest::getInt( 'pgid',	0 );
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid	= $jinput->getInt('p',0);
+		$this->teamid		= $jinput->getInt('teamid',0);
+		$this->divisionid	= $jinput->getInt('division',0);
+		$this->playgroundid	= $jinput->getInt('pgid',0);
 	}
 
 	function getMatches()

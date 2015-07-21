@@ -1,13 +1,20 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
 jimport('joomla.html.pane');
 jimport('joomla.functions');
 JHtml::_('behavior.tooltip');
 
 class JoomleagueViewTeamPlan extends JLGView
 {
-	function display($tpl=null)
+	public function display($tpl=null)
 	{
 		// Get a refrence of the page instance in joomla
 		$document = JFactory::getDocument();
@@ -26,7 +33,8 @@ class JoomleagueViewTeamPlan extends JLGView
 			$this->config = array_merge($this->overallconfig,$config);
 			$this->rounds = $rounds;
 			$this->teams = $model->getTeamsIndexedByPtid();
-			$this->match = $match;
+			// @todo fix!
+			/* $this->match = $match; */
 			$this->favteams = $model->getFavTeams();
 			$this->division = $model->getDivision();
 			$this->ptid = $model->getProjectTeamId();

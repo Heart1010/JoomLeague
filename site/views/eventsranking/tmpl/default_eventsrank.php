@@ -1,4 +1,13 @@
-<?php defined('_JEXEC') or die('Restricted access');
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
+
 $colspan	= 4;
 $show_icons	= 0;
 if ($this->config['show_picture_thumb'] == 1) $colspan++;

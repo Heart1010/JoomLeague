@@ -1,10 +1,17 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.view' );
 
 class JoomleagueViewClubplan extends JLGView
 {
-	function display($tpl = null)
+	public function display($tpl = null)
 	{
 		$document	= JFactory::getDocument();
 		$document->link = JRoute::_('index.php?option=com_joomleague');

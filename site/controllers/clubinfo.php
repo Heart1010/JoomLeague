@@ -1,16 +1,12 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.application.component.controller');
 
@@ -64,27 +60,22 @@ class JoomleagueControllerClubInfo extends JoomleagueController
 			if ( ( $club->store() ) &&
 			( $params->get('cfg_edit_club_info_update_notify') == "1" ) )
 			{
-				$db = JFactory::getDbo();
 				$user = JFactory::getUser();
-
-				$query = "SELECT email
-                         FROM #__users 
-                         WHERE usertype = 'Super Administrator' 
-                            OR usertype = 'Administrator'";
-
-				$db->setQuery( $query );
-
+	
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select('u.email');
+				$query->from('#__users AS u');
+				$query->leftJoin('#__user_usergroup_map AS map ON map.user_id = u.id');
+				$query->leftJoin('#__usergroups AS g ON g.id = map.group_id');
+				$query->where('g.title = '.$db->quote("Super Users").' OR g.title = '.$db->quote("Administrator"));
+				$query->order('u.username ASC');
+				$db->setQuery($query);
 				$to = $db->loadColumn();
 
 				$subject = addslashes(
-				sprintf(
-				JText::_( "COM_JOOMLEAGUE_ADMIN_EDIT_CLUB_INFO_SUBJECT" ),
-				$club->name ) );
-				$message = addslashes(
-				sprintf(
-				JText::_( "COM_JOOMLEAGUE_ADMIN_EDIT_CLUB_INFO_MESSAGE" ),
-				$user->name,
-				$club->name ) );
+				sprintf(JText::_( "COM_JOOMLEAGUE_ADMIN_EDIT_CLUB_INFO_SUBJECT" ),$club->name ) );
+				$message = addslashes(sprintf(JText::_( "COM_JOOMLEAGUE_ADMIN_EDIT_CLUB_INFO_MESSAGE" ),$user->name,$club->name ) );
 				$message .= $this->_getShowClubInfoLink();
 
 				JMail::sendMail( '', '', $to, $subject, $message );
@@ -106,4 +97,3 @@ class JoomleagueControllerClubInfo extends JoomleagueController
 		return $link;
 	}
 }
-?>

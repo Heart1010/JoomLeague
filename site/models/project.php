@@ -1,12 +1,10 @@
 <?php
 /**
+ * Joomleague
+ *
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -65,7 +63,7 @@ class JoomleagueModelProject extends JModelLegacy
 	 */
 	var $_current_round;
 
-	function __construct()
+	public function __construct()
 	{
 		$this->projectid=JRequest::getInt('p',0);
 		parent::__construct();
@@ -893,7 +891,7 @@ class JoomleagueModelProject extends JModelLegacy
 		return $this->_positions;
 	}
 
-	function getClubIconHtml(&$team,$type=1,$with_space=0)
+	public static function getClubIconHtml(&$team,$type=1,$with_space=0)
 	{
 		$small_club_icon=$team->logo_small;
 		if ($type==1)

@@ -1,13 +1,20 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.view' );
 jimport( 'joomla.html.pane' );
 jimport( 'joomla.functions');
 JHtml::_('behavior.tooltip');
 
 class JoomleagueViewIcal extends JLGView
 {
-	function display( $tpl = null )
+	public function display($tpl = null)
 	{
 		// Get a reference of the page instance in joomla
 		$document	= JFactory::getDocument();
@@ -26,7 +33,7 @@ class JoomleagueViewIcal extends JLGView
 		$this->teams = $model->getTeamsFromMatches($this->matches);
 
 		// load a class that handles ical formats.
-		require_once( JLG_PATH_SITE . DS . 'helpers' . DS . 'iCalcreator.class.php' );
+		require_once JLG_PATH_SITE.'/helpers/iCalcreator.class.php';
 		// create a new calendar instance
 		$v = new vcalendar();
 

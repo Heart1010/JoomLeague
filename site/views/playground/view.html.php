@@ -1,16 +1,16 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.view');
 
 class JoomleagueViewPlayground extends JLGView
 {
-	function display( $tpl = null )
+	public function display( $tpl = null )
 	{
 		// Get a refrence of the page instance in joomla
 		$document= JFactory::getDocument();
 
 		// Set page title
-		$document->setTitle( JText::_( 'COM_JOOMLEAGUE_PLAYGROUND_TITLE' ) );
+		$document->setTitle(JText::_('COM_JOOMLEAGUE_PLAYGROUND_TITLE'));
 
 		$model 			= $this->getModel();
 		$address_string = $model->getAddressString();

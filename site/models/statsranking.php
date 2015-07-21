@@ -1,20 +1,15 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport( 'joomla.application.component.model');
-
-require_once( JLG_PATH_SITE . DS . 'models' . DS . 'project.php' );
+require_once JLG_PATH_SITE.'/models/project.php';
 
 class JoomleagueModelStatsRanking extends JoomleagueModelProject
 {
@@ -36,14 +31,16 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 	var $divisionid = 0;
 	var $teamid = 0;
 	
-	function __construct( )
+	public function __construct( )
 	{
 		parent::__construct( );
 
 		$this->projectid	= JRequest::getInt( 'p', 0 );
 		$this->divisionid	= JRequest::getInt( 'division', 0 );
 		$this->teamid		= JRequest::getInt( 'tid', 0 );
+		
 		$this->setStatid(JRequest::getVar( 'sid', 0 ));
+		
 		$config = $this->getTemplateConfig($this->getName());
 		// TODO: the default value for limit should be updated when we know if there is more than 1 statistics type to be shown
 		if ( $this->stat_id != 0 )
@@ -58,7 +55,12 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 		$this->setOrder(JRequest::getVar('order'));
 	}
 	
-	function getDivision()
+	/**
+	 * Should be inline with ModelProject
+	 * (added $id = false)
+	 * @see JoomleagueModelProject::getDivision()
+	 */
+	function getDivision($id = false)
 	{
 		$division = null;
 		if ($this->divisionid != 0)
@@ -134,7 +136,7 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 	
 	function getPlayersStats($order=null)
 	{
-		$stats = &$this->getProjectUniqueStats();
+		$stats = $this->getProjectUniqueStats();
 		$order = ($order ? $order : $this->order);
 		
 		$results = array();
@@ -147,4 +149,3 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 	}
 
 }
-?>

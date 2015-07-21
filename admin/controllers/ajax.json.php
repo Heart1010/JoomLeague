@@ -75,7 +75,8 @@ class JoomleagueControllerAjax extends JControllerLegacy
 		$model = $this->getModel('ajax');
 		$req = JRequest::getVar('required', false);
 		$required = ($req == 'true' || $req == '1') ? true : false;
-		echo json_encode((array) $model->getProjectTeamOptions(JRequest::getInt('p'),JRequest::getInt('division'),$required));
+		$loaddefault = JRequest::getVar('loaddefault',false);
+		echo json_encode((array) $model->getProjectTeamOptions(JRequest::getInt('p'),JRequest::getInt('division'),$required,$loaddefault));
 		JFactory::getApplication()->close();
 	}
 	

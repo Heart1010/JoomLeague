@@ -1,4 +1,13 @@
 <?php
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
+
 if ($argc != 3) {
 	print "Usage: $argv[0] <manifest_filename> <version_part>\n";
 	print "where: version_part is MAJOR, MINOR, BUILD or REVISION";
