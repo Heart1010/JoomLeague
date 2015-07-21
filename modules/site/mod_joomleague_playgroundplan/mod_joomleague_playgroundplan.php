@@ -1,15 +1,11 @@
 <?php
-
 /**
- * @package	 Joomla
- * @subpackage  Joomleague playgroundplan module
- * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Playgroundplan
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
@@ -18,10 +14,11 @@ require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 
 $list = modJLGPlaygroundplanHelper::getData($params);
 
+if (empty($list)) {
+	return;
+}
+
 $document = JFactory::getDocument();
-
-
-//add css file
 $document->addStyleSheet(JUri::base().'modules/mod_joomleague_playgroundplan/css/mod_joomleague_playgroundplan.css');
 
 $mode = $params->def("mode");
@@ -36,4 +33,4 @@ switch ($mode)
 		break;
 }
 
-require(JModuleHelper::getLayoutPath('mod_joomleague_playgroundplan'));
+require JModuleHelper::getLayoutPath('mod_joomleague_playgroundplan');

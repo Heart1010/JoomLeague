@@ -27,8 +27,7 @@
 						default="" label="MOD_JOOMLEAGUE_LOGO_PROJECT_ID_LABEL" 
 						description="MOD_JOOMLEAGUE_LOGO_PROJECT_ID_LABEL_DESC" />
 						
-				<field 	name="division_id" type="dependsql" 
-						depends="p" task="projectdivisionsoptions" 			
+				<field 	name="division_id" type="dependsql" depends="p" task="projectdivisionsoptions" 			
 						label="MOD_JOOMLEAGUE_LOGO_DIVISION_ID_LABEL" 
 						description="MOD_JOOMLEAGUE_LOGO_DIVISION_ID_LABEL_DESC" />
 						

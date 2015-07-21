@@ -1,18 +1,28 @@
 <?php
 /**
- * @version		1.05
- * @package		Blog Calendar Reload
- * @author		Juan Padial
- * @authorweb	http://www.shikle.com
+ * Joomleague
+ * @subpackage	Module-Calendar
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ *
+ * -- Based upon --
+ * 
+ * Blog Calendar 
+ * @version		1.2.2.1
+ * @author		Justo Gonzaled de Rivera
  * @license		GNU/GPL
  *
- * modified from the default.php file of the Blog Calendar 1.2.2.1 module by Justo Gonzales de Rivera
+ * Blog Calendar Reload
+ * @version		1.0.5
+ * @author		Juan Padial
+ * @link		http://www.shikle.com
+ * @license		GNU/GPL
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
-$display = ($params->get('update_module') == 1) ? 'block' : 'none';
-
+$display = ($params->get('update_module') == 1) ? 'block' : 'none';ssss
 ?>
 
 

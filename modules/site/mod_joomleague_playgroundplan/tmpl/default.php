@@ -1,18 +1,13 @@
 <?php
-
 /**
- * @version	 $Id: default.php zeta65$
- * @package	 Joomla
- * @subpackage  Joomleague playgroundplan module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Playgroundplan
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-defined ( '_JEXEC' ) or die ( 'Restricted access' );
+defined('_JEXEC') or die;
 
 $teamformat = $params->get ( 'teamformat', 'name' );
 $dateformat = $params->get ( 'dateformat' );
@@ -58,7 +53,7 @@ foreach ( $list as $match ) {
 	}
 	$textdiv .= '<div class="jlplplanedate">';
 	$textdiv .= JoomleagueHelper::getMatchDate($match, $dateformat);
-	$textdiv .= " " . JText::_ ( 'MOD_JOOMLEAGUE_PLAYGROUNDPLAN_START_TIME' ) . " ";
+	$textdiv .= " " . JText::_('MOD_JOOMLEAGUE_PLAYGROUNDPLAN_START_TIME')." ";
 	$textdiv .= JoomleagueHelper::getMatchTime($match, $timeformat);
 	$textdiv .= '</div>';
 	if ($params->get ( 'show_project_name', 0 )) {

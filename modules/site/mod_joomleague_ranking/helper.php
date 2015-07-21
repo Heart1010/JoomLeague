@@ -1,24 +1,19 @@
 <?php
 /**
- * @package	 Joomla
- * @subpackage  Joomleague ranking module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Ranking
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
+
 /**
  * Ranking Module helper
- *
- * @package Joomla
- * @subpackage Joomleague ranking module
  */
-class modJLGRankingHelper
+abstract class modJLGRankingHelper
 {
 
 	/**
@@ -27,9 +22,8 @@ class modJLGRankingHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public function getData(&$params)
 	{
-		global $mainframe;
 
 		if (!class_exists('JoomleagueModelRanking')) {
 			require_once JLG_PATH_SITE.'/models/ranking.php';
@@ -73,7 +67,7 @@ class modJLGRankingHelper
 	 * @access public
 	 * @return array
 	 */
-	function getShrinkedDataAroundOneTeam($completeRankingList, $alwaysVisibleTeamId, $paramRowLimit){
+	public static function getShrinkedDataAroundOneTeam($completeRankingList, $alwaysVisibleTeamId, $paramRowLimit){
 		// First Fav-Team should be always visible in the ranking view
 		$rank = $completeRankingList;
 		$i=0;
@@ -109,7 +103,7 @@ class modJLGRankingHelper
 	 * @param object ranking item
 	 * @return value POINTS, RESULTS, DIFF, BONUS, START....see the cases here below :)
 	 */
-	function getColValue($column, $item)
+	public static function getColValue($column, $item)
 	{
 		$column = ucfirst(str_replace("jl_", "", strtolower(trim($column))));
 		$column = strtolower($column);
@@ -185,7 +179,7 @@ class modJLGRankingHelper
 	 * @param int type = 1 for club small logo, 2 for country
 	 * @return html string
 	 */
-	function getLogo($item, $type = 1)
+	public static function getLogo($item, $type = 1)
 	{
 		if ($type == 1) // club small logo
 		{
@@ -202,7 +196,7 @@ class modJLGRankingHelper
 		return '';
 	}
 
-	function getTeamLink($item, $params, $project)
+	public static function getTeamLink($item, $params, $project)
 	{
 		switch ($params->get('teamlink'))
 		{

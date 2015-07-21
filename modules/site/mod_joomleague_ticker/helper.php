@@ -1,20 +1,18 @@
 <?php
 /**
- * @version $Id$
- * @package Joomleague
- * @subpackage ticker
- * @copyright Copyright (C) 2009  JoomLeague
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see _joomleague_license.txt
+ * Joomleague
+ * @subpackage	Module-Ticker
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// no direct access
-
-defined('_JEXEC') or die('Restricted access');
-
-class modJoomleagueTickerHelper
+abstract class modJoomleagueTickerHelper
 {
 
-	function getMatches($numberofmatches, $projectid, $teamid, $selectiondate, $ordering = 'DESC', $round=0, $matchstatus, $bUseFavteams)
+	public static function getMatches($numberofmatches, $projectid, $teamid, $selectiondate, $ordering = 'DESC', $round=0, $matchstatus, $bUseFavteams)
 	{
 		$result = array();
 		$query_SELECT = ' SELECT matches.*, p.timezone, r.roundcode as roundcode, r.id as roundid, r.name as roundname, "dummy", '
@@ -128,11 +126,12 @@ class modJoomleagueTickerHelper
 	}
 
 
-	function getCorrectDateFormat($format, $matchinfo, $offset=0, $timezone='UTC')
+	public static function getCorrectDateFormat($format, $matchinfo, $offset=0, $timezone='UTC')
 	{
 		$id = 1;
 		//$now = gmmktime(gmdate("H"),gmdate("i")-$offset,gmdate("s"),gmdate("m"),gmdate("d"),gmdate("Y")); // adjust GMT by client's offset
-		$now       = gmmktime()+$offset*60*60;
+		/* $now       = gmmktime()+$offset*60*60; */
+		$now = time()+$offset*60*60;
 
 		//Second for the first time (46 * 60)
 		$first_time = 2760;
@@ -187,16 +186,14 @@ class modJoomleagueTickerHelper
 	}
 
 
-	function getSelectionDate($daysback, $dateTimeZone)
+	public static function getSelectionDate($daysback, $dateTimeZone)
 	{
 		$timezone = new DateTimeZone($dateTimeZone);
 		$utc = new DateTime();
 		$offset = $timezone->getOffset($utc);
-		$getdate = gmmktime(gmdate("H"),gmdate("i")-$offset,gmdate("s"),gmdate("m"),gmdate("d")-$daysback,gmdate("Y")); // adjust GMT by client's offset
-
+		$getdate = mktime(gmdate("H"),gmdate("i")-$offset,gmdate("s"),gmdate("m"),gmdate("d")-$daysback,gmdate("Y")); // adjust GMT by client's offset
+		
 		$selectiondate = gmdate("Y-m-d-H:i",$getdate);
 		return $selectiondate;
 	}
 }
-
-?>

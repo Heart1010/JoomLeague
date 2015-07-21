@@ -1,28 +1,19 @@
 <?php
 /**
- * @version	 $Id: helper.php 496 2010-06-01 13:04:30Z And_One $
- * @package	 Joomla
- * @subpackage  Joomleague results module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Results
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
 
 /**
  * Ranking Module helper
- *
- * @package Joomla
- * @subpackage Joomleague results module
- * @since		1.0
  */
-class modJLGResultsHelper
+abstract class modJLGResultsHelper
 {
 
 	/**
@@ -31,15 +22,15 @@ class modJLGResultsHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{		
 		if (!class_exists('JoomleagueModelResults')) {
 			require_once JLG_PATH_SITE.'/models/results.php';
 		}
-		$model = &JLGModel::getInstance('Results', 'JoomleagueModel');
+		$model = JLGModel::getInstance('Results', 'JoomleagueModel');
 		$model->setProjectId($params->get('p'));
 		
-		$project = &$model->getProject();
+		$project = $model->getProject();
 		
 		switch ($params->get('round_selection', 0))
 		{
@@ -75,7 +66,7 @@ class modJLGResultsHelper
 						'divisionid' => $params->get('division_id', 0));
 	}
 	
-	function sortByDate($matches)
+	public static function sortByDate($matches)
 	{
 		$sorted = array();
 		foreach ($matches as $m)
@@ -86,7 +77,7 @@ class modJLGResultsHelper
 		return $sorted;
 	}
 	
-	function _cmpDate($a, $b)
+	public static function _cmpDate($a, $b)
 	{
 		$res = 0;
 		if ($a->match_date && $b->match_date)
@@ -107,9 +98,9 @@ class modJLGResultsHelper
 		return $res;
 	}
 	
-	function getRound($project_id, $roundid)
+	public static function getRound($project_id, $roundid)
 	{
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		
 		$query = ' SELECT * FROM #__joomleague_round '
 		       . ' WHERE id = '. $db->Quote($roundid)
@@ -119,13 +110,14 @@ class modJLGResultsHelper
 		$res = $db->loadObject();
 		return $res;
 	}
+	
 	/**
 	 * get img for team
 	 * @param object ranking row
 	 * @param int type = 1 for club small logo, 2 for country
 	 * @return html string
 	 */
-	function getLogo($item, $params)
+	public static function getLogo($item, $params)
 	{
 		$type = $params->get('show_logo');
 		if ($type == 'country_flag' && !empty($item->country))
@@ -142,7 +134,7 @@ class modJLGResultsHelper
 				3);
 	}
 
-	function getTeamLink($item, $params, $project)
+	public static function getTeamLink($item, $params, $project)
 	{
 		switch ($params->get('teamlink'))
 		{
@@ -157,9 +149,9 @@ class modJLGResultsHelper
 		}
 	}
 	
-	function getLatestRoundId($project_id)
+	public static function getLatestRoundId($project_id)
 	{		
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		
 		$query = ' SELECT r.id AS roundid, r.round_date_first '
 		       . ' FROM #__joomleague_round AS r '
@@ -173,9 +165,9 @@ class modJLGResultsHelper
 	}
 	
 
-	function getNextRoundId($project_id)
+	public static function getNextRoundId($project_id)
 	{
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		
 		$query = ' SELECT r.id AS roundid, r.round_date_first '
 		       . ' FROM #__joomleague_round AS r '
@@ -188,7 +180,7 @@ class modJLGResultsHelper
 		return $res;		
 	}
 	
-	function getScoreLink($game, $project)
+	public static function getScoreLink($game, $project)
 	{
 		if (isset($game->team1_result) || $game->alt_decision)	{
 			return JoomleagueHelperRoute::getMatchReportRoute($project->slug, $game->id);

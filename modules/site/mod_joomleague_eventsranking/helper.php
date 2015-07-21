@@ -1,28 +1,18 @@
 <?php
 /**
- * @version	 $Id: helper.php 4971 2010-02-09 05:00:49Z timoline $
- * @package	 Joomla
- * @subpackage  Joomleague eventsranking module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Eventsranking
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
- * eventsranking Module helper
- *
- * @package Joomleague
- * @subpackage eventsranking Module
- * @since		1.5
+ * Eventsranking Module helper
  */
-class modJLGEventsrankingHelper
+abstract class modJLGEventsrankingHelper
 {
 
 	/**
@@ -31,12 +21,12 @@ class modJLGEventsrankingHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
 		if (!class_exists('JoomleagueModelEventsRanking')) {
-			require_once(JLG_PATH_SITE. DS . 'models' . DS . 'eventsranking.php');
+			require_once JLG_PATH_SITE.'/models/eventsranking.php';
 		}
-		$model = &JLGModel::getInstance('eventsranking', 'JoomleagueModel');
+		$model = JLGModel::getInstance('eventsranking', 'JoomleagueModel');
 		$model->projectid	= modJLGEventsrankingHelper::getId($params, 'p');
 		$model->divisionid  = modJLGEventsrankingHelper::getId($params, 'divisionid');
 		$model->teamid		= modJLGEventsrankingHelper::getId($params, 'tid');
@@ -47,7 +37,7 @@ class modJLGEventsrankingHelper
 		$project = $model->getProject();
 		$eventtypes = $model->getEventTypes();
 		$events	= $model->getEventRankings($model->limit,$model->limitstart, $params->get('ranking_order', 'DESC'));
-		$teams = &$model->getTeamsIndexedById();
+		$teams = $model->getTeamsIndexedById();
 
 		return array('project' => $project, 'ranking' => $events, 'eventtypes' => $eventtypes, 'teams' => $teams, 'model' => $model);
 	}
@@ -59,7 +49,7 @@ class modJLGEventsrankingHelper
 	 * @param string name of the configuration parameter
 	 * @return id string for the requested parameter (e.g. project id or statistics id)
 	 */
-	function getId($params, $paramName)
+	public static function getId($params, $paramName)
 	{
 		$id = $params->get($paramName);
 		preg_match('/(?P<id>\d+):.*/', $id, $matches);
@@ -76,7 +66,7 @@ class modJLGEventsrankingHelper
 	 * @param int type = 1 for club small logo, 2 for country
 	 * @return html string
 	 */
-	function getLogo($item, $type = 1)
+	public static function getLogo($item, $type = 1)
 	{
 		if ($type == 1) // club small logo
 		{
@@ -93,7 +83,7 @@ class modJLGEventsrankingHelper
 		return '';
 	}
 
-	function getTeamLink($team, $params, $project)
+	public static function getTeamLink($team, $params, $project)
 	{
 		switch ($params->get('teamlink'))
 		{
@@ -109,7 +99,7 @@ class modJLGEventsrankingHelper
 		}
 	}
 	
-	function printName($item, $team, $params, $project)
+	public static function printName($item, $team, $params, $project)
 	{
 				$name = JoomleagueHelper::formatName(null, $item->fname, 
 													$item->nname, 
@@ -126,7 +116,7 @@ class modJLGEventsrankingHelper
 
 	}
 
-	function getEventIcon($event)
+	public static function getEventIcon($event)
 	{
 		if ($event->icon == 'media/com_joomleague/event_icons/event.gif')
 		{

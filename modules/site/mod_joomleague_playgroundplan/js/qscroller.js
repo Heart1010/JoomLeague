@@ -1,4 +1,6 @@
-/* QScroller Copyright 2008 Massimo Giagnoni. All rights reserved.
+/* 
+
+QScroller Copyright 2008 Massimo Giagnoni. All rights reserved.
 
 Vesrion 1.0.1 (Mootools 1.11)
 QScroller is free software: you can redistribute it and/or modify

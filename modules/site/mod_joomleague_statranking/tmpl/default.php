@@ -1,20 +1,15 @@
 <?php
 /**
- * @version	 $Id: default.php 4971 2010-02-09 05:00:49Z julienv $
- * @package	 Joomla
- * @subpackage  Joomleague stats module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Statranking
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 ?>
+
 <div class="modjlgstat">
 <?php
 $header = ""; 
@@ -162,7 +157,7 @@ if (count($list['stattypes']) > 0)
 			else
 			{
 				?>
-				<p class="modjlgstat"><?php echo JText::_('NO ITEMS');?></p>
+				<p class="modjlgstat"><?php echo JText::_('MOD_JOOMLEAGUE_STATRANKING_NOITEMS');?></p>
 				<?php
 			}
 			?>
@@ -179,7 +174,7 @@ if (count($list['stattypes']) > 0)
 else
 {
 ?>
-<p class="modjlgstat"><?php echo JText::_("NO EVENTS SELECTED"); ?></p>
+<p class="modjlgstat"><?php echo JText::_("MOD_JOOMLEAGUE_STATRANKING_NOEVENTSSELECTED"); ?></p>
 <?php
 }
 ?>

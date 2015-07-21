@@ -1,22 +1,26 @@
 <?php
 /**
- * @version		1.2.2.1
- * @package		Blog Calendar
- * @author		Justo Gonzalez de Rivera
- * @license		GNU/GPL
+ * Joomleague
+ * @subpackage	Module-Calendar
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  * 
- * modified by johncage for use with joomleague
+ * Based upon Blog Calendar 1.2.2.1 
+ * @author	Justo Gonzaled de Rivera
+ * @license	GNU/GPL
+ * 
+ * Modified by Johncage for uw with Joomleague
  */
 defined('_JEXEC') or die;
 
 require_once (dirname(__FILE__).'/calendarClass.php');
 
-
 class modJLCalendarHelper
 {
 	function showCal(&$params,$year,$month,$ajax=0,$modid) //this function returns the html of the calendar for a given month
 	{
-		global $mainframe;
 		// $offset = 0; //$mainframe->getCfg('offset');
 		$language= JFactory::getLanguage(); //get the current language
 		$language->load( 'mod_joomleague_calendar' ); //load the language ini file of the module
@@ -112,7 +116,6 @@ class modJLCalendarHelper
 
 	function getDate_byId($id)
 	{
-		global $mainframe;
 		// $offset = 0; // $mainframe->getCfg('offset');
 		$prefix = $params->get('custom_prefix');
 		$query=	' SELECT match_date' .
@@ -330,7 +333,6 @@ class JLCalendar extends PHPCalendar
 	}
 
 	function matches_output($month, $year) {
-		global $mainframe;
 		$language= JFactory::getLanguage(); //get the current language
 		$language->load( 'mod_joomleague_calendar' ); //load the language ini file of the module
 		$article= $language->_('MOD_JOOMLEAGUE_CALENDAR_VALUEMATCH');

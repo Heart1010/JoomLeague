@@ -1,22 +1,16 @@
 <?php
 /**
-* @version		$Id: templatelist.php 470 2010-01-31 19:38:29Z And_One $
-* @copyright	Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
+ * Joomleague
+ * @subpackage	Module-Matches
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
  
 jimport('joomla.form.formfield');
  
-defined('JPATH_BASE') or die();
-
 class JFormFieldTemplatelist extends JFormField
 {
 	protected $type = 'Templatelist';

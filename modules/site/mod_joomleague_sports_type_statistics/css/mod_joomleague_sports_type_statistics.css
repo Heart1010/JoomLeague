@@ -36,3 +36,36 @@ div.modjlgsports img {
 	boder: none;
 	height: 16px;
 }
+
+
+
+.Table
+    {
+        display: table;
+        width: 100%;
+    }
+    .Title
+    {
+        display: table-caption;
+        text-align: center;
+        font-weight: bold;
+        font-size: larger;
+    }
+    .Heading
+    {
+        display: table-row;
+        font-weight: bold;
+        text-align: center;
+    }
+    .Row
+    {
+        display: table-row;
+    }
+    .Cell
+    {
+        display: table-cell;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 2px;
+        padding-top: 2px;
+    }

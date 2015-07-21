@@ -1,28 +1,18 @@
 <?php
 /**
- * @version	 $Id: helper.php 2010-07-04 marco vaninetti$
- * @package	 Joomla
- * @subpackage  Joomleague playgroundplan module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Playgroundplan
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
  * Playgroundplan Module helper
- *
- * @package Joomleague
- * @subpackage Joomleague playgroundplan module
- * @since		1.5
  */
-class modJLGPlaygroundplanHelper
+abstract class modJLGPlaygroundplanHelper
 {
 
 	/**
@@ -31,22 +21,17 @@ class modJLGPlaygroundplanHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
-
-
 		$usedp = $params->get('projects','0');
 		$usedpid = $params->get('playground', '0');
 		$projectstring = (is_array($usedp)) ? implode(",", $usedp) : $usedp;
 		$playgroundstring = (is_array($usedpid)) ? implode(",", $usedpid) : $usedpid;
-
-		$numberofmatches=$params->get('maxmatches','5');
+		$numberofmatches = $params->get('maxmatches','5');
 
 		$db  = JFactory::getDbo();
-
 		$result = array();
 			
-
 		$query = 'SELECT  m.match_date, DATE_FORMAT(m.time_present, "%H:%i") time_present,
                           p.name AS project_name, p.id AS project_id, p.timezone, 
 				 tj1.team_id team1, tj2.team_id team2, lg.name AS league_name,
@@ -88,6 +73,7 @@ class modJLGPlaygroundplanHelper
 			
 		$db->setQuery($query);
 		$info=$db->loadObjectList();
+		
 		if ($info)
 		{
 			foreach ($info as $match)
@@ -98,7 +84,7 @@ class modJLGPlaygroundplanHelper
 		return $info;
 	}
 
-	function getTeams( $team1_id, $teamformat)
+	public static function getTeams( $team1_id, $teamformat)
 	{
 
 		$query = "SELECT ". $teamformat. "
@@ -111,7 +97,7 @@ class modJLGPlaygroundplanHelper
 		return $team_name;
 	}
 
-	function getTeamLogo($team_id)
+	public static function getTeamLogo($team_id)
 	{
 		$query = "
             SELECT c.logo_small

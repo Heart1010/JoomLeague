@@ -1,24 +1,21 @@
 <?php
 /**
- * @package	 Joomla
- * @subpackage  Joomleague ticker module
- * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Ticker
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
-//get helper
+
 require_once dirname(__FILE__).'/helper.php';
 require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 
 $document = JFactory::getDocument();
 
-//add css file
+// add css file
 $document->addStyleSheet(JUri::base().'modules/mod_joomleague_ticker/css/mod_joomleague_ticker.css');
 
 $mode = $params->def("mode");
@@ -32,7 +29,7 @@ $bUseFav = $params->get('usefavteams');
 $matches = modJoomleagueTickerHelper::getMatches($results, $params->get('p'), $params->get('teamid'), $selectiondate, $ordering, $round, $matchstatus,$bUseFav);
 if(empty($matches) || count($matches) == 0)
 {
-	echo JText::_("No matches");
+	echo JText::_("MOD_JOOMLEAGUE_TICKER_NOMATCHES");
 	return;
 } else {
 	$timezone = new DateTimeZone($params->get('timezone'));

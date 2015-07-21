@@ -1,28 +1,18 @@
 <?php
 /**
- * @version	 $Id$
- * @package	 Joomla
- * @subpackage  Joomleague sports module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-SportstypeStatistics
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 /**
- * sports Module helper
- *
- * @package Joomla
- * @subpackage Joomleague sports module
- * @since		1.0
+ * SportstypeStatistics Module helper
  */
-class modJLGSportsHelper
+abstract class modJLGSportsHelper
 {
 
 	/**
@@ -31,7 +21,7 @@ class modJLGSportsHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
 		if (!class_exists('JoomleagueModelSportsType')) {
 			require_once JLG_PATH_SITE.'/models/sportstype.php';

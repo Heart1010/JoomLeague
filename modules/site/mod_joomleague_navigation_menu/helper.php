@@ -1,33 +1,23 @@
 <?php
 /**
- * @version $Id: helper.php 4905 2010-01-30 08:51:33Z and_one $
- * @package Joomleague
- * @subpackage  Joomleague navigation module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-NavigationMenu
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// no direct access
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 class modJoomleagueNavigationMenuHelper {
 	
 	protected $_params;
-	
 	protected $_db;
-	
 	protected $_project_id;
 	protected $_team_id;
 	protected $_division_id=0;
 	protected $_round_id=null;
 	protected $_teamoptions;
-	
 	protected $_project;
 	
 	public function __construct($params)

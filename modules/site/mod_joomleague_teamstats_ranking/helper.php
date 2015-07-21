@@ -1,28 +1,19 @@
 <?php
 /**
- * @version	 $Id: helper.php 4905 2010-01-30 08:51:33Z and_one $
- * @package	 Joomla
- * @subpackage  Joomleague stats module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-TeamstatsRanking
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
 
 /**
- * Stat Module helper
- *
- * @package Joomleague
- * @subpackage stat Module
- * @since		1.5
+ * TeamstatsRanking Module helper
  */
-class modJLGTeamStatHelper
+abstract class modJLGTeamStatHelper
 {
 
 	/**
@@ -31,19 +22,18 @@ class modJLGTeamStatHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
-		global $mainframe;
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 
 		if (!class_exists('JoomleagueModelProject')) {
-			require_once(JLG_PATH_SITE. DS . 'models' . DS . 'project.php');
+			require_once JLG_PATH_SITE.'/models/project.php';
 		}
-		$model = &JLGModel::getInstance('project', 'JoomleagueModel');
+		$model = JLGModel::getInstance('project', 'JoomleagueModel');
 		$model->setProjectId($params->get('p'));
 		$stat_id		= (int)$params->get('sid');
 				
-		$project = &$model->getProject();
+		$project = $model->getProject();
 		$stat = current(current($model->getProjectStats($stat_id)));
 		if (!$stat) {
 			echo 'Undefined stat';
@@ -78,7 +68,7 @@ class modJLGTeamStatHelper
 	 * @param int type = 1 for club small logo, 2 for country
 	 * @return html string
 	 */
-	function getLogo($item, $type = 1)
+	public static function getLogo($item, $type = 1)
 	{
 		if ($type == 1) // club small logo
 		{
@@ -95,7 +85,7 @@ class modJLGTeamStatHelper
 		return '';
 	}
 
-	function getTeamLink($item, $params, $project)
+	public static function getTeamLink($item, $params, $project)
 	{
 		switch ($params->get('teamlink'))
 		{
@@ -111,7 +101,7 @@ class modJLGTeamStatHelper
 		}
 	}
 
-	function getStatIcon($stat)
+	public static function getStatIcon($stat)
 	{
 		if ($stat->icon == 'media/com_joomleague/event_icons/event.gif')
 		{

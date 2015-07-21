@@ -1,25 +1,21 @@
 <?php
 /**
- * @author Wolfgang Pinitsch <andone@mfga.at>
- * @package	 Joomla
- * @subpackage  Joomleague teamstaffs module
- * @copyright	Copyright (C) 2005-2015 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Teamstaffs
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ * 
+ * @author		Wolfgang Pinitsch <andone@mfga.at>
  */
 defined('_JEXEC') or die;
 
+
 /**
- * Ranking Module helper
- *
- * @package Joomla
- * @subpackage Joomleague teamplayers module
+ * Teamstaffs Module helper
  */
-class modJLGTeamStaffsHelper
+abstract class modJLGTeamStaffsHelper
 {
 
 	/**
@@ -28,7 +24,7 @@ class modJLGTeamStaffsHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
 		$p = $params->get('p');
 		$p = explode(":", $p);
@@ -78,7 +74,7 @@ class modJLGTeamStaffsHelper
 		return array('project' => $project, 'staffs' => $bypos);
 	}
 
-	function getStaffLink($item, $params)
+	public static function getStaffLink($item, $params)
 	{
 		$flag = "";
 		if ($params->get('show_flag')) {

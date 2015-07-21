@@ -1,28 +1,19 @@
 <?php
 /**
- * @version	 $Id: helper.php 2010-09-04 Ingalb$
- * @package	 Joomla
- * @subpackage  Joomleague results module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Teamplayers
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined('_JEXEC') or die('Restricted access');
 
 /**
- * Ranking Module helper
- *
- * @package Joomla
- * @subpackage Joomleague teamplayers module
- * @since		1.0
+ * Teamplayers Module helper
  */
-class modJLGTeamPlayersHelper
+abstract class modJLGTeamPlayersHelper
 {
 
 	/**
@@ -31,7 +22,7 @@ class modJLGTeamPlayersHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
 		$p = $params->get('p');
 		$p = explode(":", $p);
@@ -60,14 +51,14 @@ class modJLGTeamPlayersHelper
 		if (!class_exists('JoomleagueModelRoster')) {
 			require_once JLG_PATH_SITE.'/models/roster.php';
 		}
-		$model 	= &JLGModel::getInstance('Roster', 'JoomleagueModel');
+		$model 	= JLGModel::getInstance('Roster', 'JoomleagueModel');
 		$model->setProjectId($p);
-		$project = &$model->getProject();
+		$project = $model->getProject();
 		$project->team_name = $team_name;
 		return array('project' => $project, 'roster' => $model->getTeamPlayers());
 	}
 
-	function getPlayerLink($item, $params)
+	public static function getPlayerLink($item, $params)
 	{
 		$flag = "";
 		if ($params->get('show_player_flag')) {

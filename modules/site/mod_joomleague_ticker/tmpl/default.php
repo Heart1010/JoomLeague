@@ -1,14 +1,13 @@
 <?php
 /**
- * @version $Id$
- * @package Joomleague
- * @subpackage ticker
- * @copyright Copyright (C) 2009  JoomLeague
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see _joomleague_license.txt
+ * Joomleague
+ * @subpackage	Module-Ticker
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-// no direct access
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 	
 $showdate = $params->def("showdate");
 $showproject = $params->def("showproject");

@@ -1,31 +1,22 @@
 <?php
 /**
- * @version	 $Id: default.php 4905 2010-01-30 08:51:33Z and_one $
- * @package	 Joomla
- * @subpackage  Joomleague stats module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-TeamstatsRanking
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
-
-
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 // check if any results returned
 $items = count($list['ranking']);
 if (!$items) {
-   echo '<p class="modjlgteamstat">' . JText::_('NO ITEMS') . '</p>';
+   echo '<p class="modjlgteamstat">' . JText::_('MOD_JOOMLEAGUE_TEAMSTATS_RANKING_NOITEMS') . '</p>';
    return;
 }
 
 $teamnametype = $params->get('teamnametype', 'short_name');
-
-//echo '<pre>';print_r($list); echo '</pre>';exit;
-//echo '<pre>';print_r($list['ranking']); echo '</pre>';exit;
 ?>
 
 <div class="modjlgteamstat">

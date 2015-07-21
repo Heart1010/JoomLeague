@@ -1,24 +1,18 @@
 <?php
 /**
- * @package	 Joomla
- * @subpackage  Joomleague logo module
- * @copyright	Copyright (C) 2005-2014 joomleague.at. All rights reserved.
- * @license	 GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant to the
- * GNU General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open
- * source software licenses. See COPYRIGHT.php for copyright notices and
- * details.
+ * Joomleague
+ * @subpackage	Module-Logo
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
 defined('_JEXEC') or die;
 
 /**
  * Logo Module helper
- *
- * @package Joomla
- * @subpackage Joomleague logo module
  */
-class modJLGLogoHelper
+abstract class modJLGLogoHelper
 {
 
 	/**
@@ -27,10 +21,8 @@ class modJLGLogoHelper
 	 * @access public
 	 * @return array
 	 */
-	function getData(&$params)
+	public static function getData(&$params)
 	{
-		global $mainframe;
-
 		if (!class_exists('JoomleagueModelTeams')) {
 			require_once JLG_PATH_SITE.'/models/teams.php';
 		}
@@ -46,13 +38,14 @@ class modJLGLogoHelper
 		return array('project' => $project, 'teams' => $model->getTeams());
 
 	}
+	
 	/**
 	 * get img for team
 	 * @param object teams row
 	 * @param int type = 0 for club small logo, 1 for medium logo, 2 for big logo
 	 * @return html string
 	 */
-	function getLogo($item, $type = 1)
+	public static function getLogo($item, $type = 1)
 	{
 		if ($type == 0) // club small logo
 		{
@@ -104,7 +97,7 @@ class modJLGLogoHelper
 		return '';
 	}
 
-	function getTeamLink($item, $params, $project)
+	public static function getTeamLink($item, $params, $project)
 	{
 		switch ($params->get('teamlink'))
 		{

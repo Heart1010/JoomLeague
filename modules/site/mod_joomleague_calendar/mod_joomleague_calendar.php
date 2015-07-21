@@ -1,10 +1,17 @@
 <?php
 /**
- * @version    1.2.2.1
- * @package    Blog Calendar
- * @author   Justo Gonzalez de Rivera
- * @license    GNU/GPL
- * modified by johncage for use with joomleague
+ * Joomleague
+ * @subpackage	Module-Calendar
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ * 
+ * Based upon Blog Calendar 1.2.2.1 
+ * @author	Justo Gonzaled de Rivera
+ * @license	GNU/GPL
+ * 
+ * Modified by Johncage for uw with Joomleague
  */
 defined('_JEXEC') or die;
 
