@@ -441,7 +441,7 @@ class com_joomleagueInstallerScript
 		if ($uninstallDB)
 		{
 			echo JText::_('Also removing database tables of JoomLeague');
-			include_once(JPATH_ADMINISTRATOR.'/models/databasetools.php');
+			include_once(JPATH_ADMINISTRATOR.'/components/com_joomleague/models/databasetools.php');
 			JoomleagueModelDatabaseTools::dropJoomLeagueTables();
 		}
 		else
