@@ -1,9 +1,8 @@
 <?php
 /**
- * JEM Package
- * @package JEM.Package
+ * JoomLeague Package
  *
- * @copyright (C) 2013-2015 joomlaeventmanager.net
+ * @copyright (C) 2015 joomleague.at
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  *
  * @copyright (C) 2008 - 2013 Kunena Team. All rights reserved.
@@ -13,9 +12,9 @@
 defined ('_JEXEC') or die;
 
 /**
- * JEM package installer script.
+ * package installer script.
  */
-class Pkg_JemInstallerScript {
+class Pkg_JoomleagueInstallerScript {
 
 	private $oldRelease = "";
 	private $newRelease = "";
@@ -85,7 +84,7 @@ class Pkg_JemInstallerScript {
 			
 			/*
 			if ($this->oldRelease < 3) {
-				Jerror::raiseNotice(100,JText::sprintf('PKG_JEM_INSTALLATION_PREVENTINSTALL',$this->oldRelease));	
+				Jerror::raiseNotice(100,JText::sprintf('PKG_JOOMLEAGUE_INSTALLATION_PREVENTINSTALL',$this->oldRelease));	
 				return false;	
 			}
 			*/
@@ -111,12 +110,10 @@ class Pkg_JemInstallerScript {
 		if ($type == 'uninstall') return true;
 		
 		if ($type == 'install' || $type == 'update') {
-			/* $parent->getParent()->setRedirectURL(JRoute::_('index.php?option=com_jem&view=main', false)); */
+			/* $parent->getParent()->setRedirectURL(JRoute::_('index.php?option=com_joomleague&view=projects', false)); */
 		}
 		
-		$this->enablePlugin('content', 'jem');
-	//	$this->enablePlugin('search', 'jem');
-	//	$this->enablePlugin('jem', 'mailer');
+		// $this->enablePlugin('content', 'joomleague');
 	
 		return true;
 	}
@@ -191,7 +188,7 @@ class Pkg_JemInstallerScript {
 		// Abort if Magic Quotes are enabled, it was removed from phpversion 5.4
 		if (version_compare(phpversion(), '5.4', '<')) {
 			if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-				$app->enqueueMessage("Magic Quotes are enabled. JEM requires Magic Quotes to be disabled.", 'notice');
+				$app->enqueueMessage("Magic Quotes are enabled. JoomLeague requires Magic Quotes to be disabled.", 'notice');
 				return false;
 			}
 		}
@@ -208,7 +205,7 @@ class Pkg_JemInstallerScript {
 			$db = JFactory::getDbo();
 			$query	= $db->getQuery(true);
 			$query->delete('#__update_sites');
-			$query->where('name = '.$db->q('JEM Update Site'));
+			$query->where('name = '.$db->q('JoomLeague Update Site'));
 			$db->setQuery($query);
 			$db->execute(); 
 		}
@@ -219,13 +216,13 @@ class Pkg_JemInstallerScript {
 	
 	
 	/**
-	 * Helper method that outputs a short JEM header with logo and text
+	 * Helper method that outputs a short JoomLeague header with logo and text
 	 */
 	private function getHeader() {
 		?>
-		<img src="../media/com_jem/images/jemlogo.png" alt="" style="float:left; padding-right:20px;" />
-		<h1><?php echo JText::_('PKG_JEM'); ?></h1>
-		<p class="small"><?php echo JText::_('PKG_JEM_INSTALLATION_HEADER'); ?></p>
+		<img src="../media/com_joomleague/images/logo.png" alt="" style="float:left; padding-right:20px;" />
+		<h1><?php echo JText::_('PKG_JOOMLEAGUE'); ?></h1>
+		<p class="small"><?php echo JText::_('PKG_JOOMLEAGUE_INSTALLATION_HEADER'); ?></p>
 		<?php
 	}
 	
