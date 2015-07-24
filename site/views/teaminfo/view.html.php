@@ -17,6 +17,7 @@ class JoomleagueViewTeamInfo extends JLGView
 		$document	= JFactory::getDocument();
 		$model		= $this->getModel();
 		$config		= $model->getTemplateConfig( $this->getName() );
+		
 		$project	= $model->getProject();
 		$this->project = $project;
 		$isEditor = $model->hasEditPermission('projectteam.edit');
@@ -48,29 +49,40 @@ class JoomleagueViewTeamInfo extends JLGView
 				7 => JText::_('COM_JOOMLEAGUE_GLOBAL_SUNDAY')
 			);
 			$this->daysOfWeek = $daysOfWeek;
+			
+			
+			// @todo check!
+			// moved to this if statement as $team is not defined if there is no project available
+			$extended = $this->getExtended($team->teamextended, 'team');
+			$this->extended = $extended;
 		}
 
-		$extended = $this->getExtended($team->teamextended, 'team');
-		$this->extended = $extended;
-
+		
+		
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_TEAMINFO_PAGE_TITLE'));
+		
 		if (!empty($this->team))
 		{
 			$titleInfo->team1Name = $this->team->tname;
 		}
+		
 		if (!empty($this->project))
 		{
 			$titleInfo->projectName = $this->project->name;
 			$titleInfo->leagueName = $this->project->league_name;
 			$titleInfo->seasonName = $this->project->season_name;
 		}
+		
+		
 		$division = $model->getDivision(JRequest::getInt('division',0));
+		
 		if (!empty( $division ) && $division->id != 0)
 		{
 			$titleInfo->divisionName = $division->name;
 		}
-		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $this->config["page_title_format"]);
+		
+		$this->pagetitle = JoomleagueHelper::formatTitle($titleInfo, $config["page_title_format"]);
 		$document->setTitle($this->pagetitle);
 		
 		parent::display( $tpl );

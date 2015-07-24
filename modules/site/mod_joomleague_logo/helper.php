@@ -23,6 +23,8 @@ abstract class modJLGLogoHelper
 	 */
 	public static function getData(&$params)
 	{
+		// @todo check! // 23-07-2015
+		// we are included model Teams but is it needed?
 		if (!class_exists('JoomleagueModelTeams')) {
 			require_once JLG_PATH_SITE.'/models/teams.php';
 		}
@@ -35,7 +37,9 @@ abstract class modJLGLogoHelper
 		$division_id = $division_id[0];
 		$model->divisionid = $division_id;
 		
-		return array('project' => $project, 'teams' => $model->getTeams());
+		$data = array('project' => $project, 'teams' => $model->getTeams()); 
+		
+		return $data;
 
 	}
 	

@@ -180,7 +180,7 @@ class JLCalendar extends PHPCalendar
 	var $teamslist = array();
 	
 	public function __construct($options)
-	{
+	{	
 		$this->params = $options;
 	}
 	
@@ -246,7 +246,7 @@ class JLCalendar extends PHPCalendar
 
 
 	function jl_utf8_convert ($text, $fromenc='iso-8859-1', $toenc='UTF-8' )
-	{
+	{		
 		if (strtolower($fromenc)==strtolower($toenc) || $this->params->get('convert', 0)==0) return $text;
 
 		elseif (function_exists('iconv')) {
@@ -319,7 +319,10 @@ class JLCalendar extends PHPCalendar
 		$this->params->prefix = $this->prefix;
 		
 		// @todo Check!
-		JoomleagueConnector::getEntries($caldates, $this->params, $this->matches);
+		$entries = new JoomleagueConnector($this->params);
+		$entries->getEntries($caldates, $this->params, $this->matches);
+		
+		/* JoomleagueConnector::getEntries($caldates, $this->params, $this->matches); */
 
 		if ($livescore != ''){
 			require_once (dirname(__FILE__).'/connectors/livescore.php');

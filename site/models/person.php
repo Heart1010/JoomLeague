@@ -37,9 +37,30 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
-		$this->projectid	= $jinput->getInt('p',0);
-		$this->personid		= $jinput->getInt('pid',0);
-		$this->teamplayerid	= $jinput->getInt('pt',0);
+		$this->projectid	= $jinput->getString('p',0); // projectid
+		if ($this->projectid) {
+			# is the : within the string?
+			if (strpos($this->projectid,':') !== false) {
+				$arr = explode(":", $this->projectid, 2);
+				$this->projectid = $arr[0];
+			}
+		}
+		$this->personid		= $jinput->getString('pid',0); // personid
+		if ($this->personid) {
+			# is the : within the string?
+			if (strpos($this->personid,':') !== false) {
+				$arr = explode(":", $this->personid, 2);
+				$this->personid = $arr[0];
+			}
+		}
+		$this->teamplayerid	= $jinput->getString('pt',0); // templayer
+		if ($this->teamplayerid) {
+			# is the : within the string?
+			if (strpos($this->teamplayerid,':') !== false) {
+				$arr = explode(":", $this->teamplayerid, 2);
+				$this->teamplayerid = $arr[0];
+			}
+		}
 	}
 
 	function getPerson()
@@ -167,7 +188,7 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 	}
 
 	/**
-	 * @todo fix!
+	 * @todo fix! // 23-07-2015
 	 * this function is not inline with model-Project
 	 * @see JoomleagueModelProject::getRounds()
 	 */

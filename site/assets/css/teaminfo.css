@@ -43,3 +43,9 @@ div.joomleague .jl_listing_value {
 div.joomleague .jl_parentContainer {
 	overflow: hidden;
 }
+
+div.historyheading {
+	width:100%;
+	margin-top:10px;
+	margin-bottom:10px;
+}

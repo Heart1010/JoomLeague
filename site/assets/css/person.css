@@ -1,8 +1,11 @@
 @CHARSET "UTF-8";
 
 .plgeneralinfo {
+	/*
 	width: 100%;
+	*/
 }
+
 
 .plgeneralinfo td.picture {
 	width: 50%;
@@ -17,21 +20,31 @@
 }
 
 .plinfo {
-	width: 100%;
+	/* width: 100%; */
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
 
 .plinfo td.label {
-	width: 50%;
+	width: 100%;
+	text-align: left;
+	padding: 4px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	border-top: 1px solid #ccc !important;
+	border-bottom: 1px solid #ccc !important;
+	/* 
+	width: 100%;
 	text-align: left;
 	font-weight: bold;
 	vertical-align: top;
+	*/
 }
 
 .plinfo td.data {
-	width: 60%;
+	/* width: 60%; */
 	text-align: left;
+	padding-left: 20px;
 }
 
 .status {

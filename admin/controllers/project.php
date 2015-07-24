@@ -541,7 +541,6 @@ class JoomleagueControllerProject extends JoomleagueController
 	 * @param	string	$prefix	The class prefix. Optional.
 	 *
 	 * @return	object	The model.
-	 * @since	1.6
 	 */
 	public function getModel($name = 'Project', $prefix = 'JoomleagueModel', $config = array('ignore_request' => true))
 	{

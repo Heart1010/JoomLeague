@@ -9,18 +9,18 @@
 defined('_JEXEC') or die; 
 ?>
 <!-- person data START -->
-<h2><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_PERSONAL_DATA' );	?></h2>
+<h2><?php echo JText::_('COM_JOOMLEAGUE_PERSON_PERSONAL_DATA');	?></h2>
 
-<table class="plgeneralinfo">
+<table class="plgeneralinfo table">
 	<tr>
 	<?php
 	if ( $this->config['show_player_photo'] == 1 )
 	{
 		?>
 		<td class="picture"><?php
-		$picturetext=JText::_( 'COM_JOOMLEAGUE_PERSON_PICTURE' );
+		$picturetext = JText::_('COM_JOOMLEAGUE_PERSON_PICTURE');
 		$imgTitle = JText::sprintf( $picturetext , JoomleagueHelper::formatName(null, $this->person->firstname, $this->person->nickname, $this->person->lastname, $this->config["name_format"]) );
-		$picture = isset($this->teamPlayer) ? $this->teamPlayer->picture : null;
+		$picture = $this->teamPlayer ? $this->teamPlayer->picture : null;
 		if ((empty($picture)) || ($picture == JoomleagueHelper::getDefaultPlaceholder("player") ))
 		{
 			$picture = $this->person->picture;
@@ -37,13 +37,14 @@ defined('_JEXEC') or die;
 	}
 	?>
 		<td class="info">
-		<table class="plinfo">
+		<table class="plinfo table">
 			<?php
 			if(!empty($this->person->country) && ($this->config["show_nationality"] == 1))
 			{
 			?>
 			<tr>
-				<td class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_NATIONALITY' ); ?>
+				<td class=""><span class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_NATIONALITY' ); ?>
+				</span>
 				</td>
 				<td class="data">
 				<?php
@@ -56,8 +57,8 @@ defined('_JEXEC') or die;
 			}
 			?>
 			<tr>
-				<td class="label">
-					<?php	echo JText::_( 'COM_JOOMLEAGUE_PERSON_NAME' ); ?>
+				<td class="">
+					<span class="label"><?php echo JText::_('COM_JOOMLEAGUE_PERSON_NAME'); ?></span>
 				</td>
 				<td class="data">
 				<?php
@@ -89,9 +90,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
-				echo JText::_( 'COM_JOOMLEAGUE_PERSON_NICKNAME' );
-				?></td>
+				<td class="">
+				<span class="label">
+				<?php echo JText::_('COM_JOOMLEAGUE_PERSON_NICKNAME'); ?></span></td>
 				<td class="data"><?php
 				echo $this->person->nickname;
 				?></td>
@@ -107,7 +108,7 @@ defined('_JEXEC') or die;
 				#$this->config['show_birthday'] = 4;
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				switch ( $this->config['show_birthday'] )
 				{
 					case 	1:			// show Birthday and Age
@@ -127,7 +128,7 @@ defined('_JEXEC') or die;
 						break;
 				}
 				echo JText::_( $outputStr );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				#$this->playerage', $model->getAge( $this->player->birthday, $this->project->start_date );
 				switch ( $this->config['show_birthday'] )
@@ -170,8 +171,10 @@ defined('_JEXEC') or die;
 			{
 			?>
 			<tr>
-				<td class="label">
+				<td class="">
+				<span class="label">
 					<?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_DEATHDAY' ); ?>
+				</span>
 				</td>
 				<td class="data">
 					<?php
@@ -189,7 +192,7 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_ADDRESS' ); ?></td>
+				<td class=""><span class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_ADDRESS' ); ?></span></td>
 				<td class="data"><?php
 					echo Countries::convertAddressString(	'',
 															$this->person->address,
@@ -207,9 +210,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_PHONE' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				echo $this->person->phone;
 				?></td>
@@ -221,9 +224,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_MOBILE' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				echo $this->person->mobile;
 				?></td>
@@ -235,9 +238,9 @@ defined('_JEXEC') or die;
 			{
 					?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_EMAIL' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				$user = JFactory::getUser();
 				if ( ( $user->id ) || ( ! $this->overallconfig['nospam_email'] ) )
@@ -259,9 +262,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_WEBSITE' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				echo JHtml::_(	'link',
 				$this->person->website,
@@ -276,9 +279,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_HEIGHT' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				echo str_replace( "%HEIGHT%", $this->person->height, JText::_( 'COM_JOOMLEAGUE_PERSON_HEIGHT_FORM' ) );
 				?></td>
@@ -289,9 +292,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_WEIGHT' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				echo str_replace( "%WEIGHT%", $this->person->weight, JText::_( 'COM_JOOMLEAGUE_PERSON_WEIGHT_FORM' ) );
 				?></td>
@@ -304,9 +307,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_NUMBER' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				if ( $this->config['player_number_picture'] )
 				{
@@ -327,9 +330,9 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php
+				<td class=""><span class="label"><?php
 				echo JText::_( 'COM_JOOMLEAGUE_PERSON_ROSTERPOSITION' );
-				?></td>
+				?></span></td>
 				<td class="data"><?php
 				echo JText::_( $this->teamPlayer->position_name );
 				?></td>
@@ -340,8 +343,8 @@ defined('_JEXEC') or die;
 			{
 				?>
 			<tr>
-				<td class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_REGISTRATIONNR' ); ?>
-				</td>
+				<td class=""><span class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_REGISTRATIONNR' ); ?>
+				</span></td>
 				<td class="data"><?php echo $this->person->knvbnr; ?></td>
 			</tr>
 			<?php

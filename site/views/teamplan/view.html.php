@@ -44,7 +44,6 @@ class JoomleagueViewTeamPlan extends JLGView
 			$this->matches_refering = $model->getMatchesRefering($config);
 			$this->matchesperround = $model->getMatchesPerRound($config,$rounds);
 			$this->model = $model;
-
 		}
 
 		// Set page title

@@ -8,21 +8,14 @@
  */
 defined('_JEXEC') or die;
 ?>
-<table class="about">
-	<tr>
-		<td align="center">
-		<object type="application/x-shockwave-flash" data="media/com_joomleague/jl_images/joomleague_logo.swf" id="movie" width="410" height="200">
-		<param name="movie" value="media/com_joomleague/jl_images/joomleague_logo.swf" />
-		<param name="bgcolor" value="#FFFFFF" />
-		<param name="quality" value="high" />
-		<param name="loop" value="false" />
-		<param name="allowscriptaccess" value="samedomain" />
-	  </object>
-		</td>
-	</tr>
-</table>
-<br />
-<div class="componentheading">
+
+<div class="logo">
+<?php 
+	echo JHtml::_('image', 'com_joomleague/logo.png', null, NULL, true); 
+?>
+</div>
+<div class="clearfix"></div>
+<div class="componentheading label">
 	<?php echo $this->pagetitle; ?>
 </div>
 <table class="about">
@@ -31,7 +24,7 @@ defined('_JEXEC') or die;
 	</tr>
 </table>
 <br />
-<div class="componentheading">
+<div class="componentheading label">
 	<?php echo JText::_('COM_JOOMLEAGUE_ABOUT_DETAILS'); ?>
 </div>
 <table class="about">
@@ -119,7 +112,7 @@ defined('_JEXEC') or die;
 -->
 </table>
 <br />
-<div class="componentheading">
+<div class="componentheading label">
 	<?php echo JText::_('COM_JOOMLEAGUE_ABOUT_LICENSE'); ?>
 </div>
 <table class="about">

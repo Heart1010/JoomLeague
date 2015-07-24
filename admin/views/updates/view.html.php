@@ -31,6 +31,7 @@ class JoomleagueViewUpdates extends JLGView
 		$uri = JFactory::getURI();
 		$model = $this->getModel();
 		$versions=$model->getVersions();
+		
 		$updateFiles = array();
 		$lists=array();
 		if($updateFiles=$model->loadUpdateFiles()) {

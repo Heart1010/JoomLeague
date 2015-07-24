@@ -29,7 +29,9 @@ class JoomleagueModelTeams extends JoomleagueModelProject
 		parent::__construct( );
 	}
 
-	function getDivision()
+	// @todo check! // 23-07-2015
+	// added "$id = false" to be inline with parent
+	function getDivision($id = false)
 	{
 		$division = null;
 		if ($this->divisionid != 0)
@@ -39,7 +41,12 @@ class JoomleagueModelTeams extends JoomleagueModelProject
 		return $division;
 	}
 
-	function getTeams()
+	/**
+	 * @todo check! // 23-07-2015
+	 * added "$division = false" tp be inline with parent
+	 * @see JoomleagueModelProject::getTeams()
+	 */
+	public function getTeams($division = false)
 	{
 		$teams = array();
 

@@ -28,10 +28,39 @@ class JoomleagueModelTeamPlan extends JoomleagueModelProject
 
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
-		$this->projectid=$jinput->getInt('p',0);
-		$this->teamid=$jinput->getInt('tid',0);
-		$this->divisionid=$jinput->getInt('division',0);
-		$this->mode=$jinput->getInt("mode",0);
+		
+		$this->projectid	= $jinput->getInt('p',0); // Project-id
+		if ($this->projectid) {
+			# is the / within the string?
+			if (strpos($this->projectid,':') !== false) {
+				$arr = explode(":", $this->projectid, 2);
+				$this->projectid = $arr[0];
+			}
+		}
+		$this->teamid		= $jinput->getInt('tid',0); // Team-id
+		if ($this->projectid) {
+			# is the / within the string?
+			if (strpos($this->projectid,':') !== false) {
+				$arr = explode(":", $this->projectid, 2);
+				$this->projectid = $arr[0];
+			}
+		}
+		$this->divisionid	= $jinput->getInt('division',0); // Division-id
+		if ($this->divisionid) {
+			# is the / within the string?
+			if (strpos($this->divisionid,':') !== false) {
+				$arr = explode(":", $this->divisionid, 2);
+				$this->divisionid = $arr[0];
+			}
+		}
+		$this->mode			= $jinput->getInt("mode",0); // Mode
+		if ($this->mode) {
+			# is the / within the string?
+			if (strpos($this->mode,':') !== false) {
+				$arr = explode(":", $this->mode, 2);
+				$this->mode = $arr[0];
+			}
+		}
 	}
 
 	function getDivisionID()

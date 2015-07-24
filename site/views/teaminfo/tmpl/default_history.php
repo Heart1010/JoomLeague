@@ -9,14 +9,10 @@
 defined('_JEXEC') or die; 
 ?>
 
-<table width="100%" class="contentpaneopen">
-	<tr>
-		<td class="contentheading"><?php echo '&nbsp;' . JText::_('COM_JOOMLEAGUE_TEAMINFO_HISTORY'); ?>
-		</td>
-	</tr>
-</table>
-
-<table class="fixtures">
+<div class="clearfix"></div>
+<div class="historyheading"><span class="label"><?php echo '&nbsp;' . JText::_('COM_JOOMLEAGUE_TEAMINFO_HISTORY'); ?></span></div>
+<div class="clearfix"></div>
+<table class="fixtures table">
 	<tr class="sectiontableheader">
 		<td><?php echo JText::_('COM_JOOMLEAGUE_TEAMINFO_SEASON'); ?></td>
 		<td><?php echo JText::_('COM_JOOMLEAGUE_TEAMINFO_LEAGUE'); ?></td>

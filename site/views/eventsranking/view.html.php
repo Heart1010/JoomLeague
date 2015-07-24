@@ -46,8 +46,13 @@ class JoomleagueViewEventsRanking extends JLGView
 			// Next query will result in an array with exactly 1 statistic id
 			$evid = array_keys($this->eventtypes);
 
-			// Selected one valid eventtype, so show its name
-			$prefix .= " - " . JText::_($this->eventtypes[$evid[0]]->name);
+			
+			// @todo check! // 23-07-2015
+			// Added if statement as it can happen that no eventtype was selected
+			if ($evid) {
+				// Selected one valid eventtype, so show its name
+				$prefix .= " - " . JText::_($this->eventtypes[$evid[0]]->name);
+			}
 		}
 
 		// Set page title

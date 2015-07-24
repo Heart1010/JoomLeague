@@ -34,8 +34,30 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 	{
 		parent::__construct();
 
-		$this->projectid=JRequest::getInt('p',0);
-		$this->teamid=JRequest::getInt('tid',0);
+		// @todo check! // 24-07-2015
+		// p is passed as String (2:name) so changed getInt to getString
+		// if ":" is in the name it will fire up an explode as we want to have only a id.
+		$this->projectid = JRequest::getString('p',0);
+		if ($this->projectid) {
+			# is the / within the string?
+			if (strpos($this->projectid,':') !== false) {
+				$arr = explode(":", $this->projectid, 2);
+				$this->projectid = $arr[0];
+			}
+		}
+		
+		// @todo check! // 24-07-2015
+		// tid is passed as String (2:name) so changed getInt to getString
+		// if ":" is in the name it will fire up an explode as we want to have only a id.
+		$this->teamid=JRequest::getString('tid',0);
+		if ($this->teamid) {
+			# is the / within the string?
+			if (strpos($this->teamid,':') !== false) {
+				$arr2 = explode(":", $this->teamid, 2);
+				$this->teamid = $arr2[0];
+			}
+		}
+				
 		$this->projectteamid=JRequest::getInt('ttid',0);
 		$this->getProjectTeam();
 	}
@@ -81,6 +103,9 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 		return $this->projectteam;
 	}
 
+	/**
+	 * required: $this->teamid + $this->projectid
+	 */
 	function getTeam()
 	{
 		if (is_null($this->team))
@@ -106,45 +131,59 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 	}
 
 	/**
-	 * return team players by positions
-	 * @return array
+	 * return team players (by positions)
+	 * 
+	 * @todo check! // 24-07-2015
+	 * Changed "INNER" to "LEFT" join for positions as it can happen
+	 * that no positions were attached.
 	 */
 	function getTeamPlayers()
 	{
-		$projectteam = $this->getprojectteam();
+		$projectteam = $this->getprojectteam();	
+		
+		// @todo check 24-07-2015
+		// changed retrieval of projectteamid
+		$projectteamid = $projectteam->ptid;
+	
 		if (empty($this->_players))
 		{
-			$query='	SELECT	pr.firstname,
-								pr.nickname,
-								pr.lastname,
-								pr.country,
-								pr.birthday,
-								pr.deathday,
-								tp.id AS playerid,
-								pr.id AS pid,
-								pr.picture AS ppic,
-								tp.jerseynumber AS position_number,
-								tp.notes AS description,
-								tp.injury AS injury,
-								tp.suspension AS suspension,
-								pt.team_id,
-								tp.away AS away,tp.picture,
-								pos.name AS position,
-								ppos.position_id,
-								ppos.id as pposid,
-								CASE WHEN CHAR_LENGTH(pr.alias) THEN CONCAT_WS(\':\',pr.id,pr.alias) ELSE pr.id END AS slug
-						FROM #__joomleague_team_player tp
-						INNER JOIN #__joomleague_project_team AS pt ON pt.id=tp.projectteam_id
-						INNER JOIN #__joomleague_person AS pr ON tp.person_id=pr.id
-						INNER JOIN #__joomleague_project_position AS ppos ON ppos.id=tp.project_position_id
-						INNER JOIN #__joomleague_position AS pos ON pos.id=ppos.position_id
-						WHERE tp.projectteam_id='.$this->_db->Quote($this->projectteamid).'
-						AND pr.published = 1
-						AND tp.published = 1
-						ORDER BY pos.ordering, ppos.position_id, tp.jerseynumber, pr.lastname, pr.firstname';
-			$this->_db->setQuery($query);
-			$this->_players=$this->_db->loadObjectList();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select(
+					$this->getState(
+							'list.select',
+							'tp.id AS playerid,tp.jerseynumber AS position_number,tp.notes AS description,tp.injury AS injury,tp.suspension AS suspension,tp.away AS away,tp.picture'
+					)
+			);
+			$query->from('#__joomleague_team_player AS tp');
+			
+			// Join Person
+			$query->select('pr.id AS pid, pr.picture AS ppic, pr.firstname,pr.nickname,pr.lastname,pr.country,pr.birthday,pr.deathday,CASE WHEN CHAR_LENGTH(pr.alias) THEN CONCAT_WS(\':\',pr.id,pr.alias) ELSE pr.id END AS slug')
+			->join('INNER', $db->quoteName('#__joomleague_person') . ' AS pr ON tp.person_id = pr.id');
+			
+			// Join Project-Team
+			$query->select('pt.team_id')
+			->join('INNER', $db->quoteName('#__joomleague_project_team') . ' AS pt ON pt.id = tp.projectteam_id');
+							
+			// Join Project-Position
+			$query->select('ppos.position_id,ppos.id AS pposid')
+			->join('LEFT', $db->quoteName('#__joomleague_project_position') . ' AS ppos ON ppos.id = tp.project_position_id');
+				
+			// Join Position
+			$query->select('pos.name AS position')
+			->join('LEFT', $db->quoteName('#__joomleague_position') . ' AS pos ON pos.id = ppos.position_id');
+				
+		
+			$query->where('tp.projectteam_id = '.$db->Quote($projectteamid));
+			$query->where('pr.published = 1');
+			$query->where('tp.published = 1');
+			$query->order('pos.ordering, ppos.position_id, tp.jerseynumber, pr.lastname, pr.firstname');
+			$db->setQuery($query);
+			$this->_players = $db->loadObjectList();
 		}
+		
 		$bypos=array();
 		foreach ($this->_players as $player)
 		{

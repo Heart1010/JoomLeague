@@ -23,7 +23,7 @@
 			<field	name="tid" type="dependsql" depends="p,division" task="projectteamsbydivisionoptions"
 					label="COM_JOOMLEAGUE_XML_SELECT_TEAM_LABEL"
 					description="COM_JOOMLEAGUE_XML_SELECT_TEAM_DESCR"
-					required="false">
+					required="true">
 			</field>
 
 		</fieldset>

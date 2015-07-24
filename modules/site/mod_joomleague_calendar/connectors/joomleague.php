@@ -13,6 +13,14 @@ class JoomleagueConnector extends JLCalendar{
 	//var $database = JFactory::getDbo();
 	var $xparams;
 	var $prefix;
+	var $params = null;
+	
+	
+	public function __construct($options)
+	{
+		$this->params = $options;
+	}
+	
 
 	function getEntries ( &$caldates, &$params, &$matches )
 	{

@@ -35,15 +35,25 @@ class JoomleagueModelRanking extends JoomleagueModelProject
 	public function __construct( )
 	{
 		parent::__construct( );
-		$this->projectid = JRequest::getInt( "p", 0 );
-		$this->round = JRequest::getInt( "r", $this->getCurrentRound());
-		$this->part  = JRequest::getInt( "part", 0);
-		$this->from  = JRequest::getInt( 'from', $this->round );
-		$this->to	 = JRequest::getInt( 'to', $this->round);
-		$this->type  = JRequest::getInt( 'type', 0 );
-		$this->last  = JRequest::getInt( 'last', 0 );
-
-		$this->selDivision = JRequest::getInt( 'division', 0 );
+		
+		$app 				= JFactory::getApplication();
+		$jinput 			= $app->input;
+		
+		$this->projectid 	= $jinput->getInt("p",0);
+		if ($this->projectid) {
+			# is the : within the string?
+			if (strpos($this->projectid,':') !== false) {
+				$arr = explode(":", $this->projectid, 2);
+				$this->projectid = $arr[0];
+			}
+		}
+		$this->round 		= $jinput->getInt("r",$this->getCurrentRound());
+		$this->part  		= $jinput->getInt("part",0);
+		$this->from  		= $jinput->getInt('from',$this->round);
+		$this->to	 		= $jinput->getInt('to',$this->round);
+		$this->type  		= $jinput->getInt('type',0);
+		$this->last  		= $jinput->getInt('last',0);
+		$this->selDivision	= $jinput->getInt('division',0);
 	}
 
 	

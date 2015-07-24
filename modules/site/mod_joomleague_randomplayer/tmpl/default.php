@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 // check if any player returned
 $items = count($list['player']);
 if (!$items) {
-	echo '<p class="modjlgrandomplayer">' . JText::_('NO ITEMS') . '</p>';
+	echo '<p class="modjlgrandomplayer">' . JText::_('MOD_JOOMLEAGUE_RANDOMPLAYER_NOITEMS') . '</p>';
 	return;
 }?>
 

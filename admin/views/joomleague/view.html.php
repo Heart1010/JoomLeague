@@ -104,16 +104,22 @@ class JoomleagueViewJoomleague extends JLGView
 		$model = $this->getModel('project') ;
 		$params = JComponentHelper::getParams($option);
 		
+		// catch variables
 		$pid = JRequest::getVar('pid',array(0),'','array');
 		$stid = JRequest::getVar('stid',array(0),'','array');
+		
+		// Project variable request + Sporttype variable request = ''
 		if($pid[0] > 0 && $stid[0] == '') {
 			$model->setId($pid[0]);
 			$project = $this->get('Data');
 			$sports_type_id = $project->sports_type_id;
 		} else {
+			// defaulting to state
 			$sports_type_id = $app->getUserState($option.'sportstypes',0);
 		}
-		if($stid[0] > 0 || $sports_type_id >0)
+		
+		// Sporttype variable request + sporttypeid
+		if($stid[0] > 0 || $sports_type_id > 0)
 		{
 			if($stid[0] > 0) {
 				$app->setUserState($option.'sportstypes',$stid[0]);
@@ -150,7 +156,8 @@ class JoomleagueViewJoomleague extends JLGView
 
 		$allSportstypes = JoomleagueModelSportsTypes::getSportsTypes();
 		$sportstypes[]	= JHtml::_('select.option','0',JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_SPORTSTYPE'),'id','name');
-		$allSportstypes=array_merge($sportstypes,$allSportstypes);
+		$allSportstypes	= array_merge($sportstypes,$allSportstypes);
+		
 		$lists['sportstypes']=JHtml::_('select.genericList',
 										$allSportstypes,
 										'stid[]',
@@ -404,6 +411,12 @@ class JoomleagueViewJoomleague extends JLGView
 		$link3[]=JRoute::_('index.php?option=com_joomleague&view=updates&task=update.display');
 		$label3[]=JText::_('COM_JOOMLEAGUE_M_MENU_UPDATES');
 		$limage3[]=JHtml::_('image',$imagePath.'update.png',JText::_('COM_JOOMLEAGUE_M_MENU_UPDATES'));
+		
+		if (JFactory::getUser()->authorise('core.manage')) {
+			$link3[]=JRoute::_('index.php?option=com_joomleague&view=tools&task=tools.display');
+			$label3[]=JText::_('Tools');
+			$limage3[]=JHtml::_('image',$imagePath.'update.png',JText::_('Tools2'));
+		}
 		
 		$link[]=$link3;
 		$label[]=$label3;

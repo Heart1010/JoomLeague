@@ -268,7 +268,7 @@ class JoomleagueHelper
 	 * @param string $current_date date in YYYY-mm-dd format,default to today
 	 * @return int age
 	 */
-	function getAge($date, $seconddate)
+	public static function getAge($date, $seconddate)
 	{
 
 		if ( ($date != "0000-00-00") &&
@@ -517,9 +517,13 @@ class JoomleagueHelper
 					$ret .='" width="'.$width.'" alt="'.$alttext.'" title="'.$title.'"';
 				}
 				//width==0 and height set, let the browser resize it
+				
+				// @todo check! // 23-07-2015
+				// added "style="height:'.$height.'px;"" to have a smaller output of the image 
+				// in persons-view. The template css did overrule the image height.
 				if($height>0 && $width==0) {
 					$ret .= ' src="'.$picture;
-					$ret .='" height="'.$height.'" alt="'.$alttext.'" title="'.$title.'"';
+					$ret .='" height="'.$height.'" style="height:'.$height.'px;" alt="'.$alttext.'" title="'.$title.'"';
 				}
 				//width==0 and height==0, use original picture size
 				if($height==0 && $width==0) {
@@ -1059,6 +1063,20 @@ class JoomleagueHelper
 
 	public static function getVersion()
 	{
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select(array('manifest_cache'));
+		$query->from('#__extensions');
+		$query->where(array('name = '.$db->quote('com_joomleague'),'type = '.$db->quote('component')));
+		$db->setQuery($query);
+		
+		$manifest = json_decode($db->loadResult(), true);
+		$result = $manifest['version'];
+		
+		return $result;
+		
+		/*
 		$database = JFactory::getDbo();
 
 		$query="SELECT CONCAT(major,'.',minor,'.',build,'.',revision) AS version
@@ -1067,6 +1085,7 @@ class JoomleagueHelper
 		$database->setQuery($query);
 		$result=$database->loadResult();
 		return $result;
+		*/
 	}
 
 	/**
@@ -1388,7 +1407,6 @@ class JoomleagueHelper
 	 *
 	 * @param string $print_link
 	 * @param array $config
-	 * @since 1.5.2
 	 */
 	public static function printbutton($print_link, &$config)
 	{

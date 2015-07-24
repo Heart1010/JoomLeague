@@ -103,18 +103,25 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 
 	public function searchTeam()
 	{
+		// Use the correct json mime-type
+		header('Content-Type: application/json');
+		
 		$option 	= JRequest::getCmd('option');
 		$app		= JFactory::getApplication();
 		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$query 		= JRequest::getVar("query", "", "", "string");
 		$projectid 	= $app->getUserState($option."project");
 		$results 	= $model->getNotAssignedTeams($query, $projectid);
+		
+		
 		$response = array(
 			"totalCount" => count($results),
 			"rows" => array()
 		);
 
+		$names = array();
 		foreach ($results as $row) {
+			$names[] = $row->name;
 			$name = $row->name;
 			$name .= " (" . $row->info . ")";
 			$name .= " (" . $row->id . ")";
@@ -124,9 +131,14 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 				"name" => $name
 			);
 		}
-
-		echo json_encode($response);
-		exit;
+		
+		
+		$suggestions = $names;
+		
+		
+		// Send the response.
+		echo '{ "suggestions": ' . json_encode($suggestions) . ' }';
+		JFactory::getApplication()->close();
 	}
 
 	public function addPlayer()
@@ -316,67 +328,111 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 
 	public function addTeam()
 	{
+		// we are coming from projectteams
 		$option = JRequest::getCmd('option');
 		$app	= JFactory::getApplication();
-
-		$db = JFactory::getDbo();
-		$teamid = JRequest::getInt("cteamid", 0);
-		$name = JRequest::getVar("quickadd", '', 'request', 'string');
+		$jinput = $app->input;
+		$db 	= JFactory::getDbo();
+		
+		// catch variables	
+		$cteamid = $jinput->getInt("cteamid", 0); // @todo check!, is a cteamid ever passed?
+		$name	= $jinput->getString("quickadd", ''); // @todo check!
+		$prId	= $jinput->getInt("project_id",0);
+		$searchText = $jinput->getString("p","");
+			
+		// get current projectid
+		// @todo check!
+		// we can catch the id also from the post
 		$project_id = $app->getUserState($option."project");
-
-		// add the new team as their name was sent through.
-		if (!$teamid)
-		{
-			$model = JLGModel::getInstance('Team', 'JoomleagueModel');
-			$data = array(
-				"name" => $name
-			);
-			$teamid = $model->store($data);
+		
+		
+		// Return if $searchText is empty
+		// As input we do want to have a team-name
+		if (empty($searchText)) {
+			$app->enqueueMessage(Jtext::_('Fill in a teamname'),'warning');
+			$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+			return;
 		}
-
-		if (!$teamid) {
-			$msg = Jtext::_('COM_JOOMLEAGUE_ADMIN_QUICKADD_CTRL_ERROR_TEAM');
-			$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id, $msg, 'error');
-		}
-
-		// check if team belongs to project
-		$query = ' SELECT id FROM #__joomleague_project_team '
-		. ' WHERE project_id = '. $db->Quote($project_id)
-		. '   AND team_id = '. $db->Quote($teamid)
-		;
+		
+		// Retrieve team-id
+		// @todo add check for unique name
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_team');
+		$query->where('name = '.$db->quote($searchText));
 		$db->setQuery($query);
-		$res = $db->loadResult();
-		if (!$res)
-		{
-			$new = JTable::getInstance( 'Projectteam', 'Table' );
-			$new->team_id		= $teamid;
-			$new->project_id	= $project_id;
-
-			// Set ordering to the last item if not set
-			$db->setQuery('SELECT MAX(ordering) FROM #__joomleague_project_team WHERE project_id = '. $db->Quote($project_id) );
-			$max = $db->loadResult();
-			$new->ordering 		= $max+1;
-
-			if ( !$new->check() )
-			{
-				$this->setError( $new->getError() );
-			}
-			// Get data from player
-			$query = "	SELECT picture
-						FROM #__joomleague_team AS t
-						WHERE t.id=". $db->Quote($teamid);
-
-			$db->setQuery( $query );
-			$team = $db->loadObject();
-			if ( $team )
-			{
-				$new->picture		= $team->picture;
-			}
-			if ( !$new->store() )
-			{
-	  			$this->setError( $new->getError() );
-			}
+		$teamid = $db->loadResult();
+		
+		if (empty($teamid) || $teamid == null) {
+			$app->enqueueMessage(Jtext::_('Team does not exist.<br>No team was added'),'warning');
+			$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+			return;
 		}
+			
+		// At this point we do have a project+teamid
+		// -> check if team already belongs to project
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_project_team');
+		$query->where('project_id = '.$project_id);
+		$query->where('team_id = '.$teamid);
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		
+		if ($result) {
+			# the team was already added so don't add it twice
+			$app->enqueueMessage(Jtext::_('Team already exists<br>No team was added'),'warning');
+			$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+			return;
+		}
+		
+		// Add team to projectteam 
+		$new = JTable::getInstance('Projectteam','Table');
+		$new->team_id		= $teamid;
+		$new->project_id	= $project_id;
+
+		// Set ordering to the last item if not set
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('MAX(ordering)');
+		$query->from('#__joomleague_project_team');
+		$query->where('project_id = '.$project_id);
+		$db->setQuery($query);
+		$max = $db->loadResult();
+		$new->ordering 		= $max+1;
+
+		if (!$new->check())
+		{
+			$this->setError($new->getError());
+		}
+		
+		// Get data from player
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('picture');
+		$query->from('#__joomleague_team AS t');
+		$query->where('t.id = '.$teamid);
+		$db->setQuery($query);
+		$team = $db->loadObject();
+		
+		if ($team)
+		{
+			$new->picture	= $team->picture;
+		}
+		if (!$new->store())
+		{
+	  		$this->setError($new->getError());
+		}
+		
+		// @todo fix!
+		$errors = $this->getErrors();
+		if ($errors) {
+			/* $app->enqueueMessage($errors,'error'); */
+		}
+		
+		
 		$msg = Jtext::_('COM_JOOMLEAGUE_ADMIN_QUICKADD_CTRL_TEAM_ASSIGNED');
 		$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id, $msg);
 	}

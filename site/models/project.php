@@ -69,6 +69,31 @@ class JoomleagueModelProject extends JModelLegacy
 		parent::__construct();
 	}
 
+	
+	/**
+	 * returns project current round id
+	 *
+	 * @return int
+	 */
+	function getCurrentRound()
+	{
+		$round = $this->increaseRound();
+		return ($round ? $round->id : 0);
+	}
+
+	/**
+	 * returns project current round code
+	 *
+	 * @return int
+	 */
+	function getCurrentRoundNumber()
+	{
+		$round = $this->increaseRound();
+		return ($round ? $round->roundcode : 0);
+	}
+	
+	
+	
 	function getProject()
 	{
 		if (is_null($this->_project) && $this->projectid > 0)
@@ -92,13 +117,9 @@ class JoomleagueModelProject extends JModelLegacy
 		}
 		return $this->_project;
 	}
-
-	function setProjectID($id=0)
-	{
-		$this->projectid=$id;
-		$this->_project=null;
-	}
-
+	
+	
+	
 	function getSportsType()
 	{
 		if (!$project = $this->getProject())
@@ -106,31 +127,10 @@ class JoomleagueModelProject extends JModelLegacy
 			$this->setError(0, Jtext::_('COM_JOOMLEAGUE_ERROR_PROJECTMODEL_PROJECT_IS_REQUIRED'));
 			return false;
 		}
-
+	
 		return $project->sports_type_id;
 	}
-
-	/**
-	 * returns project current round id
-	 *
-	 * @return int
-	 */
-	function getCurrentRound()
-	{
-		$round = $this->increaseRound();
-		return ($round ? $round->id : 0);
-	}
-
-	/**
-	 * returns project current round code
-	 *
-	 * @return int
-	 */
-	function getCurrentRoundNumber()
-	{
-		$round = $this->increaseRound();
-		return ($round ? $round->roundcode : 0);
-	}
+	
 
 	/**
 	 * method to update and return the project current round
@@ -271,8 +271,52 @@ class JoomleagueModelProject extends JModelLegacy
 	}
 	
 
+	function getDivision($id)
+	{
+		$divs=$this->getDivisions();
+		if ($divs && isset($divs[$id])) {
+			return $divs[$id];
+		}
+		$div = new stdClass();
+		$div->id = 0;
+		$div->name = '';
+		return $div;
+	}
 	
+	
+	function getDivisions($divLevel=0)
+	{
+		$project = $this->getProject();
+		
+		if (isset($project)) {
+			if ($project->project_type == 'DIVISIONS_LEAGUE')
+			{
+				if (empty($this->_divisions))
+				{
+					$query="SELECT * from #__joomleague_division
+						  WHERE project_id=".$this->projectid;
+					$this->_db->setQuery($query);
+					$this->_divisions=$this->_db->loadObjectList('id');
+				}
+				if ($divLevel)
+				{
+					$ids=$this->getDivisionsId($divLevel);
+					$res=array();
+					foreach ($this->_divisions as $d)
+					{
+						if (in_array($d->id,$ids)) {
+							$res[]=$d;
+						}
+					}
+					return $res;
+				}
+				return $this->_divisions;
+			}
+		}
+		return array();
+	}
 
+	
 	/**
 	 * return an array of division id and it's subdivision ids
 	 * @param int division id
@@ -293,50 +337,7 @@ class JoomleagueModelProject extends JModelLegacy
 		}
 		return $res;
 	}
-
 	
-	function getDivision($id)
-	{
-		$divs=$this->getDivisions();
-		if ($divs && isset($divs[$id])) {
-			return $divs[$id];
-		}
-		$div = new stdClass();
-		$div->id = 0;
-		$div->name = '';
-		return $div;
-	}
-	
-	
-	function getDivisions($divLevel=0)
-	{
-		$project = $this->getProject();
-		if ($project->project_type == 'DIVISIONS_LEAGUE')
-		{
-			if (empty($this->_divisions))
-			{
-				$query="SELECT * from #__joomleague_division
-						  WHERE project_id=".$this->projectid;
-				$this->_db->setQuery($query);
-				$this->_divisions=$this->_db->loadObjectList('id');
-			}
-			if ($divLevel)
-			{
-				$ids=$this->getDivisionsId($divLevel);
-				$res=array();
-				foreach ($this->_divisions as $d)
-				{
-					if (in_array($d->id,$ids)) {
-						$res[]=$d;
-					}
-				}
-				return $res;
-			}
-			return $this->_divisions;
-		}
-		return array();
-	}
-
 	
 	function getDivisionsId($divLevel=0)
 	{
@@ -999,6 +1000,57 @@ class JoomleagueModelProject extends JModelLegacy
 		}
 		return $result;
 	}
+	
+	
+	/**
+	 * returns match events
+	 * @param int match id
+	 * @return array
+	 */
+	function getMatchEvents($match_id,$showcomments=0,$sortdesc=0)
+	{
+		if ($showcomments == 1) {
+			$join = 'LEFT';
+			$addline = ' me.notes,';
+		} else {
+			$join = 'INNER';
+			$addline = '';
+		}
+		$esort = '';
+		if ($sortdesc == 1) {
+			$esort = ' DESC';
+		}
+		$query = ' 	SELECT 	me.event_type_id,
+							me.id as event_id,
+							me.event_time,
+							me.notice,'
+				. $addline .
+				'pt.team_id AS team_id,
+							et.name AS eventtype_name,
+							t.name AS team_name,
+							me.projectteam_id AS ptid,
+							me.event_sum,
+							p.id AS playerid,
+							p.firstname AS firstname1,
+							p.nickname AS nickname1,
+							p.lastname AS lastname1,
+							p.picture AS picture1,
+							tp.picture AS tppicture1
+					FROM #__joomleague_match_event AS me
+					'.$join.' JOIN #__joomleague_eventtype AS et ON me.event_type_id = et.id
+					'.$join.' JOIN #__joomleague_project_team AS pt ON me.projectteam_id = pt.id
+					'.$join.' JOIN #__joomleague_team AS t ON pt.team_id = t.id
+					LEFT JOIN #__joomleague_team_player AS tp ON tp.id = me.teamplayer_id
+						  AND tp.published = 1
+					LEFT JOIN #__joomleague_person AS p ON tp.person_id = p.id
+						  AND p.published = 1
+					WHERE me.match_id = ' . $match_id . '
+					ORDER BY (me.event_time + 0)'. $esort .', me.event_type_id, me.id';
+	
+		$this->_db->setQuery( $query );
+		return $this->_db->loadObjectList();
+	}
+	
 
 	/**
 	 * returns match substitutions
@@ -1039,55 +1091,7 @@ class JoomleagueModelProject extends JModelLegacy
 		return $this->_db->loadObjectList();
 	}
 
-	/**
-	 * returns match events
-	 * @param int match id
-	 * @return array
-	 */
-	function getMatchEvents($match_id,$showcomments=0,$sortdesc=0)
-	{
-		if ($showcomments == 1) {
-		    $join = 'LEFT';
-		    $addline = ' me.notes,';
-		} else {
-		    $join = 'INNER';
-		    $addline = '';
-		}
-		$esort = '';
-		if ($sortdesc == 1) {
-		    $esort = ' DESC';
-		}
-		$query = ' 	SELECT 	me.event_type_id,
-							me.id as event_id,
-							me.event_time,
-							me.notice,'
-							. $addline .
-							'pt.team_id AS team_id,
-							et.name AS eventtype_name,
-							t.name AS team_name,
-							me.projectteam_id AS ptid,
-							me.event_sum,
-							p.id AS playerid,
-							p.firstname AS firstname1,
-							p.nickname AS nickname1,
-							p.lastname AS lastname1,
-							p.picture AS picture1,
-							tp.picture AS tppicture1
-					FROM #__joomleague_match_event AS me
-					'.$join.' JOIN #__joomleague_eventtype AS et ON me.event_type_id = et.id
-					'.$join.' JOIN #__joomleague_project_team AS pt ON me.projectteam_id = pt.id
-					'.$join.' JOIN #__joomleague_team AS t ON pt.team_id = t.id
-					LEFT JOIN #__joomleague_team_player AS tp ON tp.id = me.teamplayer_id
-						  AND tp.published = 1
-					LEFT JOIN #__joomleague_person AS p ON tp.person_id = p.id
-						  AND p.published = 1
-					WHERE me.match_id = ' . $match_id . '
-					ORDER BY (me.event_time + 0)'. $esort .', me.event_type_id, me.id';
-
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
-	}
-
+	
 	function hasEditPermission($task=null)
 	{
 		$allowed = false;
@@ -1115,4 +1119,11 @@ class JoomleagueModelProject extends JModelLegacy
 		}
 		return $allowed;
 	}
+	
+	function setProjectID($id=0)
+	{
+		$this->projectid=$id;
+		$this->_project=null;
+	}
+	
 }

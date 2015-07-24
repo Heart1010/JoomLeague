@@ -16,7 +16,6 @@ defined('_JEXEC')or die;
 	echo $this->form->renderField('alias');
 	echo $this->form->renderField('published');
 	echo $this->form->renderField('sports_type_id');
-	echo $this->form->renderField('league_id');
 	?>
 	<div class="control-group">
 		<div class="control-label"><?php echo $this->form->getLabel('league_id'); ?></div>

@@ -1,10 +1,27 @@
 @CHARSET "UTF-8";
 
-.table input{
-    display:block;
-    width:90%;
-    margin-left:auto;
-    margin-right:auto;
+
+.tools.table-hover tbody tr:hover > td,
+.tools.table-hover tbody tr:hover > th {
+	background-color: #d0d5d3;
+}
+
+img.calendar.btn {
+	padding: 5px 13px !important;
+}
+
+
+div.panel .table {
+	margin: 0px;
+}
+
+div.panel .table th,
+div.panel .table td {
+	
+}
+
+.table input {
+	width: auto;
 }
 
 div.container-title {
@@ -131,22 +148,9 @@ div.pagetitle {
     float: left;
 }
 
-div.icon-wrapper {
-	border:1px solid black;
-	background-color: #CECECE;
-	width: 40px !important;
-	height: 40px !important;
-	padding: 10px;
-}
-
-div.icon-wrapper img{
-	height: 40px;
-	width: 40px;
-}
-
-
 /* -- PANE SLIDER STYLES ----------------------------- */
-/* Taken from Bluestork template */
+/* Taken from Bluestork template, Joomla! */
+
 .pane-sliders {
 	margin: 18px 0 0 0;
 	position:relative;
@@ -231,4 +235,82 @@ div#position-icon.pane-sliders div.pane-down .icon-wrapper .icon {
 
 div#position-icon.pane-sliders .icon {
 	background: #fff;
+}
+
+
+/* -- CONTROL PANEL STYLES ----------------------------- */
+/* Taken from Bluestork template, Joomla! */
+
+
+.cpanel div.cpicon, #cpanel div.cpicon {
+	text-align: center;
+	margin-right: 15px;
+	float: left;
+	margin-bottom: 15px;
+
+}
+.cpanel div.cpicon a, #cpanel div.cpicon a {
+	background-color: #fff;
+	background-position: -30px;
+	display: block;
+	float: left;
+	min-height: 100px;
+	width: 108px;
+	color: #565656;
+	vertical-align: middle;
+	text-decoration: none;
+	border: 1px solid #CCC;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-transition-property:
+		background-position,
+		-webkit-border-bottom-left-radius,
+		-webkit-box-shadow;
+	-moz-transition-property:
+		background-position,
+		-moz-border-radius-bottomleft,
+		-moz-box-shadow;
+	-webkit-transition-duration: 0.8s;
+	-moz-transition-duration: 0.8s;
+}
+
+#cpanel div.cpicon a:hover,
+#cpanel div.cpicon a:focus,
+#cpanel div.cpicon a:active,
+.cpanel div.cpicon a:hover,
+.cpanel div.cpicon a:focus,
+.cpanel div.cpicon a:active {
+	background-position: 0;
+	-webkit-border-bottom-left-radius: 50% 20px;
+	-moz-border-radius-bottomleft: 50% 20px;
+	border-bottom-left-radius: 50% 20px;
+	-webkit-box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+	box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.25);
+	position: relative;
+	z-index: 10;
+}
+
+#cpanel img,
+.cpanel img {
+	padding: 10px 0;
+	margin: 0 auto;
+}
+
+#cpanel span,
+.cpanel span {
+	display: block;
+	text-align: center;
+}
+
+div.cpanel-left {
+	width: 54%;
+	float: left;
+}
+
+div.cpanel-right {
+	width: 45%;
+	float: right;
 }

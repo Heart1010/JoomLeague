@@ -8,6 +8,7 @@
  */
 defined('_JEXEC') or die;
 
+
 // Show team-players as defined
 if (!empty($this->rows))
 {
@@ -67,7 +68,7 @@ if (!empty($this->rows))
 		}
 	}
 	?>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" style="text-align: center;">
+<table class="table">
 	<?php
 	foreach ($this->rows as $position_id => $players)
 	{

@@ -181,10 +181,13 @@ class JoomleagueViewPersons extends JLGView
 	        onUpdate       :    '.($onUpdate ? $onUpdate : 'null').',
 	        singleClick    :    true
     	});});');
-		$html='';
-		$html .= '<input onchange="document.getElementById(\'cb'.$i.'\').checked=true" type="text" name="'.$name.'" id="'.$id.'" value="'.htmlspecialchars($value,ENT_COMPAT,'UTF-8').'" '.$attribs.' />'.
-				 '<img class="calendar" style="margin-top: 5px" src="'.JUri::root(true).'/templates/system/images/calendar.png" alt="calendar" id="'.$id.'_img" />';
-		return $html;
+		
+			
+		$html[] = "<div class='input-append'";
+		$html[]	= '<input class="input-small" onchange="document.getElementById(\'cb'.$i.'\').checked=true" type="text" name="'.$name.'" id="'.$id.'" value="'.htmlspecialchars($value,ENT_COMPAT,'UTF-8').'" />'.
+		$html[] = '<img class="calendar btn" style="" src="'.JUri::root(true).'/templates/system/images/calendar.png" alt="calendar" id="'.$id.'_img" /></span>';
+		$html[] = "</div>";
+		return implode("\n", $html);
 	}
 	
 	/**

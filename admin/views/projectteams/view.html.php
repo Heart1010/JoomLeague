@@ -218,11 +218,14 @@ class JoomleagueViewProjectteams extends JLGView
 		$uri = JFactory::getURI();
 
 		$baseurl    = JUri::root();
+		/*
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.js');
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.Request.js');
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Observer.js');
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/quickaddteam.js');
-		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');		
+		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');
+		*/		
+		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');
 
 		$filter_state		= $app->getUserStateFromRequest($option.'tl_filter_state',		'filter_state',		'',			'word');
 		$filter_order		= $app->getUserStateFromRequest($option.'tl_filter_order',		'filter_order',		't.name',	'cmd');

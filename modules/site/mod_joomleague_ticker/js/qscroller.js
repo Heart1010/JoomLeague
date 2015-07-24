@@ -1,6 +1,6 @@
 /* QScroller Copyright 2008 Massimo Giagnoni. All rights reserved.
 
-Vesrion 1.0.1 (Mootools 1.11)
+Version 1.0.1 (Mootools 1.11)
 QScroller is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-var QScroller = new Class({
+QScroller = new Class({
 	options: {
 		slides: 'qslide',
 		direction: 'h',
@@ -31,9 +31,12 @@ var QScroller = new Class({
 			position: 'relative',
 			overflow: 'hidden'
 		});
-		this.wrapper.addEvent('mouseenter', this.fireEvent.pass('onMouseEnter',this));
-		this.wrapper.addEvent('mouseleave', this.fireEvent.pass('onMouseLeave',this));
-				
+		this.wrapper.addEvent('mouseenter', function() {
+			this.fireEvent.pass('onMouseEnter',this);
+		});
+		this.wrapper.addEvent('mouseleave', function() {
+			this.fireEvent.pass('onMouseLeave',this);
+		});	
 		this.slideOut = new Element('div').setStyles({
 			position: 'absolute',
 			overflow: 'hidden',
@@ -41,24 +44,24 @@ var QScroller = new Class({
 			left: 0,
 			width: this.wrapper.getStyle('width'),
 			height: this.wrapper.getStyle('height')
-		}).injectInside(this.wrapper);
+		}).inject(this.wrapper,'inside');
 
 		this.slideIn = this.slideOut.clone();
-		this.slideIn.injectInside(this.wrapper);
+		this.slideIn.inject(this.wrapper,'inside');
 				
 		this.slides = $$('.'+this.options.slides);
 		
-		if($defined(this.options.buttons)) {
-			if($defined(this.options.buttons.next)) {
+		if(this.options.buttons != null) {
+			if(this.options.buttons.next != null) {
 				$(this.options.buttons.next).addEvent('click', this.next.bind(this));
 			}
-			if($defined(this.options.buttons.prev)) {
+			if(this.options.buttons.prev != null) {
 				$(this.options.buttons.prev).addEvent('click', this.prev.bind(this));
 			}	
-			if($defined(this.options.buttons.play)) {
+			if(this.options.buttons.play != null) {
 				$(this.options.buttons.play).addEvent('click', this.play.bind(this));
 			}	
-			if($defined(this.options.buttons.stop)) {
+			if(this.options.buttons.stop != null) {
 				$(this.options.buttons.stop).addEvent('click', this.stop.bind(this));
 			}	
 		}
@@ -82,10 +85,10 @@ var QScroller = new Class({
 	show: function() {
 		var slide = this.slideIn.getElement('div');
 		if(slide) {
-			slide.replaceWith(this.curSlide);
+			//slide.replaces(this.curSlide);
 		} else {
-			this.curSlide.injectInside(this.slideIn);
-		}
+			this.curSlide.inject(this.slideIn,'inside');
+		 }
 		this.doEffect();
 	},
 	doEffect: function() {
@@ -93,10 +96,18 @@ var QScroller = new Class({
 		var d = this.isFirst ? 0:this.options.duration;
 		var t = this.options.transition;
 		
+		/*
 		var fxObj = this.slideIn.effects({
 			duration:d,
 			transition: t
 		});
+		*/
+		
+		var fxObj = new Fx.Morph(this.slideIn, {
+		    duration: d,
+		    transition: t
+		});
+		
 		var inX = 0;
 		var inY = 0;
 		var outX = 0;
@@ -131,10 +142,21 @@ var QScroller = new Class({
 			left: [inX, 0],
 			opacity: [1, 1]
 		});
+		
+		
+		var fxObj2 = new Fx.Morph(this.slideOut, {
+		    duration: d,
+		    transition: t
+		});
+		
+		/*
 		this.slideOut.effects({
 			duration: d,
 			transition: t
-		}).start({
+		})
+		*/
+		
+		fxObj2.start({
 			top: [0, outY],
 			left: [0, outX]
 		});
@@ -145,17 +167,17 @@ var QScroller = new Class({
 		this.fxOn = false;
 		this.swapSlides();
 		if(this.auto) {
-			$clear(this.timer);
+			clearTimeout(this.timer);
 			this.timer = this.load.delay(this.options.delay, this);
 		}
 	},
 	stop: function(){
-		$clear(this.timer);
+		clearTimeout(this.timer);
 		this.auto = false;
 	},
 	play: function() {
 		if(!this.auto ) {
-			$clear(this.timer);
+			clearTimeout(this.timer);
 			this.auto=true;
 			this.step = 1;
 			if(!this.fxOn) {

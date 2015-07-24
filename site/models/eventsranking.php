@@ -24,19 +24,30 @@ class JoomleagueModelEventsRanking extends JoomleagueModelProject
 	public function __construct()
 	{
 		parent::__construct();
-		$this->projectid=JRequest::getInt('p',0);
-		$this->divisionid = JRequest::getInt( 'division', 0 );
-		$this->teamid = JRequest::getInt( 'tid', 0 );
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid	= $jinput->getInt('p',0);
+		$this->divisionid	= $jinput->getInt('division',0);
+		$this->teamid 		= $jinput->getInt('tid',0);
+		$this->matchid 		= $jinput->getInt('mid',0);
+		
 		$this->setEventid(JRequest::getVar('evid', '0'));
-		$this->matchid = JRequest::getInt('mid',0);
-		$config = $this->getTemplateConfig($this->getName());
-		$defaultLimit = $this->eventid != 0 ? $config['max_events'] : $config['count_events'];
-		$this->limit=JRequest::getInt('limit',$defaultLimit);
-		$this->limitstart=JRequest::getInt('limitstart',0);
+		$config 			= $this->getTemplateConfig($this->getName());
+		$defaultLimit 		= $this->eventid != 0 ? $config['max_events'] : $config['count_events'];
+		$this->limit		= $jinput->getInt('limit',$defaultLimit);
+		$this->limitstart	= $jinput->getInt('limitstart',0);
 		$this->setOrder(JRequest::getVar('order','desc'));
 	}
 
-	function getDivision()
+	/**
+	 * @todo check! 23-07-2015
+	 * Added "$id = false" to be inline with parent
+	 * 
+	 * @see JoomleagueModelProject::getDivision()
+	 */
+	function getDivision($id = false)
 	{
 		$division = null;
 		if ($this->divisionid != 0)
@@ -108,7 +119,13 @@ class JoomleagueModelEventsRanking extends JoomleagueModelProject
 		return $this->order;
 	}
 
-	function getEventTypes()
+	
+	/**
+	 * @todo check!
+	 * Added "$evid = false" to be inline with parent
+	 * @see JoomleagueModelProject::getEventTypes()
+	 */
+	function getEventTypes($evid = false)
 	{
 		$query=	 ' SELECT	et.id as etid,me.event_type_id as id,et.* '
 				.' FROM #__joomleague_eventtype as et '

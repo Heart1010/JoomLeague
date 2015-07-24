@@ -1,7 +1,12 @@
 <?php 
-
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
 defined('_JEXEC') or die;
-
 ?>
 
 <!-- Main START -->
@@ -14,7 +19,7 @@ foreach ( $this->currentRanking as $division => $cu_rk )
 	if ($division)
 	{
 	?>
-	<table width="96%" border="0" cellpadding="0" cellspacing="0">
+	<table class="table">
 		<tr>
 			<td class="contentheading">
 				<?php
@@ -29,7 +34,7 @@ foreach ( $this->currentRanking as $division => $cu_rk )
 		</tr>
 	</table>
 
-	<table width="96%" border="0" cellpadding="0" cellspacing="0">
+	<table class="table">
 	<?php
 		$this->teams	= $this->model->getTeamsIndexedByPtid($division);
 		foreach( $cu_rk as $ptid => $team )
@@ -47,7 +52,7 @@ foreach ( $this->currentRanking as $division => $cu_rk )
 	else
 	{
 	?>
-	<table width="96%" border="0" cellpadding="0" cellspacing="0">
+	<table class="table">
 		<?php
 			$this->teams	= $this->model->getTeamsIndexedByPtid($division);
 			echo $this->loadTemplate('rankingheading');

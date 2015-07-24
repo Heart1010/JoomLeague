@@ -54,8 +54,16 @@ class JoomleagueViewPlayer extends JLGView
 		$sportstype = $config['show_plcareer_sportstype'] ? $model->getSportsType() : 0;
 		$current_round = $project->current_round;
 		$personid = $model->personid;
+		
+		// @todo check! // 23-07-2015
+		// there seems to be an issue with $teamPlayer
+		// it can happen that it's empty so added a if statement
 		$teamPlayer = $model->getTeamPlayerByRound($current_round, $personid);
-		$this->teamPlayer = $teamPlayer[0];
+		if ($teamPlayer) {
+			$this->teamPlayer = $teamPlayer[0];
+		} else {
+			$this->teamPlayer = false;
+		}
 		$this->historyPlayer = $model->getPlayerHistory($sportstype, 'ASC');
 		$this->historyPlayerStaff = $model->getPlayerHistoryStaff($sportstype, 'ASC');
 		$this->AllEvents = $model->getAllEvents($sportstype);

@@ -58,8 +58,9 @@ class JoomleagueViewTreetonode extends JLGView
 		$this->user = JFactory::getUser();
 		$this->projectws = $projectws;
 		$this->lists = $lists;
-		$this->division = $division;
-		$this->division_id = $division_id;
+		// @todo fix!
+		/* $this->division = $division; */
+		/* $this->division_id = $division_id; */
 		$this->node = $node;
 		$this->match = $match;
 		$this->pagination = $pagination;

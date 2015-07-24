@@ -47,7 +47,13 @@ class JoomleagueViewTreetomatchs extends JLGView
 		$model = $this->getModel();
 
 		$projectws = $this->get('Data','project');
-		$nodews = $this->get('Data','node');
+		
+		// @todo check!
+		// renamed "node" to "treetonode" as the output for 
+		// nodews was returning a string and it seems the view was expecting an id 
+		// so a object had to be returned
+		
+		$nodews = $this->get('Data','treetonode');
 		//build the html select list for node assigned matches
 		$ress = array();
 		$res1 = array();
@@ -142,7 +148,9 @@ class JoomleagueViewTreetomatchs extends JLGView
 		$this->treetomatchs = $treetomatchs;
 		$this->projectws = $projectws;
 		$this->nodews = $nodews;
-		$this->pagination = $pagination;
+		
+		// @todo fix!
+		/* $this->pagination = $pagination; */
 		$this->request_url = $uri->toString();
 
 		parent::display($tpl);
@@ -162,7 +170,7 @@ class JoomleagueViewTreetomatchs extends JLGView
 
 		$model = $this->getModel();
 		$projectws = $this->get('Data','project');
-		$nodews = $this->get('Data','node');
+		$nodews = $this->get('Data','treetonode');
 
 		$this->match = $match;
 		$this->projectws = $projectws;

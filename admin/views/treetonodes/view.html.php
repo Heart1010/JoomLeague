@@ -80,6 +80,7 @@ class JoomleagueViewTreetonodes extends JLGView
 
 		$this->lists = $lists;
 		$this->node = $node;
+		// @todo fix!
 	//	$this->roundcode',$roundcode);
 		$this->style = $style;
 		$this->path = $path;

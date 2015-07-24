@@ -12,8 +12,16 @@ table.about {
 	align: center;
 	border: none;
 	padding: 3px 0px 0px 20px;
+	border:1px solid black;
+	margin-top:20px;
 }
 
 table.about td {
 	width: 70px;
+	padding: 8px;
+}
+
+div.logo {
+	margin:0 auto;
+	width: 300px;
 }

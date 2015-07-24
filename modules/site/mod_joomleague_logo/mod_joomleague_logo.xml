@@ -48,7 +48,7 @@
 				
 				<field 	name="nametype" type="list" default="name" 
 						label="MOD_JOOMLEAGUE_LOGO_TEAM_NAME_LABEL"
-						description="MOD_JOOMLEAGUE_LOGO_TEAM_NAME_DESC=">
+						description="MOD_JOOMLEAGUE_LOGO_TEAM_NAME_DESC">
 					<option value="short_name">MOD_JOOMLEAGUE_LOGO_TEAM_NAME_SHORT</option>
 					<option value="middle_name">MOD_JOOMLEAGUE_LOGO_TEAM_NAME_MEDIUM</option>
 					<option value="name">MOD_JOOMLEAGUE_LOGO_TEAM_NAME_FULL</option>

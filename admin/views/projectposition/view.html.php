@@ -155,15 +155,14 @@ class JoomleagueViewProjectposition extends JLGView
 		$this->addToolbar_Editlist();		
 		parent::display($tpl);
 	}
+	
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar()
 	{ 
 		// Set toolbar items for the page
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_P_POSITION_TITLE'),'Positions');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_P_POSITION_TITLE'),'jl-Positions');
 
 		JLToolBarHelper::custom('projectposition.assign','upload.png','upload_f2.png','COM_JOOMLEAGUE_ADMIN_P_POSITION_BUTTON_UN_ASSIGN',false);
 		JToolBarHelper::divider();
@@ -172,12 +171,10 @@ class JoomleagueViewProjectposition extends JLGView
 	}
 	/**
 	* Add the page title and toolbar.
-	*
-	* @since	1.7
 	*/
 	protected function addToolbar_Editlist()
 	{ 
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_P_POSITION_EDIT_TITLE'),'Positions');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_P_POSITION_EDIT_TITLE'),'jl-Positions');
 		JLToolBarHelper::save('projectposition.save_positionslist');
 		JLToolBarHelper::cancel('projectposition.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');
 		JToolBarHelper::help('screen.joomleague',true);

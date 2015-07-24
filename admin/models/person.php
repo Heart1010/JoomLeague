@@ -235,6 +235,8 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 	 * @access	public
 	 * @return	boolean	True on success
 	 *
+	 * @todo check!
+	 * removed $deathday
 	 */
 	function storeshort($cid,$post)
 	{
@@ -247,7 +249,6 @@ class JoomleagueModelPerson extends JoomleagueModelItem
 			$tblPerson->lastname	= $post['lastname'.$cid[$x]];
 			$tblPerson->nickname	= $post['nickname'.$cid[$x]];
 			$tblPerson->birthday	= $post['birthday'.$cid[$x]];
-			$tblPerson->deathday	= $post['deathday'.$cid[$x]];
 			$tblPerson->country		= $post['country'.$cid[$x]];
 			$tblPerson->position_id	= $post['position'.$cid[$x]];
 			if(!$tblPerson->store()) {

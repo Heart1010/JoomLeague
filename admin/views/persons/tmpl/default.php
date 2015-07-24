@@ -26,9 +26,22 @@ function onupdatebirthday(cal)
 {
 	$($(cal.params.inputField).getProperty('cb')).setProperty('checked','checked');
 }
+
+
+
+jQuery('.typeahead').typeahead({
+    source: function (query, process) {
+        return jQuery.get('/typeahead', { query: query }, function (data) {
+            return process(data.options);
+        });
+    }
+});
 </script>
 
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
+
+<!-- Typeahead -->
+
 
 <!-- Filter -->
 <div class="clearfix">
@@ -53,7 +66,7 @@ function onupdatebirthday(cal)
 </div>
 
 <!-- Rows -->
-		<table class="table table-striped" id="articleList">
+		<table class="table table-striped persons" id="articleList">
 			<thead>
 				<tr>
 					<th width="5"><?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_NUM'); ?></th>
@@ -144,23 +157,23 @@ function onupdatebirthday(cal)
 							?>
 							<td class="center">
 								<input	<?php echo $inputappend; ?> type="text" size="15"
-										class="inputbox" name="firstname<?php echo $row->id; ?>"
+										class="input-medium" name="firstname<?php echo $row->id; ?>"
 										value="<?php echo stripslashes(htmlspecialchars($row->firstname)); ?>"
 										onchange="document.getElementById('cb<?php echo $i; ?>').checked=true" />
 							</td>
 							<td class="center">
 								<input	<?php echo $inputappend; ?> type="text" size="15"
-										class="inputbox" name="nickname<?php echo $row->id; ?>"
+										class="input-medium" name="nickname<?php echo $row->id; ?>"
 										value="<?php echo stripslashes(htmlspecialchars($row->nickname)); ?>"
 										onchange="document.getElementById('cb<?php echo $i; ?>').checked=true" />
 							</td>
 							<td class="center">
 								<input	<?php echo $inputappend; ?> type="text" size="15"
-										class="inputbox" name="lastname<?php echo $row->id; ?>"
+										class="input-medium" name="lastname<?php echo $row->id; ?>"
 										value="<?php echo stripslashes(htmlspecialchars($row->lastname)); ?>"
 										onchange="document.getElementById('cb<?php echo $i; ?>').checked=true" />
 							</td>
-							<td class="center">
+							<td class="center image">
 								<?php
 								if (empty($row->picture) || !JFile::exists(JPATH_SITE.'/'.$row->picture))
 								{
@@ -176,8 +189,15 @@ function onupdatebirthday(cal)
 								}
 								else
 								{
+									if (JFile::exists(JPATH_SITE.'/'.$row->picture)) {
+										$imageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_TEAMS_CUSTOM_IMAGE');
+										echo JHtml::_('image','administrator/components/com_joomleague/assets/images/ok.png',$imageTitle,'title= "'.$imageTitle.'"');
+										
+									/*
 									$playerName = JoomleagueHelper::formatName(null ,$row->firstname, $row->nickname, $row->lastname, 0);
 									echo JoomleagueHelper::getPictureThumb($row->picture, $playerName, 0, 21, 4);
+									*/
+								}
 								}
 								?>
 							</td>
@@ -191,6 +211,7 @@ function onupdatebirthday(cal)
 								} else {
 									$date = JHtml::date( $row->birthday, 'Y-m-d', true);
 								}
+								
 								if ($is_checked)
 								{
 									echo $row->birthday;

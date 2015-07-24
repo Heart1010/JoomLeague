@@ -48,7 +48,7 @@
 					label="MOD_JOOMLEAGUE_CALENDAR_LABEL_TIME_FORMAT"
 					description="MOD_JOOMLEAGUE_CALENDAR_LABEL_TIME_FORMAT_DESC" />
 									
-				<field name="cal_start_day" type="radio" class="btn-group btn-group-yesno" default="1"
+				<field name="cal_start_day" type="list" default="1"
 					label="MOD_JOOMLEAGUE_CALENDAR_CALSTARTDAYLBL" description="MOD_JOOMLEAGUE_CALENDAR_CALSTARTDAYDESC">
 					<option value="0">0</option>
 					<option value="1">1</option>
@@ -59,7 +59,7 @@
 					<option value="6">6</option>
 				</field>
 
-				<field name="cal_length_days" type="radio" class="btn-group btn-group-yesno" default="2"
+				<field name="cal_length_days" type="list" default="2"
 					label="MOD_JOOMLEAGUE_CALENDAR_LENGTHDAYSLBL" description="MOD_JOOMLEAGUE_CALENDAR_LENGTHDAYSDESC">
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -123,7 +123,7 @@
 					<option value="1">MOD_JOOMLEAGUE_CALENDAR_YES</option>
 				</field>
 
-				<field name="team_names" type="radio" class="btn-group btn-group-yesno" default="short_name"
+				<field name="team_names" type="list" default="short_name"
 					label="MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESLBL" description="MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESDESC">
 					<option value="-">MOD_JOOMLEAGUE_CALENDAR_NONAMES</option>
 					<option value="short_name">MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESOPTION1</option>
@@ -131,7 +131,7 @@
 					<option value="name">MOD_JOOMLEAGUE_CALENDAR_TEAMNAMESOPTION3</option>
 				</field>
 
-				<field name="team_logos" type="radio" class="btn-group btn-group-yesno" default="-" label="MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSLBL"
+				<field name="team_logos" type="list" default="-" label="MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSLBL"
 					description="MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSDESC">
 					<option value="-">MOD_JOOMLEAGUE_CALENDAR_NONAMES</option>
 					<option value="logo_small">MOD_JOOMLEAGUE_CALENDAR_CLUBLOGOSOPTION1</option>

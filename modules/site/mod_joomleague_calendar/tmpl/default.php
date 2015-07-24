@@ -22,7 +22,7 @@
  */
 defined('_JEXEC') or die;
 
-$display = ($params->get('update_module') == 1) ? 'block' : 'none';ssss
+$display = ($params->get('update_module') == 1) ? 'block' : 'none';
 ?>
 
 

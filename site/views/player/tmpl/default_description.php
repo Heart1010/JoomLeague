@@ -11,19 +11,27 @@ defined('_JEXEC') or die;
 <!-- Team Player Description START -->
 <?php
 	$description = "";
-	if ( isset($this->teamPlayer) && !empty($this->teamPlayer->notes) )
-	{
-		$description = $this->teamPlayer->notes;
+	if ($this->teamPlayer) {
+		if (isset($this->teamPlayer) && !empty($this->teamPlayer->notes)) {
+			{
+				$description = $this->teamPlayer->notes;
+			}
+		} else {
+			if (!empty($this->person->notes))
+			{
+				$description = $this->person->notes;
+			}
+		}
 	}
 	else
 	{
-		if ( !empty($this->person->notes) )
+		if (!empty($this->person->notes))
 		{
 			$description = $this->person->notes;
 		}
 	}
 
-	if ( !empty($description) )
+	if (!empty($description))
 	{
 		?>
 		<h2><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_INFO' );	?></h2>

@@ -21,13 +21,13 @@
 	//echo " - " . JHtml::calendar( $this->enddate, 'enddate', 'enddate', $dateformat );
 	if ($this->config['use_tabbed_view']==0)
 	{
-		echo "<td>".JHtml::_('select.genericlist', $this->lists['type'], 'type' , 'class="inputbox" size="1"', 'value', 'text', $this->type )."</td>";
+		echo "<td>".JHtml::_('select.genericlist', $this->lists['type'], 'type' , 'class="input-medium" size="1"', 'value', 'text', $this->type )."</td>";
 	}
-	echo "<td>".JHtml::_('select.genericlist', $this->lists['frommatchday'], 'from' , 'class="inputbox" size="1"', 'value' ,'text' , $this->from )."</td>";
-	echo "<td>".JHtml::_('select.genericlist', $this->lists['tomatchday'], 'to' , 'class="inputbox" size="1"', 'value', 'text', $this->to )."</td>";
+	echo "<td>".JHtml::_('select.genericlist', $this->lists['frommatchday'], 'from' , 'class="input-medium" size="1"', 'value' ,'text' , $this->from )."</td>";
+	echo "<td>".JHtml::_('select.genericlist', $this->lists['tomatchday'], 'to' , 'class="input-medium" size="1"', 'value', 'text', $this->to )."</td>";
 
 	?>
-		<td><input type="submit" class="button" name="reload View"
+		<td><input type="submit" class="button btn" name="reload View"
 			value="<?php echo JText::_('COM_JOOMLEAGUE_RANKING_FILTER'); ?>"></td>
 	</tr>
 </table>

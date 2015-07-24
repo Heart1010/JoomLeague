@@ -8,11 +8,12 @@
  */
 defined('_JEXEC')or die;
 ?>
-<fieldset class="adminform">
+<fieldset class="form-vertical">
 	<legend><?php echo JText::_('JCONFIG_PERMISSIONS_LABEL'); ?></legend>
 	<?php foreach ($this->form->getFieldset('Permissions') as $field): ?>
-		<?php echo $field->label; ?>
-		<div class="clr"> </div>
-		<?php echo $field->input; ?>
+		<div class="control-group">
+			<div class="control-label"><?php echo $field->label;?></div>
+       		<div class="controls"><?php echo $field->input;?></div>
+    	</div>
 	<?php endforeach; ?>
 </fieldset>

@@ -5,6 +5,7 @@
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
+ * 
  */
 defined('_JEXEC') or die;
 
@@ -32,6 +33,64 @@ function searchTeam(val,key)
 
 var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?option=com_joomleague&task=quickadd.searchteam&project_id=<?php echo $this->projectws->id; ?>';
 </script>
+<?php 
+$script = "
+jQuery(document).ready(function() {
+	var value, searchword = jQuery('#quickadd');
+
+		// Set the input value if not already set.
+		if (!searchword.val())
+		{
+			searchword.val('" . JText::_('Search', true) . "');
+		}
+
+		// Get the current value.
+		value = searchword.val();
+
+		// If the current value equals the default value, clear it.
+		searchword.on('focus', function()
+		{	var el = jQuery(this);
+			if (el.val() === '" . JText::_('Search', true) . "')
+			{
+				el.val('');
+			}
+		});
+
+		// If the current value is empty, set the previous value.
+		searchword.on('blur', function()
+		{	var el = jQuery(this);
+			if (!el.val())
+			{
+				el.val(value);
+			}
+		});
+
+		jQuery('#quickaddForm').on('submit', function(e){
+			e.stopPropagation();
+		});";
+
+
+/*
+ * This segment of code sets up the autocompleter.
+ */
+	JHtml::_('script', 'media/jui/js/jquery.autocomplete.min.js', false, false, false, false, true);
+
+	$script .= "
+	var suggest = jQuery('#quickadd').autocomplete({
+		serviceUrl: '" . JRoute::_('index.php?option=com_joomleague&task=quickadd.searchteam&project_id='.$this->projectws->id, false) . "',		
+		paramName: 'q',
+		minChars: 1,
+		maxHeight: 400,
+		width: 300,
+		zIndex: 9999,
+		deferRequestBy: 500
+	});";
+
+$script .= "});";
+
+JFactory::getDocument()->addScriptDeclaration($script);
+?>
+
 <fieldset class="form-horizontal">
 	<legend>
 	<?php
@@ -40,8 +99,12 @@ var quickaddsearchurl = '<?php echo JUri::root();?>administrator/index.php?optio
 	</legend>
 	<form id="quickaddForm" action="<?php echo JRoute::_(JUri::root().'administrator/index.php?option=com_joomleague&task=quickadd.addteam'); ?>" method="post">
 		<?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_QUICKADD_DESCR'); ?>
-		<input type="text" name="quickadd" id="quickadd" size="50" />
-		<input type="submit" name="submit" id="submit" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_ADD');?>" />
+		<div class="clearfix"></div>
+		<div class="btn-wrapper input-append pull-left">
+			<input type="text" name="p" id="quickadd" size="50" value="<?php htmlspecialchars(JFactory::getApplication()->input->get('q', '', 'string')); ?>" />
+			<input class="btn" type="submit" name="submit" id="submit" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_ADD');?>" />
+		</div>
+		
 		<input type="hidden" name="project_id" id="project_id" value="<?php echo $this->projectws->id; ?>" />
 		<input type="hidden" id="cteamid" name="cteamid" value="">
 		<?php echo JHtml::_('form.token')."\n"; ?>

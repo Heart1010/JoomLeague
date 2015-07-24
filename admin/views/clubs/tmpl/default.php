@@ -13,7 +13,7 @@ $ordering=($this->lists['order'] == 'a.ordering');
 
 JHtml::_('behavior.tooltip');
 ?>
-<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
+<form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
 	
 <div class="clearfix">
 	<div class="btn-wrapper input-append pull-left">

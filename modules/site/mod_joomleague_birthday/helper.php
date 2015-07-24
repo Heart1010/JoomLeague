@@ -106,11 +106,10 @@ if ($params->get('use_which') <= 1)
 	if ($params->get('limit') > 0) $query .= " LIMIT " . $params->get('limit');
 
 	$database->setQuery($query);
-	//echo("<hr>".$database->getQuery($query));
-	$players=$database->loadAssocList();
+	$players = $database->loadAssocList();
 }
 
-//get staff info, we have to make a function for this
+// get staff info, we have to make a function for this
 if ($params->get('use_which') == 2 || $params->get('use_which') == 0)
 {
 	$query="SELECT p.id, p.birthday, p.firstname, p.nickname, p.lastname,
@@ -168,6 +167,6 @@ if ($params->get('use_which') == 2 || $params->get('use_which') == 0)
 
 	$database->setQuery($query);
 	//echo("<hr>".$database->getQuery($query));
-	$crew=$database->loadAssocList();
+	$crew = $database->loadAssocList();
 }
 ?>

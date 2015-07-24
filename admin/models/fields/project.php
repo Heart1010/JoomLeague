@@ -14,7 +14,7 @@ class JFormFieldProject extends JFormField
 	protected $type = 'project';
 
 	protected function getInput() {
-		$required 	= $this->element['required'] == "true" ? 'true' : 'false';
+		$required 	= $this->required == "true" ? 'true' : 'false';
 		$db			= JFactory::getDbo();
 		$lang		= JFactory::getLanguage();
 		$extension	= "com_joomleague";

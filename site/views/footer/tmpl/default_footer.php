@@ -13,7 +13,7 @@ if (JComponentHelper::getParams('com_joomleague')->get('show_footer',1))
 {
 ?>
 	<br />
-		<div class="copyright">
+		<div class="poweredby">
 			<?php
 			echo ' :: Powered by ';
 			echo JHtml::link('http://www.joomleague.at','JoomLeague',array('target' => '_blank'));

@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 	cellspacing="0">
 	<tr>
 		<td>
-		<table id="playercareer">
+		<table id="playercareer" class="table">
 			<thead>
 			<tr class="sectiontableheader">
 				<th class="td_l" class="nowrap"><?php echo JText::_('COM_JOOMLEAGUE_PERSON_COMPETITION'); ?></th>

@@ -23,9 +23,36 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 	public function __construct()
 	{
 		parent::__construct();
-		$this->projectid=JRequest::getInt('p',0);
-		$this->personid=JRequest::getInt('pid',0);
-		$this->teamplayerid=JRequest::getInt('pt',0);
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		// @tod check!
+		// changed getInt to getString as the variables are like nr:name
+		$this->projectid 	= $jinput->getString('p',0); // projectid
+		if ($this->projectid) {
+			# is the : within the string?
+			if (strpos($this->projectid,':') !== false) {
+				$arr = explode(":", $this->projectid, 2);
+				$this->projectid = $arr[0];
+			}
+		}
+		$this->personid		= $jinput->getString('pid',0); // personid
+		if ($this->personid) {
+			# is the : within the string?
+			if (strpos($this->personid,':') !== false) {
+				$arr = explode(":", $this->personid, 2);
+				$this->personid = $arr[0];
+			}
+		}
+		$this->teamplayerid	= $jinput->getString('pt',0); // teamplayerid
+		if ($this->teamplayerid) {
+			# is the : within the string?
+			if (strpos($this->teamplayerid,':') !== false) {
+				$arr = explode(":", $this->teamplayerid, 2);
+				$this->teamplayerid = $arr[0];
+			}
+		}
 	}
 
 	// Get all teamplayers of the project where the person played in
