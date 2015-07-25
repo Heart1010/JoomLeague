@@ -9,7 +9,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<copyright>Copyright (C) 2013-2015 joomlaeventmanager.net</copyright>
 	<version>3.0.1</version>
-	<description>PKG_JOOMLEAGUE_INSTALLATION_DESCRIPTION</description>
+	<description>Joomleague Package</description>
 	
 	<scriptfile>pkg_install.php</scriptfile>
 

@@ -14,7 +14,7 @@ defined ('_JEXEC') or die;
 /**
  * package installer script.
  */
-class Pkg_JoomleagueInstallerScript {
+class pkg_joomleagueInstallerScript {
 
 	private $oldRelease = "";
 	private $newRelease = "";
@@ -48,7 +48,7 @@ class Pkg_JoomleagueInstallerScript {
 		);
 
 	public function install($parent) {
-			//$this->getHeader();
+			$this->getHeader();
 		return true;
 	}
 
@@ -57,7 +57,7 @@ class Pkg_JoomleagueInstallerScript {
 	}
 
 	public function update($parent) {
-			//$this->getHeader();
+			$this->getHeader();
 		return self::install($parent);
 	}
 
@@ -198,18 +198,6 @@ class Pkg_JoomleagueInstallerScript {
 	protected function setUpdateServer() {
 		$app = JFactory::getApplication();
 		
-		$version = array('3.0.1','3.0.2','3.0.3','3.0.4','3.0.5','3.0.6');
-		
-		if (in_array($this->oldRelease,$version)) {
-			// Remove entry in table update_sites
-			$db = JFactory::getDbo();
-			$query	= $db->getQuery(true);
-			$query->delete('#__update_sites');
-			$query->where('name = '.$db->q('JoomLeague Update Site'));
-			$db->setQuery($query);
-			$db->execute(); 
-		}
-		
 		return true;
 		
 	}
@@ -221,8 +209,6 @@ class Pkg_JoomleagueInstallerScript {
 	private function getHeader() {
 		?>
 		<img src="../media/com_joomleague/images/logo.png" alt="" style="float:left; padding-right:20px;" />
-		<h1><?php echo JText::_('PKG_JOOMLEAGUE'); ?></h1>
-		<p class="small"><?php echo JText::_('PKG_JOOMLEAGUE_INSTALLATION_HEADER'); ?></p>
 		<?php
 	}
 	
