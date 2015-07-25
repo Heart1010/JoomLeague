@@ -37,15 +37,34 @@ class TableClub extends JLTable
 	public function check()
 	{	
 		// setting alias
-		if ( empty( $this->alias ) )
+		if ( empty($this->alias))
 		{
-			$this->alias = JFilterOutput::stringURLSafe( $this->name );
+			$this->alias = JFilterOutput::stringURLSafe($this->name);
 		}
 		else {
-			$this->alias = JFilterOutput::stringURLSafe( $this->alias ); // make sure the user didn't modify it to something illegal...
+			$this->alias = JFilterOutput::stringURLSafe($this->alias);
 		}
+		
+		// check if name is unique
+		if (!$this->id) {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('name');
+			$query->from('#__joomleague_club');
+			$query->where('name ='.$db->Quote($this->name));
+			$db->setQuery($query);
+			$result = $db->loadColumn();
+			
+			if ($result) {
+				$app = JFactory::getApplication()->enqueueMessage('Club already exists','warning');
+				return false;	
+			}
+			
+		} 
+			
 		return true;
 	}
+	
 	
 	/**
 	 * Redefined asset name, as we support action control

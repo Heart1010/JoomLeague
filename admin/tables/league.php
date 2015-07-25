@@ -39,7 +39,24 @@ class TableLeague extends JLTable
 		else {
 			$this->alias = JFilterOutput::stringURLSafe( $this->alias ); // make sure the user didn't modify it to something illegal...
 		}
-		//should check name unicity
+		
+		// check if name is unique
+		if (!$this->id) {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('name');
+			$query->from('#__joomleague_league');
+			$query->where('name ='.$db->Quote($this->name));
+			$db->setQuery($query);
+			$result = $db->loadColumn();
+				
+			if ($result) {
+				$app = JFactory::getApplication()->enqueueMessage('League already exists','warning');
+				return false;
+			}
+				
+		}
+		
 		return true;
 	}
 }
