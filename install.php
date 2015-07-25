@@ -59,7 +59,7 @@ class com_joomleagueInstallerScript
 		include_once($this->install_rootfolder.'/site/joomleague.core.php');
 		include_once($this->install_admin_rootfolder.'/assets/updates/jl_install.php');
 		
-		self::installPermissions();
+		// self::installPermissions();
 		echo JHtml::_('sliders.end');
 		echo self::getFxInitJSCode('steps');
 		?>
@@ -75,13 +75,13 @@ class com_joomleagueInstallerScript
 	}
 
 		
-	public function installPermissions()
+	public function installPermissionsObs()
 	{
 		$time_start = microtime(true);
 		jimport('joomla.access.rules');
 		$app = JFactory::getApplication();
 	
-		// Get the root rules
+		// Get the default rules (root)
 		$root = JTable::getInstance('asset');
 		$root->loadByName('root.1');
 		$root_rules = new JAccessRules($root->rules);
@@ -202,7 +202,6 @@ class com_joomleagueInstallerScript
 		$params = JComponentHelper::getParams('com_joomleague');
 		//Also uninstall db tables of JoomLeague?
 		$uninstallDB = $params->get('cfg_drop_joomleague_tables_when_uninstalled',0); 
-		$uninstallDB = true;
 		
 		if ($uninstallDB)
 		{
