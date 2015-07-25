@@ -13,30 +13,37 @@ require_once JLG_PATH_SITE.'/models/project.php';
 
 class JoomleagueModelClubInfo extends JoomleagueModelProject
 {
-	var $projectid = 0;
-	var $clubid = 0;
-	var $club = null;
+	var $projectid	= 0;
+	var $clubid 	= 0;
+	var $club 		= null;
 
 	public function __construct( )
 	{
 		parent::__construct( );
 
-		$this->projectid = JRequest::getInt( "p", 0 );
-		$this->clubid = JRequest::getInt( "cid", 0 );
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid = JLHelperFront::stringToInt($jinput->getString('p', 0));
+		$this->clubid 	 = JLHelperFront::stringToInt($jinput->getString('cid', 0));
 	}
 
+	/**
+	 * Club
+	 */
 	function getClub( )
 	{
-		if ( is_null( $this->club ) )
+		if (is_null($this->club))
 		{
-			if ( $this->clubid > 0 )
+			if ($this->clubid > 0)
 			{
-				$query = ' SELECT c.* '
-				       . ' FROM #__joomleague_club AS c '
-				       . ' WHERE c.id = '. $this->_db->Quote($this->clubid)
-				            ;
-				$this->_db->setQuery($query);
-				$this->club = $this->_db->loadObject();
+				$db 	= JFactory::getDbo();
+				$query	= $db->getQuery(true);
+				$query->select('c.*');
+				$query->from('#__joomleague_club AS c');
+				$query->where('c.id = '.$db->Quote($this->clubid));
+				$db->setQuery($query);
+				$this->club = $db->loadObject();
 			}
 		}
 		return $this->club;
@@ -44,8 +51,8 @@ class JoomleagueModelClubInfo extends JoomleagueModelProject
 
 	function getTeamsByClubId()
 	{
-		$teams = array( 0 );
-		if ( $this->clubid > 0 )
+		$teams = array(0);
+		if ($this->clubid > 0)
 		{
 			$query = ' SELECT id, '
 				     	. ' CASE WHEN CHAR_LENGTH( alias ) THEN CONCAT_WS( \':\', id, alias ) ELSE id END AS slug, '
@@ -66,35 +73,44 @@ class JoomleagueModelClubInfo extends JoomleagueModelProject
 		return $teams;
 	}
 
+	
+	/**
+	 * getStadiums
+	 */
 	function getStadiums()
 	{
 		$stadiums = array();
 
 		$club = $this->getClub();
-		if ( !isset( $club ) )
+		if (!isset($club))
 		{
 			return null;
 		}
-		if ( $club->standard_playground > 0 )
+		if ($club->standard_playground > 0)
 		{
 			$stadiums[] = $club->standard_playground;
 		}
 		$teams = $this->getTeamsByClubId();
 
-		if ( count( $teams > 0 ) )
+		if (count($teams > 0))
 		{
-			foreach ($teams AS $team )
+			foreach ($teams AS $team)
 			{
-				$query = ' SELECT distinct(standard_playground) '
-				       . ' FROM #__joomleague_project_team '
-				       . ' WHERE team_id = '.(int)$team->id
-				       . ' AND standard_playground > 0';
-				if ( $club->standard_playground > 0 )
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select('DISTINCT standard_playground');
+				$query->from('#__joomleague_project_team');
+				$query->where('team_id = '.$team->id);
+				$query->where('standard_playground > 0');
+				
+				if ($club->standard_playground > 0)
 				{
-					$query .= ' AND standard_playground <> '.$club->standard_playground;
+					$query->where('standard_playground <> '.$club->standard_playground);
 				}
-				$this->_db->setQuery($query);
-				if ( $res = $this->_db->loadResult() )
+				$db->setQuery($query);
+				$result = $db->loadResult();
+				
+				if ($result)
 				{
 					$stadiums[] = $res;
 				}
@@ -103,33 +119,44 @@ class JoomleagueModelClubInfo extends JoomleagueModelProject
 		return $stadiums;
 	}
 
+	
+	/**
+	 * Playgrounds
+	 */
 	function getPlaygrounds( )
 	{
 		$playgrounds = array();
 
 		$stadiums = $this->getStadiums();
-		if ( !isset ( $stadiums ) )
+		if (!isset($stadiums))
 		{
 			return null;
 		}
 
-		foreach ( $stadiums AS $stadium )
+		foreach ($stadiums AS $stadium)
 		{
-			$query = '	SELECT id AS value, name AS text, pl.*, '
-    			     . ' CASE WHEN CHAR_LENGTH( pl.alias ) THEN CONCAT_WS( \':\', pl.id, pl.alias ) ELSE pl.id END AS slug '
-				     . ' FROM #__joomleague_playground AS pl '
-				     . ' WHERE id = '. $this->_db->Quote($stadium)
-			            ;
-			$this->_db->setQuery($query, 0, 1);
-			$playgrounds[] = $this->_db->loadObject();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('pl.id AS value, pl.name AS text, pl.*, '
+					. ' CASE WHEN CHAR_LENGTH( pl.alias ) THEN CONCAT_WS( \':\', pl.id, pl.alias ) ELSE pl.id END AS slug');
+			$query->from('#__joomleague_playground AS pl');
+			$query->where('pl.id = '.$db->Quote($stadium));
+			$db->setQuery($query, 0, 1);
+			$playgrounds[] = $db->loadObject();
 		}
 		return $playgrounds;
 	}
 
-	function getAddressString( )
+	
+	/**
+	 * AddressString
+	 */
+	function getAddressString()
 	{
 		$club = $this->getClub();
-		if ( !isset ( $club ) ) { return null; }
+		if (!isset($club)) { 
+			return null; 
+		}
 
 		$address_parts = array();
 		if (!empty($club->address))
@@ -159,6 +186,10 @@ class JoomleagueModelClubInfo extends JoomleagueModelProject
 		return $address;
 	}
 	
+	
+	/**
+	 * HasEditPermission
+	 */
 	function hasEditPermission($task=null)
 	{
 		//check for ACL permsission and project admin/editor

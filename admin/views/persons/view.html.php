@@ -124,7 +124,7 @@ class JoomleagueViewPersons extends JLGView
 		{
                     //back icon should be replaced by the abort/close icon
                     JToolBarHelper::back('COM_JOOMLEAGUE_ADMIN_PERSONS_BACK','index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display');
-                    JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PERSONS_ASSIGN_REFEREES'),'generic.png');
+                    JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PERSONS_ASSIGN_REFEREES'),'jl-Referees');
                     $items = $mdlQuickAdd->getNotAssignedReferees(JString::strtolower($search),$project_id);
 		}
 

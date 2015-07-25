@@ -28,10 +28,15 @@ class JoomleagueModelReferee extends JoomleagueModelPerson
 	public function __construct()
 	{
 		parent::__construct();
-		$this->projectid=JRequest::getInt('p',0);
-		$this->personid=JRequest::getInt('pid',0);
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid = JLHelperFront::stringToInt($jinput->getInt('p',0));
+		$this->personid  = JLHelperFront::stringToInt($jinput->getInt('pid',0));
 	}
 
+	
 	function &getReferee()
 	{
 		if (is_null($this->_data))
@@ -88,22 +93,28 @@ class JoomleagueModelReferee extends JoomleagueModelPerson
 						LEFT JOIN #__joomleague_position AS pos ON ppos.position_id=pos.id
 						WHERE per.id='.$this->_db->Quote($personid).' AND per.published = 1 ORDER BY s.ordering ASC,l.ordering ASC,p.name ASC ';
 			$this->_db->setQuery($query);
-			$this->_history=$this->_db->loadObjectList();
+			$this->_history = $this->_db->loadObjectList();
 		}
 		return $this->_history;
 	}
 
+	
 	function getPresenceStats($project_id,$person_id)
 	{
-		$query='	SELECT	count(mr.id) AS present
-					FROM #__joomleague_match_referee AS mr
-					INNER JOIN #__joomleague_match AS m ON mr.match_id=m.id
-					INNER JOIN #__joomleague_project_referee AS pr ON pr.id=mr.project_referee_id
-					WHERE pr.person_id='.$this->_db->Quote((int)$person_id).' AND pr.project_id='.$this->_db->Quote((int)$project_id);
-		$this->_db->setQuery($query,0,1);
-		$inoutstat=$this->_db->loadResult();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('COUNT(mr.id) AS present');
+		$query->from('#__joomleague_match_referee AS mr');
+		$query->join('INNER','#__joomleague_match AS m ON mr.match_id=m.id');
+		$query->join('INNER','#__joomleague_project_referee AS pr ON pr.id=mr.project_referee_id');
+		$query->where('pr.person_id='.$db->Quote($person_id));
+		$query->where('pr.project_id='.$db->Quote($project_id));
+		$db->setQuery($query,0,1);
+		
+		$inoutstat = $db->loadResult();
 		return $inoutstat;
 	}
+	
 
 	function getGames()
 	{

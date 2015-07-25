@@ -40,14 +40,14 @@ defined('_JEXEC') or die;
 		}
 		?>
 		<td class="info">
-			<table class="plinfo">
+			<table class="plinfo table">
 				<?php
 				if(!empty($this->person->country) && ($this->config["show_nationality"] == 1))
 				{
 				?>
 				<tr>
-					<td class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_NATIONALITY' ); ?>
-					</td>
+					<td><span class="label"><?php echo JText::_( 'COM_JOOMLEAGUE_PERSON_NATIONALITY' ); ?>
+					</span></td>
 					<td class="data">
 					<?php
 						echo Countries::getCountryFlag( $this->person->country ) . " " .
@@ -59,12 +59,11 @@ defined('_JEXEC') or die;
 				}
 				?>
 				<tr>
-					<td class="label">
-
+					<td><span class="label">
 							<?php
 							echo JText::_( 'COM_JOOMLEAGUE_PERSON_NAME' );
 							?>
-
+							</span>
 					</td>
 					<td class="data">
 						<?php
@@ -97,12 +96,12 @@ defined('_JEXEC') or die;
 						{
 							?>
 							<tr>
-								<td class="label">
+								<td><span class="label">
 
 										<?php
 										echo JText::_( 'COM_JOOMLEAGUE_PERSON_NICKNAME' );
 										?>
-
+										</span>
 								</td>
 								<td class="data">
 									<?php
@@ -119,7 +118,7 @@ defined('_JEXEC') or die;
 					#$this->config['show_birthday'] = 4;
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								switch ( $this->config['show_birthday'] )
@@ -142,7 +141,7 @@ defined('_JEXEC') or die;
 								}
 								echo JText::_( $outputStr );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -189,12 +188,11 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
-
+						<td><span class="label">
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_ADDRESS' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -216,12 +214,12 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_PHONE' );
 								?>
-
+								</span>
 						</td>
 						<td class="data">
 							<?php
@@ -236,12 +234,12 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_MOBILE' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -256,12 +254,12 @@ defined('_JEXEC') or die;
 			{
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_EMAIL' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -290,12 +288,12 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_WEBSITE' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -313,12 +311,11 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
-
+						<td><span class="label">
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_HEIGHT' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -332,12 +329,11 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
-
+						<td><span class="label">
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_WEIGHT' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -351,12 +347,12 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_POSITION' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php
@@ -370,12 +366,12 @@ defined('_JEXEC') or die;
 				{
 					?>
 					<tr>
-						<td class="label">
+						<td><span class="label">
 
 								<?php
 								echo JText::_( 'COM_JOOMLEAGUE_PERSON_REGISTRATIONNR' );
 								?>
-
+							</span>
 						</td>
 						<td class="data">
 							<?php

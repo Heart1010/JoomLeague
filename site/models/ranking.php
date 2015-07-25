@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die;
 
-jimport( 'joomla.application.component.model' );
+jimport('joomla.application.component.model');
 require_once JLG_PATH_SITE.'/helpers/ranking.php';
 require_once JLG_PATH_SITE.'/models/project.php';
 
@@ -39,21 +39,14 @@ class JoomleagueModelRanking extends JoomleagueModelProject
 		$app 				= JFactory::getApplication();
 		$jinput 			= $app->input;
 		
-		$this->projectid 	= $jinput->getInt("p",0);
-		if ($this->projectid) {
-			# is the : within the string?
-			if (strpos($this->projectid,':') !== false) {
-				$arr = explode(":", $this->projectid, 2);
-				$this->projectid = $arr[0];
-			}
-		}
-		$this->round 		= $jinput->getInt("r",$this->getCurrentRound());
-		$this->part  		= $jinput->getInt("part",0);
-		$this->from  		= $jinput->getInt('from',$this->round);
-		$this->to	 		= $jinput->getInt('to',$this->round);
-		$this->type  		= $jinput->getInt('type',0);
-		$this->last  		= $jinput->getInt('last',0);
-		$this->selDivision	= $jinput->getInt('division',0);
+		$this->projectid 	= JLHelperFront::stringToInt($jinput->getInt("p",0));
+		$this->round 		= JLHelperFront::stringToInt($jinput->getInt("r",$this->getCurrentRound()));
+		$this->part  		= JLHelperFront::stringToInt($jinput->getInt("part",0));
+		$this->from  		= JLHelperFront::stringToInt($jinput->getInt('from',$this->round));
+		$this->to	 		= JLHelperFront::stringToInt($jinput->getInt('to',$this->round));
+		$this->type  		= JLHelperFront::stringToInt($jinput->getInt('type',0));
+		$this->last  		= JLHelperFront::stringToInt($jinput->getInt('last',0));
+		$this->selDivision	= JLHelperFront::stringToInt($jinput->getInt('division',0));
 	}
 
 	
@@ -83,28 +76,49 @@ class JoomleagueModelRanking extends JoomleagueModelProject
 		}
 		
 		// previous games of each team, until current round
-		$query = ' SELECT m.*, r.roundcode, '
-		       . ' CASE WHEN CHAR_LENGTH(t1.alias) AND CHAR_LENGTH(t2.alias) THEN CONCAT_WS(\':\',m.id,CONCAT_WS("_",t1.alias,t2.alias)) ELSE m.id END AS slug, '
-		       . ' CASE WHEN CHAR_LENGTH(p.alias) THEN CONCAT_WS(\':\',p.id,p.alias) ELSE p.id END AS project_slug '
-		       . ' FROM #__joomleague_match AS m '
-		       . ' INNER JOIN #__joomleague_round AS r ON r.id = m.round_id '
-		       . ' INNER JOIN #__joomleague_project AS p ON p.id = r.project_id '
-		       . ' INNER JOIN #__joomleague_project_team AS pt1 ON m.projectteam1_id=pt1.id '
-		       . ' INNER JOIN #__joomleague_project_team AS pt2 ON m.projectteam2_id=pt2.id '
-		       . ' INNER JOIN #__joomleague_team AS t1 ON pt1.team_id = t1.id '
-		       . ' INNER JOIN #__joomleague_team AS t2 ON pt2.team_id = t2.id '
-		       . ' WHERE r.project_id = ' . $this->_db->Quote($this->projectid)
-		       . '   AND r.roundcode <= ' . $this->_db->Quote($current->roundcode)
-		       . '   AND m.team1_result IS NOT NULL ';
-		       if($this->selDivision>0) {
-		       	$query .= '   AND (pt1.division_id = ' . $this->_db->Quote($this->selDivision);
-				$query .= '   OR pt2.division_id = ' . $this->_db->Quote($this->selDivision) . ')';
-		       }
-		       $query .= ' ORDER BY r.roundcode ASC '
-		       ;
-		$this->_db->setQuery($query);
-		$games = $this->_db->loadObjectList();
+		$db = JFactory::getDbo();
+		
+		$query = $db->getQuery(true);
+		$query->select('m.*');
+		$query->from('#__joomleague_match AS m');
+		
+		// join Round
+		$query->select('r.roundcode');
+		$query->join('INNER', '#__joomleague_round AS r ON r.id = m.round_id');
+		
+		// join Project
+		$query->join('INNER', '#__joomleague_project AS p ON p.id = r.project_id');
+		
+		// join Project-Team (team1)
+		$query->join('INNER', '#__joomleague_project_team AS pt1 ON pt1.id = m.projectteam1_id');
+		
+		// join Project-Team (team2)
+		$query->join('INNER', '#__joomleague_project_team AS pt2 ON pt2.id = m.projectteam2_id');
+		
+		// join Team (team1)
+		$query->join('INNER', '#__joomleague_team AS t1 ON t1.id = pt1.team_id');
 
+		// join Team (team2)
+		$query->join('INNER', '#__joomleague_team AS t2 ON t2.id = pt2.team_id');
+		
+		$query->select('CASE WHEN CHAR_LENGTH(t1.alias) AND CHAR_LENGTH(t2.alias) THEN CONCAT_WS(\':\',m.id,CONCAT_WS("_",t1.alias,t2.alias)) ELSE m.id END AS slug');
+		$query->select('CASE WHEN CHAR_LENGTH(p.alias) THEN CONCAT_WS(\':\',p.id,p.alias) ELSE p.id END AS project_slug');
+		
+		
+		$query->where('r.project_id = '.$db->Quote($this->projectid));
+		$query->where('r.roundcode <= ' . $db->Quote($current->roundcode));
+		$query->where('m.team1_result IS NOT NULL');
+		
+		if ($this->selDivision> 0 ) 
+		{
+			$query->where('(pt1.division_id = '.$db->Quote($this->selDivision).' OR pt2.division_id = '.$db->Quote($this->selDivision).')');
+		}
+		$query->order('r.roundcode ASC');
+		
+		
+		$db->setQuery($query);
+		$games = $db->loadObjectList();
+		
 		$teams = $this->getTeamsIndexedByPtid();
 
 		// get games per team
@@ -310,12 +324,14 @@ class JoomleagueModelRanking extends JoomleagueModelProject
 	 */
 	function _getPreviousRoundId($round_id)
 	{
-		$query = ' SELECT id ' 
-		       . ' FROM #__joomleague_round ' 
-		       . ' WHERE project_id = ' . $this->projectid
-		       . ' ORDER BY roundcode ASC ';
-		$this->_db->setQuery($query);
-		$res = $this->_db->loadColumn();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_round');
+		$query->where('project_id = ' . $this->projectid);
+		$query->order('roundcode ASC');
+		$db->setQuery($query);
+		$res = $db->loadColumn();
 		
 		if (!$res) {
 			return $round_id;
@@ -335,8 +351,8 @@ class JoomleagueModelRanking extends JoomleagueModelProject
 
 	function _sortRanking(&$ranking)
 	{
-		$order     = JRequest::getVar( 'order', '' );
-		$order_dir = JRequest::getVar( 'dir', 'ASC' );
+		$order     = JRequest::getVar('order','');
+		$order_dir = JRequest::getVar('dir','ASC');
 
 		switch ($order)
 		{

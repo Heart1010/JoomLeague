@@ -33,13 +33,18 @@ class JoomleagueModelMatrix extends JoomleagueModelProject
 		return $this->roundid;
 	}
 
-	function getDivision( )
+	/**
+	 * @todo check! // 24-07-2015
+	 * Added "$id = false" to be inline
+	 * @see JoomleagueModelProject::getDivision()
+	 */
+	function getDivision($id = false)
 	{
 		$division = null;
-		if ( $this->divisionid > 0 )
+		if ($this->divisionid > 0)
 		{
 			$division = $this->getTable("Division", "Table");
-			$division->load( $this->divisionid );
+			$division->load($this->divisionid);
 		}
 		return $division;
 	}

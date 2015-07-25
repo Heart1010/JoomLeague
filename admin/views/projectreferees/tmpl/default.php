@@ -49,26 +49,82 @@ function searchPlayer(val)
 	}
 }
 </script>
+<?php 
+$script = "
+jQuery(document).ready(function() {
+	var value, searchword = jQuery('#quickadd');
+
+		// Set the input value if not already set.
+		if (!searchword.val())
+		{
+			searchword.val('" . JText::_('Search', true) . "');
+		}
+
+		// Get the current value.
+		value = searchword.val();
+
+		// If the current value equals the default value, clear it.
+		searchword.on('focus', function()
+		{	var el = jQuery(this);
+			if (el.val() === '" . JText::_('Search', true) . "')
+			{
+				el.val('');
+			}
+		});
+
+		// If the current value is empty, set the previous value.
+		searchword.on('blur', function()
+		{	var el = jQuery(this);
+			if (!el.val())
+			{
+				el.val(value);
+			}
+		});
+
+		jQuery('#quickaddForm').on('submit', function(e){
+			e.stopPropagation();
+		});";
+
+
+/*
+ * @todo Change text // 24-07-2015
+ * At the moment only passing a name is showing results
+ * This segment of code sets up the autocompleter.
+ */
+	JHtml::_('script', 'media/jui/js/jquery.autocomplete.min.js', false, false, false, false, true);
+
+	$script .= "
+	var suggest = jQuery('#quickadd').autocomplete({
+		serviceUrl: '" . JRoute::_('index.php?option=com_joomleague&task=quickadd.searchreferee&project_id='.$this->projectws->id, false) . "',		
+		paramName: 'q',
+		minChars: 1,
+		maxHeight: 400,
+		width: 300,
+		zIndex: 9999,
+		deferRequestBy: 500
+	});";
+
+$script .= "});";
+
+JFactory::getDocument()->addScriptDeclaration($script);
+?>
+
 <?php
 $uri=JUri::root();
 ?>
 <fieldset class="form-horizontal">
-	<legend>
-	<?php
-	echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTREFEREES_QUICKADD_REFEREE');
-	?>
-	</legend>
-	<form id="quickaddForm" action="<?php echo JUri::root(); ?>administrator/index.php?option=com_joomleague&task=quickadd.addreferee" method="post">
-	<input type="hidden" id="cpersonid" name="cpersonid" value="">
-	<table>
-		<tr>
-			<td><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTREFEREES_QUICKADD_DESCR');?>:</td>
-			<td><input type="text" name="quickadd" id="quickadd"  size="50" /></td>
-			<td><input type="submit" name="submit" id="submit" value="<?php echo JText::_('Add');?>" /></td>
-		</tr>
-	</table>
+	<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTREFEREES_QUICKADD_REFEREE');?></legend>
+	
+<form id="quickaddForm" action="<?php echo JUri::root(); ?>administrator/index.php?option=com_joomleague&task=quickadd.addreferee" method="post">
+	<?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTREFEREES_QUICKADD_DESCR');?>
+	<div class="clearfix"></div>
+	<div class="btn-wrapper input-append pull-left">
+		<input type="text" name="p" id="quickadd" size="50" value="<?php htmlspecialchars(JFactory::getApplication()->input->getString('q', '')); ?>" />
+		<input class="btn" type="submit" name="submit" id="submit" value="<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_ADD');?>" />
+		<input type="hidden" id="cpersonid" name="cpersonid" value="">
+	</div>
 	<?php echo JHtml::_('form.token'); ?>
-	</form>
+</form>
 </fieldset>
 
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm" name="adminForm">
@@ -152,10 +208,12 @@ $uri=JUri::root();
 				<tbody>
 					<?php
 					$n = count($this->items);
-				foreach ($this->items as $i => $row) :
-						$link=JRoute::_('index.php?option=com_joomleague&task=projectreferee.edit&cid[]='.$row->id);
-						$checked=JHtml::_('grid.checkedout',$row,$i);
-						$inputappend='';
+					foreach ($this->items as $i => $row) :
+						$link			= JRoute::_('index.php?option=com_joomleague&task=projectreferee.edit&cid[]='.$row->id);
+						$checked		= JHtml::_('grid.checkedout',$row,$i);
+						$inputappend	= '';
+						/* $published		= JHtml::_('grid.published',$row,$i, 'tick.png','publish_x.png','projectreferee.'); */
+						$published 		= JHtml::_('jgrid.published', $row->published, $i, 'projectreferee.');
 						?>
 						<tr class="row<?php echo $i % 2; ?>">
 							<td class="center">
@@ -261,7 +319,7 @@ $uri=JUri::root();
 							</td>
 							<td class="center">
 								<?php
-								echo JHtml::_('grid.published',$row,$i, 'tick.png','publish_x.png','projectreferee.');
+								echo $published;
 								?>
 							</td>
 							<td class="order">

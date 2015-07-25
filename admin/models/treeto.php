@@ -210,7 +210,9 @@ class JoomleagueModelTreeto extends JoomleagueModelItem
 
 	public function getScript()
 	{
-		return 'administrator/components/com_joomleague/models/forms/treeto.js';
+		$script = 'administrator/components/com_joomleague/models/forms/treeto.js';
+		
+		return $script;
 	}
 	/**
 	 * Method to get the data that should be injected in the form.

@@ -1558,5 +1558,32 @@ class JoomleagueHelper
 		
 	}
 	
+
+	/**
+	 * Override for normal grid.state, this as it wasn't possible
+	 * top add a class to it.
+	 * 
+	 * @param string $filter_state
+	 * @param string $published
+	 * @param string $unpublished
+	 * @param string $archived
+	 * @param string $trashed
+	 * @return mixed
+	 */
+	public static function stateOptions($filter_state='*', $published='Published', $unpublished='Unpublished', $archived=NULL, $trashed=NULL )
+	{
+		$state[] = JHTML::_('select.option','','- '.JText::_('Select State').' -');
+		$state[] = JHTML::_('select.option','P',JText::_('JPUBLISHED'));
+		$state[] = JHTML::_('select.option','U',JText::_('JUNPUBLISHED'));
+		if ($archived) {
+			$state[] = JHTML::_('select.option','A',JText::_('JARCHIVED'));
+		}
+		if ($trashed) {
+			$state[] = JHTML::_('select.option','T',JText::_('JTRASHED'));
+		}
+	
+		return JHTML::_('select.genericlist',   $state, 'filter_state', 'class="input-medium" size="1" onchange="submitform();"', 'value', 'text', $filter_state);
+	}
+	
 }
 

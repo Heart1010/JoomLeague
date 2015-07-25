@@ -65,177 +65,15 @@ class JoomleagueModelProject extends JModelLegacy
 
 	public function __construct()
 	{
-		$this->projectid=JRequest::getInt('p',0);
 		parent::__construct();
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid = JLHelperFront::stringToInt($jinput->getInt('p',0));
 	}
 
 	
-	/**
-	 * returns project current round id
-	 *
-	 * @return int
-	 */
-	function getCurrentRound()
-	{
-		$round = $this->increaseRound();
-		return ($round ? $round->id : 0);
-	}
-
-	/**
-	 * returns project current round code
-	 *
-	 * @return int
-	 */
-	function getCurrentRoundNumber()
-	{
-		$round = $this->increaseRound();
-		return ($round ? $round->roundcode : 0);
-	}
-	
-	
-	
-	function getProject()
-	{
-		if (is_null($this->_project) && $this->projectid > 0)
-		{
-			//fs_sport_type_name = sport_type folder name
-			$query='SELECT p.*, l.country, st.id AS sport_type_id, st.name AS sport_type_name,
-					LOWER(SUBSTR(st.name, CHAR_LENGTH( "COM_JOOMLEAGUE_ST_")+1)) AS fs_sport_type_name,
-					CASE WHEN CHAR_LENGTH( p.alias )
-					THEN CONCAT_WS( \':\', p.id, p.alias )
-					ELSE p.id
-					END AS slug,
-					l.name AS league_name,
-					s.name AS season_name
-					FROM #__joomleague_project AS p
-					INNER JOIN #__joomleague_sports_type AS st ON p.sports_type_id = st.id
-					LEFT JOIN #__joomleague_league AS l ON p.league_id = l.id
-					LEFT JOIN #__joomleague_season AS s ON p.season_id = s.id
-					WHERE p.id='. $this->_db->Quote($this->projectid);
-			$this->_db->setQuery($query,0,1);
-			$this->_project = $this->_db->loadObject();
-		}
-		return $this->_project;
-	}
-	
-	
-	
-	function getSportsType()
-	{
-		if (!$project = $this->getProject())
-		{
-			$this->setError(0, Jtext::_('COM_JOOMLEAGUE_ERROR_PROJECTMODEL_PROJECT_IS_REQUIRED'));
-			return false;
-		}
-	
-		return $project->sports_type_id;
-	}
-	
-
-	/**
-	 * method to update and return the project current round
-	 * @return object
-	 */
-	function increaseRound()
-	{
-		if (!$this->_current_round)
-		{
-			if (!$project = $this->getProject()) {
-				$this->setError(0, Jtext::_('COM_JOOMLEAGUE_ERROR_PROJECTMODEL_PROJECT_IS_REQUIRED'));
-				return false;
-			}
-
-			$current_date=strftime("%Y-%m-%d %H:%M:%S");
-
-			// determine current round according to project settings
-			switch ($project->current_round_auto)
-			{
-				case 0 :	 // manual mode
-					$query="SELECT r.id, r.roundcode FROM #__joomleague_round AS r
-							 WHERE r.id =".$project->current_round;
-					break;
-
-				case 1 :	 // get current round from round_date_first
-					$query="SELECT r.id, r.roundcode FROM #__joomleague_round AS r
-							 WHERE r.project_id=".$project->id."
-								AND (r.round_date_first - INTERVAL ".($project->auto_time)." MINUTE < '".$current_date."')
-							 ORDER BY r.round_date_first DESC LIMIT 1";
-					break;
-
-				case 2 : // get current round from round_date_last
-					$query="SELECT r.id, r.roundcode FROM #__joomleague_round AS r
-							  WHERE r.project_id=".$project->id."
-								AND (r.round_date_last + INTERVAL ".($project->auto_time)." MINUTE > '".$current_date."')
-							  ORDER BY r.round_date_first ASC LIMIT 1";
-					break;
-
-				case 3 : // get current round from first game of the round
-					$query="SELECT r.id, r.roundcode FROM #__joomleague_round AS r,#__joomleague_match AS m
-							WHERE r.project_id=".$project->id."
-								AND m.round_id=r.id
-								AND (m.match_date - INTERVAL ".($project->auto_time)." MINUTE < '".$current_date."')
-							ORDER BY m.match_date DESC LIMIT 1";
-					break;
-
-				case 4 : // get current round from last game of the round
-					$query="SELECT r.id, r.roundcode FROM #__joomleague_round AS r, #__joomleague_match AS m
-							WHERE r.project_id=".$project->id."
-								AND m.round_id=r.id
-								AND (m.match_date + INTERVAL ".($project->auto_time)." MINUTE > '".$current_date."')
-							ORDER BY m.match_date ASC LIMIT 1";
-					break;
-			}
-			$this->_db->setQuery($query);
-			$result = $this->_db->loadObject();
-
-			// If result is empty, it probably means either this is not started, either this is over, depending on the mode.
-			// Either way, do not change current value
-			if (!$result)
-			{
-				$query = ' SELECT r.id, r.roundcode FROM #__joomleague_round AS r '
-				       . ' WHERE r.project_id = '. $project->current_round
-				       ;
-				$this->_db->setQuery($query);
-				$result = $this->_db->loadObject();
-
-				if (!$result)
-				{
-					if ($project->current_round_auto == 2) {
-					    // the current value is invalid... saison is over, just take the last round
-					    $query = ' SELECT r.id, r.roundcode FROM #__joomleague_round AS r '
-						    . ' WHERE r.project_id = '. $project->id
-						    . ' ORDER BY . r.roundcode DESC '
-						    ;
-					    $this->_db->setQuery($query);
-					    $result = $this->_db->loadObject();
-					} else {
-					    // the current value is invalid... just take the first round
-					    $query = ' SELECT r.id, r.roundcode FROM #__joomleague_round AS r '
-						    . ' WHERE r.project_id = '. $project->id
-						    . ' ORDER BY . r.roundcode ASC '
-						    ;
-					    $this->_db->setQuery($query);
-					    $result = $this->_db->loadObject();
-					}
-
-				}
-			}
-
-			// Update the database if determined current round is different from that in the database
-			if ($result && ($project->current_round <> $result->id))
-			{
-				$query = ' UPDATE #__joomleague_project SET current_round = '.$result->id
-				       . ' WHERE id = ' . $this->_db->Quote($project->id);
-				$this->_db->setQuery($query);
-				if (!$this->_db->execute()) {
-					JError::raiseWarning(0, JText::_('COM_JOOMLEAGUE_ERROR_CURRENT_ROUND_UPDATE_FAILED'));
-				}
-			}
-			$this->_current_round = $result;
-		}
-		return $this->_current_round;
-	}
-
 	function getColors($configcolors='')
 	{
 		$s=substr($configcolors,0,-1);
@@ -270,7 +108,35 @@ class JoomleagueModelProject extends JModelLegacy
 		return $colors;
 	}
 	
+	
+	
+	/**
+	 * returns project current round id
+	 */
+	function getCurrentRound()
+	{
+		$round	= $this->increaseRound();
+		$result = $round ? $round->id : 0;
+	
+		return $result;
+	}
+	
+	
+	/**
+	 * returns project current round code
+	 */
+	function getCurrentRoundNumber()
+	{
+		$round  = $this->increaseRound();
+		$result = $round ? $round->roundcode : 0;
+	
+		return $result;
+	}
+	
 
+	/**
+	 * getDivision
+	 */
 	function getDivision($id)
 	{
 		$divs=$this->getDivisions();
@@ -293,10 +159,13 @@ class JoomleagueModelProject extends JModelLegacy
 			{
 				if (empty($this->_divisions))
 				{
-					$query="SELECT * from #__joomleague_division
-						  WHERE project_id=".$this->projectid;
-					$this->_db->setQuery($query);
-					$this->_divisions=$this->_db->loadObjectList('id');
+					$db = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query->select('*');
+					$query->from('#__joomleague_division');
+					$query->where('project_id = '.$this->projectid);
+					$db->setQuery($query);
+					$this->_divisions = $db->loadObjectList('id');
 				}
 				if ($divLevel)
 				{
@@ -341,24 +210,65 @@ class JoomleagueModelProject extends JModelLegacy
 	
 	function getDivisionsId($divLevel=0)
 	{
-		$query="SELECT id from #__joomleague_division
-				  WHERE project_id=".$this->projectid;
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_division');
+		$query->where('project_id='.$this->projectid);
 		if ($divLevel==1)
 		{
-			$query .= " AND (parent_id=0 OR parent_id IS NULL) ";
+			$query->where('(parent_id = 0 OR parent_id IS NULL)');
 		}
 		else if ($divLevel==2)
 		{
-			$query .= " AND parent_id>0";
+			$query->where('parent_id > 0');
 		}
-		$query .= " ORDER BY ordering";
-		$this->_db->setQuery($query);
-		$res = $this->_db->loadColumn();
+		$query->order('ordering');
+		$db->setQuery($query);
+		$res = $db->loadColumn();
 		if(count($res) == 0) {
 			echo JText::_('COM_JOOMLEAGUE_RANKING_NO_SUBLEVEL_DIVISION_FOUND') . $divLevel;
 		}
 		return $res;
 	}
+	
+	
+	
+	/**
+	 * getProject
+	 */
+	function getProject()
+	{
+		if (is_null($this->_project) && $this->projectid > 0)
+		{
+			// Create a new query object.
+			$db 	= $this->getDbo();
+			$query	= $db->getQuery(true);
+			$app 	= JFactory::getApplication();
+				
+			// Select the required fields from the table.
+			$query->select('p.*,CASE WHEN CHAR_LENGTH( p.alias ) THEN CONCAT_WS( \':\', p.id, p.alias ) ELSE p.id END AS slug');
+			$query->from('#__joomleague_project AS p');
+				
+			// Join League
+			$query->select('l.country, l.name AS league_name')
+			->join('LEFT', $db->quoteName('#__joomleague_league') . ' AS l ON l.id = p.league_id');
+				
+			// Join SportsType
+			$query->select('st.id AS sport_type_id, st.name AS sport_type_name,LOWER(SUBSTR(st.name, CHAR_LENGTH( "COM_JOOMLEAGUE_ST_")+1)) AS fs_sport_type_name')
+			->join('INNER', $db->quoteName('#__joomleague_sports_type') . ' AS st ON st.id = p.sports_type_id');
+				
+			// Join Season
+			$query->select('s.name AS season_name')
+			->join('LEFT', $db->quoteName('#__joomleague_season') . ' AS s ON s.id = p.season_id');
+				
+			$query->where('p.id = '.$db->Quote($this->projectid));
+			$db->setQuery($query,0,1);
+			$this->_project = $db->loadObject();
+		}
+		return $this->_project;
+	}
+	
 	
 	
 	/**
@@ -414,7 +324,24 @@ class JoomleagueModelProject extends JModelLegacy
 	}
 	
 	
+	/**
+	 * getSportsType
+	 */
+	function getSportsType()
+	{
+		if (!$project = $this->getProject())
+		{
+			$this->setError(0, Jtext::_('COM_JOOMLEAGUE_ERROR_PROJECTMODEL_PROJECT_IS_REQUIRED'));
+			return false;
+		}
 	
+		return $project->sports_type_id;
+	}
+	
+	
+	/**
+	 * getTeamInfo
+	 */
 	function getTeaminfo($projectteamid)
 	{
 		$query=' SELECT t.*, pt.division_id, t.id as team_id,
@@ -934,6 +861,139 @@ class JoomleagueModelProject extends JModelLegacy
 			return Countries::getCountryFlag($team->country);
 		}
 	}
+	
+	
+	/**
+	 * method to update and return the project current round
+	 * @return object
+	 */
+	function increaseRound()
+	{
+		if (!$this->_current_round)
+		{
+			if (!$project = $this->getProject()) {
+				$this->setError(0, Jtext::_('COM_JOOMLEAGUE_ERROR_PROJECTMODEL_PROJECT_IS_REQUIRED'));
+				return false;
+			}
+	
+			$current_date = strftime("%Y-%m-%d %H:%M:%S");
+			$db = JFactory::getDbo();
+	
+			// determine current round according to project settings
+			switch ($project->current_round_auto)
+			{
+				case 0 :	 // manual mode
+					$query = $db->getQuery(true);
+					$query->select('r.id, r.roundcode');
+					$query->from('#__joomleague_round AS r');
+					$query->where('r.id = '.$project->current_round);
+					break;
+	
+				case 1 :	 // get current round from round_date_first
+					$query = $db->getQuery(true);
+					$query->select('r.id, r.roundcode');
+					$query->from('#__joomleague_round AS r');
+					$query->where('r.project_id = '.$project->id);
+					$query->where('(r.round_date_first - INTERVAL '.$db->Quote($project->auto_time).' MINUTE < '.$db->Quote($current_date).')');
+					$query->order('r.round_date_first DESC');
+					break;
+					
+				case 2 : // get current round from round_date_last
+					$query = $db->getQuery(true);
+					$query->select('r.id, r.roundcode');
+					$query->from('#__joomleague_round AS r');
+					$query->where('r.project_id = '.$project->id);
+					$query->where('(r.round_date_last + INTERVAL '.$db->Quote($project->auto_time).' MINUTE > '.$db->Quote($current_date).')');
+					$query->order('r.round_date_first DESC');
+					break;
+	
+				case 3 : // get current round from first game of the round
+					$query = $db->getQuery(true);
+					$query->select('r.id, r.roundcode');
+					$query->from('#__joomleague_round AS r');
+						
+					// Join Match
+					$query->join('LEFT', $db->quoteName('#__joomleague_match') . ' AS m ON m.round_id = r.id');
+						
+					$query->where('r.project_id = '.$project->id);
+					$query->where('(m.match_date - INTERVAL '.$db->Quote($project->auto_time).' MINUTE < '.$db->Quote($current_date).')');
+					$query->order('m.match_date DESC');
+					break;
+	
+				case 4 : // get current round from last game of the round
+					$query = $db->getQuery(true);
+					$query->select('r.id, r.roundcode');
+					$query->from('#__joomleague_round AS r');
+	
+					// Join Match
+					$query->join('LEFT', $db->quoteName('#__joomleague_match') . ' AS m ON m.round_id = r.id');
+	
+					$query->where('r.project_id = '.$project->id);
+					$query->where('(m.match_date + INTERVAL '.$db->Quote($project->auto_time).' MINUTE > '.$db->Quote($current_date).')');
+					$query->order('m.match_date ASC');
+					break;
+			}
+			$db->setQuery($query,0,1);
+			$result = $db->loadObject();
+	
+			// If result is empty, it probably means either this is not started, either this is over, depending on the mode.
+			// Either way, do not change current value
+			if (!$result)
+			{
+	
+				$query = $db->getQuery(true);
+				$query->select('r.id, r.roundcode');
+				$query->from('#__joomleague_round AS r');
+				$query->where('r.project_id = '.$project->current_round);
+				$db->setQuery($query);
+				$result = $db->loadObject();
+	
+				if (!$result)
+				{
+					if ($project->current_round_auto == 2) {
+						// the current value is invalid... season is over, just take the last round
+	
+						$query = $db->getQuery(true);
+						$query->select('r.id, r.roundcode');
+						$query->from('#__joomleague_round AS r');
+						$query->where('r.project_id = '.$project->id);
+						$query->order('r.roundcode DESC');
+						$db->setQuery($query);
+						$result = $db->loadObject();
+					} else {
+						// the current value is invalid... just take the first round
+						$query = $db->getQuery(true);
+						$query->select('r.id, r.roundcode');
+						$query->from('#__joomleague_round AS r');
+						$query->where('r.project_id = '.$project->id);
+						$query->order('r.roundcode ASC');
+						$db->setQuery($query);
+						$result = $db->loadObject();
+					}
+	
+				}
+			}
+	
+			// Update the database if determined current round is different from that in the database
+			if ($result && ($project->current_round <> $result->id))
+			{
+				$query = $db->getQuery(true);
+				$query->update('#__joomleague_project');
+				$query->set('current_round = '.$result->id);
+				$query->where('id = '.$db->Quote($project->id));
+				$db->setQuery($query);
+	
+				if (!$db->execute()) {
+					JError::raiseWarning(0, JText::_('COM_JOOMLEAGUE_ERROR_CURRENT_ROUND_UPDATE_FAILED'));
+				}
+			}
+			$this->_current_round = $result;
+		}
+		return $this->_current_round;
+	}
+	
+	
+	
 
 	/**
 	 * Method to store the item

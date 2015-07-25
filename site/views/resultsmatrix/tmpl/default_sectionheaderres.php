@@ -24,8 +24,9 @@ if ( $this->config['show_sectionheader'] == 1 )
 						$title = JText::sprintf( 'COM_JOOMLEAGUE_RESULTS_ROUND_RESULTS2', '<i>' . $this->division->name . '</i>' );
 					}
 
-					JoomleagueHelperHtml::showMatchdaysTitle($title, $this->roundid, $this->config,$this->project,$this->overallconfig);
-
+					
+					JoomleagueHelperHtml::showMatchdaysTitle($title, $this->roundid, $this->config,false,$this->project,$this->overallconfig);
+										
 					if ( $this->showediticon )
 						{
 							$link = JoomleagueHelperRoute::getResultsRoute( $this->project->id, $this->roundid, $this->divisionid, 0, 0, 'match.display');

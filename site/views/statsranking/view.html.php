@@ -46,16 +46,18 @@ class JoomleagueViewStatsRanking extends JLGView
 		$this->multiple_stats = count($this->stats) > 1;
 
 		$prefix = JText::_('COM_JOOMLEAGUE_STATSRANKING_PAGE_TITLE');
-		if ( $this->multiple_stats )
+		if ($this->multiple_stats)
 		{
-			$prefix .= " - " . JText::_( 'COM_JOOMLEAGUE_STATSRANKING_TITLE' );
+			$prefix .= " - " . JText::_('COM_JOOMLEAGUE_STATSRANKING_TITLE');
 		}
 		else
 		{
-			// Next query will result in an array with exactly 1 statistic id
-			$sid = array_keys($this->stats);
-			// Take the first result then.
-			$prefix .= " - " . $this->stats[$sid[0]]->name;
+			if ($this->stats) {
+				// Next query will result in an array with exactly 1 statistic id
+				$sid = array_keys($this->stats);
+				// Take the first result then.
+				$prefix .= " - " . $this->stats[$sid[0]]->name;
+			}
 		}
 
 		// Set page title

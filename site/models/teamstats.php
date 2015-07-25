@@ -27,31 +27,37 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
 	var $totalrounds = null;
 	var $attendanceranking = null;
 
+	
 	public function __construct()
 	{
 		parent::__construct();
 
-		$this->projectid = JRequest::getInt( "p", 0 );
-		$this->teamid = JRequest::getInt( "tid", 0 );
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid 	= JLHelperFront::stringToInt($jinput->getInt('p',0));
+		$this->teamid 		= JLHelperFront::stringToInt($jinput->getInt('tid',0));
 		//preload the team;
 		$this->getTeam();
 	}
 
+	
 	function getTeam( )
 	{
 		# it should be checked if any tid is given in the params of the url
 		# if ( is_null( $this->team ) )
-		if ( !isset( $this->team ) )
+		if (!isset( $this->team))
 		{
-			if ( $this->teamid > 0 )
+			if ($this->teamid > 0)
 			{
-				$this->team = $this->getTable( 'Team', 'Table' );
-				$this->team->load( $this->teamid );
+				$this->team = $this->getTable('Team','Table');
+				$this->team->load($this->teamid);
 			}
 		}
 		return $this->team;
 	}
 
+	
 	function getHighestHome( )
 	{
 		if ( is_null( $this->highest_home ) )
@@ -82,6 +88,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
         return $this->highest_home;
     }
 
+    
     function getHighestAway( )
     {
     	if ( is_null( $this->highest_away ) )
@@ -112,6 +119,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->highest_away;
     }
 
+    
     function getHighestDefHome( )
     {
     	if ( is_null( $this->highestdef_home ) )
@@ -142,6 +150,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->highestdef_home;
     }
 
+    
     function getHighestDefAway( )
     {
     	if ( is_null( $this->highestdef_away ) )
@@ -171,6 +180,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->highestdef_away;
     }
 
+    
     function getHighestDrawAway( )
     {
     	if ( is_null( $this->highestdraw_away ) )
@@ -197,6 +207,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	}
     	return $this->highestdraw_away;
     }
+    
     
     function getHighestDrawHome( )
     {
@@ -226,6 +237,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->highestdraw_home;
     }
     
+    
     function getNoGoalsAgainst( )
     {
     	if ( (!isset( $this->nogoals_against )) || is_null( $this->nogoals_against ) )
@@ -252,6 +264,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->nogoals_against;
     }
 
+    
     function getSeasonTotalsHome( )
     {
     	if ( is_null( $this->totalshome ) )
@@ -280,6 +293,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->totalshome;
     }
 
+    
     function getSeasonTotalsAway( )
     {
     	if ( is_null( $this->totalsaway ) )
@@ -308,6 +322,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->totalsaway;
     }
 
+    
     /**
      * get data for chart
      * @return  
@@ -333,6 +348,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     		$this->matchdaytotals = $this->_db->loadObjectList();
     		return $this->matchdaytotals;
     }
+    
     
     function getMatchDayTotals( )
     {
@@ -360,59 +376,68 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
     	return $this->matchdaytotals;
     }
 
+    
     function getTotalRounds( )
     {
-        if ( is_null( $this->totalrounds ) )
+        if (is_null($this->totalrounds))
         {
-            $query= "SELECT COUNT(id)
-                     FROM #__joomleague_round
-                     WHERE project_id= ".$this->projectid;
-            $this->_db->setQuery($query);
-            $this->totalrounds = $this->_db->loadResult();
+        	$db = JFactory::getDbo();
+        	$query = $db->getQuery(true);
+        	$query->select('COUNT(id)');
+        	$query->from('#__joomleague_round');
+        	$query->where('project_id = '.$this->projectid);
+            $db->setQuery($query);
+            $this->totalrounds = $db->loadResult();
         }
         return $this->totalrounds;
     }
 
+    
     /**
      * return games attendance
      * @return unknown_type
      */
     function _getAttendance( )
     {
-    	if ( is_null( $this->attendanceranking ) )
+    	if (is_null($this->attendanceranking))
     	{
-				$query = ' SELECT matches.crowd '
-				       . ' FROM #__joomleague_match AS matches '
-				       . ' INNER JOIN #__joomleague_project_team pt1 ON pt1.id = matches.projectteam1_id '
-				       . ' INNER JOIN #__joomleague_team t1 ON t1.id = pt1.team_id '
-				       . ' LEFT JOIN #__joomleague_playground AS playground ON pt1.standard_playground = playground.id '
-				       . ' WHERE pt1.team_id = '.$this->teamid
-				       . '   AND matches.crowd > 0 '
-				       . '   AND matches.published=1 '
-				       ;
-    		$this->_db->setQuery( $query );
-    		$this->attendanceranking = $this->_db->loadColumn();
+    		$db = JFactory::getDbo();
+    		$query = $db->getQuery(true);
+    		$query->select('matches.crowd');
+    		$query->from('#__joomleague_match AS matches');
+    		$query->join('INNER','#__joomleague_project_team pt1 ON pt1.id = matches.projectteam1_id');
+    		$query->join('INNER','#__joomleague_team t1 ON t1.id = pt1.team_id');
+    		$query->join('LEFT', '#__joomleague_playground AS playground ON playground.id = pt1.standard_playground');
+    		$query->where('pt1.team_id = '.$this->teamid);
+    		$query->where('matches.crowd > 0');
+    		$query->where('matches.published=1');
+    		$db->setQuery($query);
+    		$this->attendanceranking = $db->loadColumn();
     	}
     	return $this->attendanceranking;
     }
 
+    
 	function getBestAttendance( )
 	{
 		$attendance = $this->_getAttendance();
 		return (count($attendance)>0) ? max($attendance) : 0;
 	}
 
+	
 	function getWorstAttendance( )
 	{
 		$attendance = $this->_getAttendance();
 		return (count($attendance)>0) ? min($attendance) : 0;
 	}
 
+	
 	function getTotalAttendance( )
 	{
 		$attendance = $this->_getAttendance();
 		return (count($attendance)>0) ? array_sum($attendance) : 0;
 	}
+	
 	
 	function getAverageAttendance( )
 	{
@@ -420,6 +445,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
 		return (count($attendance)>0) ? round(array_sum($attendance)/count($attendance), 0) : 0;
 	}
 
+	
 	function getChartURL( )
 	{
 		$url = JoomleagueHelperRoute::getTeamStatsChartDataRoute( $this->projectid, $this->teamid );
@@ -427,20 +453,22 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
 		return $url;
 	}
 
+	
 	function getLogo( )
 	{
-		$database = JFactory::getDbo();
-	    $query = "SELECT logo_big
-				FROM #__joomleague_club clubs
-				LEFT JOIN #__joomleague_team teams ON clubs.id = teams.club_id
-				WHERE teams.id = ".$this->teamid;
-
-    	$database->setQuery( $query );
-    	$logo = JUri::root().$database->loadResult();
-
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('clubs.logo_big');
+		$query->from('#__joomleague_club AS clubs');
+		$query->join('LEFT', '#__joomleague_team AS teams ON teams.club_id = clubs.id');
+		$query->where('teams.id = '.$this->teamid);
+    	$db->setQuery($query);
+    	
+    	$logo = JUri::root().$db->loadResult();
 		return $logo;
 	}
 
+	
 	function getResults()
 	{
 		$query = ' SELECT m.id, m.projectteam1_id, m.projectteam2_id, pt1.team_id AS team1_id, pt2.team_id AS team2_id, '
@@ -559,6 +587,7 @@ class JoomleagueModelTeamStats extends JoomleagueModelProject
 		
 		return $results;
 	}
+	
 	
 	function getStats()
 	{

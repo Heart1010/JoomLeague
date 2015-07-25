@@ -76,31 +76,51 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		exit;
 	}
 
+	/**
+	 * Function to retrieve Referees
+	 * @todo check/fix! // 24-07-2015
+	 * Added JSON header, am returning only names. 
+	 */
 	public function searchReferee()
 	{
-		$option 	= JRequest::getCmd('option');
-		$app		= JFactory::getApplication();
-		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
-		$query 		= JRequest::getVar("query", "", "", "string");
+		// Use the correct json mime-type
+		header('Content-Type: application/json');
+		
+		$app 		= JFactory::getApplication();
+		$jinput 	= $app->input;
+		$option 	= $jinput->getCmd('option');
+		$query 		= $jinput->getString("query", "");
 		$projectid 	= $app->getUserState($option."project");
+		
+		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
 		$results 	= $model->getNotAssignedReferees($query, $projectid);
 		$response = array(
 			"totalCount" => count($results),
 			"rows" => array()
 		);
-
-		foreach ($results as $row) {
+		
+		$names = array();
+		foreach ($results as $row) { 
 			$name = JoomleagueHelper::formatName(null, $row->firstname, $row->nickname, $row->lastname, 0) . " (" . $row->id . ")";
+			$names[] = $name;
 			$response["rows"][] = array(
 				"id" => $row->id,
 				"name" => $name
 			);
 		}
 
-		echo json_encode($response);
-		exit;
+		$suggestions = $names;
+		
+		// Send the response.
+		echo '{ "suggestions": ' . json_encode($suggestions) . ' }';
+		JFactory::getApplication()->close();
 	}
-
+	
+	/**
+	 * Function to retrieve Teamnames
+	 * @todo check/fix // 24-07-2015
+	 * added JSON header + returning only names
+	 */
 	public function searchTeam()
 	{
 		// Use the correct json mime-type
@@ -243,17 +263,27 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		$this->setRedirect("index.php?option=com_joomleague&view=teamstaffs&task=teamstaff.display&project_team_id=".$projectteam_id, $msg);
 	}
 
+	
+	/**
+	 * Function to add Referees
+	 */
 	public function addReferee()
 	{
-		$option = JRequest::getCmd('option');
-		$app	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
+		$jinput 	= $app->input;
+		$option 	= $jinput->getCmd('option');
 
-		$db = JFactory::getDbo();
-		$personid = JRequest::getInt("cpersonid", 0);
-		$name = JRequest::getVar("quickadd", '', 'request', 'string');
-		$project_id = $app->getUserState($option."project");
+		$db 		= JFactory::getDbo();
+		$personid 	= $jinput->getInt("cpersonid", 0);
+		$name 		= JRequest::getVar("quickadd", '', 'request', 'string');
+		$searchText = $jinput->getString("p","");
 		
-		// add the new individual as their name was sent through.
+		
+		$project_id = $app->getUserState($option."project");
+				
+		// add the new individual as their name was sent through?
+		// Disabled for now, do we really want to create a new individual?
+		/*
 		if (!$personid)
 		{
 			$model = JLGModel::getInstance('Person', 'JoomleagueModel');
@@ -266,55 +296,107 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 			);
 			$personid = $model->store($data);
 		}
-
-		if (!$personid) {
-			$msg = Jtext::_('COM_JOOMLEAGUE_ADMIN_QUICKADD_CTRL_PERSON_ASSIGNED');
-			$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id, $msg, 'error');
+		*/
+		
+		if (empty($searchText)) {
+			$app->enqueueMessage(Jtext::_('Fill in a valid Referee'),'warning');
+			$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id);
+			return;
 		}
-
-		// check if indivual belongs to project
-		$query = ' SELECT person_id FROM #__joomleague_project_referee '
-		. ' WHERE project_id = '. $db->Quote($project_id)
-		. '   AND person_id = '. $db->Quote($personid)
-		;
+	
+		
+		$text = false;
+		
+		// Retrieve person-id
+		if (($pos = strpos($searchText, "(")) !== FALSE) {
+			$text = substr($searchText, $pos+1);
+			$text = str_replace(')', '', $text);	
+		}
+		
+		if (!is_int($text) ? (ctype_digit($text)) : true ) {
+			$personId = $text;
+		} else {
+			$personId = false;
+		}
+		
+		if (empty($personId)) {
+			$app->enqueueMessage(Jtext::_('Fill in a valid Referee'),'warning');
+			$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id);
+			return;
+		}
+		
+		// check if person is already attached to the project as a referee
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('person_id');
+		$query->from('#__joomleague_project_referee');
+		$query->where('project_id = '.$db->quote($project_id));
+		$query->where('person_id ='.$db->quote($personId));
 		$db->setQuery($query);
-		$res = $db->loadResult();
-		if (!$res)
+		$result = $db->loadObjectList();
+		
+		if ($result) {
+			$app->enqueueMessage(Jtext::_('Referee already attached'),'warning');
+			$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id);
+			return;
+		}
+		
+		if (!$result)
 		{
-				$tblProjectReferee = JTable::getInstance('Projectreferee','Table');
-				$tblProjectReferee->person_id=$personid;
-				$tblProjectReferee->projectteam_id=$projectteam_id;
+				$tblProjectReferee 					= JTable::getInstance('Projectreferee','Table');
+				$tblProjectReferee->person_id		= $personId;
+				$tblProjectReferee->project_id		= $project_id;
+				// @todo check! // 24-07-2015
+				// Table-Projectreferee does not contain a field to store a projectteam_id
+				// so changed it to "project_id"
+				/* $tblProjectReferee->projectteam_id	= $projectteam_id; */
 				
 				if (!$tblProjectReferee->check())
 				{
 					$this->setError($tblProjectReferee->getError());
 				}
-				//Get data from person
-				$query = "	SELECT picture, position_id
-							FROM #__joomleague_person AS pl
-							WHERE pl.id=". $db->Quote($personid)."
-							AND pl.published = 1";
-				$db->setQuery( $query );
+				// Get data from person
+				$query = $db->getQuery(true);
+				$query->select('pl.picture,pl.position_id');
+				$query->from('#__joomleague_person AS pl');
+				$query->where('pl.id = '.$db->Quote($personId));
+				$query->where('pl.published = 1');				
+				$db->setQuery($query);
 				$person = $db->loadObject();
-				if ( $person )
+				
+				if (empty($person)) {
+					$app->enqueueMessage(Jtext::_('Fill in a valid Referee'),'warning');
+					$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id);
+					return;
+				}
+				
+				
+				if ($person)
 				{
-					$query = "SELECT id FROM #__joomleague_project_position "; 
-					$query.= " WHERE position_id = " . $db->Quote($person->position_id);
-					$query.= " AND project_id = " . $db->Quote($project_id);
+					$query = $db->getQuery(true);
+					$query->select('id');
+					$query->from('#__joomleague_project_position');
+					$query->where('position_id = '.$db->Quote($person->position_id));
+					$query->where('project_id = '.$db->Quote($project_id));
 					$db->setQuery($query);
-					if ($resPrjPosition = $db->loadObject())
+					$result = $db->loadObject();
+					
+					if ($result)
 					{
-						$tblProjectReferee->project_position_id = $resPrjPosition->id;	
+						$tblProjectReferee->project_position_id = $result->id;	
 					}
 					
 					$tblProjectReferee->picture			= $person->picture;
 					$tblProjectReferee->project_id		= $project_id;
 					
 				}
-				$query = "	SELECT max(ordering) count
-							FROM #__joomleague_project_referee";
-				$db->setQuery( $query );
+				
+				$query = $db->getQuery(true);
+				$query->select('max(ordering) AS count');
+				$query->from('#__joomleague_project_referee');
+				$db->setQuery($query);
 				$pref = $db->loadObject();
+				
 				$tblProjectReferee->ordering = (int) $pref->count + 1;
 					
 				if (!$tblProjectReferee->store())

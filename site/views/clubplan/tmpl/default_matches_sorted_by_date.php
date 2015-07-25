@@ -48,7 +48,7 @@ defined('_JEXEC') or die;
 		foreach ( $this->matches as $game )
 		{
 			?>
-			<table class="clubplan">
+			<table class="clubplan table">
 			<?php
 			if (($this->config['showMatchDateLine']) && ($MatchDateLine != JoomleagueHelper::getMatchDate($game, JText::_('COM_JOOMLEAGUE_CLUBPLAN_MATCHDATE'))))
 			{

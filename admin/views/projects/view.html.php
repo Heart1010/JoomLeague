@@ -37,7 +37,9 @@ class JoomleagueViewProjects extends JLGView
 		$javascript = "onchange=\"$('adminForm').submit();\"";
 
 		// state filter
-		$lists['state'] = JHtml::_('grid.state',$filter_state, 'Published', 'Unpublished', 'Archived', 'Trashed');
+		// @todo check // 24-07-2015
+		// Replaced grid.state by the code below so it's possible to add a class to it.
+		$lists['state'] = JoomleagueHelper::stateOptions($filter_state);
 
 		// table ordering
 		$lists['order_Dir'] = $filter_order_Dir;
@@ -54,7 +56,7 @@ class JoomleagueViewProjects extends JLGView
 		$lists['leagues']=JHtml::_( 'select.genericList',
 									$leagues,
 									'filter_league',
-									'class="inputbox" onChange="this.form.submit();" style="width:120px"',
+									'class="input-medium" onChange="this.form.submit();"',
 									'id',
 									'name',
 									$filter_league);
@@ -69,7 +71,7 @@ class JoomleagueViewProjects extends JLGView
 		$lists['sportstypes']=JHtml::_( 'select.genericList',
 										$sportstypes,
 										'filter_sports_type',
-										'class="inputbox" onChange="this.form.submit();" style="width:120px"',
+										'class="input-medium" onChange="this.form.submit();"',
 										'id',
 										'name',
 										$filter_sports_type);
@@ -84,7 +86,7 @@ class JoomleagueViewProjects extends JLGView
 		$lists['seasons']=JHtml::_( 'select.genericList',
 									$seasons,
 									'filter_season',
-									'class="inputbox" onChange="this.form.submit();" style="width:120px"',
+									'class="input-medium" onChange="this.form.submit();"',
 									'id',
 									'name',
 									$filter_season);

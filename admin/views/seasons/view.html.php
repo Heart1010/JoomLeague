@@ -32,8 +32,8 @@ class JoomleagueViewSeasons extends JLGView
 		$pagination = $this->get('Pagination');
 
 		// state filter
-		$lists['state'] = JHtml::_('grid.state',$filter_state, 'Published', 'Unpublished', 'Archived', 'Trashed');
-
+		$lists['state'] = JoomleagueHelper::stateOptions($filter_state);
+		
 		// table ordering
 		$lists['order_Dir'] = $filter_order_Dir;
 		$lists['order'] = $filter_order;

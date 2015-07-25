@@ -24,8 +24,13 @@ class JoomleagueModelClubPlan extends JoomleagueModelProject
 	public function __construct()
 	{
 		parent::__construct();
-		$this->clubid=JRequest::getInt("cid",0);
-		$this->project_id=JRequest::getInt("p",0);
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->clubid		= JLHelperFront::stringToInt($jinput->getString('cid',0));		
+		$this->project_id	= JLHelperFront::stringToInt($jinput->getString('p',0));
+		
 		$this->setStartDate(JRequest::getVar("startdate", $this->startdate,'request','string'));
 		$this->setEndDate(JRequest::getVar("enddate",$this->enddate,'request','string'));
 	}
@@ -383,18 +388,19 @@ class JoomleagueModelClubPlan extends JoomleagueModelProject
 
 	function getMatchReferees($matchID)
 	{
-		$query=' SELECT	p.id,'
-		      .' p.firstname,'
-		      .' p.lastname,'
-		      .' mp.project_position_id,'
-		    .' CASE WHEN CHAR_LENGTH(p.alias) THEN CONCAT_WS(\':\',p.id,p.alias) ELSE p.id END AS person_slug '
-		      .' FROM #__joomleague_match_referee AS mp '
-		      .' LEFT JOIN #__joomleague_project_referee AS pref ON mp.project_referee_id=pref.id '
-		      .' INNER JOIN	#__joomleague_person AS p ON pref.person_id=p.id '
-		      .' WHERE mp.match_id='.(int)$matchID
-		      .' AND p.published = 1';
-
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		if ($matchID) {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('p.id,p.firstname,p.lastname,mp.project_position_id,CASE WHEN CHAR_LENGTH(p.alias) THEN CONCAT_WS(\':\',p.id,p.alias) ELSE p.id END AS person_slug');
+			$query->from('#__joomleague_match_referee AS mp');
+			$query->join('LEFT', '#__joomleague_project_referee AS pref ON mp.project_referee_id=pref.id');
+			$query->join('INNER', '#__joomleague_person AS p ON pref.person_id=p.id');
+			$query->where('mp.match_id = '.$matchID);
+			$query->where('p.published = 1');
+	
+			$db->setQuery($query);
+			return $db->loadObjectList();
+		} 
+		return array();
 	}
 }

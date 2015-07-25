@@ -35,25 +35,29 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 	{
 		parent::__construct( );
 
-		$this->projectid	= JRequest::getInt( 'p', 0 );
-		$this->divisionid	= JRequest::getInt( 'division', 0 );
-		$this->teamid		= JRequest::getInt( 'tid', 0 );
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
 		
-		$this->setStatid(JRequest::getVar( 'sid', 0 ));
+		$this->projectid	= JLHelperFront::stringToInt($jinput->getInt('p',0));
+		$this->divisionid	= JLHelperFront::stringToInt($jinput->getInt('division',0));
+		$this->teamid		= JLHelperFront::stringToInt($jinput->getInt('tid',0));
+		
+		$this->setStatid(JRequest::getVar('sid',0));
 		
 		$config = $this->getTemplateConfig($this->getName());
 		// TODO: the default value for limit should be updated when we know if there is more than 1 statistics type to be shown
-		if ( $this->stat_id != 0 )
+		if ($this->stat_id != 0)
 		{
-			$this->limit = JRequest::getInt( 'limit', $config["max_stats"] );
+			$this->limit = JRequest::getInt('limit', $config["max_stats"]);
 		}
 		else
 		{
-			$this->limit = JRequest::getInt( 'limit', $config["count_stats"] );
+			$this->limit = JRequest::getInt('limit', $config["count_stats"]);
 		}
-		$this->limitstart = JRequest::getInt( 'limitstart', 0 );
+		$this->limitstart = JRequest::getInt('limitstart',0);
 		$this->setOrder(JRequest::getVar('order'));
 	}
+	
 	
 	/**
 	 * Should be inline with ModelProject
@@ -75,6 +79,7 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 		return $this->teamid;
 	}
 
+	
 	/**
 	 * set order (asc or desc)
 	 * @param string $order
@@ -115,10 +120,10 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 		}
 	}
 
-	// return unique stats assigned to project
+	
 	/**
-	 * (non-PHPdoc)
-	 * @see components/com_joomleague/models/JoomleagueModelProject#getProjectStats($statid, $positionid)
+	 * return unique stats assigned to project
+	 * @see Project#getProjectStats($statid, $positionid)
 	 */
 	function getProjectUniqueStats()
 	{
@@ -133,6 +138,7 @@ class JoomleagueModelStatsRanking extends JoomleagueModelProject
 		}
 		return $allstats;
 	}
+	
 	
 	function getPlayersStats($order=null)
 	{

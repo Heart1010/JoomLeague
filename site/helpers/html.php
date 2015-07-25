@@ -168,7 +168,7 @@ abstract class JoomleagueHelperHtml {
 	{
 		/* $projectid = JRequest::getInt('p',0); */
 		$projectid = $project->id;
-
+		
 		echo ($title != '') ? $title.' - ' : $title;
 		if ($current_round > 0)
 		{

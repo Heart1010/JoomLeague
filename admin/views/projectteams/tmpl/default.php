@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
  * 
+ * A piece of com_finder was taken for the quickadd
  */
 defined('_JEXEC') or die;
 
@@ -71,6 +72,8 @@ jQuery(document).ready(function() {
 
 
 /*
+ * @todo Change text // 24-07-2015
+ * At the moment only passing a name is showing results
  * This segment of code sets up the autocompleter.
  */
 	JHtml::_('script', 'media/jui/js/jquery.autocomplete.min.js', false, false, false, false, true);
@@ -269,12 +272,19 @@ JFactory::getDocument()->addScriptDeclaration($script);
 								}
 								else
 								{
+									if (JFile::exists(JPATH_SITE.'/'.$row->picture)) {
+										$imageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_TEAMS_CUSTOM_IMAGE');
+										echo JHtml::_('image','administrator/components/com_joomleague/assets/images/ok.png',$imageTitle,'title= "'.$imageTitle.'"');
+									
+									}
+									/*
 									$imageTitle=JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_CUSTOM_IMAGE');
 									$imageParams=array();
 									$imageParams['title']=$imageTitle ;
 									$imageParams['height']=30;
 									//$imageParams['width'] =40;
 									echo JHtml::image($row->picture,$imageTitle,$imageParams);
+									*/
 								}
 								?>
 							</td>

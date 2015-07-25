@@ -33,32 +33,14 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 	public function __construct()
 	{
 		parent::__construct();
-
-		// @todo check! // 24-07-2015
-		// p is passed as String (2:name) so changed getInt to getString
-		// if ":" is in the name it will fire up an explode as we want to have only a id.
-		$this->projectid = JRequest::getString('p',0);
-		if ($this->projectid) {
-			# is the / within the string?
-			if (strpos($this->projectid,':') !== false) {
-				$arr = explode(":", $this->projectid, 2);
-				$this->projectid = $arr[0];
-			}
-		}
 		
-		// @todo check! // 24-07-2015
-		// tid is passed as String (2:name) so changed getInt to getString
-		// if ":" is in the name it will fire up an explode as we want to have only a id.
-		$this->teamid=JRequest::getString('tid',0);
-		if ($this->teamid) {
-			# is the / within the string?
-			if (strpos($this->teamid,':') !== false) {
-				$arr2 = explode(":", $this->teamid, 2);
-				$this->teamid = $arr2[0];
-			}
-		}
-				
-		$this->projectteamid=JRequest::getInt('ttid',0);
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+
+		$this->projectid	 = JLHelperFront::stringToInt($jinput->getString('p',0));
+		$this->teamid 		 = JLHelperFront::stringToInt($jinput->getString('tid',0));		
+		$this->projectteamid = JLHelperFront::stringToInt($jinput->getString('ttid',0));
+		
 		$this->getProjectTeam();
 	}
 
@@ -78,20 +60,23 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 			{
 				if (!$this->teamid)
 				{
-					$this->setError(JText::_('Missing team id'));
+					$this->setError(JText::_('COM_JOOMLEAGUE_GLOBAL_MISSING_TEAMID'));
 					return false;
 				}
 				if (!$this->projectid)
 				{
-					$this->setError(JText::_('Missing project id'));
+					$this->setError(JText::_('COM_JOOMLEAGUE_GLOBAL_MISSING_PROJECTID'));
 					return false;
 				}
-				$query='	SELECT	pt.id
-							FROM #__joomleague_project_team AS pt
-							WHERE pt.team_id='.$this->_db->Quote($this->teamid).'
-							  AND pt.project_id='.$this->_db->Quote($this->projectid);
-				$this->_db->setQuery($query);
-				$this->projectteamid = $this->_db->loadObject()->id;
+				
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select('pt.id');
+				$query->from('#__joomleague_project_team AS pt');
+				$query->where('pt.team_id = '.$db->Quote($this->teamid));
+				$query->where('pt.project_id = '.$db->Quote($this->projectid));
+				$db->setQuery($query);
+				$this->projectteamid = $db->loadObject()->id;
 				$this->projectteam = $this->getTeaminfo($this->projectteamid);
 			}
 			if ($this->projectteam)
@@ -112,20 +97,22 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 		{
 			if (!$this->teamid)
 			{
-				$this->setError(JText::_('Missing team id'));
+				$this->setError(JText::_('COM_JOOMLEAGUE_GLOBAL_MISSING_TEAMID'));
 				return false;
 			}
 			if (!$this->projectid)
 			{
-				$this->setError(JText::_('Missing project id'));
+				$this->setError(JText::_('COM_JOOMLEAGUE_GLOBAL_MISSING_PROJECTID'));
 				return false;
 			}
-			$query='	SELECT	t.*,
-								CASE WHEN CHAR_LENGTH(t.alias) THEN CONCAT_WS(\':\',t.id,t.alias) ELSE t.id END AS slug
-						FROM #__joomleague_team AS t
-						WHERE t.id='.$this->_db->Quote($this->teamid);
-			$this->_db->setQuery($query);
-			$this->team=$this->_db->loadObject();
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('t.*,CASE WHEN CHAR_LENGTH(t.alias) THEN CONCAT_WS(\':\',t.id,t.alias) ELSE t.id END AS slug');
+			$query->from('#__joomleague_team AS t');
+			$query->where('t.id = '.$db->Quote($this->teamid));
+			$db->setQuery($query);
+			$this->team = $db->loadObject();
 		}
 		return $this->team;
 	}
@@ -151,12 +138,7 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 			$query = $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select(
-					$this->getState(
-							'list.select',
-							'tp.id AS playerid,tp.jerseynumber AS position_number,tp.notes AS description,tp.injury AS injury,tp.suspension AS suspension,tp.away AS away,tp.picture'
-					)
-			);
+			$query->select('tp.id AS playerid,tp.jerseynumber AS position_number,tp.notes AS description,tp.injury AS injury,tp.suspension AS suspension,tp.away AS away,tp.picture');
 			$query->from('#__joomleague_team_player AS tp');
 			
 			// Join Person
@@ -199,40 +181,40 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 		return $bypos;
 	}
 
+	
 	function getStaffList()
 	{
 		$projectteam = $this->getprojectteam();
-		$query='	SELECT	pr.firstname,
-							pr.nickname,
-							pr.lastname,
-							pr.country,
-							pr.birthday,
-							pr.deathday,
-							ts.id AS ptid,
-							ppos.position_id,
-							ppos.id AS pposid,
-							pr.id AS pid,
-							pr.picture AS ppic,
-							pos.name AS position,
-							ts.picture,
-							ts.notes AS description,
-							ts.injury AS injury,
-							ts.suspension AS suspension,
-							ts.away AS away,
-							pos.parent_id,
-							posparent.name AS parentname,
-							CASE WHEN CHAR_LENGTH(pr.alias) THEN CONCAT_WS(\':\',pr.id,pr.alias) ELSE pr.id END AS slug
-					FROM #__joomleague_team_staff ts
-					INNER JOIN #__joomleague_person AS pr ON ts.person_id=pr.id
-					INNER JOIN #__joomleague_project_position AS ppos ON ppos.id=ts.project_position_id
-					INNER JOIN #__joomleague_position AS pos ON pos.id=ppos.position_id
-					LEFT JOIN #__joomleague_position AS posparent ON pos.parent_id=posparent.id
-					WHERE ts.projectteam_id='.$this->_db->Quote($this->projectteamid).'
-					  AND pr.published = 1
-					  AND ts.published = 1
-					ORDER BY pos.parent_id, pos.ordering';
-		$this->_db->setQuery($query);
-		$stafflist=$this->_db->loadObjectList();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+			
+		// Select the required fields from the table.
+		$query->select('ts.id AS ptid,ts.picture,ts.notes AS description,ts.injury AS injury,ts.suspension AS suspension,ts.away AS away');
+		$query->from('#__joomleague_team_staff AS ts');
+				
+		// Join Person
+		$query->select('pr.id AS pid, pr.picture AS ppic, pr.firstname,pr.nickname,pr.lastname,pr.country,pr.birthday,pr.deathday,CASE WHEN CHAR_LENGTH(pr.alias) THEN CONCAT_WS(\':\',pr.id,pr.alias) ELSE pr.id END AS slug')
+		->join('INNER', $db->quoteName('#__joomleague_person') . ' AS pr ON ts.person_id = pr.id');
+			
+		// Join Project-Position
+		$query->select('ppos.position_id,ppos.id AS pposid')
+		->join('INNER', $db->quoteName('#__joomleague_project_position') . ' AS ppos ON ppos.id = ts.project_position_id');
+		
+		// Join Position
+		$query->select('pos.name AS position,pos.parent_id')
+		->join('INNER', $db->quoteName('#__joomleague_position') . ' AS pos ON pos.id = ppos.position_id');
+		
+		// Join Position (parent)
+		$query->select('posparent.name AS parentname')
+		->join('LEFT', $db->quoteName('#__joomleague_position') . ' AS posparent ON pos.parent_id = posparent.id');
+		
+		$query->where('ts.projectteam_id = '.$db->Quote($this->projectteamid));
+		$query->where('pr.published = 1');
+		$query->where('ts.published = 1');
+		$query->order('pos.parent_id,pos.ordering');
+		$db->setQuery($query);
+		$stafflist = $db->loadObjectList();
 		return $stafflist;
 	}
 
@@ -423,78 +405,93 @@ class JoomleagueModelRoster extends JoomleagueModelProject
 	function getTimePlayed($player_id,$game_regular_time,$match_id = NULL)
 	{
 		$result = 0;
+		$db = JFactory::getDbo();
+		
 		// starting line up without subs in/out
-		$query='SELECT count(match_id) as totalmatch
-			      FROM #__joomleague_match_player
-			      WHERE teamplayer_id = '.$player_id.' and came_in = 0';
-		if ( $match_id )
+		$query = $db->getQuery(true);
+		$query->select('count(match_id) as totalmatch');
+		$query->from('#__joomleague_match_player');
+		$query->where('teamplayer_id = '.$player_id);
+		$query->where('came_in = 0');
+		if ($match_id)
 		{
-			$query .= ' and match_id = '.$match_id;
+			$query->where('match_id = '.$match_id);
 		}
-		$this->_db->setQuery($query);
-		$totalresult = $this->_db->loadObject();
+		$db->setQuery($query);
+		$totalresult = $db->loadObject();
 
-		if ( $totalresult )
+		if ($totalresult)
 		{
 			$result += $totalresult->totalmatch * $game_regular_time;
 		}
 
 		// subs in
-		$query='SELECT count(match_id) as totalmatch, SUM(in_out_time) as totalin
-			      FROM #__joomleague_match_player
-			      WHERE teamplayer_id = '.$player_id.' and came_in = 1 and in_for IS NOT NULL';
-		if ( $match_id )
+		$query = $db->getQuery(true);
+		$query->select('count(match_id) as totalmatch, SUM(in_out_time) as totalin');
+		$query->from('#__joomleague_match_player');
+		$query->where('teamplayer_id = '.$player_id);
+		$query->where('came_in = 1');
+		$query->where('in_for IS NOT NULL');
+		if ($match_id)
 		{
-			$query .= ' and match_id = '.$match_id;
+			$query->where('match_id = '.$match_id);
 		}
-		$this->_db->setQuery($query);
-		$cameinresult = $this->_db->loadObject();
+		$db->setQuery($query);
+		$cameinresult = $db->loadObject();
 
-		if ( $cameinresult )
+		if ($cameinresult)
 		{
-			$result += ( $cameinresult->totalmatch * $game_regular_time ) - ( $cameinresult->totalin );
+			$result += ($cameinresult->totalmatch * $game_regular_time) - ($cameinresult->totalin);
 		}
 
 		// subs out
-		$query='SELECT count(match_id) as totalmatch, SUM(in_out_time) as totalout
-			      FROM #__joomleague_match_player
-			      WHERE in_for = '.$player_id.' and came_in = 1 ';
-		if ( $match_id )
+		$query = $db->getQuery(true);
+		$query->select('count(match_id) as totalmatch, SUM(in_out_time) as totalout');
+		$query->from('#__joomleague_match_player');
+		$query->where('in_for = '.$player_id);
+		$query->where('came_in = 1');
+		
+		if ($match_id)
 		{
-			$query .= ' and match_id = '.$match_id;
+			$query->where('match_id = '.$match_id);
 		}
-		$this->_db->setQuery($query);
-		$cameoutresult = $this->_db->loadObject();
+		$db->setQuery($query);
+		$cameoutresult = $db->loadObject();
 
-		if ( $cameoutresult )
+		if ($cameoutresult)
 		{
-			$result += ( $cameoutresult->totalout ) - ( $cameoutresult->totalmatch * $game_regular_time );
+			$result += ($cameoutresult->totalout) - ($cameoutresult->totalmatch * $game_regular_time);
 		}
 
 		// get all events which leads to a suspension (e.g. red card)
-		$query = 'SELECT id
-				    FROM #__joomleague_eventtype
-				    WHERE suspension = 1';
-		$this->_db->setQuery($query);
-		$suspension_events = $this->_db->loadColumn();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_eventtype');
+		$query->where('suspension = 1');
+		$db->setQuery($query);
+		
+		$suspension_events = $db->loadColumn();
 		$suspension_events = implode(',',$suspension_events);
 
 		// find matches where the player was suspended because of e.g. a red card
 		if (!empty($suspension_events))
 		{
-			$query = 'SELECT *
-					    FROM #__joomleague_match_event
-					    WHERE teamplayer_id = '.$player_id;
-			$query .= ' and event_type_id in ('.$suspension_events.')';
-			if ( $match_id )
+			$query = $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__joomleague_match_event');
+			$query->where('teamplayer_id = '.$player_id);
+			$query->where('event_type_id IN ('.$suspension_events.')');
+		
+			if ($match_id)
 			{
-			$query .= ' and match_id = '.$match_id;
+				$query->where('match_id = '.$match_id);
 			}
-			$this->_db->setQuery($query);
-			$cardsresult = $this->_db->loadObjectList();
-			foreach ( $cardsresult as $row )
+			$db->setQuery($query);
+			$cardsresult = $db->loadObjectList();
+			
+			foreach ($cardsresult as $row)
 			{
-			    $result -= ( $game_regular_time - $row->event_time );
+			    $result -= ($game_regular_time - $row->event_time);
 			}
 		}
 

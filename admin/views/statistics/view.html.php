@@ -34,7 +34,7 @@ class JoomleagueViewStatistics extends JLGView
 		$pagination = $this->get('Pagination');
 
 		// state filter
-		$lists['state']=JHtml::_('grid.state',$filter_state);
+		$lists['state'] = JoomleagueHelper::stateOptions($filter_state);
 
 		// table ordering
 		$lists['order_Dir'] = $filter_order_Dir;
@@ -50,7 +50,7 @@ class JoomleagueViewStatistics extends JLGView
 		$lists['sportstypes'] = JHtml::_( 'select.genericList',
 										$sportstypes,
 										'filter_sports_type',
-										'class="inputbox" onChange="this.form.submit();" style="width:120px"',
+										'class="input-medium" onChange="this.form.submit();"',
 										'id',
 										'name',
 										$filter_sports_type);

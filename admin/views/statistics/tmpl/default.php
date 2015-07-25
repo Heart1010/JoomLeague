@@ -78,9 +78,10 @@ JHtml::_('behavior.tooltip');
 				<?php
 				$n = count($this->items);
 				foreach ($this->items as $i => $row) :
-					$link=JRoute::_('index.php?option=com_joomleague&task=statistic.edit&id='.$row->id);
-					$checked=JHtml::_('grid.checkedout',$row,$i);
-					$published=JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','statistic.');
+					$link		= JRoute::_('index.php?option=com_joomleague&task=statistic.edit&id='.$row->id);
+					$checked	= JHtml::_('grid.checkedout',$row,$i);
+					/* $published=JHtml::_('grid.published',$row,$i,'tick.png','publish_x.png','statistic.'); */
+					$published 	= JHtml::_('jgrid.published', $row->published, $i, 'statistic.');
 					?>
 					<tr class="row<?php echo $i % 2; ?>">
 						<td class="center"><?php echo $this->pagination->getRowOffset($i); ?></td>

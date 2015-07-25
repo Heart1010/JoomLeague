@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
 jimport('joomla.html.parameter.element.timezones');
 
 /**
@@ -30,9 +29,6 @@ class JoomleagueViewProject extends JLGView
 		// add javascript
 		$document = JFactory::getDocument();
 		$version = urlencode(JoomleagueHelper::getVersion () );
-		
-		// @todo: check!
-		$document->addScript(JUri::root().'administrator/components/com_joomleague/models/forms/project.js?v='.$version);
 		
 		$this->edit = $edit;
 		$this->copy = $copy;

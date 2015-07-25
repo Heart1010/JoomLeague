@@ -35,6 +35,7 @@ require_once JLG_PATH_SITE.'/helpers/countries.php';
 require_once JLG_PATH_SITE.'/helpers/extraparams.php';
 require_once JLG_PATH_SITE.'/helpers/ranking.php';
 require_once JLG_PATH_SITE.'/helpers/html.php';
+require_once JLG_PATH_SITE.'/helpers/helper.php';
 
 require_once JLG_PATH_ADMIN.'/helpers/joomleaguehelper.php';
 require_once JLG_PATH_ADMIN.'/tables/jltable.php';

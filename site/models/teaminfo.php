@@ -24,11 +24,16 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
 
 	public function __construct( )
 	{
-		$this->projectid = JRequest::getInt( "p", 0 );
-		$this->projectteamid = JRequest::getInt( "ptid", 0 );
-		$this->teamid = JRequest::getInt( "tid", 0 );
+		$db 	= JFactory::getApplication();
+		$jinput = $db->input;
+		
+		$this->projectid 	 = JLHelperFront::stringToInt($jinput->getInt('p',0));
+		$this->projectteamid = JLHelperFront::stringToInt($jinput->getInt('ptid',0));
+		$this->teamid 		 = JLHelperFront::stringToInt($jinput->getInt('tid',0));
+		
 		parent::__construct( );
 	}
+	
 
 	/**
 	 * get team info
@@ -59,22 +64,25 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
 		return $this->team;
 	}
 
+	
 	/**
 	 * get club info
 	 * @return object
 	 */
 	function getClub()
 	{
-		if ( is_null( $this->club ) )
+		if (is_null($this->club))
 		{
 			$team = $this->getTeamByProject();
-			if ( $team->club_id > 0 )
+			if ($team->club_id > 0)
 			{
-				$query = ' SELECT *, '
-				       . ' CASE WHEN CHAR_LENGTH( alias ) THEN CONCAT_WS( \':\', id, alias ) ELSE id END AS slug '
-				       . ' FROM #__joomleague_club WHERE id = '. $this->_db->Quote($team->club_id);
-				$this->_db->setQuery($query);
-				$this->club  = $this->_db->loadObject();
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select('*');
+				$query->from('#__joomleague_club WHERE id = '. $db->Quote($team->club_id));
+				$query->select('CASE WHEN CHAR_LENGTH( alias ) THEN CONCAT_WS( \':\', id, alias ) ELSE id END AS slug');
+				$db->setQuery($query);
+				$this->club  = $db->loadObject();				
 			}
 		}
 		return $this->club;
@@ -148,6 +156,7 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
     	return $seasons;
 	}
 
+	
 	/**
 	 * get ranking of current team in a project
 	 * @param int projectid
@@ -192,6 +201,7 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
 		return $rank;
 	}
 
+	
 	/**
 	 * gets name of league associated to project
 	 * @param int $projectid
@@ -199,9 +209,15 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
 	 */
 	function getLeague($projectid)
 	{
-		$query = 'SELECT l.name AS league FROM #__joomleague_project AS p, #__joomleague_league AS l WHERE p.id=' . $projectid . ' AND l.id=p.league_id ';
-	    $this->_db->setQuery($query, 0, 1);
-    	$league = $this->_db->loadResult();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('l.name AS league');
+		$query->from('#__joomleague_league AS l');
+		$query->join('LEFT', '#__joomleague_project AS p ON p.league_id = l.id');
+		$query->where('p.id = '.$projectid);
+	    $db->setQuery($query, 0, 1);
+    	$league = $db->loadResult();
+    	
 		return $league;
 	}
 
@@ -214,32 +230,39 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
 	function getPlayerCount($projectid, $projectteamid)
 	{
 		$player = array();
-		$query = " SELECT COUNT(*) AS playercnt "
-			   . " FROM #__joomleague_person AS ps "
-		       . " INNER JOIN #__joomleague_team_player AS tp ON tp.person_id = ps.id "
-		       . " INNER JOIN #__joomleague_project_team AS pt ON tp.projectteam_id = pt.id "
-		       . " WHERE pt.project_id=" . $projectid
-		       . " AND pt.id=" . $projectteamid
-		       . " AND tp.published = 1 " 
-		       . " AND ps.published = 1 ";
-		       $this->_db->setQuery($query);
-		$player = $this->_db->loadResult();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('COUNT(ps.id) AS playercnt');
+		$query->from('#__joomleague_person AS ps');
+		$query->join('INNER', '#__joomleague_team_player AS tp ON tp.person_id = ps.id');
+		$query->join('INNER', '#__joomleague_project_team AS pt ON pt.id = tp.projectteam_id');
+		$query->where('pt.project_id = '.$projectid);
+		$query->where('pt.id = '.$projectteamid);
+		$query->where('tp.published = 1');
+		$query->where('ps.published = 1');
+		$db->setQuery($query);
+		
+		$player = $db->loadResult();
 		return $player;
 	}
 	
 	
 	function getprojectteamID($teamid)
 	{
-		$query = "SELECT id "
-			   . "  FROM #__joomleague_project_team "
-			   . "  WHERE team_id=".(int)$teamid
-			   . "	AND project_id=".(int)$this->projectid;
-
-		$this->_db->setQuery($query);
-		$result=$this->_db->loadResult();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_project_team');
+		$query->where('team_id = '.$teamid);
+		$query->where('project_id = '.$this->projectid);
+		$db->setQuery($query);
+		
+		$result = $db->loadResult();
 
 		return $result;
 	}
+	
 	
 	/**
 	* Method to return a team trainingdata array
@@ -249,15 +272,24 @@ class JoomleagueModelTeamInfo extends JoomleagueModelProject
 	function getTrainigData( $projectid )
 	{
 		$trainingData = array();
-		if($this->projectteamid <= 0) {
+		
+		if ($this->projectteamid <= 0) {
 			$projectTeamID  = $this->getprojectteamID($this->teamid);
 		}
-		$query = "SELECT * FROM #__joomleague_team_trainingdata WHERE project_id=$projectid "
-				."AND project_team_id=$projectTeamID ORDER BY dayofweek ASC";
-		$this->_db->setQuery($query);
-		$trainingData = $this->_db->loadObjectList();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__joomleague_team_trainingdata');
+		$query->where('project_id = '.$projectid);
+		$query->where('project_team_id = '.$projectTeamID);
+		$query->order('dayofweek ASC');
+		$db->setQuery($query);
+		$trainingData = $db->loadObjectList();
+		
 		return $trainingData;
 	}
+	
 	
 	function hasEditPermission($task=null)
 	{

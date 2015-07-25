@@ -18,6 +18,7 @@ class JoomleagueModelRivals extends JoomleagueModelProject
 	var $teamid = 0;
 	var $team = null;
 
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -25,24 +26,26 @@ class JoomleagueModelRivals extends JoomleagueModelProject
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
 		
-		$this->projectid = $jinput->getInt("p",0);
-		$this->teamid = $jinput->getInt("tid",0);
+		$this->projectid = JLHelperFront::stringToInt($jinput->getInt("p",0));
+		$this->teamid 	 = JLHelperFront::stringToInt($jinput->getInt("tid",0));
 		$this->getTeam();
 	}
 
+	
 	function getTeam()
 	{
 		if (!isset($this->team))
 		{
-			if ( $this->teamid > 0 )
+			if ( $this->teamid > 0)
 			{
 				$this->team = $this->getTable('Team','Table');
-				$this->team->load( $this->teamid );
+				$this->team->load($this->teamid);
 			}
 		}
 		return $this->team;
 	}
 
+	
 	function getOpponents()
 	{
 		$query = ' SELECT m.id ';

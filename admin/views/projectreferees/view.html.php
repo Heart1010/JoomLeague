@@ -133,10 +133,12 @@ class JoomleagueViewProjectReferees extends JLGView
 
 		$document = JFactory::getDocument();
 		$baseurl    = JUri::root();
+		/*
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.js');
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.Request.js');
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Observer.js');
 		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/quickaddperson.js');
+		*/
 		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');	
 
 		$filter_state		= $app->getUserStateFromRequest($option.'p_filter_state',		'filter_state',		'',				'word');

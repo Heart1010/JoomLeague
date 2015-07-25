@@ -178,7 +178,9 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 				
 			$tblProjectteam = JTable::getInstance('Projectteam','Table');
 			$tblProjectteam->id = $cid[$x];
-			$tblProjectteam->division_id =			$data['division_id' . $cid[$x]];
+			if (isset($data['division_id' . $cid[$x]])) {
+				$tblProjectteam->division_id =			$data['division_id' . $cid[$x]];
+			}
 			$tblProjectteam->start_points =			$data['start_points' .$cid[$x]];
 			$tblProjectteam->points_finally =		$data['points_finally' .$cid[$x]];
 			$tblProjectteam->neg_points_finally =	$data['neg_points_finally' . $cid[$x]];

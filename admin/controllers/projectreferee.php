@@ -253,6 +253,9 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 		$this->setRedirect( 'index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display' );
 	}
 
+	/**
+	 * Assign referees to the project
+	 */
 	public function assign()
 	{
 		//redirect to ProjectReferees page, with a message
@@ -260,22 +263,26 @@ class JoomleagueControllerProjectReferee extends JoomleagueController
 		$this->setRedirect( 'index.php?option=com_joomleague&view=persons&task=person.display&layout=assignplayers&type=2&hidemainmenu=1', $msg );
 	}
 
+	/**
+	 * unassing referees
+	 */
 	public function unassign()
 	{
-		$cid = JRequest::getVar( 'cid', array(), 'post', 'array' );
-		JArrayHelper::toInteger( $cid );
-		$model = $this->getModel( 'projectreferees' );
-		$nDeleted = $model->unassign( $cid );
-		if ( !$nDeleted )
+		$cid = JRequest::getVar('cid',array(),'post','array');
+		JArrayHelper::toInteger($cid);
+		$model = $this->getModel('projectreferees');
+		
+		$nDeleted = $model->unassign($cid);
+		if (!$nDeleted)
 		{
-			$msg = JText::_( 'COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_UNASSIGN' );
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_UNASSIGN'),'warning');
 		}
 		else
 		{
-			$msg = JText::sprintf( 'COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_UNASSIGNED', $nDeleted );
+			JFactory::getApplication()->enqueueMessage(JText::sprintf('COM_JOOMLEAGUE_ADMIN_P_REFEREE_CTRL_UNASSIGNED', $nDeleted));
 		}
-		//redirect to projectreferee page, with a message
-		$this->setRedirect( 'index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display', $msg );
+		// redirect to projectreferee page, with a message
+		$this->setRedirect( 'index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display');
 	}
 	
 	/**

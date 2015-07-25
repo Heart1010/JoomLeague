@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 require_once('person.php');
 
 class JoomleagueModelPlayer extends JoomleagueModelPerson
@@ -27,32 +26,9 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 		$app 	= JFactory::getApplication();
 		$jinput = $app->input;
 		
-		// @tod check!
-		// changed getInt to getString as the variables are like nr:name
-		$this->projectid 	= $jinput->getString('p',0); // projectid
-		if ($this->projectid) {
-			# is the : within the string?
-			if (strpos($this->projectid,':') !== false) {
-				$arr = explode(":", $this->projectid, 2);
-				$this->projectid = $arr[0];
-			}
-		}
-		$this->personid		= $jinput->getString('pid',0); // personid
-		if ($this->personid) {
-			# is the : within the string?
-			if (strpos($this->personid,':') !== false) {
-				$arr = explode(":", $this->personid, 2);
-				$this->personid = $arr[0];
-			}
-		}
-		$this->teamplayerid	= $jinput->getString('pt',0); // teamplayerid
-		if ($this->teamplayerid) {
-			# is the : within the string?
-			if (strpos($this->teamplayerid,':') !== false) {
-				$arr = explode(":", $this->teamplayerid, 2);
-				$this->teamplayerid = $arr[0];
-			}
-		}
+		$this->projectid 	= JLHelperFront::stringToInt($jinput->getString('p',0));
+		$this->personid		= JLHelperFront::stringToInt($jinput->getString('pid',0));
+		$this->teamplayerid	= JLHelperFront::stringToInt($jinput->getString('pt',0));
 	}
 
 	// Get all teamplayers of the project where the person played in
@@ -338,25 +314,30 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 
 	function getRounds($roundcodestart,$roundcodeend)
 	{
-		$projectid=$this->projectid;
-		$thisround=0;
-		$query="	SELECT	id
-					FROM #__joomleague_round
-					WHERE project_id='".(int)$projectid."'
-					AND roundcode>='".(int)$roundcodestart."'
-					AND roundcode<='".(int)$roundcodeend."'
-					ORDER BY round_date_first";
-		$this->_db->setQuery($query);
-		$rows=$this->_db->loadColumn();
-		$rounds=array();
+		$projectid = $this->projectid;
+		$thisround = 0;
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_round');
+		$query->where('project_id = '.$projectid);
+		$query->where('roundcode >= '.$roundcodestart);
+		$query->where('roundcode <= '.roundcodeend);
+		$query->order('round_date_first');
+		$db->setQuery($query);
+		
+		$rows = $db->loadColumn();
+		$rounds = array();
+		
 		if (count($rows) > 0)
 		{
 			$startround = $this->getTable('Round','Table');
 			$startround->load($rows[0]);
-			$rounds[0]=$startround;
-			$endround = $this->getTable('Round','Table');
+			$rounds[0]	= $startround;
+			$endround	= $this->getTable('Round','Table');
 			$endround->load(end($rows));
-			$rounds[1]=$endround;
+			$rounds[1]	= $endround;
 		}
 		return $rounds;
 	}
@@ -368,8 +349,9 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 	 */
 	function getAllEvents($sportstype=0)
 	{
-		$history=$this->getPlayerHistory($sportstype);
-		$positionhistory=array();
+		$history = $this->getPlayerHistory($sportstype);
+		$positionhistory = array();
+		
 		foreach($history as $h)
 		{
 			if (!in_array($h->posID,$positionhistory) && $h->posID!=null)
@@ -381,13 +363,16 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 		{
 			return array();
 		}
-		$query='	SELECT DISTINCT	et.*
-					FROM #__joomleague_eventtype AS et
-					INNER JOIN #__joomleague_position_eventtype AS pet ON pet.eventtype_id=et.id
-					INNER JOIN #__joomleague_project_position AS ppos ON ppos.position_id=pet.position_id
-					WHERE published=1
-					  AND pet.position_id IN ('. implode(',',$positionhistory) .')
-					ORDER BY pet.ordering ';
+		
+		$db 	= JFactory::getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('DISTINCT et.*');
+		$query->from('#__joomleague_eventtype AS et');
+		$query->join('INNER','#__joomleague_position_eventtype AS pet ON pet.eventtype_id=et.id');
+		$query->join('INNER','#__joomleague_project_position AS ppos ON ppos.position_id=pet.position_id');
+		$query->where('et.published = 1');
+		$query->where('pet.position_id IN ('.implode(',',$positionhistory).')');
+		$query->order('pet.ordering');
 		$this->_db->setQuery($query);
 		$info=$this->_db->loadObjectList();
 		return $info;
@@ -727,23 +712,26 @@ class JoomleagueModelPlayer extends JoomleagueModelPerson
 
 	function getGamesEvents()
 	{
-		$teamplayers=$this->getTeamPlayers();
-		$gameevents=array();
+		$teamplayers	= $this->getTeamPlayers();
+		$gameevents		= array();
+		
 		if (count($teamplayers))
 		{
-			$quoted_tpids=array();
+			$quoted_tpids = array();
 			foreach ($teamplayers as $teamplayer)
 			{
-				$quoted_tpids[]=$this->_db->Quote($teamplayer->id);
+				$quoted_tpids[] = $teamplayer->id;
 			}
-			$query='SELECT	SUM(me.event_sum) as value,
-					me.*,
-					me.match_id
-				FROM #__joomleague_match_event AS me
-				WHERE me.teamplayer_id IN ('. implode(',', $quoted_tpids) .')
-				GROUP BY me.match_id, me.event_type_id';
-			$this->_db->setQuery($query);
-			$events=$this->_db->loadObjectList();
+			
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('SUM(me.event_sum) AS value','me.*','me.match_id');
+			$query->from('#__joomleague_match_event AS me');
+			$query->where('me.teamplayer_id IN ('. implode(',', $quoted_tpids) .')');
+			$query->group('me.match_id, me.event_type_id');
+			$db->setQuery($query);
+			$events = $db->loadObjectList();
+			
 			foreach ((array) $events as $ev)
 			{
 				if (isset($gameevents[$ev->match_id]))

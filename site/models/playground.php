@@ -23,8 +23,8 @@ class JoomleagueModelPlayground extends JoomleagueModelProject
         $app = JFactory::getApplication();
         $jinput = $app->input;
 
-        $this->projectid = $jinput->getInt("p",0);
-        $this->playgroundid = $jinput->getInt("pgid",0);
+        $this->projectid 	= JLHelperFront::stringToInt($jinput->getString('p',0));
+        $this->playgroundid = JLHelperFront::stringToInt($jinput->getString('pgid',0));
     }
 
     function getPlayground()
@@ -138,17 +138,17 @@ class JoomleagueModelPlayground extends JoomleagueModelProject
         return $matches;
     }
 
+    
     function getTeamLogo($team_id)
     {
-        $query = "
-            SELECT c.logo_small,
-                   c.country
-            FROM #__joomleague_team t
-            LEFT JOIN #__joomleague_club c ON c.id = t.club_id
-            WHERE t.id = ".$team_id."
-        ";
-        $this->_db->setQuery( $query );
-        $result = $this->_db->loadObjectList();
+    	$db = JFactory::getDbo();
+    	$query = $db->getQuery(true);
+    	$query->select('c.logo_small,c.country');
+    	$query->from('#__joomleague_club AS c');
+    	$query->join('LEFT', '#__joomleague_team AS t ON t.club_id = c.id');
+    	$query->where('t.id = '.$team_id);  			
+        $db->setQuery( $query );
+        $result = $db->loadObjectList();
 
         return $result;
     }

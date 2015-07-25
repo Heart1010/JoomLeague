@@ -5,6 +5,8 @@
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
+ * 
+ * @author		Kurt Norgaz
  */
 defined('_JEXEC') or die;
 
@@ -13,8 +15,6 @@ require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
  * Projectreferees Model
- *
- * @author	Kurt Norgaz
 */
 class JoomleagueModelProjectReferees extends JoomleagueModelList
 {
@@ -281,16 +281,21 @@ class JoomleagueModelProjectReferees extends JoomleagueModelList
 	function unassign($cid)
 	{
 		if (!count($cid)){
-			return 0;
+			// no referees were selected
+			return false;
 		}
-		$removed=0;
+		
+		$db 		= JFactory::getDbo();
+		$removed 	= 0;
 		for ($x=0; $x < count($cid); $x++)
 		{
-			$query='DELETE FROM #__joomleague_project_referee WHERE id='.$cid[$x];
-			$this->_db->setQuery($query);
-			if(!$this->_db->execute())
+			$query = $db->getQuery(true);
+			$query->delete('#__joomleague_project_referee');
+			$query->where('id = '.$cid[$x]);
+			$db->setQuery($query);
+			if(!$db->execute())
 			{
-				$this->setError($this->_db->getErrorMsg());
+				$this->setError($db->getErrorMsg());
 				continue;
 			}
 			$removed++;

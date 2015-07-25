@@ -9,7 +9,7 @@
 defined('_JEXEC') or die; 
 ?>
 <!-- START: matches -->
-<table class="clubplan">				
+<table class="clubplan table">				
 <?php
 if ($this->config['type_matches'] != 0) {
 ?>

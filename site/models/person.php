@@ -37,88 +37,70 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
-		$this->projectid	= $jinput->getString('p',0); // projectid
-		if ($this->projectid) {
-			# is the : within the string?
-			if (strpos($this->projectid,':') !== false) {
-				$arr = explode(":", $this->projectid, 2);
-				$this->projectid = $arr[0];
-			}
-		}
-		$this->personid		= $jinput->getString('pid',0); // personid
-		if ($this->personid) {
-			# is the : within the string?
-			if (strpos($this->personid,':') !== false) {
-				$arr = explode(":", $this->personid, 2);
-				$this->personid = $arr[0];
-			}
-		}
-		$this->teamplayerid	= $jinput->getString('pt',0); // templayer
-		if ($this->teamplayerid) {
-			# is the : within the string?
-			if (strpos($this->teamplayerid,':') !== false) {
-				$arr = explode(":", $this->teamplayerid, 2);
-				$this->teamplayerid = $arr[0];
-			}
-		}
+		$this->projectid	= JLHelperFront::stringToInt($jinput->getString('p',0));
+		$this->personid		= JLHelperFront::stringToInt($jinput->getString('pid',0));
+		$this->teamplayerid	= JLHelperFront::stringToInt($jinput->getString('pt',0));
 	}
 
+	
 	function getPerson()
 	{
-		if ( is_null( $this->person ) && $this->personid > 0)
+		if (is_null($this->person) && $this->personid > 0)
 		{
-			$query = '	SELECT p.*,  
-						CASE WHEN CHAR_LENGTH( p.alias ) THEN CONCAT_WS( \':\', p.id, p.alias ) ELSE p.id END AS slug  
-						FROM #__joomleague_person AS p 
-						WHERE p.id = '. $this->_db->Quote($this->personid)
-					;
-			$this->_db->setQuery($query);
-			$this->person = $this->_db->loadObject();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('p.*');
+			$query->select('CASE WHEN CHAR_LENGTH( p.alias ) THEN CONCAT_WS( \':\', p.id, p.alias ) ELSE p.id END AS slug');
+			$query->from('#__joomleague_person AS p');
+			$query->where('p.id = '.$db->Quote($this->personid));
+			$db->setQuery($query);
+			$this->person = $db->loadObject();
 		}
 		return $this->person;
 	}
 
+	
 	function &getReferee()
 	{
-		if ( is_null( $this->_inproject ) )
+		if (is_null($this->_inproject))
 		{
-			$query = '	SELECT tp.*, pos.name AS position_name 
-						FROM #__joomleague_project_referee AS tp 
-						INNER JOIN #__joomleague_position AS pos ON pos.id = tp.project_position_id 
-						WHERE tp.project_id = '. $this->_db->Quote($this->projectid) .'
-						AND tp.person_id = '. $this->_db->Quote($this->personid)
-					;
-			$this->_db->setQuery($query);
-			$this->_inproject = $this->_db->loadObject();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('tp.*, pos.name AS position_name');
+			$query->from('#__joomleague_project_referee AS tp');
+			$query->join('INNER', '#__joomleague_position AS pos ON pos.id = tp.project_position_id');
+			$query->where('tp.project_id = '. $db->Quote($this->projectid));
+			$query->where('tp.person_id = '. $db->Quote($this->personid));
+			$db->setQuery($query);
+			$this->_inproject = $db->loadObject();
 		}
 		return $this->_inproject;
 	}
+	
 
 	function getPositionEventTypes( $positionId = 0 )
 	{
 		$result = array();
-
-		$query = '	SELECT	pet.*,
-					et.name,
-					et.icon
-	
-					FROM #__joomleague_position_eventtype AS pet
-					INNER JOIN #__joomleague_eventtype AS et ON et.id = pet.eventtype_id
-					INNER JOIN #__joomleague_match_event AS me ON et.id = me.event_type_id
-					WHERE me.project_id=' . $this->projectid;
-
-		if ( $positionId > 0 )
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pet.*,et.name,et.icon');
+		$query->from('#__joomleague_position_eventtype AS pet');
+		$query->join('INNER', '#__joomleague_eventtype AS et ON et.id = pet.eventtype_id');
+		$query->join('INNER', '#__joomleague_match_event AS me ON et.id = me.event_type_id');
+		$query->where('me.project_id = '.$this->projectid);
+		if ($positionId > 0)
 		{
-			$query .= ' AND pet.position_id = ' . (int)$positionId;
+			$query->where('pet.position_id = '.$positionId);
 		}
-		$query .= ' ORDER BY pet.ordering';
+		$query->order('pet.ordering');
 
-		$this->_db->setQuery( $query );
-		$result = $this->_db->loadObjectList();
+		$db->setQuery($query);
+		$result = $db->loadObjectList();
 
-		if ( $result )
+		if ($result)
 		{
-			if ( $positionId )
+			if ($positionId)
 			{
 				return $result;
 			}
@@ -173,53 +155,59 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 		return $results;
 	}
 
-	function getContactID( $catid )
+	
+	function getContactID($catid)
 	{
 		$person = $this->getPerson();
-
-		$query = '	SELECT	id
-					FROM #__contact_details
-					WHERE user_id = ' . $person->jl_user_id . '
-					AND catid=' . $catid;
-
-		$this->_db->setQuery( $query );
-		$contact_id = $this->_db->loadResult();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__contact_details');
+		$query->where('user_id = '.$person->jl_user_id);
+		$query->where('catid = '.$catid);
+		$db->setQuery($query);
+		
+		$contact_id = $db->loadResult();
 		return $contact_id;
 	}
 
+	
 	/**
 	 * @todo fix! // 23-07-2015
 	 * this function is not inline with model-Project
 	 * @see JoomleagueModelProject::getRounds()
 	 */
-	function getRounds( $roundcodestart, $roundcodeend )
+	function getRounds($roundcodestart, $roundcodeend)
 	{
 		$projectid = $this->projectid;
-
 		$thisround = 0;
-		$query = "	SELECT	id
-					FROM #__joomleague_round
-					WHERE project_id='" . (int)$projectid . "'
-					AND roundcode>='" . (int)$roundcodestart . "'
-					AND roundcode<='" . (int)$roundcodeend . "'
-					ORDER BY round_date_first";
-
-		$this->_db->setQuery( $query );
-		$rows = $this->_db->loadColumn();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id');
+		$query->from('#__joomleague_round');
+		$query->where('project_id = '.$projectid);
+		$query->where('roundcode >= '.$roundcodestart);
+		$query->where('roundcode <= '.$roundcodeend);
+		$query->order('round_date_first');
+		$db->setQuery($query);
+		$rows = $db->loadColumn();
 
 		$rounds = array();
-		if ( count( $rows ) > 0 )
+		if (count($rows) > 0)
 		{
-			$startround = $this->getTable( 'Round', 'Table' );
-			$startround->load( $rows[0] );
+			$startround = $this->getTable('Round','Table');
+			$startround->load($rows[0]);
 			$rounds[0] = $startround;
-			$endround = $this->getTable( 'Round', 'Table' );
-			$endround->load( end( $rows ) );
+			$endround = $this->getTable('Round','Table');
+			$endround->load(end($rows));
 			$rounds[1] = $endround;
 		}
 		return $rounds;
 	}
 
+	
 	/**
 	 * get all positions the player was assigned too in different projects
 	 * @return unknown_type
@@ -236,15 +224,18 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 		if (!count($positionhistory)) {
 			return array();
 		}
-		$query = ' SELECT et.* '
-				. ' FROM #__joomleague_eventtype AS et '
-				. ' INNER JOIN #__joomleague_position_eventtype AS pet ON pet.eventtype_id = et.id '
-				. ' WHERE published = 1 '
-				. '   AND pet.position_id IN ('. implode(',', $positionhistory) .')'
-				. ' ORDER BY et.ordering '
-				;
-				$this->_db->setQuery( $query );
-				$info = $this->_db->loadObjectList();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('et.*');
+		$query->from('#__joomleague_eventtype AS et');
+		$query->join('INNER', '#__joomleague_position_eventtype AS pet ON pet.eventtype_id = et.id');
+		$query->where('published = 1');
+		$query->where('pet.position_id IN ('. implode(',', $positionhistory) .')');
+		$query->order('et.ordering');
+		$db->setQuery($query);
+				
+		$info = $db->loadObjectList();
 		return $info;
 	}
 
@@ -278,6 +269,7 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 				return $result;
 	}
 
+	
 	function getInOutStats( $project_id, $person_id )
 	{
 		$query = ' SELECT	sum(IF(came_in=0,1,0)+max(came_in=1)) AS played, '
@@ -291,15 +283,14 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 				. ' AND pt.project_id=' . $this->_db->Quote((int)$project_id)
 				. ' AND tp.published = 1 ';
 		$this->_db->setQuery( $query );
+		
 		$inoutstat = $this->_db->loadObjectList();
-
 		return $inoutstat;
 	}
 
+	
 	function getPlayerChangedRecipients()
 	{
-		/* $user = JFactory::getUser(); */
-		
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('u.email');
@@ -309,8 +300,8 @@ class JoomleagueModelPerson extends JoomleagueModelProject
 		$query->where('g.title = '.$db->quote("Super Users").' OR g.title = '.$db->quote("Administrator"));
 		$query->order('u.username ASC');
 		$db->setQuery($query);
-		$users = $db->loadColumn();
 		
+		$users = $db->loadColumn();
 		return $users;
 	}
 

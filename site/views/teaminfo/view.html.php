@@ -11,6 +11,11 @@ defined('_JEXEC') or die;
 
 class JoomleagueViewTeamInfo extends JLGView
 {
+	
+	/**
+	 * @todo fix! // 24-07-2015
+	 * If a club is not attached to a project it will give problems
+	 */
 	public function display( $tpl = null )
 	{
 		// Get a reference of the page instance in joomla
@@ -57,8 +62,7 @@ class JoomleagueViewTeamInfo extends JLGView
 			$this->extended = $extended;
 		}
 
-		
-		
+	
 		// Set page title
 		$titleInfo = JoomleagueHelper::createTitleInfo(JText::_('COM_JOOMLEAGUE_TEAMINFO_PAGE_TITLE'));
 		

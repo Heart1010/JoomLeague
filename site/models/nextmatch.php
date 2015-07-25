@@ -31,13 +31,18 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 	public function __construct( )
 	{
 		parent::__construct( );
-		$this->projectid = JRequest::getInt( "p", 0 );
-		$this->divisionid = JRequest::getInt( "division", 0 );
-		$this->teamid = JRequest::getInt( "tid", 0 );
-		$this->matchid = JRequest::getInt( "mid", 0 );
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->projectid 	= JLHelperFront::stringToInt($jinput->getInt('p',0));
+		$this->divisionid	= JLHelperFront::stringToInt($jinput->getInt('division',0));
+		$this->teamid 		= JLHelperFront::stringToInt($jinput->getInt('tid',0));
+		$this->matchid 		= JLHelperFront::stringToInt($jinput->getInt('mid',0));
 		$this->getSpecifiedMatch($this->projectid, $this->divisionid, $this->teamid, $this->matchid);
 	}
 
+	
 	function getSpecifiedMatch($projectId, $divisionId, $teamId, $matchId)
 	{
 		if (!$this->_match)
@@ -98,6 +103,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		return $this->_match;
 	}
 
+	
 	/**
 	 * get match info
 	 * @return object
@@ -124,6 +130,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		return $this->_match;
 	}
 
+	
 	/**
 	 * get match teams details
 	 * @return array
@@ -148,6 +155,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		return $this->teams;
 	}
 
+	
 	function getReferees()
 	{
 		$match = $this->getMatch();
@@ -164,6 +172,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		return $this->_db->loadObjectList();
 	}
 
+	
 	function _getRanking()
 	{
 		if (empty($this->ranking))
@@ -177,6 +186,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		return $this->ranking;
 	}
 
+	
 	function getHomeRanked()
 	{
 		$match = $this->getMatch();
@@ -190,6 +200,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		return false;
 	}
 
+	
 	function getAwayRanked()
 	{
 		$match = $this->getMatch();
@@ -203,6 +214,7 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 		}
 		return false;
 	}
+	
 
 	function _getHighestHomeWin($teamid)
 	{
@@ -463,15 +475,20 @@ class JoomleagueModelNextMatch extends JoomleagueModelProject
 
 		return $teams;
 	}
+	
 
-	function getPlayground( $pgid )
+	function getPlayground($pgid)
 	{
-		$query = 'SELECT * FROM #__joomleague_playground
-					WHERE id = '. $this->_db->Quote($pgid);
-		$this->_db->setQuery($query, 0, 1);
-		return $this->_db->loadObject();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__joomleague_playground');
+		$query->where('id = '.$db->Quote($pgid));
+		$db->setQuery($query, 0, 1);
+		return $db->loadObject();
 	}
 
+	
 	function getMatchText($match_id)
 	{
 		$query = "SELECT m.*, t1.name t1name,  t2.name t2name, p.timezone

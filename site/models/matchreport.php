@@ -14,8 +14,8 @@ require_once JLG_PATH_SITE.'/models/project.php';
 class JoomleagueModelMatchReport extends JoomleagueModelProject
 {
 
-	var $matchid=0;
-	var $match=null;
+	var $matchid	= 0;
+	var $match		= null;
 
 	/**
 	 * caching for players events. Used in stats calculations
@@ -40,7 +40,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		$app = JFactory::getApplication();
 		$jinput = $app->input;
 		
-		$this->matchid=$jinput->getInt('mid',0);
+		$this->matchid = JLHelperFront::stringToInt($jinput->getInt('mid',0));
 		parent::__construct();
 	}
 
@@ -49,14 +49,15 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (is_null($this->match))
 		{
-			$query='SELECT m.*,DATE_FORMAT(m.time_present,"%H:%i") time_present, r.project_id, p.timezone 
-					FROM #__joomleague_match AS m 
-					INNER JOIN #__joomleague_round AS r on r.id=m.round_id 
-					INNER JOIN #__joomleague_project AS p on r.project_id=p.id 
-					WHERE m.id='. $this->_db->Quote($this->matchid)
-			      ;
-			$this->_db->setQuery($query,0,1);
-			$this->match=$this->_db->loadObject();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('m.*,DATE_FORMAT(m.time_present,"%H:%i") AS time_present, r.project_id,p.timezone');
+			$query->from('#__joomleague_match AS m');
+			$query->join('INNER', '#__joomleague_round AS r on r.id = m.round_id');
+			$query->join('INNER', '#__joomleague_project AS p on r.project_id=p.id');
+			$query->where('m.id = '.$db->Quote($this->matchid));
+			$db->setQuery($query,0,1);
+			$this->match = $db->loadObject();
 			if ($this->match)
 			{
 				JoomleagueHelper::convertMatchDateToTimezone($this->match);
@@ -64,18 +65,20 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		}
 		return $this->match;
 	}
+	
 
 	function &getProject()
 	{
 		if (empty($this->_project))
 		{
-			$match=$this->getMatch();
+			$match = $this->getMatch();
 			$this->setProjectID($match->project_id);
 			parent::getProject();
 		}
 		return $this->_project;
 	}
 
+	
 	function getClubinfo($clubid)
 	{
 		$this->club = $this->getTable('Club','Table');
@@ -84,9 +87,10 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->club;
 	}
 
+	
 	function getRound()
 	{
-		$match=$this->getMatch();
+		$match = $this->getMatch();
 
 		$round = $this->getTable('Round','Table');
 		$round->load($match->round_id);
@@ -94,54 +98,61 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		//if no match title set then set the default one
 		if(is_null($round->name) || empty($round->name))
 		{
-			$round->name=JText::sprintf('COM_JOOMLEAGUE_RESULTS_GAMEDAY_NB',$round->id);
+			$round->name = JText::sprintf('COM_JOOMLEAGUE_RESULTS_GAMEDAY_NB',$round->id);
 		}
 
 		return $round;
 	}
 
+	
 	function getMatchPlayerPositions()
 	{
-		$query='	SELECT	pos.id, pos.name, 
-							ppos.position_id AS position_id, ppos.id as pposid
-					FROM #__joomleague_position AS pos
-					INNER JOIN #__joomleague_project_position AS ppos ON pos.id=ppos.position_id
-					INNER JOIN #__joomleague_match_player AS mp ON ppos.id=mp.project_position_id
-					WHERE mp.match_id='.(int)$this->matchid.'
-					GROUP BY pos.id
-					ORDER BY pos.ordering ASC ';
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pos.id,pos.name,ppos.position_id AS position_id, ppos.id AS pposid');
+		$query->from('#__joomleague_position AS pos');
+		$query->join('INNER','#__joomleague_project_position AS ppos ON pos.id = ppos.position_id');
+		$query->join('INNER','#__joomleague_match_player AS mp ON ppos.id = mp.project_position_id');
+		$query->where('mp.match_id = '.$this->matchid);
+		$query->group('pos.id');
+		$query->order('pos.ordering ASC');
+		$db->setQuery($query);
+		return $db->loadObjectList();
 	}
 
+	
 	function getMatchStaffPositions()
 	{
-		$query='	SELECT	pos.id, pos.name, 
-							ppos.position_id AS position_id, ppos.id as pposid
-					FROM #__joomleague_position AS pos
-					INNER JOIN #__joomleague_project_position AS ppos ON pos.id=ppos.position_id
-					INNER JOIN #__joomleague_match_staff AS mp ON ppos.id=mp.project_position_id
-					WHERE mp.match_id='.(int)$this->matchid.'
-					GROUP BY pos.id
-					ORDER BY pos.ordering ASC ';
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pos.id,pos.name,ppos.position_id AS position_id, ppos.id AS pposid');
+		$query->from('#__joomleague_position AS pos');
+		$query->join('INNER','#__joomleague_project_position AS ppos ON pos.id = ppos.position_id');
+		$query->join('INNER','#__joomleague_match_staff AS mp ON ppos.id = mp.project_position_id');
+		$query->where('mp.match_id = '.$this->matchid);
+		$query->group('pos.id');
+		$query->order('pos.ordering ASC');
+		$db->setQuery($query);
+		return $db->loadObjectList();
 	}
 
+	
 	function getMatchRefereePositions()
 	{
-		$query='	SELECT	pos.id, pos.name, 
-							ppos.position_id AS position_id, ppos.id as pposid
-					FROM #__joomleague_position AS pos
-					INNER JOIN #__joomleague_project_position AS ppos ON pos.id=ppos.position_id
-					INNER JOIN #__joomleague_match_referee AS mp ON ppos.id=mp.project_position_id
-					WHERE mp.match_id='.(int)$this->matchid.'
-					GROUP BY pos.id
-					ORDER BY pos.ordering ASC ';
-		$this->_db->setQuery($query);
-		return $this->_db->loadObjectList();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pos.id,pos.name,ppos.position_id AS position_id, ppos.id AS pposid');
+		$query->from('#__joomleague_position AS pos');
+		$query->join('INNER','#__joomleague_project_position AS ppos ON pos.id = ppos.position_id');
+		$query->join('INNER','#__joomleague_match_referee AS mp ON ppos.id = mp.project_position_id');
+		$query->where('mp.match_id = '.$this->matchid);
+		$query->group('pos.id');
+		$query->order('pos.ordering ASC');
+		$db->setQuery($query);
+		return $db->loadObjectList();
 	}
 
+	
 	function getMatchPlayers()
 	{
 		$query=' SELECT	pt.id,'
@@ -174,6 +185,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		$this->_db->setQuery($query);
 		return $this->_db->loadObjectList();
 	}
+	
 
 	function getMatchStaff()
 	{
@@ -203,6 +215,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->_db->loadObjectList();
 	}
 
+	
 	function getMatchReferees()
 	{
 		$query=' SELECT	p.id,'
@@ -224,6 +237,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->_db->loadObjectList();
 	}
 
+	
 	function getSubstitutes()
 	{
 		$query=' SELECT	mp.in_out_time,
@@ -299,21 +313,29 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->playground;
 	}
 
+	
 	/**
 	 * get match statistics as an array (projectteam_id => teamplayer_id => statistic_id)
 	 * @return array
 	 */
 	function getMatchStats()
 	{
-		$match=$this->getMatch();
-		$query=' SELECT * FROM #__joomleague_match_statistic '
-		      .' WHERE match_id='. $this->_db->Quote($match->id);
-		$this->_db->setQuery($query);
-		$res=$this->_db->loadObjectList();
+		$match = $this->getMatch();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('*');
+		$query->from('#__joomleague_match_statistic');
+		$query->where('match_id = '.$db->Quote($match->id));
+		$db->setQuery($query);
+		$res = $db->loadObjectList();
 
-		$stats = array(	$match->projectteam1_id => array(),
-						$match->projectteam2_id => array());
-		if(count($stats)>0 && count($res)>0) {
+		$stats = array(
+				$match->projectteam1_id => array(),
+				$match->projectteam2_id => array()
+		);
+		
+		if(count($stats) > 0 && count($res) > 0) {
 			foreach ($res as $stat)
 			{
 				@$stats[$stat->projectteam_id][$stat->teamplayer_id][$stat->statistic_id]=$stat->value;
@@ -321,6 +343,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		}
 		return $stats;
 	}
+	
 
 	/**
 	 * get match statistics as array(teamplayer_id => array(statistic_id => value))
@@ -330,14 +353,17 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (!($this->_playersbasicstats))
 		{
-			$match=$this->getMatch();
+			$match = $this->getMatch();
 
-			$query=' SELECT * FROM #__joomleague_match_statistic '
-			      .' WHERE match_id='. $this->_db->Quote($match->id);
-			$this->_db->setQuery($query);
-			$res=$this->_db->loadObjectList();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__joomleague_match_statistic');
+			$query->where('match_id = '.$db->Quote($match->id));
+			$db->setQuery($query);
+			$res = $db->loadObjectList();
 
-			$stats=array();
+			$stats = array();
 			if (count($res))
 			{
 				foreach ($res as $stat)
@@ -351,6 +377,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->_playersbasicstats;
 	}
 
+	
 	/**
 	 * get match statistics as array(teamplayer_id => array(event_type_id => value))
 	 * @return array
@@ -359,14 +386,17 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (!($this->_playersevents))
 		{
-			$match=$this->getMatch();
+			$match = $this->getMatch();
 
-			$query=' SELECT * FROM #__joomleague_match_event '
-			      .' WHERE match_id='. $this->_db->Quote($match->id);
-			$this->_db->setQuery($query);
-			$res=$this->_db->loadObjectList();
-
-			$events=array();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__joomleague_match_event');
+			$query->where('match_id = '.$db->Quote($match->id));
+			$db->setQuery($query);
+			$res = $db->loadObjectList();
+						
+			$events = array();
 			if (count($res))
 			{
 				foreach ($res as $event)
@@ -380,6 +410,7 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->_playersevents;
 	}
 
+	
 	/**
 	 * get match statistics as an array (team_staff_id => statistic_id)
 	 * @return array
@@ -388,14 +419,17 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 	{
 		if (!($this->_staffsbasicstats))
 		{
-			$match=$this->getMatch();
+			$match = $this->getMatch();
 
-			$query=' SELECT * FROM #__joomleague_match_staff_statistic '
-			      .' WHERE match_id='. $this->_db->Quote($match->id);
-			$this->_db->setQuery($query);
-			$res=$this->_db->loadObjectList();
-
-			$stats=array();
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__joomleague_match_staff_statistic');
+			$query->where('match_id = '.$db->Quote($match->id));
+			$db->setQuery($query);
+			$res = $db->loadObjectList();
+			
+			$stats = array();
 			if (count($res))
 			{
 				foreach ($res as $stat)
@@ -408,21 +442,25 @@ class JoomleagueModelMatchReport extends JoomleagueModelProject
 		return $this->_staffsbasicstats;
 	}
 
+	
+	/**
+	 * getMatchText
+	 */
 	function getMatchText($match_id)
 	{
-		$query="SELECT	m.*,
-						t1.name t1name,
-						t2.name t2name
-				FROM #__joomleague_match AS m
-				INNER JOIN #__joomleague_project_team AS pt1 ON m.projectteam1_id=pt1.id
-				INNER JOIN #__joomleague_project_team AS pt2 ON m.projectteam2_id=pt2.id
-				INNER JOIN #__joomleague_team AS t1 ON pt1.team_id=t1.id
-				INNER JOIN #__joomleague_team AS t2 ON pt2.team_id=t2.id
-				WHERE m.id=".$match_id."
-				AND m.published=1
-				ORDER BY m.match_date,t1.short_name";
-		$this->_db->setQuery($query);
-		$result = $this->_db->loadObject();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('m.*,t1.name AS t1name,t2.name AS t2name');
+		$query->from('#__joomleague_match AS m');
+		$query->join('INNER', '#__joomleague_project_team AS pt1 ON m.projectteam1_id = pt1.id');
+		$query->join('INNER', '#__joomleague_project_team AS pt2 ON m.projectteam2_id = pt2.id');
+		$query->join('INNER', '#__joomleague_team AS t1 ON pt1.team_id=t1.id');
+		$query->join('INNER', '#__joomleague_team AS t2 ON pt2.team_id=t2.id');
+		$query->where('m.id = '.$match_id);
+		$query->where('m.published = 1');
+		$query->order('m.match_date,t1.short_name');
+		$db->setQuery($query);
+		$result = $db->loadObject();
 		return $result;
 	}
 

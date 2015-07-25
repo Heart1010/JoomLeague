@@ -28,10 +28,15 @@ class JoomleagueModelResults extends JoomleagueModelProject
 	public function __construct()
 	{
 		parent::__construct();
-		$this->divisionid = JRequest::getInt('division',0);
-		$this->mode = JRequest::getInt('mode',0);
-		$this->order = JRequest::getInt('order',0);
-		$round = JRequest::getInt('r', 0);
+		
+		$app = JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$this->divisionid	= JLHelperFront::stringToInt($jinput->getInt('division',0));
+		$this->mode 		= JLHelperFront::stringToInt($jinput->getInt('mode',0));
+		$this->order 		= JLHelperFront::stringToInt($jinput->getInt('order',0));
+		$round 				= JLHelperFront::stringToInt($jinput->getInt('r', 0));
+		
 		$roundid = $round;
 		if ($round > 0) {
 			$roundid = $round;
@@ -42,11 +47,13 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		$this->config = $this->getTemplateConfig('results');
 	}
 
+	
 	function getDivisionID()
 	{
 		return $this->divisionid;
 	}
 
+	
 	/**
 	 * @todo check!
 	 * Added $division = false to be inline with model-Project
@@ -54,7 +61,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 	 */
 	function getDivision($division = false)
 	{
-		$division=null;
+		$division = null;
 		if ($this->divisionid > 0)
 		{
 			$division = $this->getTable('Division','Table');
@@ -64,6 +71,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $division;
 	}
 
+	
 	/**
 	 * get games
 	 * @return array
@@ -94,6 +102,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		}
 		return $this->matches;
 	}
+	
 
 	/**
 	 * return array of games
@@ -158,6 +167,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $this->_db->loadObjectList();
 	}
 
+	
 	/**
 	 * returns match referees
 	 * @param int match id
@@ -179,6 +189,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $this->_db->loadObjectList();
 	}
 
+	
 	/**
 	 * returns referees (as teamname) who ruled in specific match
 	 *
@@ -204,6 +215,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $this->_db->loadObjectList('value');
 	}
 
+	
 	function isMatchAdmin($matchid)
 	{
 		$result=false;
@@ -213,6 +225,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 					JFactory::getUser()->authorise('core.edit', 'com_joomleague.match.'.$matchid) ? true : false);			
 		return $result;
 	}
+	
 
 	function isAllowed()
 	{
@@ -239,6 +252,7 @@ class JoomleagueModelResults extends JoomleagueModelProject
 		return $allowed;
 	}
 
+	
 	function getShowEditIcon()
 	{
 		$allowed = $this->isAllowed();
