@@ -1,45 +1,75 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-defined('_JEXEC') or die('Restricted access');
 
-// Import library dependencies
-jimport('joomla.plugin.plugin');
+class plgSearchJoomleague extends JPlugin 
+{
 
-class plgSearchJoomleague extends JPlugin {
-
-	public function plgSearchJoomleague(&$subject, $params) {
-		parent::__construct($subject, $params);
-		// load language file for frontend
+	
+	/**
+	 * Construct plugin.
+	 */
+	public function __construct(&$subject, $config)
+	{
+		// Do not enable plugin in administration.
+		if (JFactory::getApplication()->isAdmin())
+		{
+			return false;
+		}
+	
+		parent::__construct ($subject, $config);
+	
 		JPlugin::loadLanguage('plg_joomleague_search', JPATH_ADMINISTRATOR);
+		$params = $this->params;
+	
 	}
+	
 
-	function onContentSearchAreas() {
-		static $areas = array('joomleague' => 'JoomLeague');
+	public function onContentSearchAreas() {
+		static $areas = array(
+				'joomleague' => 'JoomLeague'
+		);
 		return $areas;
 	}
 
-	function onContentSearch($text, $phrase = '', $ordering = '', $areas = null) {
+	public function onContentSearch($text, $phrase = '', $ordering = '', $areas = null) 
+	{
 		$db 	= JFactory::getDbo();
+		$app = JFactory::getApplication();
+		$user = JFactory::getUser();
+		$groups = implode(',', $user->getAuthorisedViewLevels());
+		$tag = JFactory::getLanguage()->getTag();
+		$params = $this->params;
+		
 		require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
-
-		// load plugin params info
-		$plugin 				= JPluginHelper::getPlugin('search', 'joomleague');
-		$search_clubs 			= $this->params->def('search_clubs', 1);
-		$search_teams 			= $this->params->def('search_teams', 1);
-		$search_players 		= $this->params->def('search_players', 1);
-		$search_playgrounds 	= $this->params->def('search_playgrounds', 1);
-		$search_staffs		 	= $this->params->def('search_staffs', 1);
-		$search_referees 		= $this->params->def('search_referees', 1);
-		$search_projects 		= $this->params->def('search_projects', 1);
+		require_once JPATH_ADMINISTRATOR . '/components/com_search/helpers/search.php';
+		
+		$searchText = $text;
+		
+		if (is_array($areas))
+		{
+			if (!array_intersect($areas, array_keys($this->onContentSearchAreas())))
+			{
+				return array();
+			}
+		}
+		
+		$search_clubs 			= $params->get('search_clubs', 0);
+		$search_teams 			= $params->get('search_teams', 0);
+		$search_players 		= $params->get('search_players', 0);
+		$search_playgrounds 	= $params->get('search_playgrounds', 0);
+		$search_staffs		 	= $params->get('search_staffs', 0);
+		$search_referees 		= $params->get('search_referees', 0);
+		$search_projects 		= $params->get('search_projects', 0);
+		
+		
 		$text = trim($text);
 		if ($text == '') {
 			return array();
@@ -47,7 +77,8 @@ class plgSearchJoomleague extends JPlugin {
 
 		$wheres = array();
 
-		switch ($phrase) {
+		switch ($phrase) 
+		{
 
 		case 'any':
 		default:
@@ -60,11 +91,11 @@ class plgSearchJoomleague extends JPlugin {
 
 			if ($search_clubs) {
 				foreach ($words as $word) {
-					$word = $db->Quote('%' . $db->getEscaped($word, true) . '%', false);
+					$word = $db->Quote('%' . $db->escape($word, true) . '%', false);
 					$wheres2 = array();
-					$wheres2[] = 'c.name LIKE ' . $word;
-					$wheres2[] = 'c.alias LIKE ' . $word;
-					$wheres2[] = 'c.location LIKE ' . $word;
+					$wheres2[] = 'LOWER(c.name) LIKE LOWER('.$word.')';
+					$wheres2[] = 'LOWER(c.alias) LIKE LOWER('.$word.')';
+					$wheres2[] = 'LOWER(c.location) LIKE LOWER('.$word.')';
 
 					$wheres[] = implode(' OR ', $wheres2);
 				}
@@ -72,30 +103,30 @@ class plgSearchJoomleague extends JPlugin {
 
 			if ($search_teams) {
 				foreach ($words as $word) {
-					$word = $db->Quote('%' . $db->getEscaped($word, true) . '%', false);
+					$word = $db->Quote('%' . $db->escape($word, true) . '%', false);
 					$wheres2 = array();
-					$wheres2[] = 't.name LIKE ' . $word;
+					$wheres2[] = 'LOWER(t.name) LIKE LOWER('.$word.')';
 					$wheresteam[] = implode(' OR ', $wheres2);
 				}
 			}
 
 			if ($search_players || $search_referees || $search_staffs) {
 				foreach ($words as $word) {
-					$word = $db->Quote('%' . $db->getEscaped($word, true) . '%', false);
+					$word = $db->Quote('%' . $db->escape($word, true) . '%', false);
 					$wheres2 = array();
-					$wheres2[] = 'pe.firstname LIKE ' . $word;
-					$wheres2[] = 'pe.lastname LIKE ' . $word;
-					$wheres2[] = 'pe.nickname LIKE ' . $word;
+					$wheres2[] = 'LOWER(pe.firstname) LIKE LOWER('.$word.')';
+					$wheres2[] = 'LOWER(pe.lastname) LIKE LOWER('.$word.')';
+					$wheres2[] = 'LOWER(pe.nickname) LIKE LOWER('.$word.')';
 					$whereperson[] = implode(' OR ', $wheres2);
 				}
 			}
 
 			if ($search_playgrounds) {
 				foreach ($words as $word) {
-					$word = $db->Quote('%' . $db->getEscaped($word, true) . '%', false);
+					$word = $db->Quote('%' . $db->escape($word, true) . '%', false);
 					$wheres2 = array();
-					$wheres2[] = 'pl.name LIKE ' . $word;
-					$wheres2[] = 'pl.city LIKE ' . $word;
+					$wheres2[] = 'LOWER(pl.name) LIKE LOWER('.$word.')';
+					$wheres2[] = 'LOWER(pl.city) LIKE LOWER('.$word.')';
 
 					$whereplayground[] = implode(' OR ', $wheres2);
 				}
@@ -103,9 +134,9 @@ class plgSearchJoomleague extends JPlugin {
 
 			if ($search_projects) {
 				foreach ($words as $word) {
-					$word = $db->Quote('%' . $db->getEscaped($word, true) . '%', false);
+					$word = $db->Quote('%' . $db->escape($word, true) . '%', false);
 					$wheres2 = array();
-					$wheres2[] = 'prj.name LIKE ' . $word;
+					$wheres2[] = 'LOWER(prj.name) LIKE LOWER('.$word.')';
 
 					$whereproject[] = implode(' OR ', $wheres2);
 				}
@@ -113,7 +144,7 @@ class plgSearchJoomleague extends JPlugin {
 
 			$where 				= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheres) . ')';
 			$whereteam 			= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $wheresteam) . ')';
-			$whereperson 		= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $whereperson) . ')';
+			$whereperson 		= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $whereperson) . ')';	
 			$whereplayground 	= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $whereplayground) . ')';
 			$whereproject 		= '(' . implode(($phrase == 'all' ? ') AND (' : ') OR ('), $whereproject) . ')';
 			break;
@@ -121,6 +152,7 @@ class plgSearchJoomleague extends JPlugin {
 		}
 
 		$rows = array();
+		$query = $db->getQuery(true);
 
 		if ($search_clubs) {
 			$query = "SELECT 'Club' as section, c.name AS title," . 
@@ -190,6 +222,8 @@ class plgSearchJoomleague extends JPlugin {
 		}
 
 		if ($search_staffs) {
+			
+			/*
 
 			$query = "SELECT 'Staff' as section, REPLACE(CONCAT(pe.firstname, ' \'', pe.nickname, '\' ' , pe.lastname ),'\'\'','') AS title," . 
 					" pe.birthday AS created," . " pe.country," . " pe.picture AS picture, " . 
@@ -198,10 +232,10 @@ class plgSearchJoomleague extends JPlugin {
 					" '' AS href," . " '2' AS browsernav" .
 					" FROM #__joomleague_person AS pe" .
 					" LEFT JOIN #__joomleague_team_staff AS ts" .
+					" LEFT JOIN #__joomleague_team_player AS tp" .
 					" ON ts.person_id = pe.id " .
-					" LEFT JOIN #__joomleague_project_team AS pt" . " ON pt.id = tp.projectteam_id" .
-					" WHERE ( " . $whereperson . " ) " .
-					" AND pe.published = '1' " .
+					" LEFT JOIN #__joomleague_project_team AS pt ON pt.id = tp.projectteam_id" .
+					" WHERE ( " . $whereperson . " ) "." AND pe.published = '1' " .
 					" GROUP BY pe.lastname, pe.firstname, pe.nickname ".
 					" ORDER BY pe.lastname,pe.firstname,pe.nickname";
 
@@ -211,11 +245,13 @@ class plgSearchJoomleague extends JPlugin {
 				$list[$i]->href = JoomLeagueHelperRoute::getStaffRoute($list[$i]->project_id, $list[$i]->team_id, $list[$i]->person_id);
 			}
 			$rows[] = $list;
+			*/
 
 		}
 
 		if ($search_referees) {
 
+			/*
 			$query = "SELECT 'Referee' as section, REPLACE(CONCAT(pe.firstname, ' \'', pe.nickname, '\' ' , pe.lastname ),'\'\'','') AS title," . " pe.birthday AS created," . " pe.country," . " pe.picture AS picture, " . " CONCAT( 'Birthday:', pe.birthday, ' Notes:', pe.notes ) AS text,".
 					" pt.project_id AS project_id, pe.id as person_id, " . 
 					" ''AS href," . " '2' AS browsernav" .
@@ -233,10 +269,12 @@ class plgSearchJoomleague extends JPlugin {
 				$list[$i]->href = JoomLeagueHelperRoute::getRefereeRoute($list[$i]->project_id, $list[$i]->team_id, $list[$i]->person_id);
 			}
 			$rows[] = $list;
+			*/
 		}
 
 		if ($search_playgrounds) {
 
+			/*
 			$query = "SELECT 'Playground' as section, pl.name AS title," . " pl.checked_out_time AS created," . 
 					" pl.country," . " pl.picture AS picture, " . " pl.notes AS text," . 
 					" pt.project_id AS project_id, pl.id as playground_id, " . 
@@ -254,10 +292,13 @@ class plgSearchJoomleague extends JPlugin {
 				$list[$i]->href = JoomLeagueHelperRoute::getPlaygroundRoute($list[$i]->project_id, $list[$i]->playgroundid);
 			}
 			$rows[] = $list;
+			*/
 		}
 
 		if ($search_projects) {
+			/*
 
+		
 			$query = "SELECT 'Project' as section, prj.name AS title," . " prj.checked_out_time AS created," . 
 					" l.country," . " prj.picture AS picture, " .
 					" prj.project_id AS project_id, " . 
@@ -274,7 +315,9 @@ class plgSearchJoomleague extends JPlugin {
 				$list[$i]->href = JoomLeagueHelperRoute::getRankingRoute($list[$i]->project_id);
 			}
 			$rows[] = $list;
+			*/
 		}
+		
 
 		$results = array();
 
@@ -301,4 +344,3 @@ class plgSearchJoomleague extends JPlugin {
 		return $results;
 	}
 }
-?>

@@ -1,29 +1,35 @@
 <?php
 /**
- * @copyright	Copyright (C) 2006-2014 joomleague.at. All rights reserved.
- * @license		GNU/GPL,see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License,and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-
-jimport( 'joomla.plugin.plugin' );
 
 class plgContentJoomleague_Person extends JPlugin
 {
 
-	public function plgContentJoomleague_Person(&$subject, $params)
+	/**
+	 * Construct plugin.
+	*/
+	public function __construct(&$subject, $config)
 	{
-		parent::__construct($subject, $params);
-		// load language file for frontend
-		JPlugin::loadLanguage( 'plg_content_joomleague_person', JPATH_ADMINISTRATOR );
+		// Do not enable plugin in administration.
+		if (JFactory::getApplication()->isAdmin())
+		{
+			return false;
+		}
+		
+		parent::__construct ($subject, $config);
+	
+		$this->loadLanguage('plg_content_joomleague_person');
+		$params = $this->params;
 	}
-
+	
+	
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
 		$db = JFactory::getDbo();
@@ -37,7 +43,7 @@ class plgContentJoomleague_Person extends JPlugin
 
 		if (preg_match_all( $regex, $row->text, $matches ) > 0 )
 		{
-			require_once(JPATH_SITE.'/components/com_joomleague/joomleague.core.php');
+			require_once JPATH_SITE.'/components/com_joomleague/joomleague.core.php';
 			foreach ($matches[0] as $match)
 			{
 				$name = preg_replace("/{.+?}/", "", $match);
@@ -102,4 +108,3 @@ class plgContentJoomleague_Person extends JPlugin
 		}
 	}
 }
-?>

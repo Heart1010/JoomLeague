@@ -1,29 +1,48 @@
 <?php
 /**
- * @copyright  Copyright (C) 2008-2013 Julien Vonthron. All rights reserved.
- * @license    GNU/GPL, see LICENSE.php
- * Joomla! is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License or
- * other free or open source software licenses.
- * See COPYRIGHT.php for copyright notices and details.
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
  */
+defined('_JEXEC') or die;
 
-// no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
 
-// Import library dependencies
-jimport( 'joomla.plugin.plugin' );
-
-class plgContentJoomleague_Comments extends JPlugin {
-
-	public function plgContentJoomleague_Comments(&$subject, $params)
+class PlgContentJoomleague_Comments extends JPlugin 
+{
+	
+	/**
+	 * Construct plugin.
+	 *
+	 * @param object $subject
+	 * @param array $config
+	 */
+	public function __construct(&$subject, $config)
 	{
-		parent::__construct($subject, $params);
-
-		// load language file for frontend
-		JPlugin::loadLanguage( 'plg_joomleague_comments', JPATH_ADMINISTRATOR );
+		// Do not enable plugin in administration.
+		if (JFactory::getApplication()->isAdmin())
+		{
+			return false;
+		}
+		
+		// check for Jcomments
+		$comments = JPATH_SITE.'/components/com_jcomments/jcomments.php';
+		if (file_exists($comments))
+		{
+			require_once $comments;
+		} else {
+			return false;
+			
+		}
+		
+		parent::__construct ($subject, $config);
+		
+		$this->loadLanguage('plg_joomleague_comments');
+		$params = $this->params;
+		
 	}
+	
 
 	/**
 	 * adds comments to match reports
@@ -33,20 +52,11 @@ class plgContentJoomleague_Comments extends JPlugin {
 	 */
 	public function onMatchReportComments(&$match, $title, &$html)
 	{
-		// load plugin params info
-		$plugin				= & JPluginHelper::getPlugin('content', 'joomleague_comments');
-		$pluginParams		= new JParameter( $plugin->params );
-		$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
+		$separate_comments 	= $this->params->get('separate_comments', 0);
 
-		if ( $separate_comments ) {
-			$comments = JPATH_SITE.'/components/com_jcomments/jcomments.php';
-			if (file_exists($comments))
-			{
-				require_once($comments);
-				$html = '<div class="jlgcomments">'.JComments::show($match->id, 'com_joomleague_matchreport', $title).'</div>';
-				return true;
-			}
-			return false;
+		if ($separate_comments) {
+			$html = '<div class="jlgcomments">'.JComments::show($match->id, 'com_joomleague_matchreport', $title).'</div>';
+			return true;
 		}
 	}
 
@@ -58,20 +68,11 @@ class plgContentJoomleague_Comments extends JPlugin {
 	 */
 	public function onNextMatchComments(&$match, $title, &$html)
 	{
-		// load plugin params info
-		$plugin				= & JPluginHelper::getPlugin('content', 'joomleague_comments');
-		$pluginParams		= new JParameter( $plugin->params );
-		$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
+		$separate_comments 	= $this->params->get('separate_comments',0);
 
-		if ( $separate_comments ) {
-			$comments = JPATH_SITE.'/components/com_jcomments/jcomments.php';
-			if (file_exists($comments))
-			{
-				require_once($comments);
-				$html = '<div class="jlgcomments">'.JComments::show($match->id, 'com_joomleague_nextmatch', $title).'</div>';
-				return true;
-			}
-			return false;
+		if ($separate_comments) {
+			$html = '<div class="jlgcomments">'.JComments::show($match->id, 'com_joomleague_nextmatch', $title).'</div>';
+			return true;
 		}
 	}
 
@@ -83,23 +84,13 @@ class plgContentJoomleague_Comments extends JPlugin {
 	 */
 	public function onMatchComments(&$match, $title, &$html)
 	{
-		// load plugin params info
-		$plugin				= & JPluginHelper::getPlugin('content', 'joomleague_comments');
-		$pluginParams		= new JParameter( $plugin->params );
-		$separate_comments 	= $pluginParams->get( 'separate_comments', 0 );
+		$separate_comments 	= $this->params->get('separate_comments', 0);
 
-		if ( $separate_comments == 0 ) {
-
-			$comments = JPATH_SITE.'/components/com_jcomments/jcomments.php';
-			if (file_exists($comments))
-			{
-				require_once($comments);
-				$html = '<div class="jlgcomments">'.JComments::show($match->id, 'com_joomleague', $title).'</div>';
-				return true;
-			}
-			return false;
+		if ($separate_comments == 0) 
+		{
+			$html = '<div class="jlgcomments">'.JComments::show($match->id, 'com_joomleague', $title).'</div>';
+			return true;
 		}
 	}
-
 }
-?>
+
