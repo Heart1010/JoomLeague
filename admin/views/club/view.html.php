@@ -42,7 +42,7 @@ class JoomleagueViewClub extends JLGView
 		else
 		{
 			// for existing items the button is renamed `close` and the apply button is showed
-			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_EDIT'). ': ' . $this->form->getValue('name'), 'clubs');
+			JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_EDIT'). ': ' . $this->form->getValue('name'), 'jl-clubs');
 			JLToolBarHelper::apply('club.apply');
 			JToolBarHelper::divider();
 			JLToolBarHelper::cancel('club.cancel','COM_JOOMLEAGUE_GLOBAL_CLOSE');
