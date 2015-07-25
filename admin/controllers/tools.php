@@ -77,12 +77,32 @@ class JoomleagueControllerTools extends JoomleagueController
 		jexit();
 	}
 	
+	
+	public function truncate() {
+		// Check for request forgeries
+		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		
+		$tables	= $jinput->get('cid', array(), 'array');
+		$table	= $tables[0];
+		
+		$model = $this->getModel('tools');
+		if ($model->truncateTable($table)) {
+			$link = 'index.php?option=com_joomleague&view=tools';
+			$this->setRedirect($link);
+		}
+	}
+	
+	
 	private function sendHeaders($filename = 'export.csv', $contentType = 'text/csv') {
 		header("Content-type: ".$contentType);
 		header("Content-Disposition: attachment; filename=" . $filename);
 		header("Pragma: no-cache");
 		header("Expires: 0");
 	}
+	
 	
 	public function back() {
 

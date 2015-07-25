@@ -18,10 +18,11 @@ defined('_JEXEC') or die;
 <table class="table tools table-hover">
 	<thead>
 		<tr>
-			<th>Select</th>
+			<th class="center">Select</th>
 			<th>Table</th>
-			<th>CSV</th>
-			<th>SQL</th>
+			<th class="center">CSV</th>
+			<th class="center">SQL</th>
+			<th class="center">Truncate</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,13 +31,16 @@ defined('_JEXEC') or die;
 		foreach ($this->tables as $i => $row) :
 	?>
 		<tr>
-			<td><?php echo JHtml::_('grid.id', $i, $row); ?></td>
+			<td class="center"><?php echo JHtml::_('grid.id', $i, $row); ?></td>
 			<td><?php echo $row; ?></td>
-			<td>
+			<td class="center">
 				<a class="exportcsv" id="csvexport" onclick="return listItemTask(<?php echo $i; ?>,'tools.exporttablecsv')" href="javascript:void(0)"><?php echo JHtml::_('image', 'com_joomleague/export_excel.png',null, NULL, true); ?></a>
 			</td>
-			<td>
+			<td class="center">
 				<a class="exportsql" id="sqlexport" onclick="return listItemTask('<?php echo $i; ?>','tools.exporttablesql')" href="javascript:void(0)"><?php echo JHtml::_('image', 'com_joomleague/sql.png', null, NULL, true); ?></a>
+			</td>
+			<td class="center">
+				<a class="truncate" id="truncate" onclick="return listItemTask('<?php echo $i; ?>','tools.truncate')" href="javascript:void(0)"><?php echo JHtml::_('image', 'com_joomleague/truncate.png', null, NULL, true); ?></a>
 			</td>
 		</tr>
 	

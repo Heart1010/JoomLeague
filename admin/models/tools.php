@@ -233,4 +233,20 @@ class JoomleagueModelTools extends JoomleagueModelList
 		return $query;
 	}	
 	
+	
+	/**
+	 * Truncate Table
+	 */
+	
+	public function truncateTable($table) {
+		
+		$db = JFactory::getDbo();
+		$db->truncateTable("#__".$table);
+
+		if(!$db->execute()) {
+			return false;
+		}
+		
+		return true;
+	}
 }
