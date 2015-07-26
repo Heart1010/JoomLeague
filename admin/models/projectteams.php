@@ -263,7 +263,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 				break;
 			}
 		}
-		return result;
+		return $result;
 	}
 
 
