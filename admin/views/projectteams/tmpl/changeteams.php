@@ -32,12 +32,12 @@ defined('_JEXEC') or die;
 			$k = 0;
 			$i = 0;
 
-			foreach ( $this->projectteams as $row )
+			foreach ($this->projectteams as $row)
 			{
-				$checked = JHtml::_( 'grid.id', 'oldptid'.$i, $row->id, $row->checked_out, 'oldptid' );
-				$append=' style="background-color:#bbffff"';
-				$inputappend	= '';
-				$selectedvalue = 0;
+				$checked 	= JHtml::_('grid.id', 'oldptid'.$i, $row->id, $row->checked_out, 'oldptid');
+				$append		= ' style="background-color:#bbffff"';
+				$inputappend 	= '';
+				$selectedvalue	= 0;
 				?>
 			<tr class="<?php echo "row$k"; ?>">
 				<td class="center"><?php
@@ -49,7 +49,7 @@ defined('_JEXEC') or die;
 				?>
 				</td>
 				<td class="nowrap" class="center"><?php
-				echo JHtml::_( 'select.genericlist', $this->lists['all_teams'], 'newptid[' . $row->id . ']', $inputappend . 'class="inputbox" size="1" onchange="document.getElementById(\'cboldptid' . $i . '\').checked=true"' . $append, 'value', 'text', $selectedvalue );
+				echo JHtml::_('select.genericlist', $this->lists['all_teams'], 'newptid[' . $row->id . ']', $inputappend . 'class="inputbox" size="1" onchange="document.getElementById(\'cboldptid' . $i . '\').checked=true"' . $append, 'value', 'text', $selectedvalue);
 				?>
 				</td>
 			</tr>
@@ -61,5 +61,6 @@ defined('_JEXEC') or die;
 		</table>
 	</fieldset>
 	<input type="hidden" name="task" value="" />
-	<?php echo JHtml::_('form.token')."\n"; ?>
+	<input type="hidden" name="boxchecked" value="0" />
+	<?php echo JHtml::_('form.token'); ?>
 </form>
