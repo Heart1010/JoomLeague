@@ -119,6 +119,7 @@ if(!class_exists('JoomleagueModelItem')) {
 			{
 				$row = JTable::getInstance($table,'Table');
 			}
+			
 
 			// Bind the form fields to the items table
 			if (!$row->bind($data))
@@ -235,7 +236,13 @@ if(!class_exists('JoomleagueModelItem')) {
 				unset($name,$value);
 				$output .= '</'.$table.'s>';
 					
-				$mdlJLXExport->downloadXml($output, $table);
+				
+				$ignoreProject = false;
+				if ($table == 'sports_type') {
+					$ignoreProject = true;
+				}
+				
+				$mdlJLXExport->downloadXml($output, $table, $ignoreProject);
 				$app = JFactory::getApplication();
 				$app->close();
 			}

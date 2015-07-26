@@ -20,9 +20,9 @@ class JoomleagueModelClubs extends JoomleagueModelList
 	function _buildQuery()
 	{
 		// Get the WHERE and ORDER BY clauses for the query
-		$where=$this->_buildContentWhere();
-		$orderby=$this->_buildContentOrderBy();
-		$query='	SELECT a.*,u.name AS editor
+		$where = $this->_buildContentWhere();
+		$orderby = $this->_buildContentOrderBy();
+		$query ='	SELECT a.*,u.name AS editor
 					FROM #__joomleague_club AS a
 					LEFT JOIN #__users AS u ON u.id=a.checked_out '
 					. $where

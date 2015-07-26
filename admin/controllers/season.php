@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.controller');
 
 /**
  * Season Controller
@@ -27,6 +26,7 @@ class JoomleagueControllerSeason extends JoomleagueController
 		$this->registerTask('apply','save');
 	}
 
+	
 	public function display($cachable = false, $urlparams = false)
 	{
 				
@@ -57,6 +57,7 @@ class JoomleagueControllerSeason extends JoomleagueController
 		}
 		parent::display();
 	}
+	
 
 	public function save()
 	{
@@ -68,11 +69,11 @@ class JoomleagueControllerSeason extends JoomleagueController
 		$model=$this->getModel('season');
 		if ($model->store($post))
 		{
-			$msg=JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_CTRL_SAVED');
+			$msg = JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_CTRL_SAVED');
 		}
 		else
 		{
-			$msg=JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_CTRL_ERROR_SAVE').$model->getError();
+			$msg = JText::_('COM_JOOMLEAGUE_ADMIN_SEASON_CTRL_ERROR_SAVE').$model->getError();
 		}
 		// Check the table in so it can be edited.... we are done with it anyway
 		$model->checkin();
@@ -90,6 +91,7 @@ class JoomleagueControllerSeason extends JoomleagueController
 		$this->setRedirect($link,$msg);
 	}
 
+	
 	public function remove()
 	{
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
@@ -109,6 +111,7 @@ class JoomleagueControllerSeason extends JoomleagueController
 		$this->setRedirect('index.php?option=com_joomleague&view=seasons&task=season.display');
 	}
 
+	
 	public function cancel()
 	{
 		// Checkin the project
@@ -117,12 +120,14 @@ class JoomleagueControllerSeason extends JoomleagueController
 		$this->setRedirect('index.php?option=com_joomleague&view=seasons&task=season.display');
 	}
 
+	
 	public function import()
 	{
 		JRequest::setVar('view','import');
 		JRequest::setVar('table','season');
 		parent::display();
 	}
+	
 	
 	public function export()
 	{
@@ -135,6 +140,7 @@ class JoomleagueControllerSeason extends JoomleagueController
 		$model->export($cid, "season", "Season");
 	}
 
+	
 	/**
 	 * Proxy for getModel
 	 *

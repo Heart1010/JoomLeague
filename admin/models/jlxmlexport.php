@@ -353,39 +353,44 @@ class JoomleagueModelJLXMLExport extends JModelLegacy
 	 *
 	 * @param string $data generated xml data
 	 *
-	 * @since  1.5.0a
-	 *
 	 * @return null
 	 */
-	function downloadXml($data, $table)
+	function downloadXml($data, $table,$ignoreProject=false)
 	{
-		$option = JRequest::getCmd('option');
 		$app	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
 		jimport('joomla.filter.output');
+		
 		$filename = $this->_getIdFromData('name', $this->_project);
 		if(empty($filename)) {
-			$this->_project_id = $app->getUserState($option.'project');
-			if (empty($this->_project_id) || $this->_project_id == 0)
-			{
-				JError::raiseWarning('ERROR_CODE',JText::_('COM_JOOMLEAGUE_ADMIN_XML_EXPORT_MODEL_SELECT_PROJECT'));
-				$filename[0] = $table;
-			}
-			else {
-				// get the project datas
-				$this->_getProjectData();
-				$filename = $this->_getIdFromData('name', $this->_project);
-				$filename[0] = $filename[0]."-".$table;
+			if ($ignoreProject == true) {
+				$filename = $table;
+			} else {
+				$this->_project_id = $app->getUserState($option.'project');
+				if (empty($this->_project_id) || $this->_project_id == 0)
+				{
+					JError::raiseWarning('ERROR_CODE',JText::_('COM_JOOMLEAGUE_ADMIN_XML_EXPORT_MODEL_SELECT_PROJECT'));
+					$filename = $table;
+				} else {
+					// get the project data
+					$this->_getProjectData();
+					$filename = $this->_getIdFromData('name', $this->_project);
+					$filename = $filename[0]."-".$table;
+				}
 			}
 		}
-		/**/
+		
 		header('Content-type: "text/xml"; charset="utf-8"');
-		header("Content-Disposition: attachment; filename=\"" . JFilterOutput::stringURLSafe($filename[0])."-".date("ymd-His"). ".jlg\"");
+		header("Content-Disposition: attachment; filename=\"" . JFilterOutput::stringURLSafe($filename)."-".date("ymd-His"). ".jlg\"");
 		header("Expires: " . gmdate("D, d M Y H:i:s", mktime(date("H") + 2, date("i"), date("s"), date("m"), date("d"), date("Y"))) . " GMT");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Pragma: no-cache");
-		/**/
+	
 		echo $data;
+		jexit();
 	}
 	
 	/**

@@ -19,6 +19,7 @@ class pkg_joomleagueInstallerScript {
 	private $oldRelease = "";
 	private $newRelease = "";
 	
+	
 	/**
 	 * List of supported versions. Newest version first!
 	 * @var array
@@ -66,6 +67,7 @@ class pkg_joomleagueInstallerScript {
 	}
 
 	public function preflight($type, $parent) {
+				
 		/** @var JInstallerComponent $parent */
 		$manifest = $parent->getParent()->getManifest();
 

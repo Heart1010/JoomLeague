@@ -24,30 +24,42 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 	 */
 	function export($cid=array(),$table, $record_name)
 	{
-		$result=false;
+		$result = false;
+		
 		if (count($cid))
 		{
 			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexport", 'JoomleagueModel');
-			JArrayHelper::toInteger($cid);
-			$cids=implode(',',$cid);
-			$query="SELECT * FROM #__joomleague_eventtype WHERE id IN ($cids)";
-			$this->_db->setQuery($query);
-			$exportData=$this->_db->loadObjectList();
-			$SportsTypeArray=array();
-			$x=0;
-			foreach ($exportData as $event){$SportsTypeArray[$x]=$event->sports_type_id;}
-			$st_cids=implode(',',$SportsTypeArray);
-			$query="SELECT * FROM #__joomleague_sports_type WHERE id IN ($st_cids)";
-			$this->_db->setQuery($query);
-			$exportDataSportsType=$this->_db->loadObjectList();
-			$output="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-			// open the events
-			$output .= "<events>\n";
+			$cids = implode(',',$cid);
 			
+			// EventType
+			$db 	= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__joomleague_eventtype');
+			$query->where('id IN ('.$cids.')');
+			$db->setQuery($query);
+			$exportData = $db->loadObjectList();
+			
+			// SportsType
+			$SportsTypeArray = array();
+			$x = 0;
+			foreach ($exportData as $event) { 
+				$SportsTypeArray[$x]=$event->sports_type_id;
+			}
+			$st_cids = implode(',',$SportsTypeArray);
+			$query	= $db->getQuery(true);
+			$query->select('*');
+			$query->from('#__joomleague_sports_type');
+			$query->where('id IN ('.$st_cids.')');
+			$db->setQuery($query);
+			$exportDataSportsType = $db->loadObjectList();
+			
+			$output="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+			// Events
+			$output .= "<events>\n";
 			$output .= $mdlJLXExports->_addToXml($mdlJLXExports->_getJoomLeagueVersion());
 				
-			$record_name='SportsType';
-			//$tabVar='	';
+			$record_name = 'SportsType';
 			$tabVar='  ';
 			foreach ($exportDataSportsType as $name=>$value)
 			{
@@ -80,7 +92,7 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 			$output .= '</events>';
 			
 			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexport", 'JoomleagueModel');
-			$mdlJLXExports->downloadXml($output, $table);
+			$mdlJLXExports->downloadXml($output, $table,true);
 			
 			// close the application
 			$app = JFactory::getApplication();

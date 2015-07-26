@@ -5,6 +5,8 @@
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
+ * 
+ * @author	Julien Vonthron <julien.vonthron@gmail.com>
  */
 defined('_JEXEC') or die;
 
@@ -13,8 +15,6 @@ require_once JPATH_COMPONENT.'/models/item.php';
 
 /**
  * Sportstype Model
- *
- * @author	Julien Vonthron <julien.vonthron@gmail.com>
  */
 class JoomleagueModelSportsType extends JoomleagueModelItem
 {

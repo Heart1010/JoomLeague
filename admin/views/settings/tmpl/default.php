@@ -29,22 +29,21 @@ $option = $this->input->getCmd('option');
 	$label = $fieldSet->name;
 	echo JHtml::_('bootstrap.addTab', 'tabs', 'panel'.$p++, JText::_($label,true));
 	?>
-				<fieldset class="form-horizontal">
+				<fieldset class="form-vertical">
 					<?php
 					if (isset($fieldSet->description) && !empty($fieldSet->description)) :
 						echo '<fieldset class="adminform">'.JText::_($fieldSet->description).'</fieldset>';
 					endif;
 					?>
-					<ul class="config-option-list">
+					
 					<?php foreach ($this->form->getFieldset($name) as $field): ?>
-						<li>
+					<div class="control-group">
 						<?php if (!$field->hidden) : ?>
-						<?php echo $field->label; ?>
+							<div class="control-label"><?php echo $field->label; ?></div>
 						<?php endif; ?>
-						<?php echo $field->input; ?>
-						</li>
+						<div class="controls"><?php echo $field->input; ?></div>
+					</div>
 					<?php endforeach; ?>
-					</ul>
 				</fieldset>
 	 	<?php 
 	 	echo JHtml::_('bootstrap.endTab'); 

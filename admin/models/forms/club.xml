@@ -164,7 +164,6 @@
 		description="JCONFIG_PERMISSIONS_DESC">
 		<field name="asset_id" type="hidden" filter="unset" />
 		<field name="rules" type="rules" label="COM_JOOMLEAGUE_SETTINGS_ACCESS_COMPONENT"
-			class="inputbox" filter="rules" validate="rules" component="com_joomleague"
-			section="club" />
+			class="inputbox" filter="rules" validate="rules" component="com_joomleague" section="club" />
 	</fieldset>
 </form>

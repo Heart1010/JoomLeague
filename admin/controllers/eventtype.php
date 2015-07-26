@@ -108,18 +108,25 @@ class JoomleagueControllerEventtype extends JoomleagueController
 		}
 		$this->setRedirect('index.php?option=com_joomleague&view=eventtypes&task=eventtype.display');
 	}
+	
 
 	public function export()
 	{
 		JSession::checkToken() or die('COM_JOOMLEAGUE_GLOBAL_INVALID_TOKEN');
-		$post=JRequest::get('post');
-		$cid=JRequest::getVar('cid',array(),'post','array');
-		JArrayHelper::toInteger($cid);
-		if (count($cid) < 1){JError::raiseError(500,JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TO_EXPORT'));}
+		
+		$app	= JFactory::getApplication();
+		$jinput = $app->input;
+		$post	= JRequest::get('post');
+		$cids 	= $jinput->get('cid',array(),'array');
+		
+		if (count($cids) < 1) { 
+			JError::raiseError(500,JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TO_EXPORT'));
+		}
 		$model = $this->getModel("eventtype");
-		$model->export($cid, "eventtype", "EventType");
+		$model->export($cids, "eventtype", "EventType");
 	}
 
+	
 	public function cancel()
 	{
 		// Checkin the event

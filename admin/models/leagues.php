@@ -20,52 +20,43 @@ class JoomleagueModelLeagues extends JoomleagueModelList
 	
 	function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where=$this->_buildContentWhere();
-		$orderby=$this->_buildContentOrderBy();
-
-		$query='	SELECT	obj.*,
-							u.name AS editor
-					FROM #__joomleague_league AS obj
-					LEFT JOIN #__users AS u ON u.id=obj.checked_out ' .
-					$where .
-					$orderby;
-		return $query;
-	}
-
-	function _buildContentOrderBy()
-	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
-		$filter_order		= $app->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		if ($filter_order == 'obj.ordering')
-		{
-			$orderby=' ORDER BY obj.ordering '.$filter_order_Dir;
-		}
-		else
-		{
-			$orderby=' ORDER BY '.$filter_order.' '.$filter_order_Dir.',obj.ordering ';
-		}
-		return $orderby;
-	}
-
-	function _buildContentWhere()
-	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
 		$filter_order		= $app->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
 		$search				= $app->getUserStateFromRequest($option.'l_search',				'search',			'',				'string');
-		$search=JString::strtolower($search);
-		$where=array();
+		$search				= JString::strtolower($search);
+	
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('obj.*');
+		$query->from('#__joomleague_league AS obj');
+		
+		// users
+		$query->select('u.name AS editor');
+		$query->join('LEFT', '#__users AS u ON u.id=obj.checked_out');
+		
+		// Where
 		if ($search)
 		{
-			$where[]='LOWER(obj.name) LIKE '.$this->_db->Quote('%'.$search.'%');
+			$query->where('LOWER(obj.name) LIKE '.$db->Quote('%'.$search.'%'));
 		}
-		$where=(count($where) ? ' WHERE '.implode(' AND ',$where) : '');
-		return $where;
+		
+		// Order
+		if ($filter_order == 'obj.ordering')
+		{
+			$query->order('obj.ordering '.$filter_order_Dir);
+		}
+		else
+		{
+			$query->order($filter_order.' '.$filter_order_Dir,'obj.ordering ');
+		}
+		
+		return $query;
 	}
+
 
 	/**
 	 * Method to return a leagues array (id,name)
@@ -75,8 +66,11 @@ class JoomleagueModelLeagues extends JoomleagueModelList
 	 */
 	function getLeagues()
 	{
-		$db = JFactory::getDbo();
-		$query='SELECT id, name FROM #__joomleague_league ORDER BY name ASC ';
+		$db 	= JFactory::getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('id,name');
+		$query->from('#__joomleague_league');
+		$query->order('name ASC');
 		$db->setQuery($query);
 		if (!$result=$db->loadObjectList())
 		{
