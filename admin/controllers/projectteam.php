@@ -82,14 +82,14 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 	  	$oldteamids	= JRequest::getVar('oldptid', array(), 'post', 'array');
 		$newteamids	= JRequest::getVar('newptid', array(), 'post', 'array');
 	
-		if ( $oldteamids )
+		if ($oldteamids)
 	    {
 	    	if(!$model->changeTeamId($oldteamids, $newteamids, $app)) {
-	    		$msg = JText::_('COM_JOOMLEAGUE_ADMIN_P_TEAM_CTRL_ERROR_SAVE') . $model->getError(); 
+	    		$app->enqueueMessage(JText::_('COM_JOOMLEAGUE_ADMIN_P_TEAM_CTRL_ERROR_SAVE').$model->getError(),'warning'); 
 	    	}
 	    }	
 	    $link = 'index.php?option=com_joomleague&view=projectteams&task=projectteam.display';
-	  	$this->setRedirect($link, $msg);  
+	  	$this->setRedirect($link);  
 	}
   
   	public function changeteams()
@@ -119,6 +119,10 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 		parent::display();
 	}
   
+	
+	/**
+	 * @todo fix!
+	 */
   function editlist()
 	{
 		$option = JRequest::getCmd('option');
@@ -147,12 +151,14 @@ class JoomleagueControllerProjectteam extends JoomleagueController
 
 	public function save_teamslist()
 	{
+		$app 	= JFactory::getApplication();
+		$jinput	= $app->input;
+		
 		$post	= JRequest::get('post');
-		$cid	= JRequest::getVar('cid', array(0), 'post', 'array');
+		$cid 	= $jinput->get('cid',array(),'array');
 		$post['id'] = (int) $cid[0];
-
+			
 		$model = $this->getModel('projectteams');
-
 		if ($model->store($post))
 		{
 			//clear ranking cache
