@@ -21,16 +21,18 @@ class JoomleagueHelper
 	 * @access	public
 	 * @return	array project
 	 */
-	public static function getProjects()
+	public static function getProjects($ignoreId = false)
 	{
 		$db = JFactory::getDbo();
-
-		$query='	SELECT	id,
-				name
-
-				FROM #__joomleague_project
-				ORDER BY ordering, name ASC';
-
+		
+		$query = $db->getQuery(true);
+		$query->select('id,name');
+		$query->from('#__joomleague_project');
+		$query->order('ordering, name ASC');
+		if ($ignoreId) {
+			# single-id
+			$query->where('id NOT LIKE '.$db->quote($ignoreId));
+		}
 		$db->setQuery($query);
 
 		if (!$result=$db->loadObjectList())

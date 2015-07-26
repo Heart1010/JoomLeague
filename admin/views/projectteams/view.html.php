@@ -284,21 +284,22 @@ class JoomleagueViewProjectteams extends JLGView
 	 */
 	function _displayCopy($tpl)
 	{
-		$document = JFactory::getDocument();
-		$option = JRequest::getCmd('option');
-		$app 	= JFactory::getApplication();
+		$document	= JFactory::getDocument();
+		$app 		= JFactory::getApplication();
+		$jinput		= $app->input;
+		$option 	= $jinput->getCmd('option');
 		$project_id = $app->getUserState( $option . 'project' );
 	
-		$uri = JFactory::getURI();
-			
-		$ptids = JRequest::getVar('cid', array(), 'post', 'array');
-	
+		$uri 		= JFactory::getURI();
+		$ptids 		= JRequest::getVar('cid', array(), 'post', 'array');
+
 		$model = $this->getModel();
 	
 		$lists = array();
 					
-		//build the html select list for all teams
-		$options = JoomleagueHelper::getProjects();
+		// build the html select list for all Projects
+		$ignoreId = $project_id;
+		$options = JoomleagueHelper::getProjects($ignoreId);
 		
 		$lists['projects'] = JHtml::_('select.genericlist', $options, 'dest', '', 'id', 'name');
 		

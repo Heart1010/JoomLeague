@@ -13,16 +13,10 @@ defined('_JEXEC') or die;
 	
 	<fieldset>
 	<legend><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_COPY_DEST')?></legend>
-	<table class="admintable">
-		<tr>
-			<td class="key">
-				<label for="dest"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_SELECT_PROJECT' ).':'; ?></label>
-			</td>
-			<td>
-				<?php echo $this->lists['projects']; ?>
-			</td>
-		</tr>
-	</table>
+		<div class="control-group">
+			<div class="control-label"><?php echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_SELECT_PROJECT' ).':'; ?></div>
+       		<div class="controls"><?php echo $this->lists['projects']; ?></div>
+    	</div>		
 	</fieldset>
 	
 	<?php foreach ($this->ptids as $ptid): ?>
