@@ -101,7 +101,7 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		
 		$names = array();
 		foreach ($results as $row) { 
-			$name = JoomleagueHelper::formatName(null, $row->firstname, $row->nickname, $row->lastname, 0) . " (" . $row->id . ")";
+			$name = JoomleagueHelper::formatName(null, $row->firstname, $row->nickname, $row->lastname, 0) . " [" . $row->id . "]";
 			$names[] = $name;
 			$response["rows"][] = array(
 				"id" => $row->id,
@@ -126,10 +126,13 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		// Use the correct json mime-type
 		header('Content-Type: application/json');
 		
-		$option 	= JRequest::getCmd('option');
 		$app		= JFactory::getApplication();
+		$jinput		= $app->input;
+		
+		$option 	= $jinput->getCmd('option');
+		
 		$model 		= JLGModel::getInstance('Quickadd', 'JoomleagueModel');
-		$query 		= JRequest::getVar("query", "", "", "string");
+		$query 		= $jinput->getString('query', '');
 		$projectid 	= $app->getUserState($option."project");
 		$results 	= $model->getNotAssignedTeams($query, $projectid);
 		
@@ -141,7 +144,7 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 
 		$names = array();
 		foreach ($results as $row) {
-			$names[] = $row->name;
+			$names[] = $row->name." [".$row->id."]";
 			$name = $row->name;
 			$name .= " (" . $row->info . ")";
 			$name .= " (" . $row->id . ")";
@@ -277,27 +280,8 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		$personid 	= $jinput->getInt("cpersonid", 0);
 		$name 		= JRequest::getVar("quickadd", '', 'request', 'string');
 		$searchText = $jinput->getString("p","");
-		
-		
 		$project_id = $app->getUserState($option."project");
 				
-		// add the new individual as their name was sent through?
-		// Disabled for now, do we really want to create a new individual?
-		/*
-		if (!$personid)
-		{
-			$model = JLGModel::getInstance('Person', 'JoomleagueModel');
-			$name = explode(" ", $name);
-			$firstname = ucfirst(array_shift($name));
-			$lastname = ucfirst(implode(" ", $name));
-			$data = array(
-				"firstname" => $firstname,
-				"lastname" => $lastname,
-			);
-			$personid = $model->store($data);
-		}
-		*/
-		
 		if (empty($searchText)) {
 			$app->enqueueMessage(Jtext::_('Fill in a valid Referee'),'warning');
 			$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id);
@@ -308,9 +292,35 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		$text = false;
 		
 		// Retrieve person-id
-		if (($pos = strpos($searchText, "(")) !== FALSE) {
+		if (($pos = strpos($searchText, "[")) !== FALSE) {
 			$text = substr($searchText, $pos+1);
-			$text = str_replace(')', '', $text);	
+			$text = str_replace(']', '', $text);	
+		}
+		
+		
+		// It is possible that a text is passed without the brackets
+		// in that case no id will be there so let's check if the name exists	
+		if ($text == false) {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__joomleague_person');
+			$query->where('CONCAT(firstname, " ",lastname) LIKE '.$db->quote('%'.$searchText.'%'));
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+				
+			if (count($result) > 1) {
+				$app->enqueueMessage(Jtext::_('Multiple persons were found<br>no person was added'),'warning');
+				$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+				return;
+			}
+				
+			if (empty($result)) {
+				$app->enqueueMessage(Jtext::_('Person with that name was not found'),'warning');
+				$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+				return;
+			}
+				
 		}
 		
 		if (!is_int($text) ? (ctype_digit($text)) : true ) {
@@ -320,7 +330,7 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		}
 		
 		if (empty($personId)) {
-			$app->enqueueMessage(Jtext::_('Fill in a valid Referee'),'warning');
+			$app->enqueueMessage(Jtext::_('No person was found'),'warning');
 			$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id);
 			return;
 		}
@@ -408,20 +418,21 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		$this->setRedirect("index.php?option=com_joomleague&view=projectreferees&task=projectreferee.display&projectid=".$project_id, $msg);
 	}
 
+	
 	public function addTeam()
 	{
 		// we are coming from projectteams
-		$option = JRequest::getCmd('option');
 		$app	= JFactory::getApplication();
 		$jinput = $app->input;
 		$db 	= JFactory::getDbo();
 		
 		// catch variables	
-		$cteamid = $jinput->getInt("cteamid", 0); // @todo check!, is a cteamid ever passed?
-		$name	= $jinput->getString("quickadd", ''); // @todo check!
-		$prId	= $jinput->getInt("project_id",0);
+		$option 	= $jinput->getCmd('option');
+		$cteamid	= $jinput->getInt("cteamid", 0); // @todo check!, is a cteamid ever passed?
+		$name		= $jinput->getString("quickadd", ''); // @todo check!
+		$prId		= $jinput->getInt("project_id",0);
 		$searchText = $jinput->getString("p","");
-			
+				
 		// get current projectid
 		// @todo check!
 		// we can catch the id also from the post
@@ -436,17 +447,47 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 			return;
 		}
 		
-		// Retrieve team-id
-		// @todo add check for unique name
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select('id');
-		$query->from('#__joomleague_team');
-		$query->where('name = '.$db->quote($searchText));
-		$db->setQuery($query);
-		$teamid = $db->loadResult();
 		
-		if (empty($teamid) || $teamid == null) {
+		$text = false;
+		
+		// Retrieve Team-id
+		if (($pos = strpos($searchText, "[")) !== FALSE) {
+			$text = substr($searchText, $pos+1);
+			$text = str_replace(']', '', $text);
+		}
+		
+		// It is possible that a text is passed without the brackets
+		// in that case no id will be there so let's check if the name exists
+		if ($text == false) {
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__joomleague_team');
+			$query->where('name = '.$db->quote($searchText));
+			$db->setQuery($query);
+			$result = $db->loadObjectList();
+			
+			if (count($result) > 1) {
+				$app->enqueueMessage(Jtext::_('Multiple teams with that name were found<br>no team is added'),'warning');
+				$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+				return;
+			}
+			
+			if (empty($result)) {
+				$app->enqueueMessage(Jtext::_('Team with that name was not found'),'warning');
+				$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
+				return;
+			}
+			
+		}
+		
+		if (!is_int($text) ? (ctype_digit($text)) : true ) {
+			$teamId = $text;
+		} else {
+			$teamId = false;
+		}
+
+		if (empty($teamId) || $teamId == null) {
 			$app->enqueueMessage(Jtext::_('Team does not exist.<br>No team was added'),'warning');
 			$this->setRedirect("index.php?option=com_joomleague&view=projectteams&task=projectteam.display&projectid=".$project_id);
 			return;
@@ -459,7 +500,7 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		$query->select('id');
 		$query->from('#__joomleague_project_team');
 		$query->where('project_id = '.$project_id);
-		$query->where('team_id = '.$teamid);
+		$query->where('team_id = '.$teamId);
 		$db->setQuery($query);
 		$result = $db->loadResult();
 		
@@ -472,7 +513,7 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 		
 		// Add team to projectteam 
 		$new = JTable::getInstance('Projectteam','Table');
-		$new->team_id		= $teamid;
+		$new->team_id		= $teamId;
 		$new->project_id	= $project_id;
 
 		// Set ordering to the last item if not set
@@ -490,12 +531,12 @@ class JoomleagueControllerQuickadd extends JoomleagueController
 			$this->setError($new->getError());
 		}
 		
-		// Get data from player
+		// Get data from team
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('picture');
 		$query->from('#__joomleague_team AS t');
-		$query->where('t.id = '.$teamid);
+		$query->where('t.id = '.$teamId);
 		$db->setQuery($query);
 		$team = $db->loadObject();
 		
