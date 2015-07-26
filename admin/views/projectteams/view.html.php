@@ -82,6 +82,10 @@ class JoomleagueViewProjectteams extends JLGView
 		
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
+		$baseurl    = JUri::root();
+		
+		$document = JFactory::getDocument();
+		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/multiselect.js');
 
 		$filter_state = $app->getUserStateFromRequest($option.'tl_filter_state', 'filter_state', '', 'word');
 		$filter_order = $app->getUserStateFromRequest($option.'tl_filter_order', 'filter_order', 't.name', 'cmd');
@@ -107,13 +111,13 @@ class JoomleagueViewProjectteams extends JLGView
 		$lists['search_mode'] = $search_mode;
 		$projectws = $this->get('Data','project');
 
-		//build the html select list for project assigned teams
-		$ress = array();
+		// build the html select list for project assigned teams
+		$ress = array(); // Teams assigned
 		$res1 = array();
 		$notusedteams = array();
 
-		if ($ress = $model->getProjectTeams($project_id))
-		{
+		if ($ress = $model->getProjectTeams($project_id)) // all assigned teams
+		{	
 			$teamslist=array();
 			foreach($ress as $res)
 			{
@@ -126,29 +130,31 @@ class JoomleagueViewProjectteams extends JLGView
 					$project_teamslist[] = JHtmlSelect::option($res->value,$res->text.' ('.$res->info.')');
 				}
 			}
-
 			$lists['project_teams'] = JHtmlSelect::genericlist($project_teamslist, 'project_teamslist[]',
 																' style="width:250px; height:300px;" class="inputbox" multiple="true" size="'.min(30,count($ress)).'"',
 																'value',
-																'text');
+																'text',false,'multiselect');
 		}
 		else
 		{
-			$lists['project_teams']= '<select name="project_teamslist[]" id="project_teamslist" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
+			$lists['project_teams']= '<select name="project_teamslist[]" id="multiselect" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
-		if ($ress1 = $model->getTeams())
+		
+		if ($ress1 = $model->getTeams()) // All available teams
 		{
-			if ($ress = $model->getProjectTeams($project_id))
-			{
-				foreach ($ress1 as $res1)
+			if ($ress = $model->getProjectTeams($project_id)) // all assigned teams
+			{	
+				foreach ($ress1 AS $res1)
 				{
-					$used=0;
-					foreach ($ress as $res)
-					{
-						if ($res1->value == $res->value){$used=1;}
+					$used = 0;
+					foreach ($ress AS $res) // we're checking all assigned teams
+					{		
+						if ($res1->value == $res->value) {
+							$used=1;
+						}
 					}
-
+					
 					if ($used == 0 && !empty($res1->info)){
 						$notusedteams[]=JHtmlSelect::option($res1->value,$res1->text.' ('.$res1->info.')');
 					}
@@ -178,18 +184,18 @@ class JoomleagueViewProjectteams extends JLGView
 			JError::raiseWarning('ERROR_CODE','<br />'.JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_ADD_TEAM').'<br /><br />');
 		}
 
-		//build the html select list for teams
+		// build the html select list for teams
 		if (count($notusedteams) > 0)
 		{
 			$lists['teams'] = JHtmlSelect::genericlist( $notusedteams,
 														'teamslist[]',
 														' style="width:250px; height:300px;" class="inputbox" multiple="true" size="'.min(30,count($notusedteams)).'"',
 														'value',
-														'text');
+														'text',false,'multiselect_to');
 		}
 		else
 		{
-			$lists['teams'] = '<select name="teamslist[]" id="teamslist" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
+			$lists['teams'] = '<select name="teamslist[]" id="multiselect_to" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
 		unset($res);

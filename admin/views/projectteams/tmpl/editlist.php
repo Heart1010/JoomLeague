@@ -1,6 +1,14 @@
-<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+<?php 
+/**
+ * Joomleague
+ *
+ * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @link		http://www.joomleague.at
+ */
+defined('_JEXEC') or die;
 
-JHtml::_( 'behavior.tooltip' );
+JHtml::_('behavior.tooltip');
 
 $uri = JFactory::getURI();
 ?>
@@ -26,26 +34,21 @@ echo JHtml::script( 'JL_eventsediting.js?v='.$version,'administrator/components/
 		submitform( pressbutton );
 	}
 </script>
-
-<style type="text/css">
-	table.paramlist td.paramlist_key {
-		width: 92px;
-		text-align: left;
-		height: 30px;
-	}
-</style>
+<script>
+jQuery(document).ready(function($) {
+	$('#multiselect').multiselect();
+});
+</script>
 
 <form action="<?php echo $this->request_url; ?>" method="post" id="adminForm">
-	<div class="col50" >
-		<fieldset class="adminform" style="float: left;">
+		<fieldset class="form-horizontal">
 			<legend>
 				<?php
 				echo JText::sprintf( 'COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_ASSIGN_TITLE', '<i>' . $this->projectws->name . '</i>');
 				?>
 			</legend>
-			<table class="admintable">
-				<tr>
-					<td>
+			<div class="row-fluid">
+				<div class="span3">
 						<b>
 							<?php
 							echo JText::_( 'COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_ASSIGN_AVAIL_TEAMS' );
@@ -54,36 +57,27 @@ echo JHtml::script( 'JL_eventsediting.js?v='.$version,'administrator/components/
 						<?php
 						echo $this->lists['teams'];
 						?>
-					</td>
-					<td style="text-align:center; ">
-						&nbsp;&nbsp;
-						<input	type="button" class="inputbox"
-								onclick="handleMoveLeftToRight()"
-								value="&gt;&gt;" />
-						&nbsp;&nbsp;<br />&nbsp;&nbsp;
-					 	<input	type="button" class="inputbox"
-					 			onclick="handleMoveRightToLeft()"
-								value="&lt;&lt;" />
-						&nbsp;&nbsp;
-					</td>
-					<td>
+				</div>
+				<div class="span2">
+					<button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="icon-backward"></i></button>
+					<button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="icon-arrow-left"></i></button>
+					<button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="icon-arrow-right"></i></button>
+					<button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="icon-forward"></i></button>					
+				</div>
+				<div class="span3">
 						<b>
 							<?php
-							echo JText::_( 'COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_ASSIGN_PROJ_TEAMS' );
+							echo JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_ASSIGN_PROJ_TEAMS');
 							?>
 						</b><br />
 						<?php
 						echo $this->lists['project_teams'];
 						?>
-					</td>
-			   </tr>
-			</table>
+				</div>
+			</div>
 		</fieldset>
-		<div class="clr"></div>
-
-		<input type="hidden" name="teamschanges_check"	value="0"	id="teamschanges_check" />
+		<div class="clearfix"></div>
 		<input type="hidden" name="option"				value="com_joomleague" />
 		<input type="hidden" name="cid[]"				value="<?php echo $this->projectws->id; ?>" />
 		<input type="hidden" name="task"				value="projectteam.save_matcheslist" />
-	</div>
 </form>
