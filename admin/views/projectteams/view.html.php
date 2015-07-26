@@ -45,24 +45,27 @@ class JoomleagueViewProjectteams extends JLGView
 
   function _displayChangeTeams($tpl)
 	{
-		$option = JRequest::getCmd('option');
-		$app 	= JFactory::getApplication();
-		$project_id = $app->getUserState( $option . 'project' );
+		$app 		= JFactory::getApplication();
+		$jinput		= $app->input;
+		$option 	= $jinput->getCmd('option');
+		$project_id = $app->getUserState($option.'project');
 		
 		$projectteams = $this->get('Data');
 		$model = $this->getModel();
 		
-		//build the html select list for all teams
+		// build the html select list for all teams
 		$allTeams = array();
-		$all_teams[] = JHtml::_( 'select.option', '0', JText::_( 'COM_JOOMLEAGUE_GLOBAL_SELECT_TEAM' ) );
-		if( $allTeams = $model->getAllTeams($project_id) ) 
-    {
-			$all_teams=array_merge($all_teams,$allTeams);
+		
+		$all_teams[] = JHtml::_('select.option', '0', JText::_('COM_JOOMLEAGUE_GLOBAL_SELECT_TEAM'));
+		
+		if($allTeams = $model->getAllTeams($project_id)) 
+    	{
+			$all_teams = array_merge($all_teams,$allTeams);
 		}
-		$lists['all_teams']=$all_teams;
+		$lists['all_teams'] = $all_teams;
 		unset($all_teams);
 		
-		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_CHANGEASSIGN_TEAMS'),'install');
+		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_CHANGEASSIGN_TEAMS'),'jl-install');
 			
 		JLToolBarHelper::custom('projectteam.storechangeteams','move.png','move_f2.png','COM_JOOMLEAGUE_ADMIN_PROJECTTEAMS_BUTTON_STORE_CHANGE_TEAMS',false);
 		JToolBarHelper::back();	
@@ -133,11 +136,11 @@ class JoomleagueViewProjectteams extends JLGView
 			$lists['project_teams'] = JHtmlSelect::genericlist($project_teamslist, 'project_teamslist[]',
 																' style="width:250px; height:300px;" class="inputbox" multiple="true" size="'.min(30,count($ress)).'"',
 																'value',
-																'text',false,'multiselect');
+																'text',false,'multiselect_to');
 		}
 		else
 		{
-			$lists['project_teams']= '<select name="project_teamslist[]" id="multiselect" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
+			$lists['project_teams']= '<select name="project_teamslist[]" id="multiselect_to" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
 		
@@ -191,11 +194,11 @@ class JoomleagueViewProjectteams extends JLGView
 														'teamslist[]',
 														' style="width:250px; height:300px;" class="inputbox" multiple="true" size="'.min(30,count($notusedteams)).'"',
 														'value',
-														'text',false,'multiselect_to');
+														'text',false,'multiselect');
 		}
 		else
 		{
-			$lists['teams'] = '<select name="teamslist[]" id="multiselect_to" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
+			$lists['teams'] = '<select name="teamslist[]" id="multiselect" style="width:250px; height:300px;" class="inputbox" multiple="true" size="10"></select>';
 		}
 
 		unset($res);
@@ -223,14 +226,7 @@ class JoomleagueViewProjectteams extends JLGView
 		$db = JFactory::getDbo();
 		$uri = JFactory::getURI();
 
-		$baseurl    = JUri::root();
-		/*
-		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.js');
-		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Autocompleter.Request.js');
-		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/Observer.js');
-		$document->addScript($baseurl.'administrator/components/com_joomleague/assets/js/autocompleter/1_4/quickaddteam.js');
-		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');
-		*/		
+		$baseurl    = JUri::root();		
 		$document->addStyleSheet($baseurl.'administrator/components/com_joomleague/assets/css/Autocompleter.css');
 
 		$filter_state		= $app->getUserStateFromRequest($option.'tl_filter_state',		'filter_state',		'',			'word');

@@ -59,10 +59,10 @@ jQuery(document).ready(function($) {
 						?>
 				</div>
 				<div class="span2">
-					<button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="icon-backward"></i></button>
-					<button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="icon-arrow-left"></i></button>
-					<button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="icon-arrow-right"></i></button>
-					<button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="icon-forward"></i></button>					
+					<button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="icon-forward"></i></button>
+					<button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="icon-arrow-right"></i></button>
+					<button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="icon-arrow-left"></i></button>
+					<button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="icon-backward"></i></button>					
 				</div>
 				<div class="span3">
 						<b>
