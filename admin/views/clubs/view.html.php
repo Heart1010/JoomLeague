@@ -22,11 +22,11 @@ class JoomleagueViewClubs extends JLGView
 		$app 		= JFactory::getApplication();
 		$uri		= JFactory::getURI();
 
-		$filter_state		= $app->getUserStateFromRequest($option.'a_filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $app->getUserStateFromRequest($option.'a_filter_order',		'filter_order',		'a.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'a_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'a_search',				'search',			'',				'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'a_search_mode',		'search_mode',		'',				'string');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		'a.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',				'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($this->get('context').'.search_mode',		'search_mode',		'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items		= $this->get('Data');

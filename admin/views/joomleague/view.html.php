@@ -135,6 +135,7 @@ class JoomleagueViewJoomleague extends JLGView
 		$seasonnav = $app->getUserState($option.'seasonnav');
 		
 		$pid=JRequest::getVar('pid',array(0),'','array');
+			
 		if($pid[0] > 0)
 		{
 			$app->setUserState($option.'project',$pid[0]);

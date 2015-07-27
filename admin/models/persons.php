@@ -5,6 +5,8 @@
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
+ * 
+ * @author	Kurt Norgaz
  */
 defined('_JEXEC') or die;
 
@@ -12,9 +14,7 @@ jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
- * Joomleague Component Persons Model
- *
- * @author	Kurt Norgaz
+ * Persons Model
  */
 class JoomleagueModelPersons extends JoomleagueModelList
 {
@@ -22,88 +22,75 @@ class JoomleagueModelPersons extends JoomleagueModelList
 
 	function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
-
-		$query = '	SELECT	pl.*, u.name AS editor
-					FROM #__joomleague_person AS pl
-					LEFT JOIN #__users AS u
-					 ON u.id = pl.checked_out ';
-
-		$query .= $where;
-		$query .= $orderby;
-		return $query;
-	}
-
-	function _buildContentOrderBy()
-	{
-		$option = $this->input->getCmd('option');
 		$app	= JFactory::getApplication();
-
-		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
-
-		if ( $filter_order == 'pl.lastname' )
-		{
-			$orderby 	= ' ORDER BY pl.lastname ' . $filter_order_Dir;
-		}
-		else
-		{
-			$orderby 	= ' ORDER BY ' . $filter_order . ' ' . $filter_order_Dir . ' , pl.lastname ';
-		}
-
-		return $orderby;
-	}
-
-	function _buildContentWhere()
-	{
-		$option = $this->input->getCmd('option');
-		$app	= JFactory::getApplication();
-
-		$filter_state		= $app->getUserStateFromRequest( $option . 'pl_filter_state', 'filter_state', '', 'word' );
-		$filter_order		= $app->getUserStateFromRequest( $option . 'pl_filter_order', 'filter_order', 'pl.lastname', 'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'pl_filter_order_Dir',	'filter_order_Dir', '',	'word' );
-		$search				= $app->getUserStateFromRequest( $option . 'pl_search', 'search',	'', 'string');
-		$search_mode		= $app->getUserStateFromRequest( $option . 'pl_search_mode', 'search_mode', '', 'string');
-		$project_id			= $app->getUserState( $option . 'project' );
-		$team_id			= $app->getUserState( $option . 'team_id' );
-		$project_team_id	= $app->getUserState( $option . 'project_team_id' );
-		$search				= JString::strtolower( $search );
+		$jinput	= $app->input;
+		$option = $jinput->getCmd('option');
+		
+		$project_id			= $app->getUserState($option.'project');
+		$team_id			= $app->getUserState($option.'team_id');
+		$project_team_id	= $app->getUserState($option.'project_team_id');
 		$exludePerson		= '';
-
-		$where = array();
-		if ( $search )
+		
+		$filter_state		= $app->getUserStateFromRequest($this->context.'.filter_state', 'filter_state', '', 'word' );
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order', 'filter_order', 'pl.lastname', 'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir', '',	'word' );
+		$search				= $app->getUserStateFromRequest($this->context.'.search', 'search',	'', 'string');
+		$search_mode		= $app->getUserStateFromRequest($this->context.'.search_mode', 'search_mode', '', 'string');
+		$search				= JString::strtolower($search);
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pl.*');
+		$query->from('#__joomleague_person AS pl');
+		
+		// Users
+		$query->select('u.name AS editor');
+		$query->join('LEFT', '#__users AS u ON u.id = pl.checked_out');
+		
+		// Where
+		if ($search)
 		{
-			if ( $search_mode )
+			if ($search_mode)
 			{
-				$where[] = '(LOWER(pl.lastname) LIKE ' . $this->_db->Quote( $search . '%' ) .
-						   'OR LOWER(pl.firstname) LIKE ' . $this->_db->Quote( $search . '%' ) .
-						   'OR LOWER(pl.nickname) LIKE ' . $this->_db->Quote( $search . '%' ) . ')';
+				$query->where('(LOWER(pl.lastname) LIKE '.$db->Quote($search.'%') .
+				'OR LOWER(pl.firstname) LIKE '.$db->Quote($search.'%').
+				'OR LOWER(pl.nickname) LIKE '.$db->Quote($search.'%').')');
 			}
 			else
 			{
-				$where[] = '(LOWER(pl.lastname) LIKE ' . $this->_db->Quote( '%' . $search . '%' ).
-						   'OR LOWER(pl.firstname) LIKE ' . $this->_db->Quote( '%' . $search . '%' ) .
-						   'OR LOWER(pl.nickname) LIKE ' . $this->_db->Quote( '%' . $search . '%' ) . ')';
+				$query->where('(LOWER(pl.lastname) LIKE '.$db->Quote('%'.$search.'%').
+				'OR LOWER(pl.firstname) LIKE '.$db->Quote('%'.$search.'%') .
+				'OR LOWER(pl.nickname) LIKE '.$db->Quote('%'.$search.'%').')');
 			}
 		}
-
-		if ( $filter_state )
+		
+		// Filter-State
+		if ($filter_state)
 		{
-			if ( $filter_state == 'P' )
+			if ($filter_state == 'P')
 			{
-				$where[] = 'pl.published = 1';
+				$query->where('pl.published = 1');
 			}
-			elseif ($filter_state == 'U' )
+			elseif ($filter_state == 'U')
 			{
-				$where[] = 'pl.published = 0';
+				$query->where('pl.published = 0');
 			}
 		}
-
-		$where = ( count( $where ) ? ' WHERE ' . implode( ' AND ', $where ) : '' );
-		return $where;
+		
+		// Order
+		if ( $filter_order == 'pl.lastname' )
+		{
+			$query->order('pl.lastname ' . $filter_order_Dir);
+		}
+		else
+		{
+			$query->order($filter_order . ' ' . $filter_order_Dir,'pl.lastname ');
+		}
+		
+		return $query;
 	}
+
+
 
 	/**
 	 * get person history across all projects, with team, season, position,... info
@@ -200,20 +187,20 @@ class JoomleagueModelPersons extends JoomleagueModelList
 	 */
 	function getPersonsToAssign()
 	{
-		$cid = JRequest::getVar( 'cid' );
+		$cid = JRequest::getVar('cid');
 
-		if ( !count( $cid ) )
+		if (!count($cid))
 		{
 			return array();
 		}
-
-		$query = '	SELECT	pl.id,
-							pl.firstname, pl.nickname,
-							pl.lastname
-					FROM #__joomleague_person AS pl
-					WHERE pl.id IN (' . implode( ', ', $cid ) . ') AND pl.published = 1';
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pl.id,pl.firstname,pl.nickname,pl.lastname');
+		$query->from('#__joomleague_person AS pl');
+		$query->where('pl.id IN ('.implode(', ',$cid).')','pl.published = 1');
+		$db->setQuery($query);
+		return $db->loadObjectList();
 	}
 
 
@@ -224,15 +211,15 @@ class JoomleagueModelPersons extends JoomleagueModelList
 	 */
 	function getProjectTeamList()
 	{
-		$query = '	SELECT	t.id AS value,
-							t.name AS text
-					FROM #__joomleague_team AS t
-					INNER JOIN	#__joomleague_project_team AS tt ON tt.team_id = t.id
-					WHERE tt.project_id = ' . $this->_project_id . '
-					ORDER BY text ASC ';
-
-		$this->_db->setQuery( $query );
-		return $this->_db->loadObjectList();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('t.id AS value,t.name AS text');
+		$query->from('#__joomleague_team AS t');
+		$query->join('INNER', '#__joomleague_project_team AS tt ON tt.team_id = t.id');
+		$query->where('tt.project_id = '.$this->_project_id);
+		$query->order('text ASC');
+		$db->setQuery( $query);
+		return $db->loadObjectList();
 	}
 
 	/**
@@ -240,15 +227,19 @@ class JoomleagueModelPersons extends JoomleagueModelList
 	 *
 	 * @return string
 	 */
-	function getTeamName( $team_id )
+	function getTeamName($team_id)
 	{
-		if ( !$team_id )
+		if (!$team_id)
 		{
 			return '';
 		}
-		$query = ' SELECT name FROM #__joomleague_team WHERE id = ' . $team_id;
-		$this->_db->setQuery( $query );
-		return $this->_db->loadResult();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('name');
+		$query->from('#__joomleague_team');
+		$query->where('id = '.$team_id);
+		$db->setQuery($query);
+		return $db->loadResult();
 	}
 
 	/**
@@ -256,19 +247,20 @@ class JoomleagueModelPersons extends JoomleagueModelList
 	 *
 	 * @return string
 	 */
-	function getProjectTeamName( $project_team_id )
+	function getProjectTeamName($project_team_id)
 	{
-		if ( !$project_team_id )
+		if (!$project_team_id)
 		{
 			return '';
 		}
-		$query = ' SELECT t.name
-					FROM #__joomleague_team AS t
-					INNER JOIN #__joomleague_project_team AS pt
-					ON t.id=pt.team_id
-					WHERE pt.id = '. $this->_db->Quote($project_team_id);
-		$this->_db->setQuery( $query );
-		return $this->_db->loadResult();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('t.name');
+		$query->from('#__joomleague_team AS t');
+		$query->join('INNER', '#__joomleague_project_team AS pt ON t.id = pt.team_id');
+		$query->where('pt.id = '.$db->Quote($project_team_id));
+		$db->setQuery($query);
+		return $db->loadResult();
 	}
 
 }

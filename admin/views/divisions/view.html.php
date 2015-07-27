@@ -23,10 +23,10 @@ class JoomleagueViewDivisions extends JLGView
 		$db		= JFactory::getDbo();
 		$uri	= JFactory::getURI();
 
-		$filter_state		= $app->getUserStateFromRequest($option . 'dv_filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $app->getUserStateFromRequest($option . 'dv_filter_order',		'filter_order',		'dv.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option . 'dv_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option . 'dv_search',				'search',			'',				'string');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		'dv.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',			'search',			'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items		= $this->get('Data');

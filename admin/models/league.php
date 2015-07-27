@@ -29,10 +29,14 @@ class JoomleagueModelLeague extends JoomleagueModelItem
 	{
 		if (count($pks))
 		{
-			$cids=implode(',',$pks);
-			$query="SELECT id FROM #__joomleague_project WHERE league_id IN ($cids)";
-			$this->_db->setQuery($query);
-			if ($this->_db->loadResult())
+			$cids = implode(',',$pks);
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__joomleague_project');
+			$query->where('league_id IN ('.$cids.')');
+			$db->setQuery($query);
+			if ($db->loadResult())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUE_MODEL_ERROR_PROJECT_EXISTS'));
 				return false;

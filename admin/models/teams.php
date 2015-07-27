@@ -19,66 +19,49 @@ class JoomleagueModelTeams extends JoomleagueModelList
 	
 	function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
-
-		$query = ' SELECT c.name as clubname, c.id AS club_id, t.*, u.name AS editor '
-				. ' FROM #__joomleague_team AS t '
-				. ' LEFT JOIN #__joomleague_club AS c '
-				. ' ON t.club_id = c.id'
-				. ' LEFT JOIN #__users AS u ON u.id = t.checked_out '
-				. $where
-				. $orderby
-		;
-		return $query;
-	}
-	
-
-	function _buildContentOrderBy()
-	{
-		$option = $this->input->getCmd('option');
 		$app	= JFactory::getApplication();
-
-		$filter_order		= $app->getUserStateFromRequest($option.'t_filter_order','filter_order','t.ordering','cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'t_filter_order_Dir','filter_order_Dir','','word');
-
-		if ($filter_order == 't.ordering'){
-			$orderby 	= ' ORDER BY t.ordering '.$filter_order_Dir;
-		} else {
-			$orderby 	= ' ORDER BY '.$filter_order.' '.$filter_order_Dir.' , t.ordering ';
-		}
-
-		return $orderby;
-	}
-	
-	
-	function _buildContentWhere()
-	{
-		$option = $this->input->getCmd('option');
-		$app	= JFactory::getApplication();
-
-		$filter_state		= $app->getUserStateFromRequest( $option.'t_filter_state',		'filter_state',		'',				'word' );
-		$filter_order		= $app->getUserStateFromRequest( $option.'t_filter_order',		'filter_order',		't.ordering',	'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( $option.'t_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-		$search				= $app->getUserStateFromRequest( $option.'t_search',			'search',			'',				'string' );
-		$search_mode		= $app->getUserStateFromRequest( $option.'t_search_mode',		'search_mode',			'',				'string' );
-		$search				= JString::strtolower( $search );
-
-		$where = array();
-
+		$jinput	= $app->input;
+		$option = $jinput->getCmd('option');
+		$cid    = JRequest::getvar('cid', 0, 'GET', 'INT');
+		
+		$filter_state		= $app->getUserStateFromRequest($this->context.'.filter_state',		'filter_state',		'',				'word' );
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		't.ordering',	'cmd' );
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word' );
+		$search				= $app->getUserStateFromRequest($this->context.'.search',			'search',			'',				'string' );
+		$search_mode		= $app->getUserStateFromRequest($this->context.'.search_mode',		'search_mode',			'',				'string' );
+		$search				= JString::strtolower($search);
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('t.*');
+		$query->from('#__joomleague_team AS t');
+		
+		$query->select('c.name as clubname, c.id AS club_id');
+		$query->join('LEFT', '#__joomleague_club AS c ON t.club_id = c.id');
+		
+		$query->select('u.name AS editor');
+		$query->join('LEFT','#__users AS u ON u.id = t.checked_out');
+		
+		// Where
 		if ($search) {
 			if($search_mode)
-				$where[] = 'LOWER(t.name) LIKE '.$this->_db->Quote($search.'%');
+				$query->where('LOWER(t.name) LIKE '.$db->Quote($search.'%'));
 			else
-				$where[] = 'LOWER(t.name) LIKE '.$this->_db->Quote('%'.$search.'%');
+				$query->where('LOWER(t.name) LIKE '.$db->Quote('%'.$search.'%'));
 		}
-
-                if ($cid    =   JRequest::getvar('cid', 0, 'GET', 'INT')) {
-                    $where[] = 'club_id ='. $cid;
-                }
-
-                $where 		= ( count( $where ) ? ' WHERE '. implode( ' AND ', $where ) : '' );
-		return $where;
+		
+		if ($cid) {
+			$query->where('club_id ='. $cid);
+		}
+		
+		
+		// Order
+		if ($filter_order == 't.ordering'){
+			$query->order('t.ordering '.$filter_order_Dir);
+		} else {
+			$query->order($filter_order.' '.$filter_order_Dir,'t.ordering ');
+		}
+	
+		return $query;
 	}
 }

@@ -16,15 +16,16 @@ class JoomleagueViewSeasons extends JLGView
 {
 	public function display($tpl=null)
 	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
-		$uri = JFactory::getURI();
-		$lists		= array();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		$uri 	= JFactory::getURI();
+		$lists	= array();
 		
-		$filter_order		= $app->getUserStateFromRequest($option.'s_filter_order',		'filter_order',		's.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'s_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_state',			'filter_state',		'P',			'word');
-		$search				= $app->getUserStateFromRequest($option.'s_search',			'search',			'',				'string');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		's.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state',		'filter_state',		'P',			'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',			'search',			'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
@@ -55,7 +56,6 @@ class JoomleagueViewSeasons extends JLGView
 	*/
 	protected function addToolbar()
 	{ 
-		// Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_SEASONS_TITLE'),'jl-seasons');
 		JLToolBarHelper::addNew('season.add');
 		JLToolBarHelper::editList('season.edit');

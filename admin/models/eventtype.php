@@ -143,25 +143,28 @@ class JoomleagueModelEventtype extends JoomleagueModelItem
 	{
 		if (count($pks))
 		{
-			$cids=implode(',',$pks);
+			$cids = implode(',',$pks);
+			$db = JFactory::getDbo();
 			// first check that they are not used in any match events
-			$query='	SELECT event_type_id
-						FROM #__joomleague_match_event
-						WHERE event_type_id IN ('.$cids.')';
-			$this->_db->setQuery($query);
-			$this->_db->execute();
-			if ($this->_db->getAffectedRows())
+			$query = $db->getQuery(true);
+			$query->select('event_type_id');
+			$query->from('#__joomleague_match_event');
+			$query->where('event_type_id IN ('.$cids.')');
+			$db->setQuery($query);
+			$db->execute();
+			if ($db->getAffectedRows())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_EVENT_MODEL_ERROR_MATCHES_EXISTS'));
 				return false;
 			}
 			// then check that they are not assigned to any positions
-			$query='	SELECT eventtype_id
-						FROM #__joomleague_position_eventtype
-						WHERE eventtype_id IN ('.$cids.')';
-			$this->_db->setQuery($query);
-			$this->_db->execute();
-			if ($this->_db->getAffectedRows())
+			$query = $db->getQuery(true);
+			$query->select('eventtype_id');
+			$query->from('#__joomleague_position_eventtype');
+			$query->where('eventtype_id IN ('.$cids.')');
+			$db->setQuery($query);
+			$db->execute();
+			if ($db->getAffectedRows())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_EVENT_MODEL_ERROR_POSITION_EXISTS'));
 				return false;

@@ -20,10 +20,10 @@ class JoomleagueViewLeagues extends JLGView
 		$app = JFactory::getApplication();
 		$uri = JFactory::getURI();
 
-		$filter_order		= $app->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'l_search',			'search',			'',				'string');
-		$search=JString::strtolower($search);
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',			'search',			'',				'string');
+		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
 		$total = $this->get('Total');
@@ -50,13 +50,12 @@ class JoomleagueViewLeagues extends JLGView
 	*/
 	protected function addToolbar()
 	{
-		// Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_LEAGUES_TITLE'),'jl-leagues');
 		JLToolBarHelper::addNew('league.add');
 		JLToolBarHelper::editList('league.edit');
 		JLToolBarHelper::custom('league.import','upload','upload','COM_JOOMLEAGUE_GLOBAL_CSV_IMPORT',false);
 		JLToolBarHelper::archiveList('league.export','COM_JOOMLEAGUE_GLOBAL_XML_EXPORT');
-		JLToolBarHelper::deleteList('', 'league.remove');
+		JLToolBarHelper::deleteList('','league.remove');
 		JToolBarHelper::divider();
 		JToolBarHelper::help('screen.joomleague',true);
 	}

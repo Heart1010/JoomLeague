@@ -38,20 +38,28 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	 */
 	function delete(&$pks=array())
 	{
-		$result=false;
+		$result = false;
 		if (count($pks))
 		{
-			$cids=implode(',',$pks);
-			$query="SELECT id FROM #__joomleague_team WHERE club_id IN ($cids)";
-			$this->_db->setQuery($query);
-			if ($this->_db->loadResult())
+			$cids	= implode(',',$pks);
+			$db 	= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__joomleague_team');
+			$query->where('club_id IN ('.$cids.')');
+			$db->setQuery($query);
+			if ($db->loadResult())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_MODEL_ERROR_TEAM_EXISTS'));
 				return false;
 			}
-			$query="SELECT id FROM #__joomleague_playground WHERE club_id IN ($cids)";
-			$this->_db->setQuery($query);
-			if ($this->_db->loadResult())
+			
+			$query = $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__joomleague_playground');
+			$query->where('club_id IN ('.$cids.')');
+			$db->setQuery($query);
+			if ($db->loadResult())
 			{
 				$this->setError(JText::_('COM_JOOMLEAGUE_ADMIN_CLUB_MODEL_ERROR_VENUE_EXISTS'));
 				return false;
@@ -136,12 +144,15 @@ class JoomleagueModelClub extends JoomleagueModelItem
 	*/
 	function getPlaygrounds()
 	{
-		$query='SELECT id AS value, name AS text 
-				FROM #__joomleague_playground ORDER BY text ASC';
-		$this->_db->setQuery($query);
-		if (!$result=$this->_db->loadObjectList())
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id AS value, name AS text');
+		$query->from('#__joomleague_playground');
+		$query->order('text ASC');
+		$db->setQuery($query);
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		return $result;

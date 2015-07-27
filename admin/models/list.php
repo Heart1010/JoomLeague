@@ -5,6 +5,8 @@
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
+ * 
+ * @author	Julien Vonthron <julien.vonthron@gmail.com>
  */
 defined( '_JEXEC' ) or die;
 
@@ -12,8 +14,6 @@ jimport( 'joomla.application.component.model' );
 
 /**
  * List Model
- *
- * @author	Julien Vonthron <julien.vonthron@gmail.com>
  */
 class JoomleagueModelList extends JModelLegacy
 {
@@ -41,6 +41,7 @@ class JoomleagueModelList extends JModelLegacy
 	/* current project id */
 	var $_project_id = 0;
 	var $_identifier = "";
+	protected $context = null;
 	
 	protected $input;
 
@@ -56,10 +57,19 @@ class JoomleagueModelList extends JModelLegacy
 
 		// Get the pagination request variables
 		$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'), 'int' );
-		$this->setState('limit',$limit);
+		/* $limitstart	= $app->getUserStateFromRequest($this->context.'.limitstart','limitstart', 0, 'int' ); */
 		$limitstart	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.limitstart','limitstart', 0, 'int' );
+		$limitstart = ($limit != 0 ? (floor($limitstart / $limit) * $limit) : 0);
+		
+		$this->setState('limit',$limit);
 		$this->setState('limitstart', $limitstart);
-		$this->_project_id = $app->getUserState($option . 'project', 0);
+		$this->_project_id = $app->getUserState($option.'project', 0);
+		
+		// Guess the context as Option.ModelName.
+		if (empty($this->context))
+		{
+			$this->context = strtolower($this->option . '.' . $this->getName());
+		}
 	}
 
 	/**
@@ -71,11 +81,11 @@ class JoomleagueModelList extends JModelLegacy
 	function getData()
 	{
 		// Lets load the content if it doesn't already exist
-		if ( empty($this->_data) )
+		if (empty($this->_data))
 		{
 			$query = $this->_buildQuery();
-			if ( !$this->_data = $this->_getList(	$query, $this->getState( 'limitstart' ), 
-													$this->getState( 'limit' ) ) )
+			$this->_data = $this->_getList($query, $this->getState('limitstart'), $this->getState('limit'));
+			if ($this->_data)
 			{
 				echo $this->_db->getErrorMsg();
 			}
@@ -92,10 +102,10 @@ class JoomleagueModelList extends JModelLegacy
 	function getTotal()
 	{
 		// Lets load the content if it doesn't already exist
-		if ( empty( $this->_total ) )
+		if (empty($this->_total))
 		{
 			$query = $this->_buildQuery();
-			$this->_total = $this->_getListCount( $query );
+			$this->_total = $this->_getListCount($query);
 		}
 		return $this->_total;
 	}
@@ -109,12 +119,10 @@ class JoomleagueModelList extends JModelLegacy
 	function getPagination()
 	{
 		// Lets load the content if it doesn't already exist
-		if ( empty( $this->_pagination ) )
+		if (empty($this->_pagination))
 		{
-			jimport( 'joomla.html.pagination' );
-			$this->_pagination = new JPagination(	$this->getTotal(), 
-													$this->getState( 'limitstart' ), 
-													$this->getState( 'limit' ) );
+			jimport('joomla.html.pagination');
+			$this->_pagination = new JPagination($this->getTotal(),$this->getState('limitstart'),$this->getState('limit'));
 		}
 		return $this->_pagination;
 	}
@@ -122,6 +130,12 @@ class JoomleagueModelList extends JModelLegacy
 	function getIdentifier() {
 		return $this->_identifier;
 	}
+	
+	
+	function getContext() {
+		return $this->context;
+	}
+	
 	
 	function publish($pks=array(),$value=1)
 	{

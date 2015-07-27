@@ -23,17 +23,18 @@ class JoomleagueViewPersons extends JLGView
 			return;
 		}
 		JHtml::_('behavior.calendar');
-		$option = $this->input->getCmd('option');
-		$params	= JComponentHelper::getParams( $option );
-		$app = JFactory::getApplication();
 		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		$params	= JComponentHelper::getParams($option);
 		$model	= $this->getModel();
 
-		$filter_state		= $app->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
-		$filter_order		= $app->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering', 'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'pl_filter_order_Dir', 'filter_order_Dir', '', 'word');
-		$search				= $app->getUserStateFromRequest($option.'pl_search', 'search', '', 'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'pl_search_mode', 'search_mode', '', 'string');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state', 'filter_state', '', 'word');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order', 'filter_order', 'pl.ordering', 'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search', 'search', '', 'string');
+		$search_mode		= $app->getUserStateFromRequest($this->get('context').'.search_mode', 'search_mode', '', 'string');
 
 		$items = $this->get('Data');
 		$total = $this->get('Total');
@@ -81,31 +82,37 @@ class JoomleagueViewPersons extends JLGView
 		$this->addToolbar();
 		parent::display($tpl);
 	}
-
+	
+	
+	/**
+	 * @todo // 27-07-2015
+	 * check if filter/search works, this as the "get('context')" was added
+	 */
 	function _displayAssignPlayers($tpl=null)
 	{
 		$option 		= $this->input->getCmd('option');
 		$params			= JComponentHelper::getParams( $option );
 		$app 			= JFactory::getApplication();
+		$jinput			= $app->input;
 		$model 			= $this->getModel();
 		$project_id 	= $app->getUserState($option.'project');
 		$mdlProject 	= JModelLegacy::getInstance("project", "JoomLeagueModel");
 		$project_name 	= $mdlProject->getProjectName($project_id);
 		$project_team_id = $app->getUserState($option.'project_team_id');
 		$team_name 		= $model->getProjectTeamName($project_team_id);
-		$mdlQuickAdd = JLGModel::getInstance('Quickadd','JoomleagueModel');
+		$mdlQuickAdd 	= JLGModel::getInstance('Quickadd','JoomleagueModel');
+		$type 			= $jinput->getInt('type');
 
-		$filter_state		= $app->getUserStateFromRequest($option.'pl_filter_state', 'filter_state', '', 'word');
-		$filter_order		= $app->getUserStateFromRequest($option.'pl_filter_order', 'filter_order', 'pl.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'pl_filter_order_Dir', 'filter_order_Dir', '', 'word');
-		$search				= $app->getUserStateFromRequest($option.'pl_search', 'search', '', 'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'pl_search_mode',	'search_mode', '', 'string');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state', 'filter_state', '', 'word');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order', 'filter_order', 'pl.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir', 'filter_order_Dir', '', 'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search', 'search', '', 'string');
+		$search_mode		= $app->getUserStateFromRequest($this->get('context').'.search_mode',	'search_mode', '', 'string');
 
 		//save icon should be replaced by the apply
 		JLToolBarHelper::apply('person.saveassigned','COM_JOOMLEAGUE_ADMIN_PERSONS_SAVE_SELECTED');		
 		
 		// Set toolbar items for the page
-		$type=JRequest::getInt('type');
 		if ($type==0)
 		{
                     //back icon should be replaced by the abort/close icon

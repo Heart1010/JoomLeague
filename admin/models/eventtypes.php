@@ -23,12 +23,12 @@ class JoomleagueModelEventtypes extends JoomleagueModelList
 		$jinput = $app->input;
 		$option = $jinput->getCmd('option');
 		
-		$filter_order		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$filter_sports_type	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_sports_type',	'filter_sports_type','',	'int');
-		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_state',		'filter_state',		'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search',				'search',			'',				'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search_mode',		'search_mode',		'',				'string');
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$filter_sports_type	= $app->getUserStateFromRequest($this->context.'.filter_sports_type',	'filter_sports_type','',	'int');
+		$filter_state		= $app->getUserStateFromRequest($this->context.'.filter_state',		'filter_state',		'',				'word');
+		$search				= $app->getUserStateFromRequest($this->context.'.search',			'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($this->context.'.search_mode',		'search_mode',		'',				'string');
 		$search 			= JString::strtolower($search);
 		
 		// Query

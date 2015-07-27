@@ -43,10 +43,12 @@ class JoomleagueModelPositions extends JoomleagueModelList
 
 	function _buildContentOrderBy()
 	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
-		$filter_order		= $app->getUserStateFromRequest($option.'po_filter_order',		'filter_order',		'po.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'po_filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$app	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		'po.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
 		if ($filter_order == 'po.ordering')
 		{
 			$orderby=' ORDER BY po.parent_id ASC,po.ordering '.$filter_order_Dir;
@@ -60,15 +62,18 @@ class JoomleagueModelPositions extends JoomleagueModelList
 
 	function _buildContentWhere()
 	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
-		$filter_sports_type	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_sports_type',	'filter_sports_type','',			'int');
-		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order',		'filter_order',		'po.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search',				'search',			'',				'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search_mode',		'search_mode',		'',				'string');
-		$search=JString::strtolower($search);
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
+		$filter_sports_type	= $app->getUserStateFromRequest($this->context.'.filter_sports_type',	'filter_sports_type','',			'int');
+		$filter_state		= $app->getUserStateFromRequest($this->context.'.filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		'po.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->context.'.search',				'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($this->context.'.search_mode',		'search_mode',		'',				'string');
+		$search				= JString::strtolower($search);
+		
 		$where=array();
 		if ($filter_sports_type> 0)
 		{
@@ -108,21 +113,24 @@ class JoomleagueModelPositions extends JoomleagueModelList
 	 */
 	function getParentsPositions()
 	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
+		$app 		= JFactory::getApplication();
+		$jinput 	= $app->input;
+		$option 	= $jinput->getCmd('option');
 		$project_id = $app->getUserState($option.'project');
-		//get positions already in project for parents list
-		//support only 2 sublevel, so parent must not have parents themselves
-		$query='	SELECT	pos.id AS value,
-							pos.name AS text
-					FROM #__joomleague_position AS pos
-					WHERE pos.parent_id=0
-					ORDER BY pos.ordering ASC 
-					';
-		$this->_db->setQuery($query);
-		if (!$result=$this->_db->loadObjectList())
+		
+		// get positions already in project for parents list
+		// support only 2 sublevel, so parent must not have parents themselves
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('pos.id AS value,pos.name AS text');
+		$query->from('#__joomleague_position AS pos');
+		$query->where('pos.parent_id = 0');
+		$query->order('pos.ordering ASC');
+		
+		$db->setQuery($query);
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		return $result;

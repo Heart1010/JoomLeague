@@ -24,9 +24,9 @@ class JoomleagueModelLeagues extends JoomleagueModelList
 		$jinput = $app->input;
 		$option = $jinput->getCmd('option');
 		
-		$filter_order		= $app->getUserStateFromRequest($option.'l_filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'l_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'l_search',				'search',			'',				'string');
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->context.'.search',			'search',			'',				'string');
 		$search				= JString::strtolower($search);
 	
 		$db = JFactory::getDbo();

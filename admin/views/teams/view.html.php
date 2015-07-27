@@ -17,16 +17,17 @@ class JoomleagueViewTeams extends JLGView
 
 	function display($tpl=null)
 	{
-		$option 	= $this->input->getCmd('option');
-		$params		= JComponentHelper::getParams($option);
 		$app 		= JFactory::getApplication();
+		$jinput		= $app->input;
+		$option 	= $jinput->getCmd('option');
+		$params		= JComponentHelper::getParams($option);
 		$uri 		= JFactory::getURI();
 
-		$filter_state		= $app->getUserStateFromRequest($option.'t_filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $app->getUserStateFromRequest($option.'t_filter_order',		'filter_order',		't.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'t_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'t_search',				'search',			'',				'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'t_search_mode',		'search_mode',		'',				'string');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		't.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',			'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($this->get('context').'.search_mode',		'search_mode',		'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
@@ -61,9 +62,7 @@ class JoomleagueViewTeams extends JLGView
 	*/
 	protected function addToolbar()
 	{ 
-		// Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_TEAMS_TITLE'),'jl-Teams');
-		
 		JLToolBarHelper::addNew('team.add');
 		JLToolBarHelper::editList('team.edit');
 		JLToolBarHelper::custom('team.copysave','copy.png','copy_f2.png','COM_JOOMLEAGUE_GLOBAL_COPY',true);

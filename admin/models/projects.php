@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
@@ -20,98 +19,91 @@ class JoomleagueModelProjects extends JoomleagueModelList
 	
 	function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where      = $this->_buildContentWhere();
-		$orderby    = $this->_buildContentOrderBy();
-
-		$query = '	SELECT	p.*,
-							st.name AS sportstype,
-							s.name AS season,
-							l.name AS league,
-							u.name AS editor
-					FROM	#__joomleague_project AS p
-					LEFT JOIN #__joomleague_season AS s ON s.id = p.season_id
-					LEFT JOIN #__joomleague_league AS l ON l.id = p.league_id
-					LEFT JOIN #__joomleague_sports_type AS st ON st.id = p.sports_type_id
-					LEFT JOIN #__users AS u ON u.id = p.checked_out ' .
-					$where .
-					$orderby;
-
-		return $query;
-	}
-
-	function _buildContentOrderBy()
-	{
-		$option = $this->input->getCmd('option');
-		$app	= JFactory::getApplication();
-
+		
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		
 		$filter_order		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order',		'filter_order',		'p.ordering',	'cmd');
 		$filter_order_Dir	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		
-		if ( $filter_order == 'p.ordering' )
-		{
-			$orderby 	= ' ORDER BY p.ordering ' . $filter_order_Dir;
-		}
-		else
-		{
-			$orderby 	= ' ORDER BY ' . $filter_order . ' ' . $filter_order_Dir . ' , p.ordering ';
-		}
-
-		return $orderby;
-	}
-
-	function _buildContentWhere()
-	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
 		$filter_league		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_league',		'filter_league','',			'int');
 		$filter_sports_type	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_sports_type',	'filter_sports_type','',	'int');
 		$filter_season		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_season',		'filter_season','',			'int');
 		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_state',		'filter_state',		'P',	'word');
 		$search				= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search',				'search',			'',		'string');
 		$search_mode		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search_mode',		'search_mode',		'',		'string');
-		$search=JString::strtolower($search);
-		$where = array();
+		$search				= JString::strtolower($search);
 		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('p.*');
+		$query->from('#__joomleague_project AS p');
+		
+		// League
+		$query->select('l.name AS league');
+		$query->join('LEFT', '#__joomleague_league AS l ON l.id = p.league_id');
+		
+		// Season
+		$query->select('s.name AS season');
+		$query->join('LEFT', '#__joomleague_season AS s ON s.id = p.season_id');
+		
+		// SportsType
+		$query->select('st.name AS sportstype');
+		$query->join('LEFT', '#__joomleague_sports_type AS st ON st.id = p.sports_type_id');
+		
+		// User
+		$query->select('u.name AS editor');
+		$query->join('LEFT', '#__users AS u ON u.id = p.checked_out');
+		
+		// Where
 		if($filter_league > 0) {
-			$where[] = 'p.league_id = ' . $filter_league;
+			$query->where('p.league_id = ' . $filter_league);
 		}
 		if($filter_season > 0) {
-			$where[] = 'p.season_id = ' . $filter_season;
+			$query->where('p.season_id = ' . $filter_season);
 		}
 		if ($filter_sports_type > 0)
 		{
-			$where[] = 'p.sports_type_id = ' . $this->_db->Quote($filter_sports_type);
+			$query->where('p.sports_type_id = '.$db->Quote($filter_sports_type));
 		}
-		if ( $search )
+		if ($search)
 		{
-			$where[] = 'LOWER(p.name) LIKE ' . $this->_db->Quote( '%' . $search . '%' );
+			$query->where('LOWER(p.name) LIKE ' . $db->Quote('%'.$search.'%'));
 		}
-
-		if ( $filter_state )
+		
+		if ($filter_state)
 		{
-			if ( $filter_state == 'P' )
+			if ($filter_state == 'P')
 			{
-				$where[] = 'p.published = 1';
+				$query->where('p.published = 1');
 			}
-			elseif ($filter_state == 'U' )
+			elseif ($filter_state == 'U')
 			{
-				$where[] = 'p.published = 0';
+				$query->where('p.published = 0');
 			}
-			elseif ($filter_state == 'A' )
+			elseif ($filter_state == 'A')
 			{
-				$where[] = 'p.published = 2';
+				$query->where('p.published = 2');
 			}
-			elseif ($filter_state == 'T' )
+			elseif ($filter_state == 'T')
 			{
-				$where[] = 'p.published = -2';
+				$query->where('p.published = -2');
 			}
 		}
-
-		$where = ( count( $where ) ? ' WHERE ' . implode( ' AND ', $where ) : '' );
-
-		return $where;
+		
+		// Orderby
+		if ( $filter_order == 'p.ordering' )
+		{
+			$query->order('p.ordering ' . $filter_order_Dir);
+		}
+		else
+		{
+			$query->order($filter_order . ' ' . $filter_order_Dir,'p.ordering ');
+		}
+		
+		return $query;
 	}
+
 
 	/**
 	* Method to check if the project to be copied already exists
@@ -119,7 +111,7 @@ class JoomleagueModelProjects extends JoomleagueModelList
 	* @access  public
 	* @return  array
 	*/
-	function cpCheckPExists( $post )
+	function cpCheckPExists($post)
 	{
 		$name = 		$post['name'];
 		$league_id = 	$post['league_id'];
@@ -127,18 +119,21 @@ class JoomleagueModelProjects extends JoomleagueModelList
 		$old_id = 		$post['old_id'];
 
 		//check project unicity if season and league are not both new
-		if ( $league_id && $season_id )
+		if ($league_id && $season_id)
 		{
-			$query = '	SELECT id FROM #__joomleague_project
-						WHERE name = ' . $this->_db->Quote($name) . '
-						AND league_id = ' . $league_id . '
-						AND season_id = ' . $season_id;
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id');
+			$query->from('#__joomleague_project');
+			$query->where('name = ' . $db->Quote($name));
+			$query->where('league_id = ' . $league_id);
+			$query->where('season_id = ' . $season_id);
+			
+			$db->setQuery($query);
+			$db->execute();
+			$num = $db->getAffectedRows();
 
-			$this->_db->setQuery( $query );
-			$this->_db->execute();
-			$num = $this->_db->getAffectedRows();
-
-			if ( $num > 0 )
+			if ($num > 0)
 			{
 				return false;
 			}
@@ -206,16 +201,16 @@ class JoomleagueModelProjects extends JoomleagueModelList
 	*/
 	function getSeasons()
 	{
-		$query = '	SELECT	id,
-							name
-					FROM #__joomleague_season
-					ORDER BY name ASC ';
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id,name');
+		$query->from('#__joomleague_season');
+		$query->order('name ASC');
+		$db->setQuery($query);
 
-		$this->_db->setQuery( $query );
-
-		if ( !$result = $this->_db->loadObjectList() )
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError( $this->_db->getErrorMsg() );
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 

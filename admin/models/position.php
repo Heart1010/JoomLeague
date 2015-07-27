@@ -29,11 +29,14 @@ class JoomleagueModelPosition extends JoomleagueModelItem
 	{
 		if ($project_id > 0)
 		{
-			$query='DELETE FROM #__joomleague_project_position WHERE project_id='.(int)$project_id;
-			$this->_db->setQuery($query);
-			if (!$this->_db->execute())
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->delete('#__joomleague_project_position');
+			$query->where('project_id='.$project_id);	
+			$db->setQuery($query);
+			if (!$db->execute())
 			{
-				$this->setError($this->_db->getErrorMsg());
+				$this->setError($db->getErrorMsg());
 				return false;
 			}
 		}
@@ -443,7 +446,7 @@ class JoomleagueModelPosition extends JoomleagueModelItem
 			$output .= '</positions>';
 			
 			$mdlJLXExports = JModelLegacy::getInstance("jlxmlexport", 'JoomleagueModel');
-			$mdlJLXExports->downloadXml($output, $table);
+			$mdlJLXExports->downloadXml($output, $table,true);
 			
 			// close the application
 			$app = JFactory::getApplication();

@@ -19,66 +19,50 @@ class JoomleagueModelDivisions extends JoomleagueModelList
 	
 	function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
-
-		$query = '	SELECT	dv.*,
-							dvp.name AS parent_name,
-							u.name AS editor
-					FROM #__joomleague_division AS dv
-					LEFT JOIN #__joomleague_division AS dvp ON dvp.id = dv.parent_id
-					LEFT JOIN #__users AS u ON u.id = dv.checked_out ' .
-					$where . $orderby;
+		$app 		= JFactory::getApplication();
+		$jinput 	= $app->input;
+		$option 	= $jinput->getCmd('option');
+		$project_id = $app->getUserState($option.'project');
+		
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		'dv.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->context.'.search',			'search',			'',				'string');
+		$search				= JString::strtolower( $search );
+		
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('dv.*');
+		$query->from('#__joomleague_division AS dv');
+		
+		// Division
+		$query->select('dvp.name AS parent_name');
+		$query->join('LEFT', '#__joomleague_division AS dvp ON dvp.id = dv.parent_id');
+		
+		// Users
+		$query->select('u.name AS editor');
+		$query->join('LEFT', '#__users AS u ON u.id = dv.checked_out');
+		
+		// Where
+		$query->where('dv.project_id = '.$project_id);
+		if ($search)
+		{
+			$query->where('LOWER(dv.name) LIKE '.$db->Quote('%'.$search.'%'));
+		}
+		
+		// Order
+		if ($filter_order == 'dv.ordering')
+		{
+			$query->order('dv.ordering ' . $filter_order_Dir);
+		}
+		else
+		{
+			$query->order($filter_order . ' '.$filter_order_Dir, 'dv.ordering ');
+		}
 
 		return $query;
 	}
 
-	function _buildContentOrderBy()
-	{
-		$option = $this->input->getCmd('option');
-
-		$app	= JFactory::getApplication();
-		$filter_order		= $app->getUserStateFromRequest( $option . 'dv_filter_order',		'filter_order',		'dv.ordering',	'cmd' );
-		$filter_order_Dir	= $app->getUserStateFromRequest( $option . 'dv_filter_order_Dir',	'filter_order_Dir',	'',				'word' );
-
-		if ( $filter_order == 'dv.ordering' )
-		{
-			$orderby 	= ' ORDER BY dv.ordering ' . $filter_order_Dir;
-		}
-		else
-		{
-			$orderby 	= ' ORDER BY ' . $filter_order . ' '.$filter_order_Dir . ' , dv.ordering ';
-		}
-
-		return $orderby;
-	}
-
-	function _buildContentWhere()
-	{
-		$option = $this->input->getCmd('option');
-
- 		$app	= JFactory::getApplication();
-		$project_id = $app->getUserState( $option . 'project' );
-		$where = array();
-
-		$where[]	= ' dv.project_id = ' . $project_id;
-
-		$filter_order		= $app->getUserStateFromRequest($option.'dv_filter_order',		'filter_order',		'dv.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'dv_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'dv_search',			'search',			'',				'string');
-		$search				= JString::strtolower( $search );
-
-		if ($search)
-		{
-			$where[] = 'LOWER(dv.name) LIKE '.$this->_db->Quote('%'.$search.'%');
-		}
-
-
-		$where = (count($where) ? ' WHERE '.implode(' AND ',$where) : '');
-
-		return $where;
-	}
+	
 	
 	/**
 	* Method to return a divisions array (id, name)
@@ -89,16 +73,16 @@ class JoomleagueModelDivisions extends JoomleagueModelList
 	*/
 	function getDivisions($project_id)
 	{
-		$query = '	SELECT	id AS value,
-					name AS text
-					FROM #__joomleague_division
-					WHERE project_id=' . $project_id .
-					' ORDER BY name ASC ';
-
-		$this->_db->setQuery( $query );
-		if ( !$result = $this->_db->loadObjectList("value") )
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id AS value,name AS text');
+		$query->from('#__joomleague_division');
+		$query->where('project_id=' . $project_id);
+		$query->order('name ASC');
+		$db->setQuery($query);
+		if (!$result = $db->loadObjectList("value"))
 		{
-			$this->setError( $this->_db->getErrorMsg() );
+			$this->setError($db->getErrorMsg());
 			return array();
 		}
 		else
@@ -116,11 +100,13 @@ class JoomleagueModelDivisions extends JoomleagueModelList
 	 */
 	function getProjectDivisionsCount($project_id)
 	{
-		$query='SELECT count(*) AS count
-		FROM #__joomleague_division AS d
-		JOIN #__joomleague_project AS p on p.id = d.project_id
-		WHERE p.id='.$project_id;
-		$this->_db->setQuery($query);
-		return $this->_db->loadResult();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('COUNT(d.id) AS count');
+		$query->from('#__joomleague_division AS d');
+		$query->join('LEFT', '#__joomleague_project AS p on p.id = d.project_id');
+		$query->where('p.id = '.$project_id);
+		$db->setQuery($query);
+		return $db->loadResult();
 	}
 }

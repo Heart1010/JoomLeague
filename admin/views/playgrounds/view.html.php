@@ -17,15 +17,16 @@ class JoomleagueViewPlaygrounds extends JLGView
 
 	public function display($tpl=null)
 	{
-		$option = $this->input->getCmd('option');
-		$params		= JComponentHelper::getParams($option);
-		$app = JFactory::getApplication();
-		$uri = JFactory::getURI();
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
+		$params	= JComponentHelper::getParams($option);
+		$uri	= JFactory::getURI();
 
-		$filter_order		= $app->getUserStateFromRequest($option.'v_filter_order',		'filter_order',		'v.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'v_filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'v_search',				'search',			'',				'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'t_search_mode',		'search_mode',		'',				'string');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		'v.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',			'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($this->get('context').'.search_mode',		'search_mode',		'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
@@ -33,12 +34,12 @@ class JoomleagueViewPlaygrounds extends JLGView
 		$pagination = $this->get('Pagination');
 
 		// table ordering
-		$lists['order_Dir']=$filter_order_Dir;
-		$lists['order']=$filter_order;
+		$lists['order_Dir'] = $filter_order_Dir;
+		$lists['order']		= $filter_order;
 
 		// search filter
-		$lists['search']=$search;
-		$lists['search_mode']=$search_mode;
+		$lists['search']	  = $search;
+		$lists['search_mode'] = $search_mode;
 
 		$this->user = JFactory::getUser();
 		$this->config = JFactory::getConfig();
@@ -56,7 +57,6 @@ class JoomleagueViewPlaygrounds extends JLGView
 	 */
 	protected function addToolbar()
 	{
-		// Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_PLAYGROUNDS_TITLE'),'jl-playground');
 		JLToolBarHelper::editList('playground.edit');
 		JLToolBarHelper::addNew('playground.add');
@@ -64,7 +64,6 @@ class JoomleagueViewPlaygrounds extends JLGView
 		JLToolBarHelper::archiveList('playground.export','COM_JOOMLEAGUE_GLOBAL_XML_EXPORT');
 		JLToolBarHelper::deleteList('','playground.remove');
 		JToolBarHelper::divider();
-
 		JToolBarHelper::help('screen.joomleague',true);
 	}
 }

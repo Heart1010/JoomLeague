@@ -5,6 +5,8 @@
  * @copyright	Copyright (C) 2006-2015 joomleague.at. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link		http://www.joomleague.at
+ * 
+ * @author Marco Vaninetti <martizva@alice.it>
  */
 defined('_JEXEC') or die;
 
@@ -13,8 +15,6 @@ require_once JPATH_COMPONENT.'/models/project.php';
 
 /**
  * Joomleague Model
- *
- * @author Marco Vaninetti <martizva@alice.it>
  */
 class JoomleagueModelJoomleague extends JoomleagueModelItem
 {
@@ -27,16 +27,17 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	function _loadData()
 	{
 		// Lets load the content if it doesn't already exist
-		if ( empty( $this->_data ) )
+		if (empty($this->_data))
 		{
-			$pid	= JRequest::getVar( 'pid',	array(0), '', 'array' );
-
-			$query = '	SELECT p.*
-						FROM #__joomleague_project AS p
-						WHERE p.id = ' . (int) $pid[0];
-
-			$this->_db->setQuery( $query );
-			$this->_data = $this->_db->loadObject();
+			$pid	= JRequest::getVar('pid',	array(0), '', 'array');
+	
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('p.*');
+			$query->from('#__joomleague_project AS p');
+			$query->where('p.id = '.$pid[0]);
+			$db->setQuery($query);
+			$this->_data = $db->loadObject();
 			return (boolean) $this->_data;
 		}
 		return true;
@@ -78,17 +79,17 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*/
 	function getProjects()
 	{
-		$query = '	SELECT	id,
-							name
-					FROM #__joomleague_project
-					WHERE p.published=1
-					ORDER BY ordering,name ASC';
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id, name');
+		$query->from('#__joomleague_project');
+		$query->where('p.published = 1');
+		$query->order('ordering, name ASC');
+		$db->setQuery($query);
 
-		$this->_db->setQuery( $query );
-
-		if ( !$result = $this->_db->loadObjectList() )
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$this->setError($db->getErrorMsg());
 			return false;
 
 		}
@@ -106,23 +107,25 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*/
 	function getProjectteams()
 	{
-		$option = JRequest::getCmd('option');
-		$app	= JFactory::getApplication();
+		$app		= JFactory::getApplication();
+		$jinput 	= $app->input;
+		$option 	= $jinput->getCmd('option');
+		$project_id = $app->getUserState($option.'project');
 
-		$project_id = $app->getUserState( $option . 'project' );
-
-		$query = '	SELECT	pt.id AS value,
-							t.name As text,
-							t.notes
-					FROM #__joomleague_team AS t
-					LEFT JOIN #__joomleague_project_team AS pt ON pt.team_id = t.id
-					WHERE pt.project_id = ' . $project_id . '
-					ORDER BY name ASC ';
-
-		$this->_db->setQuery( $query );
-		if ( !$result = $this->_db->loadObjectList() )
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('t.name As text,t.notes');
+		$query->from('#__joomleague_team AS t');
+		
+		$query->select('pt.id AS value');
+		$query->join('LEFT', '#__joomleague_project_team AS pt ON pt.team_id = t.id');
+		
+		$query->where('pt.project_id = '.$project_id);
+		$query->order('t.name ASC');
+		$db->setQuery($query);
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError( $this->_db->getErrorMsg() );
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		else
@@ -130,6 +133,7 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 			return $result;
 		}
 	}
+	
 
 	/**
 	* Method to return the project rounds array
@@ -139,19 +143,17 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*/
 	function getProjectRounds()
 	{
-		$query = '	SELECT	id,
-							roundcode,
-							name,
-							round_date_first,
-							round_date_last
-					FROM #__joomleague_round
-					WHERE project_id = ' . (int) $this->_id . '
-					ORDER BY roundcode,round_date_first';
-
-		$this->_db->setQuery( $query );
-		if ( !$result = $this->_db->loadObjectList() )
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id,roundcode,name,round_date_first,round_date_last');
+		$query->from('#__joomleague_round');
+		$query->where('project_id = '.$this->_id);
+		$query->order('roundcode,round_date_first');
+		$db->setQuery($query);
+		
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError( $this->_db->getErrorMsg() );
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		else
@@ -168,11 +170,16 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*/
 	function getSeasons()
 	{
-		$query = 'SELECT id, name FROM #__joomleague_season ORDER BY name ASC ';
-		$this->_db->setQuery($query);
-		if (!$result = $this->_db->loadObjectList())
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id,name');
+		$query->from('#__joomleague_season');
+		$query->order('name ASC');
+		$db->setQuery($query);
+		
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		return $result;
@@ -186,31 +193,38 @@ class JoomleagueModelJoomleague extends JoomleagueModelItem
 	*/
 	function getProjectsBySportsType($sportstype_id, $season = null)
 	{
-		$query = "SELECT id, name FROM #__joomleague_project as p
-						WHERE sports_type_id=$sportstype_id 
-						AND published=1 ";
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('p.id,p.name');
+		$query->from('#__joomleague_project as p');
+		$query->where('p.sports_type_id = '.$sportstype_id);
+		$query->where('p.published = 1');
 		if ($season) {
-			$query .= ' AND season_id = '.(int) $season;
+			$query->where('p.season_id = '.$season);
 		}
-		$query .=	" ORDER BY p.ordering, p.name ASC ";
-		$this->_db->setQuery($query);
-		if (!$result = $this->_db->loadObjectList())
+		$query->order('p.ordering, p.name ASC');
+		$db->setQuery($query);
+		
+		if (!$result = $db->loadObjectList())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		return $result;
 	}
 	
+	
 	function getVersion()
 	{
-		$query = "SELECT CONCAT(major,'.',minor,'.',build,'.',revision) AS version
-						FROM #__joomleague_version 
-						ORDER BY date DESC LIMIT 1";
-		$this->_db->setQuery($query);
-		if (!$result=$this->_db->loadObjectList())
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('CONCAT(major,minor,build,revision) AS version');
+		$query->from('#__joomleague_version');
+		$query->order('date DESC');
+		$db->setQuery($query,0,1);
+		if (!$result=$db->loadObjectList())
 		{
-			$this->setError($this->_db->getErrorMsg());
+			$this->setError($db->getErrorMsg());
 			return false;
 		}
 		return $result;

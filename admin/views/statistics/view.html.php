@@ -16,17 +16,19 @@ class JoomleagueViewStatistics extends JLGView
 {
 	public function display($tpl=null)
 	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
-		$document = JFactory::getDocument();
-		$user = JFactory::getUser();
-		$uri = JFactory::getURI();
+		$app 		= JFactory::getApplication();
+		$jinput 	= $app->input;
+		$option 	= $jinput->getCmd('option');
 		
-		$filter_sports_type	= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_sports_type',	'filter_sports_type','',	'int');
-		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_state',		'filter_state',		'',				'word');
-		$filter_order		= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'.'.$this->get('identifier').'.search',			'search',			'',				'string');
+		$document	= JFactory::getDocument();
+		$user 		= JFactory::getUser();
+		$uri 		= JFactory::getURI();
+		
+		$filter_sports_type	= $app->getUserStateFromRequest($this->get('context').'.filter_sports_type',	'filter_sports_type','',	'int');
+		$filter_state		= $app->getUserStateFromRequest($this->get('context').'.filter_state',		'filter_state',		'',				'word');
+		$filter_order		= $app->getUserStateFromRequest($this->get('context').'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->get('context').'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$search				= $app->getUserStateFromRequest($this->get('context').'.search',			'search',			'',				'string');
 		$search				= JString::strtolower($search);
 
 		$items = $this->get('Data');
@@ -71,9 +73,8 @@ class JoomleagueViewStatistics extends JLGView
 	*/
 	protected function addToolbar()
 	{
-		// Set toolbar items for the page
 		JToolBarHelper::title(JText::_('COM_JOOMLEAGUE_ADMIN_STATISTICS_TITLE'),'jl-statistics');
-		
+			
 		JLToolBarHelper::publishList();
 		JLToolBarHelper::unpublishList();
 		JToolBarHelper::divider();

@@ -23,10 +23,10 @@ class JoomleagueModelSeasons extends JoomleagueModelList
 		$jinput	= $app->input;
 		$option = $jinput->getCmd('option');
 		
-		$filter_order		= $app->getUserStateFromRequest($option.'s_filter_order',		'filter_order',			's.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'s_filter_order_Dir',	'filter_order_Dir',		'ASC',				'word');
-		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_state',		'filter_state',	'P',	'word');
-		$search				= $app->getUserStateFromRequest($option.'s_search',				'search',				'',				'string');
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',			's.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',		'ASC',				'word');
+		$filter_state		= $app->getUserStateFromRequest($this->context.'.filter_state',		'filter_state',			'P',	'word');
+		$search				= $app->getUserStateFromRequest($this->context.'.search',			'search',				'',				'string');
 		$search				= JString::strtolower($search);
 		
 		$db 	= JFactory::getDbo();

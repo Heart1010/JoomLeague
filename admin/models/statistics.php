@@ -8,7 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.model');
 require_once JPATH_COMPONENT.'/models/list.php';
 
 /**
@@ -20,74 +19,64 @@ class JoomleagueModelStatistics extends JoomleagueModelList
 	
 	function _buildQuery()
 	{
-		// Get the WHERE and ORDER BY clauses for the query
-		$where		= $this->_buildContentWhere();
-		$orderby	= $this->_buildContentOrderBy();
-
-		$query = "	SELECT	obj.*,
-							st.name AS sportstype,		
-							u.name AS editor
-					FROM #__joomleague_statistic AS obj
-					LEFT JOIN #__joomleague_sports_type AS st ON st.id=obj.sports_type_id					
-					LEFT JOIN #__users AS u ON u.id = obj.checked_out " .
-					$where . $orderby;
-		return $query;
-	}
-
-	function _buildContentOrderBy()
-	{
-		$option = $this->input->getCmd('option');
-		$app	= JFactory::getApplication();
-
-		$filter_order		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
-		$filter_order_Dir	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$app 	= JFactory::getApplication();
+		$jinput = $app->input;
+		$option = $jinput->getCmd('option');
 		
-		if ( $filter_order == 'obj.ordering')
-		{
-			$orderby 	= ' ORDER BY obj.ordering ' . $filter_order_Dir;
-		} else
-		{
-			$orderby 	= ' ORDER BY ' . $filter_order . ' ' . $filter_order_Dir . ' , obj.ordering ';
-		}
-
-		return $orderby;
-	}
-
-	function _buildContentWhere()
-	{
-		$option = $this->input->getCmd('option');
-		$app = JFactory::getApplication();
-		$filter_sports_type	= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_sports_type',	'filter_sports_type','',	'int');
-		$filter_state		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.filter_state',		'filter_state',		'',				'word');
-		$search				= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search',				'search',			'',				'string');
-		$search_mode		= $app->getUserStateFromRequest($option.'.'.$this->_identifier.'.search_mode',		'search_mode',		'',				'string');
-		$search=JString::strtolower($search);
+		$filter_order		= $app->getUserStateFromRequest($this->context.'.filter_order',		'filter_order',		'obj.ordering',	'cmd');
+		$filter_order_Dir	= $app->getUserStateFromRequest($this->context.'.filter_order_Dir',	'filter_order_Dir',	'',				'word');
+		$filter_sports_type	= $app->getUserStateFromRequest($this->context.'.filter_sports_type',	'filter_sports_type','',	'int');
+		$filter_state		= $app->getUserStateFromRequest($this->context.'.filter_state',		'filter_state',		'',				'word');
+		$search				= $app->getUserStateFromRequest($this->context.'.search',			'search',			'',				'string');
+		$search_mode		= $app->getUserStateFromRequest($this->context.'.search_mode',		'search_mode',		'',				'string');
+		$search				= JString::strtolower($search);
 		
-		$where = array();
+		$db 	= JFactory::getDbo();
+		$query	= $db->getQuery(true);
+		$query->select('obj.*');
+		$query->from('#__joomleague_statistic AS obj');
+		
+		// SportsType
+		$query->select('st.name AS sportstype');
+		$query->join('LEFT','#__joomleague_sports_type AS st ON st.id=obj.sports_type_id');
+		
+		// Users
+		$query->select('u.name AS editor');
+		$query->join('LEFT','#__users AS u ON u.id = obj.checked_out');
+		
+		// Where
 		if ($filter_sports_type > 0)
 		{
-			$where[]='obj.sports_type_id='.$this->_db->Quote($filter_sports_type);
+			$query->where('obj.sports_type_id = '.$db->Quote($filter_sports_type));
 		}
 		
-		if ( $search )
+		if ($search)
 		{
-			$where[] = 'LOWER(obj.name) LIKE ' . $this->_db->Quote('%' . $search . '%');
+			$query->where('LOWER(obj.name) LIKE '.$db->Quote('%' . $search . '%'));
 		}
-		if ( $filter_state )
+		if ($filter_state)
 		{
-			if ( $filter_state == 'P' )
+			if ($filter_state == 'P')
 			{
-				$where[] = 'obj.published = 1';
+				$query->where('obj.published = 1');
 			}
-			elseif ( $filter_state == 'U' )
+			elseif ($filter_state == 'U')
 			{
-				$where[] = 'obj.published = 0';
+				$query->where('obj.published = 0');
 			}
 		}
-
-		$where	= ( count( $where ) ? ' WHERE '. implode( ' AND ', $where ) : '' );
-
-		return $where;
+		
+		// Orderby
+		if ($filter_order == 'obj.ordering')
+		{
+			$query->order('obj.ordering '.$filter_order_Dir);
+		} else
+		{
+			$query->order($filter_order . ' ' . $filter_order_Dir,'obj.ordering ');
+		}
+		
+					
+		return $query;
 	}
 
 }
