@@ -17,10 +17,13 @@ JHtml::_('behavior.tooltip');
 
 <div class="clearfix">
 	<div class="btn-wrapper input-append pull-left">
-		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER' ); ?>:
+		<?php echo JText::_('COM_JOOMLEAGUE_GLOBAL_FILTER'); ?>:
 		<input type="text" name="search" id="search" value="<?php echo $this->lists['search'];?>" class="text_area" onchange="document.adminForm.submit();" />
 		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
 		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
+	</div>
+	<div class="btn-wrapper pull-left">
+		<?php echo '&nbsp;&nbsp;'.$this->pagination->getLimitBox(); ?>
 	</div>
 	<div class="btn-wrapper pull-right">
 		<?php echo $this->lists['sportstypes'].'&nbsp;&nbsp;'; ?>
@@ -135,6 +138,8 @@ JHtml::_('behavior.tooltip');
 					<?php endforeach; ?>
 			</tbody>
 		</table>
+		<?php echo $this->pagination->getListFooter(); ?>
+		
 	</div>
 	<input type="hidden" name="task"				value="" />
 	<input type="hidden" name="boxchecked"			value="0" />

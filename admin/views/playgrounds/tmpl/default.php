@@ -35,6 +35,9 @@ function searchPlayground(val,key)
 		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
 		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
 	</div>
+	<div class="btn-wrapper pull-left">
+		<?php echo '&nbsp;&nbsp;'.$this->pagination->getLimitBox(); ?>
+	</div>
 	<div class="btn-wrapper pull-right">
 		<div style="max-width: 700px; overflow: auto; float: right">
 			<?php
@@ -93,7 +96,7 @@ function searchPlayground(val,key)
 					</th>
 				</tr>
 			</thead>
-			<tfoot><tr><td colspan="10"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
+			<tfoot><tr><td colspan="10"></td></tr></tfoot>
 			<tbody>
 				<?php
 				$n = count($this->items);
@@ -169,6 +172,7 @@ function searchPlayground(val,key)
 					<?php endforeach; ?>
 			</tbody>
 		</table>
+		<?php echo $this->pagination->getListFooter(); ?>
 	</div>
 
 	<input type="hidden" name="search_mode" value="<?php echo $this->lists['search_mode']; ?>" />
@@ -176,5 +180,5 @@ function searchPlayground(val,key)
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="" />
-	<?php echo JHtml::_('form.token')."\n"; ?>
+	<?php echo JHtml::_('form.token'); ?>
 </form>

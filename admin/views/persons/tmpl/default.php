@@ -51,6 +51,9 @@ jQuery('.typeahead').typeahead({
 		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
 		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
 	</div>
+	<div class="btn-wrapper pull-left">
+		<?php echo '&nbsp;&nbsp;'.$this->pagination->getLimitBox(); ?>
+	</div>
 	<div class="btn-wrapper pull-right">
 		<div style="max-width: 700px; overflow: auto; float: right">
 			<?php
@@ -118,7 +121,7 @@ jQuery('.typeahead').typeahead({
 					</th>
 				</tr>
 			</thead>
-			<tfoot><tr><td colspan='12'><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
+			<tfoot><tr><td colspan='12'></td></tr></tfoot>
 			<tbody>
 				<?php
 				$n = count($this->items);
@@ -261,13 +264,13 @@ jQuery('.typeahead').typeahead({
 				?>
 			</tbody>
 		</table>
+		<?php echo $this->pagination->getListFooter(); ?>
 
-	
 	<!-- Input fields -->
 	<input type="hidden" name="search_mode" value="<?php echo $this->lists['search_mode'];?>" id="search_mode" />
 	<input type="hidden" name="task" value="person.display" />
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="filter_order" value="<?php echo $this->lists['order']; ?>" />
 	<input type="hidden" name="filter_order_Dir" value="" />
-	<?php echo JHtml::_('form.token')."\n"; ?>
+	<?php echo JHtml::_('form.token'); ?>
 </form>

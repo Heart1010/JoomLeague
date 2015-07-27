@@ -22,6 +22,9 @@ JHtml::_('behavior.tooltip');
 		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
 		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
 	</div>
+	<div class="btn-wrapper pull-left">
+		<?php echo '&nbsp;&nbsp;'.$this->pagination->getLimitBox(); ?>
+	</div>
 	<div class="btn-wrapper pull-right">
 		<div style="max-width: 700px; overflow: auto; float: right">
 			<?php
@@ -36,7 +39,7 @@ JHtml::_('behavior.tooltip');
 	</div>
 </div>
 
-	<div id="editcell">
+
 		<table class="adminlist table table-striped">
 			<thead>
 				<tr>
@@ -74,7 +77,6 @@ JHtml::_('behavior.tooltip');
 					</th>
 				</tr>
 			</thead>
-			<tfoot><tr><td colspan="11"><?php echo $this->pagination->getListFooter(); ?></td></tr></tfoot>
 			<tbody>
 				<?php
 				$n = count($this->items);
@@ -220,7 +222,9 @@ JHtml::_('behavior.tooltip');
 					<?php endforeach; ?>
 			</tbody>
 		</table>
-	</div>
+	<!-- Pagination -->
+	<?php echo $this->pagination->getListFooter(); ?>
+	<!-- Input fields -->
 	<input type="hidden" name="search_mode" value="<?php echo $this->lists['search_mode']; ?>" />
 	<input type="hidden" name="boxchecked" value="0" />
 	<input type="hidden" name="task" value="club.display" />

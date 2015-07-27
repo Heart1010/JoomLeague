@@ -22,6 +22,9 @@ JHtml::_('behavior.tooltip');
 		<button class="btn hasTooltip" onclick="this.form.submit();"><span class="icon-search"></span></button>
 		<button class="btn hasTooltip" onclick="document.getElementById('search').value='';this.form.submit();"><span class="icon-remove"></span></button>
 	</div>
+	<div class="btn-wrapper pull-left">
+		<?php echo '&nbsp;&nbsp;'.$this->pagination->getLimitBox(); ?>
+	</div>
 	<div class="btn-wrapper pull-right">
 		<?php echo $this->lists['sportstypes'].'&nbsp;&nbsp;'; ?>
 		<?php echo $this->lists['state']; ?>
@@ -183,6 +186,7 @@ JHtml::_('behavior.tooltip');
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+		<?php echo $this->pagination->getListFooter(); ?>
 	</div>
 	<input type="hidden" name="task" value="position.display" />
 	<input type="hidden" name="boxchecked" value="0" />
