@@ -299,7 +299,7 @@ class JoomleagueModelProjectteams extends JoomleagueModelList
 			$db->setQuery( $querycountry );
 			$country = $db->loadResult();
 
-			$query="SELECT t.id as value, t.name as text
+			$query="SELECT t.id as value, CASE WHEN CHAR_LENGTH(t.info) THEN CONCAT(t.name, ' (', t.info, ')') ELSE t.name END AS text
 					FROM #__joomleague_team as t
 					INNER JOIN #__joomleague_club as c
 					ON c.id = t.club_id
